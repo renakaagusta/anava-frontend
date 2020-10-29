@@ -34,8 +34,8 @@
                         </b-row>
                     </router-link>
                 </li>
-                <li>
-                    <router-link class="text-white" :to="{name: 'DashboardMain'}">
+                <li @click="selectedItem=1" v-bind:class="[selectedItem == 1 ? 'active' : '']"> 
+                    <router-link class="text-white" :to="{name: 'MainDocument'}">
                         <b-row>
                             <b-col lg="1">
                                 <div class="inline"><i class="far fa-copy"></i></div>
@@ -46,8 +46,8 @@
                         </b-row>
                     </router-link>
                 </li>
-                <li>
-                    <router-link class="text-white" :to="{name: 'DashboardMain'}">
+                <li @click="selectedItem=2" v-bind:class="[selectedItem == 2 ? 'active' : '']">
+                    <router-link class="text-white" :to="{name: 'MainPayment'}">
                         <b-row>
                             <b-col lg="1">
                                 <div class="inline"><i class="fas fa-money-bill-wave"></i></div>
@@ -58,8 +58,8 @@
                         </b-row>
                     </router-link>
                 </li>
-                <li>
-                    <router-link class="text-white" :to="{name: 'DashboardMain'}">
+                <li @click="selectedItem=3" v-bind:class="[selectedItem == 3 ? 'active' : '']">
+                    <router-link class="text-white" :to="{name: 'MainSchedule'}">
                         <b-row>
                             <b-col lg="1">
                                 <div class="inline"><i class="far fa-calendar-alt"></i></div>
@@ -94,7 +94,7 @@
                         </b-row>
                     </router-link>
                 </li>
-                <li @click="selectedItem=3" v-bind:class="[selectedItem == 3 ? 'active' : '']">
+                <li>
                     <router-link class="text-white" :to="{name: 'DashboardMain'}">
                         <b-row>
                             <b-col lg="1">
@@ -106,7 +106,7 @@
                         </b-row>
                     </router-link>
                 </li>
-                <li @click="selectedItem=4" v-bind:class="[selectedItem == 4 ? 'active' : '']">
+                <li>
                     <router-link class="text-white" :to="{name: 'DashboardMain'}">
                         <b-row>
                             <b-col lg="1">

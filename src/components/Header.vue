@@ -1,5 +1,5 @@
 <template>
-    <b-navbar style="background:#292929;padding:12px 20px;position:fixed;top:0;width:calc(100% - 250px);">
+    <b-navbar class="sticky-header" style="background:#292929;padding:12px 20px;position:fixed;top:0;width:calc(100% - 250px);">
         <b-navbar-brand class="text-white">
             <i class="fas fa-bars"></i>
         </b-navbar-brand>
@@ -58,5 +58,9 @@ export default {
 }
 .inline {
     display: inline;
+}
+.sticky-header {
+    position: fixed;
+    z-index: 5;
 }
 </style>

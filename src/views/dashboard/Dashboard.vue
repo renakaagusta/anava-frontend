@@ -20,7 +20,11 @@ export default {
   name: "Home",
   components: {
     Header,
-    Sidebar,
+    Sidebar
   },
 };
 </script>
+
+<style scoped>
+
+</style>
