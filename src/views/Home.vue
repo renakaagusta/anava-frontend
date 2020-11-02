@@ -1,15 +1,12 @@
 <template>
   <div>
+    <div class="home-voting"/>
     <div v-if="loading">
       <transition name="fade">
         <Loader/>
       </transition>
     </div>
     <div v-else>
-      <div class="home-voting"/>
-      <video autoplay muted loop id="video-bg">
-        <source src="@/assets/video himatipa.mp4" type="video/mp4">
-      </video>
       <div class="container-router">
         <transition name="fade" mode="out-in" >
           <router-view/>
@@ -49,10 +46,6 @@ export default {
   }
 </script>
 <style scoped>
-/* html, body
-{
-  height: 100%;
-} */
 html {
   min-height: 100% !important;
   height: 100%;

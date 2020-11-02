@@ -1,119 +1,138 @@
 <template>
   <div class="page">
-    <NavBar />
-    <div class="sub-page" id="home">
-      <h1 class="text-white" style="padding-top:200px;">
-        Selamat datang di ANAVA 2020
-      </h1>
-      <div class="rotate">
-        <span>
-          Tagline 3<br />
-          Tagline 2<br />
-          Tagline 1
-        </span>
-      </div>
-      <b-container class="scroll-down text-white">
-        <a href="#about" v-smooth-scroll="{ duration: 1000 }">
-          Selengkapnya
-          <div class="arrow bounce">
-            <i class="fas fa-angle-double-down fa-2x"></i>
-          </div>
-        </a>
-      </b-container>
-    </div>
-    <div class="sub-page" id="about">
-      <div
-        data-aos="fade-in"
-        data-aos-duration="1000"
-        data-aos-delay="200"
-        class="pt-5">
-        <b-container class="mt-5">
-          <b-row>
-            <b-col lg="6"> 
-              <div class="logo">
-                <img src="@/assets/logo-big.png"/>
-              </div>
-            </b-col>
-            <b-col lg="6">
-              <div class="content">
-                <h1>About Us</h1>
-                <hr />
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-              </div>
-              <button class="btn text">Selengkapnya</button>
-            </b-col>
-          </b-row>
+    <Login v-if="show == 'login'"/>
+    <Register v-if="show == 'register'"/>
+    <div v-if="show == 'welcome'">
+      <NavBar />
+      <div class="sub-page" id="home">
+        <h1 class="text-white" style="padding-top:200px;">
+          Selamat datang di ANAVA 2020
+        </h1>
+        <div class="rotate">
+          <span>
+            Tagline 3<br />
+            Tagline 2<br />
+            Tagline 1
+          </span>
+        </div>
+        <b-container class="scroll-down text-white">
+          <a href="#about" v-smooth-scroll="{ duration: 1000 }">
+            Selengkapnya
+            <div class="arrow bounce">
+              <i class="fas fa-angle-double-down fa-2x"></i>
+            </div>
+          </a>
         </b-container>
       </div>
-    </div>
-    <div class="sub-page" id="event">
-      <div data-aos="fade-in" data-aos-duration="1000" data-aos-delay="200">
-        <h1>Our Event</h1>
-        <div class="content">
-          <b-row>
-            <b-col lg="4">
-              <img src="@/assets/logo-big.png"/>            
-            </b-col>
-            <b-col lg="4">
-              <img src="@/assets/logo-big.png"/>
-            </b-col>
-            <b-col lg="4">
-              <img src="@/assets/logo-big.png"/>
-            </b-col>
-          </b-row>
+      <div class="sub-page" id="about">
+        <div
+          data-aos="fade-in"
+          data-aos-duration="1000"
+          data-aos-delay="200"
+          class="pt-5"
+        >
+          <b-container class="mt-5">
+            <b-row>
+              <b-col lg="6">
+                <div class="logo">
+                  <img src="@/assets/logo-big.png" />
+                </div>
+              </b-col>
+              <b-col lg="6">
+                <div class="content">
+                  <h1>About Us</h1>
+                  <hr />
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur.
+                </div>
+                <button class="btn text">Selengkapnya</button>
+              </b-col>
+            </b-row>
+          </b-container>
         </div>
       </div>
-    </div>
-    <div class="sub-page" id="patner">
-      <div data-aos="fade-in" data-aos-duration="1000" data-aos-delay="200">
-        <h1>Patnership</h1>
-        <hr/>
-        <div class="content bg-white p-5 rounded shadow-sm">
-          <h3>Sponsor :</h3>
-          <b-row>
-            <b-col lg="3">
-              <img src="@/assets/grab.png"/>
-            </b-col>
-            <b-col lg="3">
-              <img src="@/assets/grab.png"/>
-            </b-col>
-            <b-col lg="3">
-              <img src="@/assets/grab.png"/>
-            </b-col>
-            <b-col lg="3">
-              <img src="@/assets/grab.png"/>
-            </b-col>
-          </b-row>
-          <h3>Media Patner :</h3>
-          <b-row>
-            <b-col lg="3">
-              <img src="@/assets/grab.png"/>
-            </b-col>
-            <b-col lg="3">
-              <img src="@/assets/grab.png"/>
-            </b-col>
-            <b-col lg="3">
-              <img src="@/assets/grab.png"/>
-            </b-col>
-            <b-col lg="3">
-              <img src="@/assets/grab.png"/>
-            </b-col>
-          </b-row>
+      <div class="sub-page" id="event">
+        <div data-aos="fade-in" data-aos-duration="1000" data-aos-delay="200">
+          <h1>Our Event</h1>
+          <div class="content">
+            <b-row>
+              <b-col lg="4">
+                <img src="@/assets/logo-big.png" />
+              </b-col>
+              <b-col lg="4">
+                <img src="@/assets/logo-big.png" />
+              </b-col>
+              <b-col lg="4">
+                <img src="@/assets/logo-big.png" />
+              </b-col>
+            </b-row>
+          </div>
         </div>
       </div>
+      <div class="sub-page" id="patner">
+        <div data-aos="fade-in" data-aos-duration="1000" data-aos-delay="200">
+          <h1>Patnership</h1>
+          <hr />
+          <div class="content bg-white p-5 rounded shadow-sm">
+            <h3>Sponsor :</h3>
+            <b-row>
+              <b-col lg="3">
+                <img src="@/assets/grab.png" />
+              </b-col>
+              <b-col lg="3">
+                <img src="@/assets/grab.png" />
+              </b-col>
+              <b-col lg="3">
+                <img src="@/assets/grab.png" />
+              </b-col>
+              <b-col lg="3">
+                <img src="@/assets/grab.png" />
+              </b-col>
+            </b-row>
+            <h3>Media Patner :</h3>
+            <b-row>
+              <b-col lg="3">
+                <img src="@/assets/grab.png" />
+              </b-col>
+              <b-col lg="3">
+                <img src="@/assets/grab.png" />
+              </b-col>
+              <b-col lg="3">
+                <img src="@/assets/grab.png" />
+              </b-col>
+              <b-col lg="3">
+                <img src="@/assets/grab.png" />
+              </b-col>
+            </b-row>
+          </div>
+        </div>
+      </div>
+      <Footer />
     </div>
-    <Footer />
   </div>
 </template>
 <script>
 import NavBar from "@/components/NavBar.vue";
 import Footer from "@/components/Footer.vue";
+import Login from "@/views/Login.vue";
+import Register from "@/views/Register.vue";
 
 export default {
   name: "Welcome",
   components: {
     NavBar,
     Footer,
+    Login,
+    Register
+  },
+  computed: {
+    show() {
+      return this.$store.state.ui.welcomeShow;
+    },
   },
   created() {
     document.title = "PEMIRA HIMATIPA UGM 2020";
@@ -143,11 +162,11 @@ export default {
   background-color: #58427c;
   color: white;
   padding-top: 110px;
-  padding-bottom: 20px;
+  padding-bottom: 130px;
 }
 
 #about hr {
-  background-color:  #ffffff;
+  background-color: #ffffff;
   max-width: 200px;
   margin-left: 0px;
   margin-top: 20px;
@@ -189,13 +208,13 @@ export default {
 
 #patner {
   background-color: rgb(220, 220, 220);
-  color: rgb(70,70,50);
+  color: rgb(70, 70, 50);
   padding: 40px 100px;
 }
 
 #patner hr {
   max-width: 300px;
-  background-color: rgb(70,70,70);
+  background-color: rgb(70, 70, 70);
 }
 
 #patner .content {
@@ -280,7 +299,7 @@ b-button {
   font-size: 18px;
 }
 
-.scroll-down a{
+.scroll-down a {
   text-decoration: none;
   color: white;
   display: block;

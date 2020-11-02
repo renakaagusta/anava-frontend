@@ -1,14 +1,10 @@
 <template>
-  <div style="background-color:#eee">
-    <b-row>
-      <b-col lg="2">
-        <Sidebar />
-      </b-col>
-      <b-col lg="10" style="min-height:690px;padding-left:45px;">
-        <Header/>
-        <router-view class="mt-4" />
-      </b-col>
-    </b-row>
+  <div style="background-color:#eee;min-height:100%; min-width:100%;">
+    <Header/>
+    <Sidebar/> 
+    <div class="content">
+      <router-view/>
+    </div>
   </div>
 </template>
 
@@ -26,5 +22,13 @@ export default {
 </script>
 
 <style scoped>
-
+.content {
+  margin-top: 66px;
+  margin-left:250px;
+  max-width:calc(100%-250px);
+  padding-top:20px;
+  padding-left:10px;
+  padding-right: 10px;
+  position:relative;
+}
 </style>

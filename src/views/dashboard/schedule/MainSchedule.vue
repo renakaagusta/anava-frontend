@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Penyisihan -->
-        <b-card no-body class="overflow-hidden shadow ml-4 mt-4" style="max-width: 740px; border-radius: 20px">
+        <b-card no-body class="overflow-hidden shadow mt-4">
             <b-row no-gutters>
                 <b-col md="4">
                     <b-card-text>
@@ -20,7 +20,7 @@
             </b-row>
         </b-card>
         <!-- Semifinal -->
-        <b-card no-body class="overflow-hidden shadow ml-4 mt-4" style="max-width: 740px; border-radius: 20px">
+        <b-card no-body class="overflow-hidden shadow mt-4">
             <b-row no-gutters>
                 <b-col md="4">
                     <b-card-text>
@@ -39,7 +39,7 @@
             </b-row>
         </b-card>
         <!-- Final -->
-        <b-card no-body class="overflow-hidden shadow ml-4 mt-4" style="max-width: 740px; border-radius: 20px">
+        <b-card no-body class="overflow-hidden shadow mt-4">
             <b-row no-gutters>
                 <b-col md="4">
                     <b-card-text>

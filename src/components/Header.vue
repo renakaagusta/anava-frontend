@@ -1,8 +1,9 @@
 <template>
-    <b-navbar class="sticky-header" style="background:#292929;padding:12px 20px;position:fixed;top:0;width:calc(100% - 250px);">
-        <b-navbar-brand class="text-white">
-            <i class="fas fa-bars"></i>
+    <b-navbar class="navbar">
+        <b-navbar-brand class="text-white" style="width: 240px;">
+            <img class="logo" src="@/assets/logo-white.png" style="height:40px; width:70px;" />
         </b-navbar-brand>
+        <i class="fas fa-bars text-light"></i>
         <b-collapse id="nav-text-collapse" is-nav>
         </b-collapse>
         <a class="text-white" href="" @click="logout()">
@@ -50,6 +51,13 @@ export default {
 }
 </script>
 <style scoped>
+.navbar {
+    background-color: #292929;
+    width:calc(100%);
+    position:fixed;
+    top:0;
+    left:0;
+} 
 .text-bold {
     font-weight: bold;
 }

@@ -1,7 +1,7 @@
 <template>
-    <b-container>
+    <div>
         <b-row>
-            <b-col class="mt-5" lg="6 offset-3">
+            <b-col>
                 <div class="container bg-danger p-3 text-center text-white rounded-lg shadow">
                     <p>
                         <i style="font-size:30px" class="fas fa-money-bill-wave"></i>
@@ -15,7 +15,7 @@
                 </div>
             </b-col>
         </b-row>
-    </b-container>
+    </div>
 </template>
 <script>
 export default {
