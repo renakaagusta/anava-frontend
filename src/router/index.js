@@ -15,6 +15,7 @@ import CreateDocument from '../views/dashboard/document/CreateDocument.vue'
 import IndexSchedule from '../views/dashboard/schedule/IndexSchedule.vue'
 import MainSchedule from '../views/dashboard/schedule/MainSchedule.vue'
 import CreateSchedule from '../views/dashboard/schedule/CreateSchedule.vue'
+import IndexWorkingPage from '../views/dashboard/working-page/IndexWorkingPage.vue'
 
 Vue.use(VueRouter)
 
@@ -99,7 +100,12 @@ const routes = [
                 component: CreateSchedule,
               }
             ]
-          }
+          },
+          {
+            path: 'working-page',
+            name: 'IndexWorkingPage',
+            component: IndexWorkingPage,
+          },
         ]
       },
     ]
