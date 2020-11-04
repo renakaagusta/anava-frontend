@@ -28,6 +28,11 @@
 <script>
 export default {
     name: 'DashboardMain',
+    computed: {
+        show() {
+            return this.$store.state.auth.user;
+        }
+    },
 }
 </script>
 <style scoped>

@@ -1,15 +1,15 @@
 <template>
     <div>
-        <AdminIndexPayment v-if="user.roles.includes('admin')"/>
+        <AdminIndexParticipant v-if="user.roles.includes('admin')"/>
     </div>
 </template>
 <script>
-import AdminIndexPayment from './../../../components/dashboard/admin/payment/IndexPayment.vue'
+import AdminIndexParticipant from './../../../components/dashboard/admin/participant/IndexParticipant'
 
 export default {
-    name: "IndexPayment",
+    name: "IndexParticipant",
     components: {
-        AdminIndexPayment
+        AdminIndexParticipant
     },
     computed: {
         user() {
