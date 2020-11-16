@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <nav id="sidebar" class="">
+    <nav id="sidebar">
       <div class="sidebar-header">
         <div class="profile">
           <router-link class="text-white" :to="{ name: 'DashboardMain' }">
@@ -16,8 +16,12 @@
           </router-link>
         </div>
       </div>
+      {{ selectedSubItem[0] }}
 
-      <div class="sidebar-body">
+      <div
+        class="sidebar-body"
+        v-if="$store.state.auth.user.roles.includes('participant')"
+      >
         <ul class="list-unstyled components text-white">
           <li
             @click="selectedItem = 0"
@@ -151,6 +155,166 @@
           </li>
         </ul>
       </div>
+
+      <div
+        class="sidebar-body"
+        v-if="$store.state.auth.user.roles.includes('admin')"
+      >
+        <ul class="list-unstyled components text-white">
+          <li
+            @click="selectedItem = 0"
+            v-bind:class="[selectedItem == 0 ? 'active' : '']"
+          >
+            <router-link class="text-white" :to="{ name: 'DashboardMain' }">
+              <b-row>
+                <b-col lg="1">
+                  <div class="inline"><i class="fas fa-home"></i></div>
+                </b-col>
+                <b-col class="sidebar-text" lg="10">
+                  Beranda
+                </b-col>
+              </b-row>
+            </router-link>
+          </li>
+          <li
+            @click="selectedItem = 1"
+            v-bind:class="[selectedItem == 1 ? 'active' : '']"
+          >
+            <router-link class="text-white" :to="{ name: 'MainParticipant' }">
+              <b-row>
+                <b-col lg="1">
+                  <div class="inline"><i class="fas fa-users"></i></div>
+                </b-col>
+                <b-col class="sidebar-text" lg="10">
+                  Peserta
+                </b-col>
+              </b-row>
+            </router-link>
+          </li>
+          <li
+            @click="selectedItem = 2"
+            v-bind:class="[selectedItem == 2 ? 'active' : '']"
+          >
+            <router-link class="text-white" :to="{ name: 'MainPayment' }">
+              <b-row>
+                <b-col lg="1">
+                  <div class="inline">
+                    <i class="fas fa-money-bill-wave"></i>
+                  </div>
+                </b-col>
+                <b-col class="sidebar-text" lg="10">
+                  Pembayaran
+                </b-col>
+              </b-row>
+            </router-link>
+          </li>
+          <li
+            @click="selectedItem = 3"
+            v-bind:class="[selectedItem == 3 ? 'active' : '']"
+          >
+            <router-link class="text-white" :to="{ name: 'MainSchedule' }">
+              <b-row>
+                <b-col lg="1">
+                  <div class="inline"><i class="far fa-calendar-alt"></i></div>
+                </b-col>
+                <b-col class="sidebar-text" lg="10">
+                  Jadwal
+                </b-col>
+              </b-row>
+            </router-link>
+          </li>
+          <li
+            @click="selectedItem = 4"
+            v-bind:class="[selectedItem == 4 ? 'active' : '']"
+          >
+            <router-link class="text-white" :to="{ name: 'MainSchedule' }">
+              <b-row>
+                <b-col lg="1">
+                  <div class="inline"><i class="fas fa-bullhorn"></i></div>
+                </b-col>
+                <b-col class="sidebar-text" lg="10">
+                  Pengumuman
+                </b-col>
+              </b-row>
+            </router-link>
+          </li>
+          <li v-bind:class="[selectedItem == 5 ? 'active' : '']">
+            <a class="text-white" @click="performToggle(5)">
+              <b-row>
+                <b-col lg="1">
+                  <div class="inline"><i class="far fa-calendar-alt"></i></div>
+                </b-col>
+                <b-col class="sidebar-text" lg="10">
+                  OSM
+                </b-col>
+              </b-row>
+            </a>
+            <ul
+              class="list-unstyled components text-white pl-2"
+              v-if="toggle == 5"
+            >
+              <li
+                @click="selectedSubItem = 1"
+                v-bind:class="[selectedSubItem == 1 ? 'active' : '']"
+              >
+                <router-link class="text-white" :to="{ name: 'DashboardMain' }">
+                  <b-row>
+                    <b-col lg="1">
+                      <div class="inline"><i class="fas fa-trophy"></i></div>
+                    </b-col>
+                    <b-col class="sidebar-text" lg="10">
+                      Penyisihan
+                    </b-col>
+                  </b-row>
+                </router-link>
+              </li>
+              <li 
+                  @click="selectedSubItem = 2" v-bind:class="[selectedSubItem == 2 ? 'active' : '']">
+                <router-link
+                  class="text-white"
+                  :to="{ name: 'DashboardMain' }"
+                >
+                  <b-row>
+                    <b-col lg="1">
+                      <div class="inline"><i class="fas fa-trophy"></i></div>
+                    </b-col>
+                    <b-col class="sidebar-text" lg="10">
+                      Semifinal
+                    </b-col>
+                  </b-row>
+                </router-link>
+              </li>
+              <li @click="selectedSubItem = 3" v-bind:class="[selectedSubItem == 3 ? 'active' : '']">
+                <router-link
+                  class="text-white"
+                  :to="{ name: 'DashboardMain' }"
+                >
+                  <b-row>
+                    <b-col lg="1">
+                      <div class="inline"><i class="fas fa-trophy"></i></div>
+                    </b-col>
+                    <b-col class="sidebar-text" lg="10">
+                      Final
+                    </b-col>
+                  </b-row>
+                </router-link>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <router-link class="text-white" :to="{ name: 'DashboardMain' }">
+              <b-row>
+                <b-col lg="1">
+                  <div class="inline"><i class="fas fa-award"></i></div>
+                </b-col>
+                <b-col class="sidebar-text" lg="10">
+                  Sertifikat
+                </b-col>
+              </b-row>
+            </router-link>
+          </li>
+        </ul>
+      </div>
     </nav>
   </div>
 </template>
@@ -162,8 +326,21 @@ export default {
     return {
       textBold: "text-bold",
       selectedItem: 0,
+      selectedSubItem: 0,
+      toggle: 0,
       scrollY: 0,
     };
+  },
+  methods: {
+    performToggle(item) {
+      if (this.selectedItem == item && this.toggle != 0) {
+        this.toggle = 0;
+      } else {
+        this.selectedItem = item;
+        this.toggle = item;
+        this.selectedSubItem = 1;
+      }
+    },
   },
   created() {
     if (window.location.href.includes("session")) this.selectedItem = 1;
@@ -192,9 +369,10 @@ export default {
 }
 
 #sidebar {
-  min-width: 250px;
+  min-width: 280px;
   max-width: 250px;
-  min-height: 100vh;
+  height: 600px;
+  overflow-y: auto;
 }
 
 #sidebar.active {

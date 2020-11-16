@@ -22,6 +22,11 @@
                     </p>
                 </div>
             </b-col>
+            <b-col lg="12 mt-3">
+                <div class="container bg-danger p-3 text-center text-white rounded-lg shadow" v-for="event in events" :key="event._id">
+                    {{ event.name }}
+                </div>
+            </b-col>
         </b-row>
     </b-container>
 </template>
@@ -29,10 +34,19 @@
 export default {
     name: 'DashboardMain',
     computed: {
-        show() {
-            return this.$store.state.auth.user;
+        events() {
+            console.log(this.$store.state.event.events);
+            return this.$store.state.event.events;
+        },
+    },
+    methods: {
+        getEvents() {
+            this.$store.dispatch('event/getAllEvent')
         }
     },
+    created() {
+        this.getEvents();
+    }
 }
 </script>
 <style scoped>

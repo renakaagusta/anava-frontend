@@ -1,25 +1,24 @@
 <template>
     <div>
-        <b-row>
-            <b-col>
-                <div class="container bg-danger p-3 text-center text-white rounded-lg shadow">
-                    <p>
-                        <i style="font-size:30px" class="fas fa-money-bill-wave"></i>
-                        <br>
-                        Anda Belum Mengupload Bukti Pembayaran, Silakan Upload Bukti Pembayaran dengan Klik Tombol Dibawah Ini!
-                        <br>
-                        <router-link :to="{name: 'CreatePayment'}">
-                            <b-button class="btn mt-2" variant="danger">Upload Bukti Pembayaran</b-button>
-                        </router-link>
-                    </p>
-                </div>
-            </b-col>
-        </b-row>
+        <AdminMainPayment v-if="user.roles.includes('admin')"/>
+        <ParticipantMainPayment v-if="user.roles.includes('participant')"/>
     </div>
 </template>
 <script>
+import AdminMainPayment from './../../../components/dashboard/admin/payment/MainPayment.vue'
+import ParticipantMainPayment from './../../../components/dashboard/participant/payment/MainPayment.vue'
+
 export default {
-    name: 'MainPayment'
+    name: 'MainPayment',
+    components: {
+        AdminMainPayment,
+        ParticipantMainPayment
+    },
+    computed: {
+        user() {
+            return this.$store.state.auth.user;
+        }
+    }
 }
 </script>
 <style scoped>

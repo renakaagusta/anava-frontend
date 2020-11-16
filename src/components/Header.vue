@@ -37,7 +37,7 @@ export default {
         },
         logout() {
             this.$store.commit("setAuthentication", false);
-            this.$router.push('../login');
+            this.$router.push('../../login');
         }
     },
     watch:{
@@ -57,7 +57,7 @@ export default {
     position:fixed;
     top:0;
     left:0;
-    z-index: 999;
+    z-index: 999999999999999;
 } 
 .text-bold {
     font-weight: bold;

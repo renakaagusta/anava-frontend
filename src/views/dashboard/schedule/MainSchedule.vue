@@ -39,7 +39,7 @@
             </b-row>
         </b-card>
         <!-- Final -->
-        <b-card no-body class="overflow-hidden shadow mt-4">
+        <b-card no-body class="overflow-hidden shadow mt-4 mb-5">
             <b-row no-gutters>
                 <b-col md="4">
                     <b-card-text>

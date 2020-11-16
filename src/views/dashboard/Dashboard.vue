@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color:#eee;min-height:100%; min-width:100%;">
+  <div style="background-color:#ffff;min-height:100%; min-width:100%;">
     <Header/>
     <Sidebar/> 
     <div class="content">
@@ -27,7 +27,7 @@ export default {
   margin-left:250px;
   max-width:calc(100%-250px);
   padding-top:20px;
-  padding-left:10px;
+  padding-left:40px;
   padding-right: 10px;
   position:relative;
 }
