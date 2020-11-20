@@ -144,13 +144,73 @@
       <h2 class="text-left">Sertifikat</h2>
       <br />
       <b-row>
-        <b-col lg="2">
-          <p class="text-left text-bold">Tanggal lahir:</p>
+        <b-col lg="12">
+          <div id="sertif-peserta" class="text-white" style="width : 1124px; height : 794px;">
+            <img src="./../../../assets/bg-sertif-peserta.png">
+            <div style="position:absolute;top:0px;left:150px">
+              <h1 style="padding-top:140px;font-size:56px;">S E R T I F I K A T</h1>
+              <p style="font-size: 20px">Diberikan Kepada</p>
+              <h1 style="color:black;font-family:Komika Axis;">{{ participant.username }}</h1>
+              <hr style="border: 0;clear:both;display:block;width: 700px;background-color:white;height: 2px;">
+              <p style="margin-top:20px;font-size: 20px;">
+                Sebagai peserta pada Kompetisi ANAVA 14 <br> 
+                Diselenggarakan oleh Prodi Statistika Fakultas Matematika <br>
+                dan Ilmu Pengetahuan Universitas Gajah Mada
+              </p>
+              <p style="margin-left:-600px;margin-top:30px;font-size: 20px;">
+                Dekan Fakultas Matematika <br>
+                dan Ilmu Pengetahuan <br>
+                Universitas Gajah Mada
+              </p>
+              <p style="margin-left:-600px;margin-top:105px;font-size: 20px;">
+                Dr. Nama Dekan  <br> 
+                0001293123891238
+              </p>
+              <p style="margin-left:600px;margin-top:-270px;font-size: 20px;">
+                Kepala Prodi Statistika <br>
+                Universitas Gajah Mada <br>
+              </p>
+              <p style="margin-left:600px;margin-top:135px;font-size: 20px;">
+                Dr. Nama Dekan <br> 
+                0001293123891238
+              </p>
+            </div>
+          </div>
         </b-col>
-        <b-col lg="8">
-          <p class="text-left">
-            {{ getDateTime("date", "2001-01-28T00:00:00Z") }}
-          </p>
+        <b-col lg="12 mt-2">
+          <div id="sertif-juara" class="text-white" style="width : 1124px; height : 794px;">
+            <img src="./../../../assets/bg-sertif-juara.png">
+            <div style="position:absolute;top:0px;left:150px">
+              <h1 style="padding-top:80px;font-size:56px;">S E R T I F I K A T</h1>
+              <p style="font-size: 20px;">Diberikan Kepada</p>
+              <h1 style="color:black;font-family:Komika Axis;margin-top:-10px;">{{ participant.username }}</h1>
+              <hr style="border: 0;clear:both;display:block;width: 700px;background-color:white;height: 2px;">
+              <p style="font-size: 20px;">Sebagai</p>
+              <h1 style="color:black;font-family:Komika Axis;margin-top:-20px;">Juara 1</h1>
+              <p style="margin-top:20px;font-size: 20px;">
+                Pada Kompetisi ANAVA 14 yang Diselenggarakan oleh <br> 
+                Prodi Statistika Fakultas Matematika dan Ilmu Pengetahuan<br>
+                Universitas Gajah Mada
+              </p>
+              <p style="margin-left:-600px;margin-top:20px;font-size: 20px;">
+                Dekan Fakultas Matematika <br>
+                dan Ilmu Pengetahuan <br>
+                Universitas Gajah Mada
+              </p>
+              <p style="margin-left:-600px;margin-top:105px;font-size: 20px;">
+                Dr. Nama Dekan  <br> 
+                0001293123891238
+              </p>
+              <p style="margin-left:600px;margin-top:-270px;font-size: 20px;">
+                Kepala Prodi Statistika <br>
+                Universitas Gajah Mada <br>
+              </p>
+              <p style="margin-left:600px;margin-top:135px;font-size: 20px;">
+                Dr. Nama Dekan <br> 
+                0001293123891238
+              </p>
+            </div>
+          </div>
         </b-col>
       </b-row>
     </div>
