@@ -10,6 +10,9 @@ class StageService {
   getStage(id) {
     return axios.get(API_URL + id, header());
   }
+  addParticipantToStage(stage) {
+    return axios.put(API_URL + stage.id + '/add', stage, header());
+  }
 }
 
 export default new StageService();

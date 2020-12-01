@@ -55,7 +55,6 @@ export default {
     name: 'MainSchedule',
     computed: {
         participants() {
-            console.log(this.$store.state.participant.participants)
             return this.$store.state.participant.participants;
         },
     },

@@ -1,6 +1,9 @@
 <template>
   <div class="register-page">
-    <img class="logo" src="@/assets/logo-white.png" />
+    <div class="logo">
+      <img src="@/assets/logo-white.png" />
+      <h1 class="text-white d-inline-block">ANAVA</h1>
+    </div>
     <a @click="moveToWelcome()">
       <img class="close" src="@/assets/close.png" />
     </a>
@@ -42,48 +45,40 @@
           v-model="user.passwordConfirmation"
         />
       </div>
-
-      <div>
-        <label>Asal Sekolah</label>
-        <input
-          type="text"
-          name="school"
-          placeholder="Ketik disini..."
-          v-model="user.school"
-        />
-      </div>
-
       <div class="form-label-group p-1">
+        <label>Provinsi</label>
         <select
           class="custom-select"
           v-model="user.province"
           @change="getCities(user.province)"
         >
           <option value="" disabled selected>Provinsi</option>
-          <option v-for="province in provinces" :key="province.nama">{{
-            province.nama
+          <option v-for="province in provinces" :key="province.name">{{
+            province.name
           }}</option>
         </select>
       </div>
 
       <div class="form-label-group p-1">
+        <label>Kabupaten</label>
         <select
           class="custom-select"
           v-model="user.city"
           @change="getSubdistricts(user.city)"
         >
           <option value="" disabled selected>Kota / Kabupaten</option>
-          <option v-for="city in cities" :key="city.nama">{{
-            city.nama
+          <option v-for="city in cities" :key="city.name">{{
+            city.name
           }}</option>
         </select>
       </div>
 
       <div class="form-label-group p-1">
+        <label>Kecamatan</label>
         <select class="custom-select" v-model="user.subdistrict">
           <option value="" disabled selected>Kecamatan</option>
-          <option v-for="subdistrict in subdistricts" :key="subdistrict.nama">{{
-            subdistrict.nama
+          <option v-for="subdistrict in subdistricts" :key="subdistrict.name">{{
+            subdistrict.name
           }}</option>
         </select>
       </div>
@@ -95,8 +90,29 @@
         value="Register"
         @click="handleRegister()"
       />
-      <p class="text-center mt-2">Sudah punya akun? <a href="#">Login</a></p>
+      <p class="text-center mt-2">
+        Sudah punya akun? <a @click="moveToLogin()" href="#">Login</a>
+      </p>
     </div>
+    <vue-particles
+      color="#dedede"
+      :particleOpacity="0.7"
+      :particlesNumber="80"
+      shapeType="circle"
+      :particleSize="4"
+      linesColor="#dedede"
+      :linesWidth="1"
+      :lineLinked="true"
+      :lineOpacity="0.4"
+      :linesDistance="150"
+      :moveSpeed="3"
+      :hoverEffect="true"
+      hoverMode="grab"
+      :clickEffect="true"
+      clickMode="push"
+      class="particles"
+    >
+    </vue-particles>
   </div>
 </template>
 <script>
@@ -121,46 +137,50 @@ export default {
   methods: {
     getProvinces() {
       this.$store.dispatch("ui/getProvinces").then((data) => {
+        console.log(data);
         this.provinces = data;
       });
     },
-    getCities(provinceName) {
-      this.$store.dispatch("ui/getCities", provinceName).then((data) => {
+    getCities(provincename) {
+      this.$store.dispatch("ui/getCities", provincename).then((data) => {
         this.cities = data;
       });
     },
-    getSubdistricts(cityName) {
-      this.$store.dispatch("ui/getSubdistricts", cityName).then((data) => {
+    getSubdistricts(cityname) {
+      this.$store.dispatch("ui/getSubdistricts", cityname).then((data) => {
         this.subdistricts = data;
       });
     },
     moveToWelcome() {
-      this.$store.dispatch('ui/changeWelcomeComponent', 'welcome')
+      this.$store.dispatch("ui/changeWelcomeComponent", "welcome");
+    },
+    moveToLogin() {
+      this.$store.dispatch("ui/changeWelcomeComponent", "login");
     },
     handleRegister() {
       this.loading = true;
 
       this.$store.dispatch("auth/register", this.user).then(
-          (data) => {
-            console.log(JSON.stringify(data));
-            Swal.fire({
-              title: "Berhasil melakukan pendaftaran",
-              icon: 'success',
-              showConfirmButton: true,
-            }).then(()=>{
-              this.moveToWelcome();
-            })
-          },
-          (error) => {
-            console.log(error)
-            this.loading = false;
-            this.message =
-              (error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-              error.message ||
-              error.toString();
-          }
+        (data) => {
+          console.log(JSON.stringify(data));
+          Swal.fire({
+            title: "Berhasil melakukan pendaftaran",
+            icon: "success",
+            showConfirmButton: true,
+          }).then(() => {
+            this.moveToWelcome();
+          });
+        },
+        (error) => {
+          console.log(error);
+          this.loading = false;
+          this.message =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+        }
       );
     },
   },
@@ -168,14 +188,29 @@ export default {
 </script>
 <style scoped>
 .register-page {
-  background-color: #45046a;
+  background-image: linear-gradient(
+      to right top,
+      rgb(13, 33, 60),
+      rgb(52, 3, 62, 0.8)
+    ),
+    url("");
+  padding-bottom: 300px;
   min-height: 100%;
 }
 
 .register-page .logo {
+  margin-left: -40px;
+}
+
+.register-page .logo img {
   height: 100px;
   width: 170px;
-  margin-top: 40px;
+  margin-top: -20px;
+}
+
+.register-page .logo h1 {
+  display: block;
+  margin-top: 60px;
 }
 
 .register-page .close {
@@ -188,13 +223,14 @@ export default {
 }
 
 .register-container {
-  width: 400px;
+  width: 500px;
   margin-top: 40px;
-  margin-left: calc(50% - 200px);
+  margin-left: calc(50% - 250px);
   margin-bottom: 20px;
   background: #fff;
   box-sizing: border-box;
   padding: 40px 20px;
+  position: absolute;
 }
 
 .register-container img {

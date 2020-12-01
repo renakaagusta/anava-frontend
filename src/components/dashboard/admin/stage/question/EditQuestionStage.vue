@@ -1,0 +1,144 @@
+<template>
+  <div>
+    <b-container
+      class="bg-white p-3 mt-3 shadow-sm rounded"
+      v-if="this.stage.name == 'preliminary'"
+    >
+      <h1 class="mt-2">Sunting soal</h1>
+      <b-form class="text-left ml-5 mt-4 mr-5">
+        <b-form-group>
+          <h2>Nomor</h2>
+          <input
+            type="number"
+            placeholder="masukan Nomor"
+            v-model="question.number"
+            value="1"
+          />
+        </b-form-group>
+        <b-form-group>
+          <h2>Soal</h2>
+          <vue-editor
+            type="text"
+            id="content"
+            placeholder="Masukan Soal"
+            v-model="question.content"
+          ></vue-editor>
+        </b-form-group>
+        <b-form-group>
+          <h2>Pilihan A</h2>
+          <vue-editor
+            type="text"
+            id="content"
+            placeholder="Masukan Pilihan A"
+            v-model="question.options[0].content"
+          ></vue-editor>
+        </b-form-group>
+        <b-form-group>
+          <h2>Pilihan B</h2>
+          <vue-editor
+            type="text"
+            id="content"
+            placeholder="Masukan Pilihan B"
+            v-model="question.options[1].content"
+          ></vue-editor>
+        </b-form-group>
+        <b-form-group>
+          <h2>Pilihan C</h2>
+          <vue-editor
+            type="text"
+            id="content"
+            placeholder="Masukan Pilihan C"
+            v-model="question.options[2].content"
+          ></vue-editor>
+        </b-form-group>
+        <b-form-group>
+          <h2>Pilihan D</h2>
+          <vue-editor
+            type="text"
+            id="content"
+            placeholder="Masukan Pilihan D"
+            v-model="question.options[3].content"
+          ></vue-editor>
+        </b-form-group>
+        <b-form-group>
+          <h2>Pilihan E</h2>
+          <vue-editor
+            type="text"
+            id="content"
+            placeholder="Masukan Pilihan E"
+            v-model="question.options[4].content"
+          ></vue-editor>
+        </b-form-group>
+        <b-form-group>
+          <h2>Kunci</h2>
+          <select class="custom-select" v-model="question.key">
+            <option value="A" selected>A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+          </select>
+        </b-form-group>
+        <b-form-group>
+          <h2>Solusi</h2>
+          <vue-editor
+            type="text"
+            id="solution"
+            placeholder="Masukan Solusi"
+            v-model="question.solution"
+          ></vue-editor>
+        </b-form-group>
+        <a
+          @click="updateQuestion()"
+          href="#"
+          class="btn btn-primary"
+          type="submit"
+        >
+          <i class="far fa-save text-white"></i>
+          Simpan
+        </a>
+      </b-form>
+    </b-container>
+  </div>
+</template>
+<script>
+export default {
+  name: "EditQuestionStage",
+  data() {
+    return {
+    };
+  },
+  computed: {
+    question() {
+      return this.$store.state.question.question;
+    },
+    stage() {
+      return this.$store.state.stage.stage;
+    },
+    event() {
+      return this.$store.state.stage.stage;
+    },
+  },
+  methods: {
+    getQuestion() {
+      this.$store.dispatch("question/getQuestion", this.$route.params.idQuestion);
+    },
+    updateQuestion() {
+      this.$store.dispatch("question/updateQuestion", this.question);
+    },
+  },
+  created() {
+    this.getQuestion();
+  },
+};
+</script>
+<style scoped>
+p {
+  display: inline;
+}
+.profile {
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+}
+</style>

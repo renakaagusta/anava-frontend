@@ -163,7 +163,6 @@ export default {
   name: "MainSchedule",
   computed: {
     participant() {
-      console.log(this.$store.state.participant.participant);
       return this.$store.state.participant.participant;
     },
   },

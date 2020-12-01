@@ -4,6 +4,7 @@ export const ui = {
   namespaced: true,
   state: {
     welcomeShow: "welcome",
+    sidebarShow: true,
     provinces: [],
     cities: [],
     subdistrict: [],
@@ -17,6 +18,10 @@ export const ui = {
     },
   },
   actions: {
+    changeSidebarComponent({ commit }) {
+      commit("changeSidebarComponent");
+      return;
+    },
     changeWelcomeComponent({ commit }, component) {
       commit("changeWelcomeComponent", component);
       return;
@@ -56,6 +61,9 @@ export const ui = {
     },
   },
   mutations: {
+    changeSidebarComponent(state) {
+      state.sidebarShow = !state.sidebarShow;
+    },
     changeWelcomeComponent(state, component) {
       state.welcomeShow = component;
     },

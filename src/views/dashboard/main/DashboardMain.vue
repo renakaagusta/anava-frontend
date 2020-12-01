@@ -1,12 +1,16 @@
 <template>
     <b-container>
-        <h3 class="text-left">Beranda</h3>
+        <div class="bg-light text-dark mb-3 rounded shadow-sm header">
+            <h3 class="text-left d-inline float-left">
+                <i class="fas fa-home"></i>
+                Beranda
+            </h3>
+        </div>
         <hr/>
         <b-row>
             <b-col lg="12 mt-3">
                 <div class="container bg-white p-3 mb-3 text-center rounded-lg shadow">
                     <p>
-                        <i style="font-size:30px" class="fas fa-home"></i>
                         <br>
                         <b>SELAMAT DATANG PESERTA ANAVA 14!</b>
                         Ini adalah Dashboard anda <br> berbagai jenis informasi terkait lomba dapat dilihat disini 
@@ -14,7 +18,7 @@
                 </div>
             </b-col>
             <b-col lg="12 mt-3">
-                <div class="container bg-danger p-3 text-center text-white rounded-lg shadow">
+                <div class="container bg-white p-3 text-center text-dark rounded-lg shadow">
                     <p>
                         <i style="font-size:30px" class="far fa-envelope"></i>
                         <br>
@@ -31,6 +35,11 @@ export default {
 }
 </script>
 <style scoped>
+.header{
+    min-height: 90px;
+    min-width: 100%;
+    padding: 30px; 
+}
 .btn{
     padding: 10px 30px;
     background-color: rgba(0,0,0,0);

@@ -96,7 +96,7 @@ nav ul {
 }
 
 nav.black ul {
-  background:#746CC0;
+  background:rgb(13, 33, 60);
 }
 
 nav ul li {

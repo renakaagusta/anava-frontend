@@ -28,6 +28,18 @@ export const stage = {
           return Promise.resolve(response.data.data);
         },
         (error) => {
+          alert("error");
+          return Promise.reject(error);
+        }
+      );
+    },
+    addParticipantToStage({ commit }, stage) {
+      return StageService.addParticipantToStage(stage).then(
+        (response) => {
+          commit("setStage", response.data.data);
+          return Promise.resolve(response.data.data);
+        },
+        (error) => {
           return Promise.reject(error);
         }
       );
