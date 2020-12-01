@@ -3,7 +3,7 @@
         <h3 class="text-left">Beranda</h3>
         <hr/>
         <b-row>
-            <b-col lg="12 mt-3">
+            <b-col lg="12 mt-1">
                 <div class="container bg-white p-3 mb-3 text-center rounded-lg shadow">
                     <p>
                         <i style="font-size:30px" class="fas fa-home"></i>
@@ -13,8 +13,8 @@
                     </p>
                 </div>
             </b-col>
-            <b-col lg="12 mt-3">
-                <div class="container bg-danger p-3 text-center text-white rounded-lg shadow">
+            <b-col lg="12 mt-1">
+                <div class="container bg-white p-3 text-dark text-center rounded-lg shadow">
                     <p>
                         <i style="font-size:30px" class="far fa-envelope"></i>
                         <br>

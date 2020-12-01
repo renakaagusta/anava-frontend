@@ -12,7 +12,7 @@ export default {
     name: "IndexPayment",
     components: {
         AdminIndexPayment,
-        ParticipantIndexPayment
+        ParticipantIndexPayment,
     },
     computed: {
         user() {

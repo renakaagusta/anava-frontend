@@ -1,6 +1,9 @@
 <template>
   <div class="login-page">
-    <img class="logo" src="@/assets/logo-white.png"/>
+    <div class="logo">
+      <img src="@/assets/logo-white.png" />
+      <h1 class="text-white d-inline-block">ANAVA</h1>
+    </div>
     <a @click="$store.dispatch('ui/changeWelcomeComponent', 'welcome')">
       <img class="close" src="@/assets/close.png" />
     </a>
@@ -25,11 +28,45 @@
         />
       </div>
       <p class="text-left">
-        <a href="#">Lupa kata sandi?</a>
+        <router-link :to="{ name: 'ForgotPassword' }"
+          >Lupa kata sandi?</router-link
+        >
       </p>
-      <input type="submit" name="login" class="mt-4" value="Login" @click="handleLogin()" />
-      <p class="text-center mt-2">Belum punya akun? <a href="#">Daftar</a></p>
+      <input
+        type="submit"
+        name="login"
+        class="mt-4"
+        value="Login"
+        @click="handleLogin()"
+      />
+      <p class="text-center mt-2">
+        Belum punya akun?
+        <a
+          @click="$store.dispatch('ui/changeWelcomeComponent', 'register')"
+          href="#"
+          >Daftar</a
+        >
+      </p>
     </div>
+    <vue-particles
+      color="#dedede"
+      :particleOpacity="0.7"
+      :particlesNumber="80"
+      shapeType="circle"
+      :particleSize="4"
+      linesColor="#dedede"
+      :linesWidth="1"
+      :lineLinked="true"
+      :lineOpacity="0.4"
+      :linesDistance="150"
+      :moveSpeed="3"
+      :hoverEffect="true"
+      hoverMode="grab"
+      :clickEffect="true"
+      clickMode="push"
+      class="particles"
+    >
+    </vue-particles>
   </div>
 </template>
 <script>
@@ -50,11 +87,7 @@ export default {
       return this.$store.state.auth.status.loggedIn;
     },
   },
-  created() {
-    if (this.loggedIn) {
-      //this.$router.push('/profile');
-    }
-  },
+  created() {},
   methods: {
     handleLogin() {
       this.loading = true;
@@ -62,7 +95,7 @@ export default {
       if (this.user.username && this.user.password) {
         this.$store.dispatch("auth/login", this.user).then(
           () => {
-            this.$router.push('/dashboard');
+            this.$router.push("/dashboard");
             Swal.fire({
               icon: "success",
               title: "Login berhasil",
@@ -86,14 +119,31 @@ export default {
 </script>
 <style scoped>
 .login-page {
-  background-color: #45046a;
+  background-image: linear-gradient(
+      to right top,
+      rgb(13, 33, 60),
+      rgb(52, 3, 62, 0.8)
+    ),
+    url("");
   min-height: 100%;
+  background-size: cover;
+  max-height: 100%;
+  overflow-y: hidden;
 }
 
 .login-page .logo {
+  margin-left: -40px;
+}
+
+.login-page .logo img {
   height: 100px;
   width: 170px;
-  margin-top: 40px;
+  margin-top: -20px;
+}
+
+.login-page .logo h1 {
+  display: block;
+  margin-top: 60px;
 }
 
 .login-page .close {
@@ -114,6 +164,7 @@ export default {
   background: #fff;
   box-sizing: border-box;
   padding: 40px 20px;
+  position: absolute;
 }
 
 .login-container img {

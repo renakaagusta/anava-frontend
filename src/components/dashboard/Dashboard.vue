@@ -1,9 +1,9 @@
 <template>
   <div style="background-color:#eee;min-height:100%; min-width:100%;">
-    <Header/>
-    <Sidebar/> 
+    <Header />
+    <Sidebar />
     <div class="content">
-      <router-view/>
+      <router-view />
     </div>
   </div>
 </template>
@@ -16,7 +16,7 @@ export default {
   name: "Home",
   components: {
     Header,
-    Sidebar
+    Sidebar,
   },
 };
 </script>
@@ -24,11 +24,9 @@ export default {
 <style scoped>
 .content {
   margin-top: 66px;
-  margin-left:250px;
-  max-width:calc(100%-250px);
-  padding-top:20px;
-  padding-left:40px;
-  padding-right: 10px;
-  position:relative;
+  margin-left: 250px;
+  max-width: calc(100%-250px);
+  padding-top: 20px;
+  position: relative;
 }
 </style>

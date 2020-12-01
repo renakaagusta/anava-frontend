@@ -25,12 +25,12 @@
           </a>
         </li>
         <li>
-          <a @click="$store.dispatch('ui/changeWelcomeComponent', 'register')">
+          <a class="register" @click="$store.dispatch('ui/changeWelcomeComponent', 'register')">
             Register
           </a>
         </li>
         <li>
-          <a @click="$store.dispatch('ui/changeWelcomeComponent', 'login')">
+          <a class="login" @click="$store.dispatch('ui/changeWelcomeComponent', 'login')">
             Login
           </a>
         </li>
@@ -96,7 +96,7 @@ nav ul {
 }
 
 nav.black ul {
-  background:#746CC0;
+  background:rgb(13, 33, 60);
 }
 
 nav ul li {
@@ -126,6 +126,10 @@ nav ul li a:hover {
   cursor: pointer;
   color: #fff;
   display: none;
+}
+
+.register , .login{
+  cursor: pointer;
 }
 
 @media (max-width: 786px) {

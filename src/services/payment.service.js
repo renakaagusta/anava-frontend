@@ -10,6 +10,9 @@ class PaymentService {
   getPayment(id) {
     return axios.get(API_URL + id, header());
   }
+  createPayment(payment) {
+    return axios.post(API_URL, payment, header());
+  }
 }
 
 export default new PaymentService();

@@ -1,9 +1,7 @@
 import AuthService from '../services/auth.service';
 
 const user = JSON.parse(localStorage.getItem('user'));
-const initialState = user
-  ? { status: { loggedIn: true }, user }
-  : { status: { loggedIn: false }, user: null };
+const initialState = user ? { status: { loggedIn: true }, user, email: {} } : { status: { loggedIn: false }, user: null, email: {} };
 
 export const auth = {
   namespaced: true,
@@ -37,6 +35,54 @@ export const auth = {
         }
       );
     },
+    confirmEmail({ commit }, id) {
+      return AuthService.confirmEmail(id).then(
+        response => {
+          commit('confirmEmailSuccess');
+          return Promise.resolve(response.data);
+        },
+        error => {
+          commit('confirmEmailFailure');
+          return Promise.reject(error);
+        }
+      );
+    },
+    findByEmail({ commit }, email) {
+      return AuthService.findByEmail(email).then(
+        response => {
+          commit('findByEmailSuccess');
+          return Promise.resolve(response.data);
+        },
+        error => {
+          commit('findByEmailFailure');
+          return Promise.reject(error);
+        }
+      );
+    },
+    requestChangePassword({ commit }, email) {
+      return AuthService.requestChangePassword(email).then(
+        response => {
+          commit('requestChangePasswordSuccess');
+          return Promise.resolve(response.data);
+        },
+        error => {
+          commit('requestChangePasswordFailure');
+          return Promise.reject(error);
+        }
+      );
+    },
+    changePassword({ commit }, user) {
+      return AuthService.changePassword(user).then(
+        response => {
+          commit('changePasswordSuccess');
+          return Promise.resolve(response.data);
+        },
+        error => {
+          commit('changePasswordFailure');
+          return Promise.reject(error);
+        }
+      );
+    },
   },
   mutations: {
     loginSuccess(state, user) {
@@ -56,6 +102,30 @@ export const auth = {
     },
     registerFailure(state) {
       state.status.loggedIn = false;
-    }
+    },
+    confirmEmailSuccess() {
+      
+    },
+    confirmEmailFailure() {
+      
+    },
+    findByEmailSuccess(state) {
+      state.email.status = 2;
+    },
+    findByEmailFailure(state) {
+      state.email.status = 1;
+    },
+    requestChangePasswordSuccess() {
+      
+    },
+    requestChangePasswordFailure() {
+      
+    },
+    changePasswordSuccess() {
+      
+    },
+    changePasswordFailure() {
+      
+    },
   }
 };

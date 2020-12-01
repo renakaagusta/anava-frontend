@@ -9,7 +9,7 @@ import AdminMainPayment from './../../../components/dashboard/admin/payment/Main
 import ParticipantMainPayment from './../../../components/dashboard/participant/payment/MainPayment.vue'
 
 export default {
-    name: 'MainPayment',
+    name : 'MainPayment',
     components: {
         AdminMainPayment,
         ParticipantMainPayment

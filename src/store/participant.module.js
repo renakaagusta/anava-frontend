@@ -1,4 +1,4 @@
-import ParticipantService from "../services/participant.service";
+import ParticipantService from "./../services/participant.service";
 
 export const participant = {
   namespaced: true,
@@ -23,6 +23,17 @@ export const participant = {
     },
     getParticipant({ commit }, id) {
       return ParticipantService.getParticipant(id).then(
+        (response) => {
+          commit("setParticipant", response.data.data);
+          return Promise.resolve(response.data.data);
+        },
+        (error) => {
+          return Promise.reject(error);
+        }
+      );
+    },
+    updateParticipant({ commit }, participant) {
+      return ParticipantService.updateParticipant(participant).then(
         (response) => {
           commit("setParticipant", response.data.data);
           return Promise.resolve(response.data.data);

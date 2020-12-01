@@ -50,26 +50,6 @@ html {
   min-height: 100% !important;
   height: 100%;
 }
-
-.home-voting {
-  /*background-color: rgba(0, 0, 0, 0.8);*/
-  background-color: #746cc0;
-  background-image: linear-gradient(to bottom, #746cc0 0%, #58427c 80%);
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
-#video-bg {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
-  z-index: -2;
-}
 .container-router {
   height:100%;  
   width:100%;

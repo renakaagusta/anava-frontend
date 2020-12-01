@@ -7,13 +7,12 @@
           <div class="footer-left">
             <div class="footer-logo">
               <img
-                class="rounded-circle"
                 src="@/assets/logo-white.png"
-                alt=""
+                style="height:80px; width:180px;"
               />
             </div>
             <ul>
-              <li>HIMATIPA UGM</li>
+              <li>ANAVA</li>
             </ul>
           </div>
         </div>

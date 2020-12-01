@@ -4,40 +4,52 @@ import Home from "../views/Home.vue";
 import Welcome from "../views/Welcome.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
-import Dashboard from "../views/dashboard/Dashboard.vue";
+import ForgotPassword from "../views/ForgotPassword.vue";
+import ChangePassword from "../views/ChangePassword.vue";
+import ConfirmationEmail from "../views/ConfirmationEmail.vue";
 
-//Participant
+import OSM from "../views/articles/OSM.vue";
+import Poster from "../views/articles/Poster.vue";
+import Rank1 from "../views/articles/Rank1.vue";
+
+import IndexArticle from "../views/dashboard/article/IndexArticle.vue";
+
+import IndexTwibbon from "../views/dashboard/twibbon/IndexTwibbon.vue";
+
+import Dashboard from "../views/dashboard/Dashboard.vue";
 import DashboardMain from "../views/dashboard/main/DashboardMain.vue";
+
 import IndexPayment from "../views/dashboard/payment/IndexPayment.vue";
 import MainPayment from "../views/dashboard/payment/MainPayment.vue";
 import CreatePayment from "../views/dashboard/payment/CreatePayment.vue";
+
+import IndexAnnouncement from "../views/dashboard/announcement/IndexAnnouncement.vue";
+import MainAnnouncement from "../views/dashboard/announcement/MainAnnouncement.vue";
+import CreateAnnouncement from "../views/dashboard/announcement/CreateAnnouncement.vue";
+
 import IndexDocument from "../views/dashboard/document/IndexDocument.vue";
 import MainDocument from "../views/dashboard/document/MainDocument.vue";
 import CreateDocument from "../views/dashboard/document/CreateDocument.vue";
+
 import IndexSchedule from "../views/dashboard/schedule/IndexSchedule.vue";
 import MainSchedule from "../views/dashboard/schedule/MainSchedule.vue";
 import CreateSchedule from "../views/dashboard/schedule/CreateSchedule.vue";
+
 import IndexParticipant from "../views/dashboard/participant/IndexParticipant.vue";
 import MainParticipant from "../views/dashboard/participant/MainParticipant.vue";
 import DetailParticipant from "../views/dashboard/participant/DetailParticipant.vue";
 
-//kompetisi OSM
-import PenyisihanOSM from '../views/dashboard/stage/osm/PenyisihanOSM.vue'
-import SemifinalOSMSesi1 from '../views/dashboard/stage/osm/SemifinalOSMSesi1.vue'
-import SemifinalOSMSesi2 from '../views/dashboard/stage/osm/SemifinalOSMSesi2.vue'
-import FinalOSMSesi1 from '../views/dashboard/stage/osm/FinalOSMSesi1.vue'
-import FinalOSMSesi2 from '../views/dashboard/stage/osm/FinalOSMSesi2.vue'
-import UploadAnswerFile from '../views/dashboard/stage/osm/UploadAnswerFile.vue'
+import IndexEvent from "../views/dashboard/event/IndexEvent.vue";
+import SettingEvent from "../views/dashboard/event/SettingEvent.vue";
 
-//Kompetisi Poster
-import PekanKreativitasPoster from '../views/dashboard/stage/poster/PekanKreativitasPoster.vue'
-import PekanFinalPoster from '../views/dashboard/stage/poster/PekanFinalPoster.vue'
-
-//kompertisi Rangking1
-import BabakGugurRangking1 from '../views/dashboard/stage/rangking1/BabakGugurRangking1.vue'
-import IndexBabakChampionRangking1 from '../views/dashboard/stage/rangking1/IndexBabakChampionRangking1.vue'
-import MainBabakChampionRangking1 from '../views/dashboard/stage/rangking1/MainBabakChampionRangking1.vue'
-import PaketBabakChampionRangking1 from '../views/dashboard/stage/rangking1/PaketBabakChampionRangking1.vue'
+import IndexStage from "../views/dashboard/stage/IndexStage.vue";
+import MainStage from "../views/dashboard/stage/MainStage.vue";
+import SettingStage from "../views/dashboard/stage/SettingStage.vue";
+import ListParticipantStage from "../views/dashboard/stage/participant/ListParticipantStage.vue";
+import AddParticipantStage from "../views/dashboard/stage/participant/AddParticipantStage.vue";
+import MainQuestionStage from "../views/dashboard/stage/question/MainQuestionStage.vue";
+import CreateQuestionStage from "../views/dashboard/stage/question/CreateQuestionStage.vue";
+import EditQuestionStage from "../views/dashboard/stage/question/EditQuestionStage.vue";
 
 Vue.use(VueRouter);
 
@@ -63,6 +75,36 @@ const routes = [
         component: Register,
       },
       {
+        path: "forgot-password",
+        name: "ForgotPassword",
+        component: ForgotPassword,
+      },
+      {
+        path: "change-password/:id",
+        name: "ChangePassword",
+        component: ChangePassword,
+      },
+      {
+        path: "confirm-email/:id",
+        name: "ConfirmationEmail",
+        component: ConfirmationEmail,
+      },
+      {
+        path: "osm",
+        name: "OSM",
+        component: OSM,
+      },
+      {
+        path: "poster",
+        name: "Poster",
+        component: Poster,
+      },
+      {
+        path: "rank1",
+        name: "Rank1",
+        component: Rank1,
+      },
+      {
         path: "dashboard",
         name: "Dashboard",
         component: Dashboard,
@@ -80,7 +122,7 @@ const routes = [
               {
                 path: "",
                 name: "MainParticipant",
-                component: MainParticipant
+                component: MainParticipant,
               },
               {
                 path: ":id",
@@ -88,6 +130,16 @@ const routes = [
                 component: DetailParticipant,
               },
             ],
+          },
+          {
+            path: "article",
+            name: "IndexArticle",
+            component: IndexArticle,
+          },
+          {
+            path: "twibbon",
+            name: "IndexTwibbon",
+            component: IndexTwibbon,
           },
           {
             path: "payment",
@@ -103,6 +155,23 @@ const routes = [
                 path: "add",
                 name: "CreatePayment",
                 component: CreatePayment,
+              },
+            ],
+          },
+          {
+            path: "announcement",
+            name: "IndexAnnouncement",
+            component: IndexAnnouncement,
+            children: [
+              {
+                path: "",
+                name: "MainAnnouncement",
+                component: MainAnnouncement,
+              },
+              {
+                path: "add",
+                name: "CreateAnnouncement",
+                component: CreateAnnouncement,
               },
             ],
           },
@@ -141,66 +210,63 @@ const routes = [
             ],
           },
           {
-            path: 'penyisihan-osm',
-            name: 'PenyisihanOSM',
-            component: PenyisihanOSM,
-          },
-          {
-            path: 'semifinal-osm-sesi1',
-            name: 'SemifinalOSMSesi1',
-            component: SemifinalOSMSesi1,
-          },
-          {
-            path: 'semifinal-osm-sesi2',
-            name: 'SemifinalOSMSesi2',
-            component: SemifinalOSMSesi2,
-          },
-          {
-            path: 'final-osm-sesi1',
-            name: 'FinalOSMSesi1',
-            component: FinalOSMSesi1,
-          },
-          {
-            path: 'final-osm-sesi2',
-            name: 'FinalOSMSesi2',
-            component: FinalOSMSesi2,
-          },
-          {
-            path: 'upload-answer-file',
-            name: 'UploadAnswerFile',
-            component: UploadAnswerFile,
-          },
-          {
-            path: 'pekan-kreativitas-poster',
-            name: 'PekanKreativitasPoster',
-            component: PekanKreativitasPoster,
-          },
-          {
-            path: 'pekan-final-poster',
-            name: 'PekanFinalPoster',
-            component: PekanFinalPoster,
-          },
-          {
-            path: 'babak-gugur-rangking1',
-            name: 'BabakGugurRangking1',
-            component: BabakGugurRangking1,
-          },
-          {
-            path: 'babak-champion-rangking1',
-            name: 'IndexBabakChampionRangking1',
-            component: IndexBabakChampionRangking1,
+            path: "event",
+            name: "IndexEvent",
+            component: IndexEvent,
             children: [
               {
-                path: '',
-                name: 'MainBabakChampionRangking1',
-                component: MainBabakChampionRangking1,
+                path: ":idEvent",
+                children: [
+                  {
+                    path: "",
+                    name: "SettingEvent",
+                    component: SettingEvent,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            path: "stage/:idStage",
+            name: "IndexStage",
+            component: IndexStage,
+            children: [
+              {
+                path: "",
+                name: "MainStage",
+                component: MainStage,
               },
               {
-                path: 'paket/:id',
-                name: 'PaketBabakChampionRangking1',
-                component: PaketBabakChampionRangking1,
-              }
-            ]
+                path: "setting",
+                name: "SettingStage",
+                component: SettingStage,
+              },
+              {
+                path: "participant",
+                name: "ListParticipantStage",
+                component: ListParticipantStage,
+              },
+              {
+                path: "participant/add",
+                name: "AddParticipantStage",
+                component: AddParticipantStage,
+              },
+              {
+                path: "question",
+                name: "MainQuestionStage",
+                component: MainQuestionStage,
+              },
+              {
+                path: "question/:idQuestion",
+                name: "EditQuestionStage",
+                component: EditQuestionStage,
+              },
+              {
+                path: "question/add",
+                name: "CreateQuestionStage",
+                component: CreateQuestionStage,
+              },
+            ],
           },
         ],
       },
@@ -209,9 +275,9 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  routes,
   mode: "history",
   base: process.env.BASE_URL,
+  routes,
 });
 
 router.beforeEach((to, from, next) => {

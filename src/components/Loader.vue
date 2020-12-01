@@ -2,12 +2,14 @@
     <div id="preloder">
         <div class="preloader-content">
             <b-row>
-                <b-col lg="6">
+                <b-col sm="4">
                     <img class="logo" src="@/assets/logo-white.png"/>
                 </b-col>
-                <b-col lg="6">      
+                <b-col sm="8">
+                    <b-container class="text-center">     
                     <h4 class="title text-white">ANAVA 2020</h4>
                     <div class="loader"></div>
+                    </b-container>
                 </b-col>
             </b-row>
         </div>
@@ -22,8 +24,8 @@ export default {
 
 <style scoped>
 .logo {
-    height: 130px;
-    width: 80px;
+    height: 80px;
+    width: 110px;
 }
 
 .title {
@@ -42,16 +44,16 @@ export default {
 }
 
 .preloader-content {
-    width: 440px;
+    width: 350px;
     position: absolute;
-    top: calc(50% - 100px);
-    left: calc(50% - 230px);
+    top: calc(50% - 50px);
+    left: calc(50% - 175px);
 }
 
 .loader {
-    width: 40px;
-    height: 40px;
-    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    margin-top: 15px;
     margin-left: 5px;
     border-radius: 60px;
     animation: loader 0.8s linear infinite;

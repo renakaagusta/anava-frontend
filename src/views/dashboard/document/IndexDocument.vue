@@ -1,6 +1,19 @@
 <template>
-    <div>
-        <h3 class="text-left ml-4">Dokumen</h3><hr/>
+    <b-container>
+        <div class="bg-light text-dark mb-3 rounded shadow-sm header">
+            <h3 class="text-left d-inline float-left">
+                <i class="far fa-copy"></i>
+                Administrasi
+            </h3>
+        </div>
+        <hr/>
         <router-view/>
-    </div>
+    </b-container>
 </template>
+<style scoped> 
+.header{
+    min-height: 90px;
+    min-width: 100%;
+    padding: 30px; 
+}
+</style>

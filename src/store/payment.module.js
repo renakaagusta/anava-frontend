@@ -32,6 +32,17 @@ export const payment = {
         }
       );
     },
+    createPayment({ commit },payment) {
+      return PaymentService.createPayment(payment).then(
+        (response) => {
+          commit("createPayment", response.data.data);
+          return Promise.resolve(response.data.data);
+        },
+        (error) => {
+          return Promise.reject(error);
+        }
+      );
+    },
   },
   mutations: {
     setPayments(state, payments) {
@@ -40,5 +51,8 @@ export const payment = {
     setPayment(state, payment) {
       state.payment = payment;
     },
+    createPayment() {
+
+    }
   },
 };
