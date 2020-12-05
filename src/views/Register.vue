@@ -4,7 +4,7 @@
       <img src="@/assets/logo-white.png" />
       <h1 class="text-white d-inline-block">ANAVA</h1>
     </div>
-    <a @click="moveToWelcome()">
+    <a v-if="!getUrl()" @click="moveToWelcome()">
       <img class="close" src="@/assets/close.png" />
     </a>
     <div class="register-container shadow">
@@ -16,6 +16,7 @@
           name="username"
           placeholder="Ketik disini..."
           v-model="user.username"
+          :class="[$v.user.username.$error ? 'red-border' : 'black-border']"
         />
       </div>
       <div>
@@ -25,6 +26,7 @@
           name="email"
           placeholder="Ketik disini..."
           v-model="user.email"
+          :class="[$v.user.email.$error ? 'red-border' : 'black-border']"
         />
       </div>
       <div>
@@ -34,6 +36,7 @@
           name="password"
           placeholder="Ketik disini..."
           v-model="user.password"
+          :class="[$v.user.password.$error ? 'red-border' : 'black-border']"
         />
       </div>
       <div>
@@ -43,44 +46,10 @@
           name="passwordConfirmation"
           placeholder="Ketik disini..."
           v-model="user.passwordConfirmation"
+          :class="[
+            $v.user.passwordConfirmation.$error ? 'red-border' : 'black-border',
+          ]"
         />
-      </div>
-      <div class="form-label-group p-1">
-        <label>Provinsi</label>
-        <select
-          class="custom-select"
-          v-model="user.province"
-          @change="getCities(user.province)"
-        >
-          <option value="" disabled selected>Provinsi</option>
-          <option v-for="province in provinces" :key="province.name">{{
-            province.name
-          }}</option>
-        </select>
-      </div>
-
-      <div class="form-label-group p-1">
-        <label>Kabupaten</label>
-        <select
-          class="custom-select"
-          v-model="user.city"
-          @change="getSubdistricts(user.city)"
-        >
-          <option value="" disabled selected>Kota / Kabupaten</option>
-          <option v-for="city in cities" :key="city.name">{{
-            city.name
-          }}</option>
-        </select>
-      </div>
-
-      <div class="form-label-group p-1">
-        <label>Kecamatan</label>
-        <select class="custom-select" v-model="user.subdistrict">
-          <option value="" disabled selected>Kecamatan</option>
-          <option v-for="subdistrict in subdistricts" :key="subdistrict.name">{{
-            subdistrict.name
-          }}</option>
-        </select>
       </div>
 
       <input
@@ -116,23 +85,59 @@
   </div>
 </template>
 <script>
-import User from "../models/user";
 import Swal from "sweetalert2";
+import {
+  required,
+  minLength,
+  maxLength,
+  email,
+  sameAs,
+  alphaNum,
+} from "vuelidate/lib/validators";
 
 export default {
   name: "Register",
   data() {
     return {
-      user: new User("", ""),
+      user: {},
       loading: false,
       message: "",
       provinces: [],
       cities: [],
       subdistricts: [],
+      url: window.location.href,
     };
   },
-  created() {
-    this.getProvinces();
+  watcher: {
+    user: function() {
+      this.$v.$touch();
+      if (this.$v.$error) {
+        console.log(this.$v);
+        return;
+      }
+    },
+  },
+  validations: {
+    user: {
+      username: {
+        required,
+        alphaNum,
+        minLength: minLength(8),
+      },
+      email: {
+        required,
+        email,
+        maxLength: maxLength(50),
+      },
+      password: {
+        required,
+        alphaNum,
+        minLength: minLength(8),
+      },
+      passwordConfirmation: {
+        sameAsPassword: sameAs("password"),
+      },
+    },
   },
   methods: {
     getProvinces() {
@@ -158,11 +163,15 @@ export default {
       this.$store.dispatch("ui/changeWelcomeComponent", "login");
     },
     handleRegister() {
+      this.$v.$touch();
+      if (this.$v.$error) {
+        return;
+      }
+
       this.loading = true;
 
       this.$store.dispatch("auth/register", this.user).then(
-        (data) => {
-          console.log(JSON.stringify(data));
+        () => {
           Swal.fire({
             title: "Berhasil melakukan pendaftaran",
             icon: "success",
@@ -171,18 +180,23 @@ export default {
             this.moveToWelcome();
           });
         },
-        (error) => {
-          console.log(error);
-          this.loading = false;
-          this.message =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
+        (err) => {
+          Swal.fire({
+            title: "Gagal melakukan pendaftaran",
+            text: err.response.data.message,
+            icon: "error",
+            showConfirmButton: true,
+          }).then(() => {});
         }
       );
     },
+    getUrl() {
+      return this.url.includes("register");
+    },
+  },
+  created() {
+    this.getProvinces();
+    window.scrollTo(0, 0);
   },
 };
 </script>
@@ -194,7 +208,7 @@ export default {
       rgb(52, 3, 62, 0.8)
     ),
     url("");
-  padding-bottom: 300px;
+  margin-bottom: 20px;
   min-height: 100%;
 }
 
@@ -223,9 +237,9 @@ export default {
 }
 
 .register-container {
-  width: 500px;
+  width: 450px;
   margin-top: 40px;
-  margin-left: calc(50% - 250px);
+  margin-left: calc(50% - 225px);
   margin-bottom: 20px;
   background: #fff;
   box-sizing: border-box;
@@ -260,12 +274,24 @@ export default {
 .register-container input[type="text"],
 input[type="password"] {
   width: 100%;
-  border: none;
   outline: none;
-  border-bottom: 1px solid #000;
   background: transparent;
   color: #000;
   height: 40px;
+}
+
+a {
+  cursor: pointer;
+}
+
+.black-border {
+  border: none;
+  border-bottom: 1px solid black;
+}
+
+.red-border {
+  border: none;
+  border-bottom: 1px solid #df4759;
 }
 
 .register-container input[type="submit"] {
@@ -294,5 +320,9 @@ p {
   font-size: 12px;
   margin: 0;
   padding: 0;
+}
+
+.is-invalid {
+  border-color: red;
 }
 </style>

@@ -1,35 +1,145 @@
 <template>
   <div id="working-page">
     <b-container class="bg-white p-3 rounded shadow-sm mb-4" v-if="step == 0">
-      <vue-tabs>
-        <v-tab title="Jadwal">
-          <b-table stacked :items="itemsTab1"></b-table>
-        </v-tab>
-        <v-tab title="Data Peserta">
-          <b-table stacked :items="itemsTab2"></b-table>
-        </v-tab>
-        <v-tab title="Teknis & Tata tertib">
-          <b-container class="text-left p-3 border mt-2">
-            Selama melakukan pengerjaan penyisihan OSM, peserta diwajibkan
-            menaati peraturan berikut:<br/>
-            <br />1. ..... <br />2. ..... <br />3. .....
-          </b-container>
-        </v-tab>
-        <v-tab title="Tutorial">
-          <b-container class="text-left p-3 border mt-2">
-            <iframe
-              width="600"
-              height="320"
-              src="https://www.youtube.com/embed/r0t4gHKE-0g"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
-          </b-container>
-        </v-tab>
-      </vue-tabs>
+      <b-container class="border">
+        <vue-tabs>
+          <v-tab title="Jadwal">
+            <table class="table table-border">
+              <tr class="border">
+                <td><b>Sesi</b></td>
+                <td>{{ stageInformationOfParticipant.session }}</td>
+              </tr>
+              <tr class="border">
+                <td><b>Mulai pengerjaan</b></td>
+                <td>-</td>
+              </tr>
+              <tr class="border">
+                <td><b>Selesai pengerjaan</b></td>
+                <td>-</td>
+              </tr>
+            </table>
+          </v-tab>
+          <v-tab title="Data Peserta">
+            <table class="table table-border">
+              <tr class="border">
+                <td><b>Status Pembayaran</b></td>
+                <td v-if="stageInformationOfParticipant.number == null">-</td>
+                <td v-if="stageInformationOfParticipant.number != null">
+                  <i class="fas fa-check text-success"></i>
+                </td>
+              </tr>
+              <tr class="border">
+                <td><b>Nomor Peserta</b></td>
+                <td v-if="stageInformationOfParticipant.number == null">-</td>
+                <td v-if="stageInformationOfParticipant.number != null">
+                  {{ stageInformationOfParticipant.number }}
+                </td>
+              </tr>
+              <tr class="border">
+                <td><b>Terdaftar pada</b></td>
+                <td v-if="stageInformationOfParticipant.pay_at == null">-</td>
+                <td v-if="stageInformationOfParticipant.pay_at != null">
+                  {{
+                    getDateTime(
+                      "datetime",
+                      stageInformationOfParticipant.pay_at
+                    )
+                  }}
+                </td>
+              </tr>
+            </table>
+          </v-tab>
+          <v-tab title="Pakta Integritas"
+            ><div id="dropFileForm">
+              <input
+                type="file"
+                id="fileInput"
+                ref="osis_card"
+                @change="addFile('osis_card')"
+              />
 
-      <input type="submit" value="Mulai" class="btn btn-purple mt-3" @click="nextStep()" />
+              <label for="fileInput" id="fileLabel">
+                <i class="fa fa-upload fa-5x"></i>
+                <br />
+                <span id="fileLabelText">
+                  Unggah pakta integritas
+                </span>
+                <br />
+                <span id="uploadStatus"></span>
+              </label>
+
+              <input
+                type="submit"
+                value="Upload"
+                class="btn btn-purple"
+                @click="uploadFile('osis_card')"
+                disabled="true"
+              />
+            </div>
+          </v-tab>
+          <v-tab title="Pengumuman">
+            <div
+              class="container bg-white p-3 text-center text-dark rounded-lg mt-2 mb-2"
+            >
+              <p>
+                <i class="fas fa-exclamation-triangle fa-2x"></i>
+                <br />
+                Belum ada pengumuman
+              </p>
+            </div>
+          </v-tab>
+          <v-tab title="Dokumen">
+            <b-container class="text-left p-3 border mt-2">
+              <b-container class="bg-white p-3 rounded shadow-sm border">
+                <a
+                  target="blank"
+                  href="http://193.168.195.181.com/OSM/guidebook.pdf"
+                >
+                  <i class="fa fa-download fa-3x text-dark"></i>
+                  <h2 class="d-inline ml-4">Guidebook</h2>
+                </a>
+              </b-container>
+              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
+                <a  
+                  target="blank"
+                  href="http://193.168.195.181.com/OSM/silabus.pdf"
+                >
+                  <i class="fa fa-download fa-3x text-dark"></i>
+                  <h2 class="d-inline ml-4">Silabus</h2>
+                </a>
+              </b-container>
+              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
+                <a
+                  target="blank"
+                  href="http://193.168.195.181.com/OSM/pakta-integritas.pdf"
+                >
+                  <i class="fa fa-download fa-3x text-dark"></i>
+                  <h2 class="d-inline ml-4">Pakta Integritas</h2>
+                </a>
+              </b-container>
+            </b-container>
+          </v-tab>
+          <v-tab title="Tutorial">
+            <div
+              class="container bg-white p-3 text-center text-dark rounded-lg mt-2 mb-2"
+            >
+              <p>
+                <i class="fas fa-exclamation-triangle fa-2x"></i>
+                <br />
+                Tutorial belum diunggah
+              </p>
+            </div>
+          </v-tab>
+        </vue-tabs>
+      </b-container>
+
+      <input
+      type="submit"
+        value="Mulai"
+        class="btn btn-purple mt-3"
+        @click="nextStep()"
+        disabled
+      />
     </b-container>
     <b-row v-if="step == 1">
       <!-- soal -->
@@ -151,15 +261,13 @@ import * as datetime from "./../../../../../services/datetime";
 
 export default {
   name: "PenyisihanOSM",
-
   data() {
     return {
       step: 0,
       data: [],
       answerForm: {},
-      itemsTab1: [
-        { "Mulai pengerjaan": 0, "Selesai pengerjaan": 0, Pengumuman: 0 },
-      ],
+      stageInformationOfParticipant: {},
+      itemsTab1: [],
       itemsTab2: [{ "Nomor pendaftaran": 0, "Terdaftar pada": 0 }],
     };
   },
@@ -168,12 +276,11 @@ export default {
       return this.$store.state.question.questions;
     },
     stage() {
-      console.log(this.$store.state.stage.stage);
       return this.$store.state.stage.stage;
     },
     participant() {
       return JSON.parse(localStorage.getItem("user"));
-    }
+    },
   },
   methods: {
     nextStep() {
@@ -185,10 +292,6 @@ export default {
       answerForm.append("participantId", this.answerForm.participantId);
       answerForm.append("stageId", this.answerForm.stageId);
       answerForm.append("file", this.$refs.file.files[0]);
-      console.log(this.$refs.file.files[0]);
-
-      console.log(this.answerForm);
-      console.log(JSON.stringify(answerForm));
 
       this.$store.dispatch("answerForm/createAnswerForm", answerForm);
     },
@@ -204,13 +307,26 @@ export default {
     getDateTime: function(type, date) {
       return datetime.getDateTime(type, date);
     },
+    getStage() {
+      this.$store.dispatch("stage/getStage", this.$route.params.idStage);
+    },
+    getStageInformationOfParticipant() {
+      this.participant.participant.events.forEach((event) => {
+        event.stages.forEach((stage) => {
+          if (stage.id == this.stage._id) {
+            this.stageInformationOfParticipant = stage;
+          }
+        });
+      });
+    },
     JumlahSoal() {
       for (let i = 0; i < 60; i++) {
         this.data[i] = i + 1;
       }
     },
-  },
+  },  
   created() {
+    this.getStage();
     this.answerForm.stageId = this.$route.params.idStage;
     this.answerForm.participantId = this.participant.id;
     this.items = [
@@ -223,6 +339,7 @@ export default {
         "Pengumuman lolos": this.getDateTime("datetime", this.stage.started_at),
       },
     ];
+    this.getStageInformationOfParticipant();
   },
 };
 </script>
@@ -263,6 +380,81 @@ export default {
   border: 0;
   outline: 0;
   width: 30%;
+  padding: 8px;
+  background-color: #58427c;
+  color: #fff;
+  cursor: pointer;
+}
+#dropFileForm {
+  margin: 16px;
+  text-align: center;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: 0.5s;
+}
+
+#dropFileForm #fileLabel {
+  background-color: rgba(200, 200, 200, 0.5);
+  display: block;
+  padding: 16px;
+  position: relative;
+  cursor: pointer;
+
+  border: 2px dashed #555;
+}
+
+#dropFileForm #fileInput {
+  display: none;
+}
+
+#dropFileForm #fileLabel:after,
+#dropFileForm #fileLabel:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  z-index: -2;
+  border-radius: 8px 8px 0 0;
+}
+
+#dropFileForm #fileLabel:before {
+  z-index: -1;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 5%,
+    black 5%,
+    black 10%
+  );
+  opacity: 0;
+  transition: 0.5s;
+}
+
+#dropFileForm.fileHover #fileLabel:before {
+  opacity: 0.25;
+}
+
+#dropFileForm .uploadButton {
+  border: 0;
+  outline: 0;
+  width: 100%;
+  padding: 8px;
+  background-color: #58427c;
+  color: #fff;
+  cursor: pointer;
+}
+
+#dropFileForm.fileHover {
+  box-shadow: 0 0 16px limeGreen;
+}
+
+.btn-purple {
+  border: 0;
+  outline: 0;
+  width: 100%;
   padding: 8px;
   background-color: #58427c;
   color: #fff;

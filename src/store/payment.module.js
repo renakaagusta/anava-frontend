@@ -21,6 +21,17 @@ export const payment = {
         }
       );
     },
+    getAllPaymentByParticipant({ commit }, participantId) {
+      return PaymentService.getAllPaymentByParticipant(participantId).then(
+        (response) => {
+          commit("setPayments", response.data.data);
+          return Promise.resolve(response.data.data);
+        },
+        (error) => {
+          return Promise.reject(error);
+        }
+      );
+    },
     getPayment({ commit }, id) {
       return PaymentService.getPayment(id).then(
         (response) => {

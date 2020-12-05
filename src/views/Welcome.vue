@@ -6,6 +6,8 @@
     <OSM v-if="show == 'osm'" />
     <Rank1 v-if="show == 'rank1'" />
     <Poster v-if="show == 'poster'" />
+    <Sigma v-if="show == 'sigma'" />
+    <OpenHouse v-if="show == 'openhouse'" />
     <div v-if="show == 'welcome'">
       <NavBar />
       <div class="sub-page" id="home">
@@ -37,28 +39,29 @@
         >
           <b-container class="mt-5">
             <b-row>
-              <b-col lg="6">
+              <b-col lg="5" cols="11">
                 <div class="logo">
-                  <img src="@/assets/logo-big.png" />
+                  <img src="@/assets/logo-anava-white.png" />
                 </div>
               </b-col>
-              <b-col lg="6">
+              <b-col lg="5" offset="1" cols="10">
                 <div class="content">
                   <h1>About Us</h1>
                   <hr />
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur.
+                  Ajang Pengenalan Aktivitas Statistika (ANAVA) merupakan
+                  program tahunan Himpunan Mahasiswa Statistika UGM, dengan
+                  tujuan memperkenalkan ilmu statistika dan prospeknya di dunia
+                  kerja. Tahun ini, Anava akan hadir untuk ke lima belas
+                  kalinya. Meskipun terhalang kondisi pandemi, tapi kami tetap
+                  akan hadir tentunya dengan berbagai inovasi baru dari Anava
+                  yang lalu.
                 </div>
-                <button
+                <!-- <button
                   class="btn text"
                   @click="$store.dispatch('ui/changeWelcomeComponent', 'anava')"
                 >
                   Selengkapnya
-                </button>
+                </button> -->
               </b-col>
             </b-row>
           </b-container>
@@ -71,14 +74,11 @@
             <b-row>
               <b-col lg="4">
                 <b-container
-                  class="bg-white rounded p-3 shadow-sm mb-3"
+                  class="bg-white rounded p-3 shadow-sm mb-5"
                   style="width:100%; height:400px;"
                 >
                   <h1>OSM</h1>
-                  <img
-                    class="rounded-circle logo"
-                    src="@/assets/logo-big.png"
-                  /><br />
+                  <img class="logo" src="@/assets/osm.png" /><br />
                   <button
                     class="btn p-3 mt-3 w-100"
                     @click="$store.dispatch('ui/changeWelcomeComponent', 'osm')"
@@ -89,14 +89,28 @@
               </b-col>
               <b-col lg="4">
                 <b-container
-                  class="bg-white rounded p-3 shadow-sm mb-3"
+                  class="bg-white rounded p-3 shadow-sm mb-5"
                   style="width:100%; height:400px;"
                 >
-                  <h1>Poster</h1>
-                  <img
-                    class="rounded-circle logo"
-                    src="@/assets/logo-big.png"
-                  /><br />
+                  <h1>STARTED</h1>
+                  <img class="logo" src="@/assets/started.png" /><br />
+                  <button
+                    class="btn p-3 mt-3 w-100"
+                    @click="
+                      $store.dispatch('ui/changeWelcomeComponent', 'poster')
+                    "
+                  >
+                    Detail
+                  </button>
+                </b-container>
+              </b-col>
+              <b-col lg="4">
+                <b-container
+                  class="bg-white rounded p-3 shadow-sm mb-5"
+                  style="width:100%; height:400px;"
+                >
+                  <h1>THE ONE</h1>
+                  <img class="logo" src="@/assets/the-one.png" /><br />
                   <button
                     class="btn p-3 mt-3 w-100"
                     @click="
@@ -109,18 +123,33 @@
               </b-col>
               <b-col lg="4">
                 <b-container
-                  class="bg-white rounded p-3 shadow-sm mb-3"
+                  class="bg-white rounded p-3 shadow-sm mb-5"
                   style="width:100%; height:400px;"
                 >
-                  <h1>Rank 1</h1>
-                  <img
-                    class="rounded-circle logo"
-                    src="@/assets/logo-big.png"
-                  /><br />
+                  <h1>Sigma</h1>
+                  <img class="logo" src="@/assets/sigma.png" /><br />
                   <button
                     class="btn p-3 mt-3 w-100"
                     @click="
-                      $store.dispatch('ui/changeWelcomeComponent', 'poster')
+                      $store.dispatch('ui/changeWelcomeComponent', 'sigma')
+                    "
+                  >
+                    Detail
+                  </button>
+                </b-container>
+              </b-col>
+
+              <b-col lg="4">
+                <b-container
+                  class="bg-white rounded p-3 shadow-sm mb-5"
+                  style="width:100%; height:400px;"
+                >
+                  <h1>Open House</h1>
+                  <img class="logo" src="@/assets/open-house.png" /><br />
+                  <button
+                    class="btn p-3 mt-3 w-100"
+                    @click="
+                      $store.dispatch('ui/changeWelcomeComponent', 'openhouse')
                     "
                   >
                     Detail
@@ -137,7 +166,7 @@
           <div class="content mt-5">
             <carousel
               :perPage="1"
-              :navigationEnabled="true"
+              :navigationEnabled="false"
               :autoplay="true"
               :scrollPerPage="false"
             >
@@ -165,9 +194,9 @@
           </div>
         </div>
       </div>
-      <div class="sub-page" id="patner">
+      <div class="sub-page" id="partner">
         <div data-aos="fade-in" data-aos-duration="1000" data-aos-delay="200">
-          <h1>Patnership</h1>
+          <h1>Partnership</h1>
           <hr />
           <div class="content bg-white p-5 rounded shadow-sm">
             <h3>Sponsor :</h3>
@@ -185,7 +214,7 @@
                 <img src="@/assets/grab.png" />
               </b-col>
             </b-row>
-            <h3>Media Patner :</h3>
+            <h3 class="mt-4">Media Partner :</h3>
             <b-row>
               <b-col lg="3">
                 <img src="@/assets/grab.png" />
@@ -212,10 +241,12 @@ import NavBar from "@/components/NavBar.vue";
 import Footer from "@/components/Footer.vue";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
-import Anava from "@/views/articles/OSM.vue";
+// import Anava from "@/views/articles/OSM.vue";
 import OSM from "@/views/articles/OSM.vue";
-import Rank1 from "@/views/articles/OSM.vue";
-import Poster from "@/views/articles/OSM.vue";
+import Rank1 from "@/views/articles/Rank1.vue";
+import Poster from "@/views/articles/Poster.vue";
+import Sigma from "@/views/articles/Sigma.vue";
+import OpenHouse from "@/views/articles/OpenHouse.vue";
 import { Carousel, Slide } from "vue-carousel";
 
 export default {
@@ -225,10 +256,12 @@ export default {
     Footer,
     Login,
     Register,
-    Anava,
+    // Anava,
     OSM,
     Rank1,
     Poster,
+    Sigma,
+    OpenHouse,
     Carousel,
     Slide,
   },
@@ -238,7 +271,8 @@ export default {
     },
   },
   created() {
-    document.title = "PEMIRA HIMATIPA UGM 2020";
+    document.title = "ANAVA UGM 2020";
+    window.scrollTo(0, 0);
   },
 };
 </script>
@@ -284,7 +318,7 @@ export default {
     url("http://ayokuliahs2.com/wp-content/uploads/2018/01/maxresdefault-1.jpg");
   background-size: cover;
   padding-top: 110px;
-  padding-bottom: 130px;
+  padding-bottom: 150px;
 }
 
 #about hr {
@@ -301,7 +335,6 @@ export default {
   font-size: 17px;
   color: #fff;
   margin-top: 20px;
-  padding: 0px;
 }
 
 #about .btn {
@@ -320,6 +353,12 @@ export default {
   color: rgb(0, 0, 0);
 }
 
+#about img {
+  width: 300px;
+  height: 300px;
+  margin-left: calc(50% - 150px);
+}
+
 #event {
   padding: 100px 100px;
   background-image: linear-gradient(
@@ -336,12 +375,13 @@ export default {
 }
 
 #event .content .logo {
-  width: 230px;
+  width: 120px;
   height: 230px;
 }
 
-#event .btn {background-color: #537895;
-background-image: linear-gradient(315deg, #537895 0%, #09203f 74%);
+#event .btn {
+  background-color: #537895;
+  background-image: linear-gradient(315deg, #537895 0%, #09203f 74%);
   color: white;
 }
 
@@ -362,28 +402,28 @@ background-image: linear-gradient(315deg, #537895 0%, #09203f 74%);
   size: 300px;
 }
 
-#patner {
+#partner {
   background-color: rgb(220, 220, 220);
   color: rgb(70, 70, 50);
   padding: 40px 100px;
 }
 
-#patner hr {
+#partner hr {
   max-width: 300px;
   background-color: rgb(70, 70, 70);
 }
 
-#patner .content {
+#partner .content {
   padding: 20px;
   background-color: #fff;
   border-radius: 3px;
 }
 
-#patner .content img {
+#partner .content img {
   width: 230px;
 }
 
-#patner h3 {
+#partner h3 {
   text-align: left;
 }
 
@@ -399,8 +439,8 @@ b-button {
   font-weight: bold;
   overflow: hidden;
   display: inline-block;
-  min-width: 600px;
-  left: calc(50% - 300px);
+  min-width: 400px;
+  left: calc(50% - 200px);
   margin-bottom: 50px;
 }
 
@@ -474,6 +514,26 @@ b-button {
   }
   60% {
     transform: translateY(-15px);
+  }
+}
+
+@media (max-width: 767px) {
+  #documentation img {
+    height: 200px;
+    size: 200px;
+  }
+  #event {
+    padding: 100px 40px;
+  }
+  #partner {
+    padding: 40px 50px;
+  }
+  #partner .content img {
+    width: 180px;
+  }
+  #partner h3 {
+    text-align: center;
+    font-size: 1.5em;
   }
 }
 </style>

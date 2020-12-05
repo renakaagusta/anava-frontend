@@ -1,14 +1,13 @@
 import axios from 'axios';
 import header from './header';
 
-const API_URL = 'http://localhost:3000/api/answer-form/';
+const API_URL = 'http://193.168.195.181.com:3000/api/answer-form/';
 
 class AnswerFormService {
   getAllAnswerForm() {
     return axios.get(API_URL + 'all', header());
   }
   getAllAnswerFormByStage(idStage) {
-    alert(header)
     return axios.get(API_URL + 'stage/' + idStage, header(true));
   }
   getAnswerForm(id) {

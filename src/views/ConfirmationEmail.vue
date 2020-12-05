@@ -10,6 +10,7 @@
       <div class="mt-4">
         Email dari akun anda telah terkonfirmasi
       </div>
+      <router-link :to="{name:'DashboardMain'}">
       <input
         type="submit"
         name="login"
@@ -17,6 +18,7 @@
         value="Beranda"
         @click="handleLogin()"
       />
+      </router-link>
     </div>
     <vue-particles
       color="#dedede"
@@ -42,28 +44,28 @@
 <script>
 export default {
   name: "ConfirmEmail",
-  created() {
-    this.confirmEmail()
-  },
+  
   methods: {
     confirmEmail() {
       this.$store.dispatch("auth/confirmEmail", this.$route.params.id);
     },
+  },
+  created() {
+    this.confirmEmail()
+    console.log(this.$route.params.id)
   },
 };
 </script>
 <style scoped>
 .login-page {
   background-image: linear-gradient(
-      to bottom,
-      rgb(88, 66, 124, 0.9) 100%,
-      rgb(88, 66, 124, 0.9) 100%
+      to right top,
+      rgb(13, 33, 60),
+      rgb(52, 3, 62, 0.8)
     ),
-    url("../assets/background-login.jpg");
+    url("");
+  margin-bottom: 20px;
   min-height: 100%;
-  background-size: cover;
-  max-height: 100%;
-  overflow-y: hidden;
 }
 
 .login-page .logo {

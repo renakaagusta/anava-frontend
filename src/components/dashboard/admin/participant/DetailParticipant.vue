@@ -31,7 +31,8 @@
           <p class="text-left text-bold">Sekolah:</p>
         </b-col>
         <b-col lg="8">
-          <p class="text-left">{{ participant.participant.school }}</p>
+          <p v-if="participant.participant.school" class="text-left">{{ participant.participant.school }}</p>
+          <p v-else>-</p>
         </b-col>
       </b-row>
       <b-row>

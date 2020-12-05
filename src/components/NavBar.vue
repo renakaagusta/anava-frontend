@@ -1,14 +1,53 @@
 <template>
-  <nav v-bind:class="[scrollPosition > 50 ? ['black', 'shadow-sm'] : '']">
-    <div class="menu-icon">
-      <i class="fa fa-bars fa-2x"></i>
-    </div>
-    <div class="logo">
-      <img class="rounded-circle" src="@/assets/logo-white.png" alt="" />
-      ANAVA
-    </div>
-    <div class="menu">
-      <ul>
+  <div>
+    <nav v-bind:class="[scrollPosition > 50 ? ['black', 'shadow-sm'] : '']">
+      <div @click="toggle()" class="menu-icon">
+        <i class="fa fa-bars fa-2x"></i>
+      </div>
+      <div class="logo">
+        <img src="@/assets/logo-anava-white.png" alt="" />
+        ANAVA
+      </div>
+      <div class="menu">
+        <ul>
+          <li>
+            <a href="#home" v-smooth-scroll="{ duration: 1000 }">
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="#about" v-smooth-scroll="{ duration: 1000 }">
+              About us
+            </a>
+          </li>
+          <li>
+            <a href="#event" v-smooth-scroll="{ duration: 1000 }">
+              Event
+            </a>
+          </li>
+          <li>
+            <a
+              class="register"
+              @click="$store.dispatch('ui/changeWelcomeComponent', 'register')"
+              href="#"
+            >
+              Register
+            </a>
+          </li>
+          <li>
+            <a
+              class="login"
+              @click="$store.dispatch('ui/changeWelcomeComponent', 'login')"
+              href="#"
+            >
+              Login
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="menu-min" v-if="show" style="z-index: 9999999999">
+      <ul @click="toggle()">
         <li>
           <a href="#home" v-smooth-scroll="{ duration: 1000 }">
             Home
@@ -25,24 +64,31 @@
           </a>
         </li>
         <li>
-          <a @click="$store.dispatch('ui/changeWelcomeComponent', 'register')">
+          <a
+            class="register"
+            @click="$store.dispatch('ui/changeWelcomeComponent', 'register')"
+          >
             Register
           </a>
         </li>
         <li>
-          <a @click="$store.dispatch('ui/changeWelcomeComponent', 'login')">
+          <a
+            class="login"
+            @click="$store.dispatch('ui/changeWelcomeComponent', 'login')"
+          >
             Login
           </a>
         </li>
       </ul>
     </div>
-  </nav>
+  </div>
 </template>
 <script>
 export default {
   data() {
     return {
       scrollPosition: null,
+      show: false,
     };
   },
 
@@ -50,14 +96,16 @@ export default {
     updateScroll() {
       this.scrollPosition = window.scrollY;
     },
+    toggle() {
+      this.show = !this.show;
+    }
   },
 
   mounted() {
     window.addEventListener("scroll", this.updateScroll);
   },
 };
-</script>
-<style scoped>
+</script><style scoped>
 .logo {
   line-height: 60px;
   position: fixed;
@@ -65,12 +113,12 @@ export default {
   margin: 16px 46px;
   color: #fff;
   font-weight: bold;
-  font-size: 28px;
+  font-size: 20px;
   letter-spacing: 2px;
 }
 
 .logo img {
-  width: 75px;
+  width: 40px;
   height: 40px;
 }
 
@@ -79,20 +127,19 @@ nav {
   top: 0;
   width: 100%;
   line-height: 60px;
-  z-index: 99999999;
+  z-index: 99999;
 }
 
 nav ul {
   line-height: 60px;
   list-style: none;
-  background: rgba(0, 0, 0, 0);
+  background:rgb(13, 33, 60,0 );
   overflow: hidden;
   color: #fff;
   padding: 0;
   text-align: right;
   margin: 0;
-  padding-right: 40px;
-  transition: 0.5s;
+  transition: 1s;
 }
 
 nav.black ul {
@@ -116,10 +163,44 @@ nav ul li a:hover {
   font-size: 16px;
 }
 
-.menu-icon {
-  line-height: 60px;
+.menu-min {
+  color:white;
+  text-decoration: none;
+  background:rgb(13, 33, 60);
   width: 100%;
-  background: #000;
+  height: 100%;
+  position:fixed;
+  top: 80px;
+  display: none;
+  transition: 1s;
+}
+
+.menu-min ul {
+  line-height: 60px;
+  list-style: none;
+  background:rgb(13, 33, 60);
+  overflow: hidden;
+  color: #fff;
+  padding: 0;
+  text-align: center;
+  margin: 0;
+  padding-right: 40px;
+  transition: 1s;
+}
+
+.menu-min.black ul {
+  background:rgb(13, 33, 60);
+}
+
+.menu-min ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+}
+
+.menu-icon {
+  width: 100%;
+  background:rgb(13, 33, 60);
   text-align: right;
   box-sizing: border-box;
   padding: 15px 24px;
@@ -137,11 +218,11 @@ nav ul li a:hover {
 
   nav ul {
     max-height: 0px;
-    background: #000;
+  background:rgb(13, 33, 60);
   }
 
   nav.black ul {
-    background: #fff;
+  background:rgb(13, 33, 60);
   }
 
   .showing {
@@ -156,6 +237,10 @@ nav ul li a:hover {
   }
 
   .menu-icon {
+    display: block;
+  }
+
+  .menu-min {
     display: block;
   }
 }

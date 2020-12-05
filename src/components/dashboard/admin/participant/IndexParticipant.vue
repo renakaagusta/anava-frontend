@@ -10,6 +10,11 @@
         <router-view/>
     </b-container>
 </template>
+<script>
+export default {
+    
+}
+</script>
 <style scoped> 
 .header{
     min-height: 90px;

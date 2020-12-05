@@ -51,7 +51,7 @@ export default {
     },
     logout() {
       this.$store.commit("setAuthentication", false);
-      this.$router.push("../login");
+      this.$router.push("/");
     },
   },
   watch: {

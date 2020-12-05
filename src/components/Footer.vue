@@ -8,7 +8,7 @@
             <div class="footer-logo">
               <img
                 src="@/assets/logo-white.png"
-                style="height:80px; width:140px;"
+                style="height:80px; width:180px;"
               />
             </div>
             <ul>

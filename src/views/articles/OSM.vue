@@ -1,22 +1,28 @@
 <template>
   <div class="osm-page">
     <div class="logo">
-      <img src="@/assets/logo-white.png" />
+      <img src="@/assets/osm-white.png" />
       <h1 class="text-white d-inline-block">OSM</h1>
+      <h2 class="text-white">Olimpiade Statistika Matematika</h2>
       <hr />
     </div>
-    <a @click="$store.dispatch('ui/changeWelcomeComponent', 'welcome')">
+    <a v-if="!getUrl()" @click="$store.dispatch('ui/changeWelcomeComponent', 'welcome')">
       <img class="close" src="@/assets/close.png" />
     </a>
     <b-container
       id="description"
-      class="bg-purple shawod-sm rounded text-white text-left mt-5"
+      class="bg-purple shawod-sm rounded text-white text-center mt-5"
     >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur.
+      Olimpiade Statistika Matematika (OSM) ANAVA #15 merupakan salah satu
+      rangkaian ANAVA #15 berupa kegiatan olimpiade yang ditujukan untuk pelajar
+      tingkat SMA/MA sederajat. Peserta dapat lebih mengasah kemampuannya di
+      bidang matematika dan statistika, melatih analisis data dan
+      mempresentasikannya, serta berkompetisi secara sehat dalam tingkat
+      nasional. Untuk OSM tahun ini menggunakan website dengan sistem CBT
+      (Computer Based Test) sehingga dapat memudahkan peserta dan tentunya
+      melatih peserta agar lebih adaptif dalam perkembangan teknologi saat ini.
+      Rangkaian OSM ini terdiri dari tiga babak, antara lain babak penyisihan,
+      babak semifinal, dan babak final yang dibagi menjadi dua tahap.
     </b-container>
     <b-container
       id="category"
@@ -24,13 +30,13 @@
     >
       <h1>Kategori</h1>
       <b-row>
-        <b-col lg="1">
-          <i class="fas fa-users fa-9x"></i>
+        <b-col lg="1" cols="1">
+          <i class="icon fas fa-users"></i>
         </b-col>
-        <b-col lg="10">
+        <b-col lg="10" cols="9">
           <b-container class="description">
             <h2 class="text  text-white">
-              Terbuka untuk pelajar SMA
+              Terbuka untuk pelajar SMA/MA Sederajat
             </h2>
             <h5 class=" text-white">Individu</h5>
           </b-container>
@@ -43,19 +49,34 @@
     >
       <h1>Agenda</h1>
       <b-row>
-        <b-col lg="1">
-          <i class="far fa-calendar-alt fa-9x"></i>
+        <b-col lg="1" cols="1">
+          <i class="icon far fa-calendar-alt fa-9x"></i>
         </b-col>
-        <b-col lg="10">
+        <b-col lg="10" cols="9">
           <b-container class="description">
-            <h4 class="text  text-white">
+            <h2 class="text  text-white">
               Pendaftaran
-            </h4>
-            <p class="text-white">7 Desember 2020</p>
-            <h4 class="text text-white mt-4">
+            </h2>
+            <h5 class="text-white">
+              Senin, 7 Desember 2020 s/d <br />
+              Minggu, 10 Januari 2021
+            </h5>
+            <h2 class="text text-white mt-4">
               Pelaksanaan lomba
-            </h4>
-            <p class="text-white">6 Januari 2020</p>
+            </h2>
+            <h5 class="text-white">
+              Babak Penyisihan : <br />
+              Minggu, 17 Januari 2021
+            </h5>
+            <h5 class="text-white">
+              Babak Semifinal : <br />
+              Sabtu, 23 Januari 2021
+            </h5>
+            <h5 class="text-white">
+              Babak Final : <br />
+              Final 1 : Minggu, 24 Januari 2021 <br />
+              Final 2 : Sabtu, 30 Januari 2021
+            </h5>
           </b-container>
         </b-col>
       </b-row>
@@ -66,15 +87,15 @@
     >
       <h1>Kontak</h1>
       <b-row>
-        <b-col lg="1">
-          <i class="fas fa-phone-alt fa-9x"></i>
+        <b-col lg="1" cols="1">
+          <i class="icon fas fa-phone-alt fa-9x"></i>
         </b-col>
-        <b-col lg="10">
+        <b-col lg="10" cols="9">
           <b-container class="description">
             <h2 class="text  text-white">
-              Nama CP
+              Nur Indah Setyaningsih
             </h2>
-            <h5 class="text-white">08885671520</h5>
+            <h5 class="text-white">082137793955</h5>
           </b-container>
         </b-col>
       </b-row>
@@ -85,13 +106,31 @@
     >
       <h1>Total hadiah</h1>
       <b-row>
-        <b-col lg="1">
-          <i class="fas fa-gift fa-9x"></i>
+        <b-col lg="1" cols="1">
+          <i class="icon fas fa-gift fa-9x"></i>
         </b-col>
-        <b-col lg="10">
+        <b-col lg="10" cols="9">
           <b-container class="description">
             <h2 class="text text-white">
-              Rp 3.000.000
+              Rp 3.500.000
+            </h2>
+          </b-container>
+        </b-col>
+      </b-row>
+    </b-container>
+    <b-container
+      id="htm"
+      class="bg-purple shawod-sm rounded text-white text-left"
+    >
+      <h1>HTM</h1>
+      <b-row>
+        <b-col lg="1" cols="1">
+          <i class="icon fas fa-money-bill-wave fa-9x"></i>
+        </b-col>
+        <b-col lg="10" cols="9">
+          <b-container class="description">
+            <h2 class="text text-white">
+              Rp 50.000
             </h2>
           </b-container>
         </b-col>
@@ -103,19 +142,23 @@
     >
       <h1>Guidebook</h1>
       <b-row>
-        <b-col lg="1">
-          <i class="fas fa-book fa-9x"></i>
+        <b-col lg="1" cols="1">
+          <i class="icon fas fa-book fa-9x"></i>
         </b-col>
-        <b-col lg="10">
+        <b-col lg="10" cols="9">
           <b-container class="description">
-            <button class="btn">
+            <a target="blank" href="OSM/guidebook.pdf" class="btn">
               Unduh guidebook
-            </button>
+            </a>
           </b-container>
         </b-col>
       </b-row>
     </b-container>
-    <button class="btn btn-register"><h3>Daftar sekarang</h3></button>
+    <router-link :to="{ name: 'Register' }"
+      ><button class="btn btn-register">
+        <h3>Daftar sekarang</h3>
+      </button></router-link
+    >
   </div>
 </template>
 <script>
@@ -125,12 +168,21 @@ export default {
     return {
       loading: false,
       message: "",
+      url: window.location.href,
     };
   },
   computed: {
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
     },
+  },
+  methods: {
+    getUrl() {
+      return this.url.includes("osm");
+    },
+  },
+  created() {
+    window.scrollTo(0, 0);
   },
 };
 </script>
@@ -148,9 +200,9 @@ export default {
 }
 
 .osm-page .logo img {
-  height: 80px;
-  width: 160px;
-  margin-top: -40px;
+  height: 100px;
+  width: 50px;
+  margin-top: -60px;
 }
 
 .osm-page .logo h1 {
@@ -176,11 +228,7 @@ export default {
 }
 
 #description {
-  background: linear-gradient(
-    to right top,
-    rgb(10, 10, 10),
-    #09203f
-  );
+  background: linear-gradient(to right top, rgb(10, 10, 10), #09203f);
   min-height: 80px;
   padding-top: 20px;
   padding-bottom: 20px;
@@ -189,6 +237,10 @@ export default {
 
 #category {
   margin-top: 80px;
+}
+
+#category .icon {
+  font-size: 120px;
 }
 
 #category .description {
@@ -223,6 +275,15 @@ export default {
 }
 
 #prize .description {
+  margin-top: 20px;
+  margin-left: 130px;
+}
+
+#htm {
+  margin-top: 80px;
+}
+
+#htm .description {
   margin-top: 20px;
   margin-left: 130px;
 }
@@ -267,5 +328,160 @@ p {
   font-size: 12px;
   margin: 0;
   padding: 0;
+}
+
+@media (max-width: 767px) {
+  .osm-page {
+    min-height: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+  }
+
+  .osm-page .logo img {
+    height: 80px;
+    width: 40px;
+  }
+
+  .osm-page .logo h1 {
+    margin-top: 100px;
+    font-size: 60px;
+  }
+
+  #category h1 {
+    text-align: center;
+  }
+
+  #category .icon {
+    font-size: 60px;
+    margin-top: 10px;
+  }
+
+  #category .description {
+    margin-top: -10px;
+    margin-left: 60px;
+  }
+
+  #category .description h2 {
+    font-size: 1.4em;
+  }
+
+  #category .description h5 {
+    font-size: 1em;
+  }
+
+  #schedule h1 {
+    text-align: center;
+  }
+
+  #schedule .icon {
+    font-size: 60px;
+    margin-top: 10px;
+  }
+
+  #schedule .description {
+    margin-top: 5px;
+    margin-left: 65px;
+  }
+
+  #schedule .description h2 {
+    font-size: 1.4em;
+  }
+
+  #schedule .description h5 {
+    font-size: 1em;
+  }
+
+  #contact h1 {
+    text-align: center;
+  }
+
+  #contact .icon {
+    font-size: 60px;
+    margin-top: 10px;
+  }
+
+  #contact .description {
+    margin-top: 5px;
+    margin-left: 75px;
+  }
+
+  #contact .description h2 {
+    font-size: 1.4em;
+  }
+
+  #contact .description h5 {
+    font-size: 1.1em;
+  }
+
+  #prize h1 {
+    text-align: center;
+  }
+
+  #prize .icon {
+    font-size: 60px;
+    margin-top: 10px;
+  }
+
+  #prize .description {
+    margin-top: 5px;
+    margin-left: 70px;
+  }
+
+  #prize .description h2 {
+    font-size: 1.4em;
+  }
+
+  #prize .description h5 {
+    font-size: 1.1em;
+  }
+
+  #htm h1 {
+    text-align: center;
+  }
+
+  #htm .icon {
+    font-size: 60px;
+    margin-top: 10px;
+  }
+
+  #htm .description {
+    margin-top: 5px;
+    margin-left: 80px;
+  }
+
+  #htm .description h2 {
+    font-size: 1.4em;
+  }
+
+  #htm .description h5 {
+    font-size: 1.1em;
+  }
+
+  #guidebook h1 {
+    text-align: center;
+  }
+
+  #guidebook .icon {
+    font-size: 60px;
+    margin-top: 10px;
+  }
+
+  #guidebook .description {
+    margin-top: -5px;
+    margin-left: 60px;
+  }
+
+  #guidebook .description h2 {
+    font-size: 1.4em;
+  }
+
+  #guidebook .description h5 {
+    font-size: 1.1em;
+  }
+
+  .btn-register {
+    margin-bottom: 60px;
+  }
 }
 </style>

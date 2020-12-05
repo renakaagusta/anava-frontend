@@ -17,7 +17,7 @@
       <b-col md="1">
         <img
           class="profile"
-          v-bind:src="'http://localhost:8080/' + participant.image"
+          v-bind:src="'http://193.168.195.181.com/' + participant.image"
         />
       </b-col>
       <b-col md="2">

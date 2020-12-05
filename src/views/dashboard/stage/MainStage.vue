@@ -6,7 +6,7 @@
       <ParticipantFinalOSM v-if="stage.name == 'final'" />
     </div>
 
-    <div v-if="event.name == 'Poster'">
+    <div v-if="event.name == 'Started'">
       <ParticipantPekanFinalPoster
         :title="'Pekan Final Poster'"
         v-if="stage.name == 'preliminary'"
@@ -17,7 +17,7 @@
       />
     </div>
 
-    <div v-if="event.name == 'Ranking 1'">
+    <div v-if="event.name == 'The One'">
       <ParticipantPenyisihanRangking1 
         :title="'Penyisihan Ranking 1'"
         v-if="stage.name == 'preliminary'"/>
@@ -27,6 +27,18 @@
       <ParticipantFinalRangking1 
         :title="'Final Ranking 1'"
         v-if="stage.name == 'final'"/>
+    </div>
+
+    <div v-if="event.name == 'Sigma'">
+      <ParticipantSigma 
+        :title="'Sigma'"
+        v-if="stage.name == 'preliminary'"/>
+    </div>
+
+    <div v-if="event.name == 'Open House'">
+      <ParticipantOpenHouse 
+        :title="'Open House'"
+        v-if="stage.name == 'preliminary'"/>
     </div>
   </div>
 </template>
@@ -42,6 +54,10 @@ import ParticipantPenyisihanRangking1 from "./../../../components/dashboard/part
 import ParticipantSemifinalRangking1 from "./../../../components/dashboard/participant/stage/rangking1/SemifinalMainRangking1.vue";
 import ParticipantFinalRangking1 from "./../../../components/dashboard/participant/stage/rangking1/FinalRanking1.vue";
 
+import ParticipantSigma from "./../../../components/dashboard/participant/stage/sigma/IndexSigma.vue";
+
+import ParticipantOpenHouse from "./../../../components/dashboard/participant/stage/openhouse/IndexOpenHouse.vue";
+
 export default {
   name: "IndexStage",
   components: {
@@ -52,13 +68,16 @@ export default {
     ParticipantPekanFinalPoster,
     ParticipantPenyisihanRangking1,
     ParticipantSemifinalRangking1,
-    ParticipantFinalRangking1
+    ParticipantFinalRangking1,
+    ParticipantSigma,
+    ParticipantOpenHouse
   },
   computed: {
     user() {
       return this.$store.state.auth.user;
     },
     stage() {
+      console.log(this.$store.state.stage.stage);
       return this.$store.state.stage.stage;
     },
     event() {
@@ -85,7 +104,7 @@ export default {
     },
   },
   created() {
-      this.getStage();
+    this.getStage();
   },
 };
 </script>

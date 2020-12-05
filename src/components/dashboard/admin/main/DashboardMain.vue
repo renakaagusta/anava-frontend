@@ -8,7 +8,7 @@
                     <p>
                         <i style="font-size:30px" class="fas fa-home"></i>
                         <br>
-                        <b>SELAMAT DATANG PESERTA ANAVA 14!</b>
+                        <b>SELAMAT DATANG PANITIA ANAVA 15!</b>
                         Ini adalah Dashboard anda <br> berbagai jenis informasi terkait lomba dapat dilihat disini 
                     </p>
                 </div>

@@ -11,43 +11,27 @@
       v-for="announcement in announcements"
       :key="announcement._id"
     >
-      <b-col md="1">
-        <img
-          class="profile"
-          v-bind:src="'http://localhost:8080/' + announcement.admin.image"
-        />
+      <b-col md="9" class="text-left p-3">
+        <h4 class="text-bold">{{ announcement.title }}</h4>
+        <p v-if="announcement"></p>
+        
+        <p class="text-secondary">{{ getDateTime("datetime", announcement.created_at) }}</p>
       </b-col>
-      <b-col md="2">
-        <p class="text-bold">{{ announcement.admin.username }}</p>
-        <br />
-        <p class="text-secondary">
-          {{
-            announcement.admin.firstname + " " + announcement.admin.lastname
-          }}
-        </p>
-      </b-col>
-      <b-col class="pt-2" md="2">
-        <p>{{ announcement.event.name }}</p>
-        <br />
-      </b-col>
-      <b-col class="pt-2" md="2">
-        <p>
-          {{
-            announcement.verified_by.firstname + " " + announcement.verified_by.lastname
-          }}
-        </p>
-        <br />
-      </b-col>
-      <b-col class="pt-2" md="4">
-        <p>{{ announcement.created_at }}</p>
-        <br />
+      <b-col md="3" class="p-3">
+        <router-link
+          :to="{ name: 'DetailAnnouncement', params: {id: announcement._id} }"
+          class="btn btn-primary"
+          ><i class="fas fa-search"></i>&nbsp;Detail</router-link
+        >
       </b-col>
     </b-row>
   </div>
 </template>
 <script>
+import * as datetime from "./../../../../services/datetime";
+
 export default {
-  name: "MainSchedule",
+  name: "MainAnnouncement",
   computed: {
     announcements() {
       return this.$store.state.announcement.announcements;
@@ -56,6 +40,9 @@ export default {
   methods: {
     getAnnouncements() {
       this.$store.dispatch("announcement/getAllAnnouncement");
+    },
+    getDateTime: function(type, date) {
+      return datetime.getDateTime(type, date);
     },
   },
   created() {

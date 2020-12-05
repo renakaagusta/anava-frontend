@@ -1,11 +1,14 @@
 import axios from 'axios';
 import header from './header';
 
-const API_URL = 'http://localhost:3000/api/payment/';
+const API_URL = 'http://193.168.195.181.com:3000/api/payment/';
 
 class PaymentService {
   getAllPayment() {
     return axios.get(API_URL + 'all', header());
+  }
+  getAllPaymentByParticipant(participantId) {
+    return axios.get(API_URL + 'participant/' +participantId, header());
   }
   getPayment(id) {
     return axios.get(API_URL + id, header());

@@ -169,7 +169,7 @@
                       <p>Anava</p>
                       <p>
                         <a href="https://www.niagahoster.co.id/"
-                          >www.anavaugm.com</a
+                          >193.168.195.181.com</a
                         >
                       </p>
                     </td>
@@ -191,7 +191,7 @@
           <p>Peserta</p>
         </b-col>
         <b-col class="text-center" md="2">
-          <p>Sekolah</p>
+          <p>Identitas</p>
         </b-col>
         <b-col class="text-center" md="2">
           <p>Kartu Osis</p>
@@ -209,7 +209,7 @@
         <b-col md="1">
           <img
             class="profile"
-            v-bind:src="'http://localhost:8080/' + participant.image"
+            v-bind:src="'http://193.168.195.181.com/' + participant.image"
           />
         </b-col>
         <b-col md="2">
@@ -219,55 +219,38 @@
           </p>
         </b-col>
         <b-col class="pt-2" md="2">
-          <p>{{ participant.participant.school }}</p>
-          <br />
-        </b-col>
-        <b-col class="pt-2" md="2">
-          <div v-if="participant.participant.document">
-            <p
-              class="text-warning"
-              v-if="(participant.participant.document.osis_card.status = 1)"
-            >
-              Menunggu
-            </p>
-            <p
-              class="text-danger"
-              v-if="(participant.participant.document.osis_card.status = 2)"
-            >
-              Ditolak
-            </p>
-            <p
-              class="text-success"
-              v-if="(participant.participant.document.osis_card.status = 3)"
-            >
-              Diterima
-            </p>
-          </div>
+          <p
+            class="text-success"
+            v-if="participant.participant.address.length > 1"
+          >
+            <i class="fas fa-check"></i>
+          </p>
           <p v-else>-</p>
         </b-col>
-        <b-col class="pt-2" md="2">
-          <div v-if="participant.participant.document">
-            <p
-              class="text-warning"
-              v-if="(participant.participant.document.image.status = 1)"
-            >
-              Menunggu
-            </p>
-            <p
-              class="text-danger"
-              v-if="(participant.participant.document.image.status = 2)"
-            >
-              Ditolak
-            </p>
-            <p
-              class="text-success"
-              v-if="(participant.participant.document.image.status = 3)"
-            >
-              Diterima
-            </p>
-          </div>
+       <b-col class="pt-2" md="2">
+        <div v-if="participant.participant.document">
+          <p
+            class="text-success"
+            v-if="participant.participant.document.osis_card == 1"
+          >
+            <i class="fas fa-check"></i>
+          </p>
           <p v-else>-</p>
-        </b-col>
+        </div>
+        <p v-else>-</p>
+      </b-col>
+      <b-col class="pt-2" md="2">
+        <div v-if="participant.participant.document">
+          <p
+            class="text-success"
+            v-if="participant.participant.document.image == 1"
+          >
+            <i class="fas fa-check"></i>
+          </p>
+          <p v-else>-</p>
+        </div>
+        <p v-else>-</p>
+      </b-col>
         <b-col md="3">
           <button
             class="btn btn-primary"
@@ -330,6 +313,7 @@
 </template>
 <script>
 import * as datetime from "./../../../../services/datetime";
+import Swal from "sweetalert2";
 
 export default {
   name: "CreatePayment",
@@ -396,10 +380,20 @@ export default {
       return datetime.getDateTime(type, date);
     },
     createPayment() {
-      this.payment.mail = document.getElementById('mail').innerHTML;
+      this.payment.mail = document.getElementById("mail").innerHTML;
       this.payment.events = this.selectedEvent;
-      this.$store.dispatch("payment/createPayment", this.payment);
-      console.log(this.payment)
+      this.$store.dispatch("payment/createPayment", this.payment).then(
+        () => {
+          Swal.fire({
+            icon: "success",
+            title: "Pembayaran berhasil dibuat",
+            showConfirmButton: true,
+          }).then(() => {
+            this.$router.push("/dashboard/payment/");
+          });
+        },
+        () => {}
+      );
     },
     selectEvent(index) {
       this.selectedEvent[index] = !this.selectedEvent[index];
