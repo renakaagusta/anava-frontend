@@ -10,6 +10,9 @@ class EventService {
   getEvent(id) {
     return axios.get(API_URL + id, header());
   }
+  joinEvent(data) {
+    return axios.put(API_URL + data.id + '/add', data, header());
+  }
 }
 
 export default new EventService();

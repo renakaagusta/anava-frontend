@@ -1,17 +1,17 @@
 <template>
   <div class="wrapper">
-    <nav id="sidebar">
+    <nav id="sidebar" @click="checkSize">
       <div class="sidebar-header">
         <div class="profile">
           <router-link class="text-white" :to="{ name: 'DashboardMain' }">
             <b-row>
-              <b-col lg="3">
+              <b-col cols="2" lg="3">
                 <img
                   class="img-profile"
-                  v-bind:src="'http://localhost:8080/' + user.image"
+                  v-bind:src="'http://anavaugm.com/' + user.image"
                 />
               </b-col>
-              <b-col class="sidebar-text text-left" lg="8">
+              <b-col cols="2" class="sidebar-text text-left" lg="8">
                 <p class="name">{{ user.username }}</p>
                 <p class="type" v-if="user.roles.includes('participant')">
                   Peserta
@@ -22,8 +22,6 @@
           </router-link>
         </div>
       </div>
-      {{ selectedSubItem[0] }}
-
       <div class="sidebar-body" v-if="user.roles.includes('participant')">
         <ul class="list-unstyled components text-white">
           <li
@@ -32,10 +30,10 @@
           >
             <router-link class="text-white" :to="{ name: 'DashboardMain' }">
               <b-row>
-                <b-col lg="1">
+                <b-col cols="1" lg="1">
                   <div class="inline"><i class="fas fa-home"></i></div>
                 </b-col>
-                <b-col class="sidebar-text" lg="10">
+                <b-col cols="10" class="sidebar-text" lg="10">
                   Beranda
                 </b-col>
               </b-row>
@@ -45,13 +43,30 @@
             @click="selectedItem = 1"
             v-bind:class="[selectedItem == 1 ? 'active' : '']"
           >
-            <router-link class="text-white" :to="{ name: 'MainDocument' }">
+            <router-link class="text-white" :to="{ name: 'IndexArticle' }">
+              <b-row>
+                <b-col cols="1" lg="1">
+                  <div class="inline">
+                    <i class="far fa-newspaper"></i>
+                  </div>
+                </b-col>
+                <b-col cols="10" class="sidebar-text" lg="10">
+                  Artikel
+                </b-col>
+              </b-row>
+            </router-link>
+          </li>
+          <li
+            @click="selectedItem = 2"
+            v-bind:class="[selectedItem == 2 ? 'active' : '']"
+          >
+            <router-link class="text-white" :to="{ name: 'MainAnnouncement' }">
               <b-row>
                 <b-col lg="1">
-                  <div class="inline"><i class="far fa-copy"></i></div>
+                  <div class="inline"><i class="fas fa-bullhorn"></i></div>
                 </b-col>
                 <b-col class="sidebar-text" lg="10">
-                  Administrasi
+                  Pengumuman
                 </b-col>
               </b-row>
             </router-link>
@@ -60,30 +75,29 @@
             @click="selectedItem = 3"
             v-bind:class="[selectedItem == 3 ? 'active' : '']"
           >
-            <router-link class="text-white" :to="{ name: 'IndexArticle' }">
+            <router-link class="text-white" :to="{ name: 'MainSchedule' }">
               <b-row>
-                <b-col lg="1">
-                  <div class="inline">
-                    <i class="far fa-newspaper"></i>
-                  </div>
+                <b-col cols="1" lg="1">
+                  <div class="inline"><i class="far fa-calendar-alt"></i></div>
                 </b-col>
-                <b-col class="sidebar-text" lg="10">
-                  Artikel
+                <b-col cols="10" class="sidebar-text" lg="10">
+                  Jadwal
                 </b-col>
               </b-row>
             </router-link>
           </li>
           <li
             @click="selectedItem = 4"
-            v-bind:class="[selectedItem == 4 ? 'active' : '']">
+            v-bind:class="[selectedItem == 4 ? 'active' : '']"
+          >
             <router-link class="text-white" :to="{ name: 'IndexTwibbon' }">
               <b-row>
-                <b-col lg="1">
+                <b-col cols="1" lg="1">
                   <div class="inline">
                     <i class="far fa-image"></i>
                   </div>
                 </b-col>
-                <b-col class="sidebar-text" lg="10">
+                <b-col cols="10" class="sidebar-text" lg="10">
                   Twibbon
                 </b-col>
               </b-row>
@@ -93,15 +107,13 @@
             @click="selectedItem = 5"
             v-bind:class="[selectedItem == 5 ? 'active' : '']"
           >
-            <router-link class="text-white" :to="{ name: 'MainPayment' }">
+            <router-link class="text-white" :to="{ name: 'MainDocument' }">
               <b-row>
-                <b-col lg="1">
-                  <div class="inline">
-                    <i class="fas fa-money-bill-wave"></i>
-                  </div>
+                <b-col cols="1" lg="1">
+                  <div class="inline"><i class="far fa-copy"></i></div>
                 </b-col>
-                <b-col class="sidebar-text" lg="10">
-                  Pembayaran
+                <b-col cols="1" class="sidebar-text" lg="10">
+                  Administrasi
                 </b-col>
               </b-row>
             </router-link>
@@ -110,24 +122,29 @@
             @click="selectedItem = 6"
             v-bind:class="[selectedItem == 6 ? 'active' : '']"
           >
-            <router-link class="text-white" :to="{ name: 'MainSchedule' }">
+            <router-link class="text-white" :to="{ name: 'MainPayment' }">
               <b-row>
-                <b-col lg="1">
-                  <div class="inline"><i class="far fa-calendar-alt"></i></div>
+                <b-col cols="1" lg="1">
+                  <div class="inline">
+                    <i class="fas fa-money-bill-wave"></i>
+                  </div>
                 </b-col>
-                <b-col class="sidebar-text" lg="10">
-                  Jadwal
+                <b-col cols="10" class="sidebar-text" lg="10">
+                  Pembayaran
                 </b-col>
               </b-row>
             </router-link>
           </li>
-          <li v-bind:class="[selectedItem == 7 ? 'active' : '']">
+          <li
+            v-bind:class="[selectedItem == 7 ? 'active' : '']"
+            v-if="checkJoinEvent('OSM')"
+          >
             <a class="text-white" @click="performToggle(7)">
               <b-row>
-                <b-col lg="1">
+                <b-col cols="1" lg="1">
                   <div class="inline"><i class="fas fa-trophy"></i></div>
                 </b-col>
-                <b-col class="sidebar-text" lg="10">
+                <b-col cols="10" class="sidebar-text" lg="10">
                   OSM
                   <div class="d-inline">
                     <i class="fas fa-chevron-down float-right arrow"></i>
@@ -147,7 +164,7 @@
                   class="text-white"
                   :to="{
                     name: 'MainStage',
-                    params: { idStage: events[0].stages[0] },
+                    params: { idStage: events[0].stages[0]._id },
                   }"
                 >
                   <b-row>
@@ -160,58 +177,19 @@
                   </b-row>
                 </router-link>
               </li>
-              <li
-                @click="selectedSubItem = 2"
-                v-bind:class="[selectedSubItem == 2 ? 'active' : '']"
-              >
-                <router-link
-                  class="text-white"
-                  :to="{
-                    name: 'MainStage',
-                    params: { idStage: events[0].stages[1] },
-                  }"
-                >
-                  <b-row>
-                    <b-col lg="1">
-                      <div class="inline"><i class="fas fa-trophy"></i></div>
-                    </b-col>
-                    <b-col class="sidebar-text" lg="10">
-                      Semifinal
-                    </b-col>
-                  </b-row>
-                </router-link>
-              </li>
-              <li
-                @click="selectedSubItem = 3"
-                v-bind:class="[selectedSubItem == 3 ? 'active' : '']"
-              >
-                <router-link
-                  class="text-white"
-                  :to="{
-                    name: 'MainStage',
-                    params: { idStage: events[0].stages[2] },
-                  }"
-                >
-                  <b-row>
-                    <b-col lg="1">
-                      <div class="inline"><i class="fas fa-trophy"></i></div>
-                    </b-col>
-                    <b-col class="sidebar-text" lg="10">
-                      Final
-                    </b-col>
-                  </b-row>
-                </router-link>
-              </li>
             </ul>
           </li>
-          <li v-bind:class="[selectedItem == 8 ? 'active' : '']">
-            <a class="text-white" @click="performToggle(5)">
+          <li
+            v-bind:class="[selectedItem == 8 ? 'active' : '']"
+            v-if="checkJoinEvent('The One')"
+          >
+            <a class="text-white" @click="performToggle(8)">
               <b-row>
-                <b-col lg="1">
+                <b-col cols="1" lg="1">
                   <div class="inline"><i class="fas fa-trophy"></i></div>
                 </b-col>
-                <b-col class="sidebar-text" lg="10">
-                  Ranking 1
+                <b-col cols="10" class="sidebar-text" lg="10">
+                  The One
                   <div class="d-inline">
                     <i class="fas fa-chevron-down float-right arrow"></i>
                   </div>
@@ -220,7 +198,7 @@
             </a>
             <ul
               class="list-unstyled components text-white pl-2"
-              v-if="toggle == 5"
+              v-if="toggle == 8"
             >
               <li
                 @click="selectedSubItem = 1"
@@ -230,7 +208,7 @@
                   class="text-white"
                   :to="{
                     name: 'MainStage',
-                    params: { idStage: events[1].stages[0] },
+                    params: { idStage: events[1].stages[0]._id },
                   }"
                 >
                   <b-row>
@@ -243,37 +221,19 @@
                   </b-row>
                 </router-link>
               </li>
-              <li
-                @click="selectedSubItem = 2"
-                v-bind:class="[selectedSubItem == 2 ? 'active' : '']"
-              >
-                <router-link
-                  class="text-white"
-                  :to="{
-                    name: 'MainStage',
-                    params: { idStage: events[1].stages[1] },
-                  }"
-                >
-                  <b-row>
-                    <b-col lg="1">
-                      <div class="inline"><i class="fas fa-trophy"></i></div>
-                    </b-col>
-                    <b-col class="sidebar-text" lg="10">
-                      Semifinal
-                    </b-col>
-                  </b-row>
-                </router-link>
-              </li>
             </ul>
           </li>
-          <li v-bind:class="[selectedItem == 9 ? 'active' : '']">
+          <li
+            v-bind:class="[selectedItem == 9 ? 'active' : '']"
+            v-if="checkJoinEvent('Started')"
+          >
             <a class="text-white" @click="performToggle(9)">
               <b-row>
-                <b-col lg="1">
+                <b-col cols="1" lg="1">
                   <div class="inline"><i class="fas fa-trophy"></i></div>
                 </b-col>
-                <b-col class="sidebar-text" lg="10">
-                  Poster
+                <b-col cols="10" class="sidebar-text" lg="10">
+                  Started
                   <div class="d-inline">
                     <i class="fas fa-chevron-down float-right arrow"></i>
                   </div>
@@ -292,7 +252,7 @@
                   class="text-white"
                   :to="{
                     name: 'MainStage',
-                    params: { idStage: events[2].stages[0] },
+                    params: { idStage: events[2].stages[0]._id },
                   }"
                 >
                   <b-row>
@@ -305,37 +265,46 @@
                   </b-row>
                 </router-link>
               </li>
-              <li
-                @click="selectedSubItem = 3"
-                v-bind:class="[selectedSubItem == 3 ? 'active' : '']"
-              >
-                <router-link
-                  class="text-white"
-                  :to="{
-                    name: 'MainStage',
-                    params: { idStage: events[2].stages[2] },
-                  }"
-                >
-                  <b-row>
-                    <b-col lg="1">
-                      <div class="inline"><i class="fas fa-trophy"></i></div>
-                    </b-col>
-                    <b-col class="sidebar-text" lg="10">
-                      Final
-                    </b-col>
-                  </b-row>
-                </router-link>
-              </li>
             </ul>
           </li>
-          <li>
-            <router-link class="text-white" :to="{ name: 'DashboardMain' }">
-              <b-row>
-                <b-col lg="1">
-                  <div class="inline"><i class="fas fa-award"></i></div>
+          <li
+            v-bind:class="[selectedItem == 10 ? 'active' : '']"
+            v-if="checkJoinEvent('Sigma')"
+          >
+            <router-link
+              class="text-white"
+              :to="{
+                name: 'MainStage',
+                params: { idStage: events[3].stages[0]._id },
+              }"
+            >
+              <b-row @click="performToggle(10)">
+                <b-col cols="1" lg="1">
+                  <div class="inline"><i class="fas fa-trophy"></i></div>
                 </b-col>
-                <b-col class="sidebar-text" lg="10">
-                  Sertifikat
+                <b-col cols="10" class="sidebar-text" lg="10">
+                  Sigma
+                </b-col>
+              </b-row>
+            </router-link>
+          </li>
+          <li
+            v-bind:class="[selectedItem == 11 ? 'active' : '']"
+            v-if="checkJoinEvent('Open House')"
+          >
+            <router-link
+              class="text-white"
+              :to="{
+                name: 'MainStage',
+                params: { idStage: events[4].stages[0]._id },
+              }"
+            >
+              <b-row @click="performToggle(11)">
+                <b-col cols="1" lg="1">
+                  <div class="inline"><i class="fas fa-trophy"></i></div>
+                </b-col>
+                <b-col cols="10" class="sidebar-text" lg="10">
+                  Open House
                 </b-col>
               </b-row>
             </router-link>
@@ -426,7 +395,7 @@
             <a class="text-white" @click="performToggle(5)">
               <b-row>
                 <b-col lg="1">
-                  <div class="inline"><i class="far fa-calendar-alt"></i></div>
+                  <div class="inline"><i class="fas fa-trophy"></i></div>
                 </b-col>
                 <b-col class="sidebar-text" lg="10">
                   OSM
@@ -448,7 +417,7 @@
                   class="text-white"
                   :to="{
                     name: 'ListParticipantStage',
-                    params: { idStage: events[0].stages[0] },
+                    params: { idStage: events[0].stages[0]._id },
                   }"
                 >
                   <b-row>
@@ -461,45 +430,133 @@
                   </b-row>
                 </router-link>
               </li>
+            </ul>
+          </li>
+          <li v-bind:class="[selectedItem == 6 ? 'active' : '']">
+            <a class="text-white" @click="performToggle(6)">
+              <b-row>
+                <b-col lg="1">
+                  <div class="inline"><i class="fas fa-trophy"></i></div>
+                </b-col>
+                <b-col class="sidebar-text" lg="10">
+                  The One
+                  <div class="d-inline">
+                    <i class="fas fa-chevron-down float-right arrow"></i>
+                  </div>
+                </b-col>
+              </b-row>
+            </a>
+            <ul
+              class="list-unstyled components text-white pl-2"
+              v-if="toggle == 6"
+            >
               <li
-                @click="selectedSubItem = 2"
-                v-bind:class="[selectedSubItem == 2 ? 'active' : '']"
+                @click="selectedSubItem = 1"
+                v-bind:class="[selectedSubItem == 1 ? 'active' : '']"
               >
-                <router-link class="text-white" :to="{ name: 'DashboardMain' }">
+                <router-link
+                  class="text-white"
+                  :to="{
+                    name: 'ListParticipantStage',
+                    params: { idStage: events[1].stages[0]._id },
+                  }"
+                >
                   <b-row>
                     <b-col lg="1">
                       <div class="inline"><i class="fas fa-trophy"></i></div>
                     </b-col>
                     <b-col class="sidebar-text" lg="10">
-                      Semifinal
-                    </b-col>
-                  </b-row>
-                </router-link>
-              </li>
-              <li
-                @click="selectedSubItem = 3"
-                v-bind:class="[selectedSubItem == 3 ? 'active' : '']"
-              >
-                <router-link class="text-white" :to="{ name: 'DashboardMain' }">
-                  <b-row>
-                    <b-col lg="1">
-                      <div class="inline"><i class="fas fa-trophy"></i></div>
-                    </b-col>
-                    <b-col class="sidebar-text" lg="10">
-                      Final
+                      Babak Gugur
                     </b-col>
                   </b-row>
                 </router-link>
               </li>
             </ul>
           </li>
-          <li>
-            <router-link class="text-white" :to="{ name: 'DashboardMain' }">
+          <li v-bind:class="[selectedItem == 7 ? 'active' : '']">
+            <a class="text-white" @click="performToggle(7)">
               <b-row>
                 <b-col lg="1">
-                  <div class="inline"><i class="fas fa-award"></i></div>
+                  <div class="inline"><i class="fas fa-trophy"></i></div>
                 </b-col>
                 <b-col class="sidebar-text" lg="10">
+                  Started
+                  <div class="d-inline">
+                    <i class="fas fa-chevron-down float-right arrow"></i>
+                  </div>
+                </b-col>
+              </b-row>
+            </a>
+            <ul
+              class="list-unstyled components text-white pl-2"
+              v-if="toggle == 7"
+            >
+              <li
+                @click="selectedSubItem = 1"
+                v-bind:class="[selectedSubItem == 1 ? 'active' : '']"
+              >
+                <router-link
+                  class="text-white"
+                  :to="{
+                    name: 'ListParticipantStage',
+                    params: { idStage: events[2].stages[0]._id },
+                  }"
+                >
+                  <b-row>
+                    <b-col lg="1">
+                      <div class="inline"><i class="fas fa-trophy"></i></div>
+                    </b-col>
+                    <b-col class="sidebar-text" lg="10">
+                      Penyisihan
+                    </b-col>
+                  </b-row>
+                </router-link>
+              </li>
+            </ul>
+          </li>
+          <li v-bind:class="[selectedItem == 8 ? 'active' : '']" @click="selectedItem = 8">
+            <router-link
+              class="text-white"
+              :to="{
+                name: 'ListParticipantStage',
+                params: { idStage: events[3].stages[0]._id },
+              }"
+            >
+              <b-row @click="performToggle(8)">
+                <b-col lg="1">
+                  <div class="inline"><i class="fas fa-trophy"></i></div>
+                </b-col>
+                <b-col class="sidebar-text" lg="10">
+                  Sigma
+                </b-col>
+              </b-row>
+            </router-link>
+          </li>
+          <li v-bind:class="[selectedItem == 9 ? 'active' : '']"  @click="selectedItem = 9">
+            <router-link
+              class="text-white"
+              :to="{
+                name: 'ListParticipantStage',
+                params: { idStage: events[4].stages[0]._id },
+              }"
+            >
+              <b-row @click="performToggle(9)">
+                <b-col lg="1">
+                  <div class="inline"><i class="fas fa-trophy"></i></div>
+                </b-col>
+                <b-col class="sidebar-text" lg="10">
+                  Open House
+                </b-col>
+              </b-row>
+            </router-link>
+          </li>
+          <li>
+            <router-link class="text-white">
+              <b-row>
+                <b-col cols="1" lg="1">
+                  <div class="inline"><i class="fas fa-award"></i></div>
+                </b-col>
+                <b-col cols="10" class="sidebar-text" lg="10">
                   Sertifikat
                 </b-col>
               </b-row>
@@ -517,6 +574,7 @@ export default {
   data() {
     return {
       textBold: "text-bold",
+      windowWidth: window.innerWidth,
       selectedItem: 0,
       selectedSubItem: 0,
       toggle: 0,
@@ -544,6 +602,7 @@ export default {
         item: item,
       };
       this.$store.dispatch("event/selectEvent", event);
+
       if (this.selectedItem == item && this.toggle != 0) {
         this.toggle = 0;
       } else {
@@ -555,10 +614,42 @@ export default {
     getEvents() {
       this.$store.dispatch("event/getAllEvent");
     },
+    checkJoinEvent(name) {
+      var joinEvent = false;
+
+      if (this.user.participant.events.length > 0)
+        this.user.participant.events.forEach((event) => {
+          if (event.name == name) joinEvent = true;
+        });
+
+      return joinEvent;
+    },
+    onResize() {
+      this.windowWidth = window.innerWidth;
+    },
+    checkSize() {
+      if (this.windowWidth < 800)
+        this.$store.dispatch("ui/changeSidebarComponent");
+    },
+  },
+  mounted() {
+    this.$nextTick(() => {
+      window.addEventListener("resize", this.onResize);
+    });
   },
   created() {
     this.getEvents();
-    if (window.location.href.includes("stage")) {
+    if (this.user.roles.includes("participant")) {
+      if (window.location.href.includes("article")) this.selectedItem = 1;
+      else if (window.location.href.includes("announcement"))
+        this.selectedItem = 2;
+      else if (window.location.href.includes("schedule")) this.selectedItem = 3;
+      else if (window.location.href.includes("twibbon")) this.selectedItem = 4;
+      else if (window.location.href.includes("document")) this.selectedItem = 5;
+      else if (window.location.href.includes("payment")) this.selectedItem = 6;
+    }
+
+    /* if (window.location.href.includes("stage")) {
       if (this.event.name == "OSM") this.selectedItem = 7;
       else if (this.event.name == "Ranking 1") this.selectedItem = 8;
       else if (this.event.name == "Poster") this.selectedItem = 9;
@@ -567,6 +658,14 @@ export default {
     else if (window.location.href.includes("payment")) this.selectedItem = 2;
     else if (window.location.href.includes("schedule")) this.selectedItem = 3;
     else this.selectedItem = 0;
+
+    if (this.user.roles.includes("participant")) {
+      if (window.location.href.includes("stage")) {
+        if (this.event.name == "OSM") this.selectedItem = 7;
+        else if (this.event.name == "Ranking 1") this.selectedItem = 8;
+        else if (this.event.name == "Poster") this.selectedItem = 9;
+      }
+    }*/
   },
 };
 </script>
@@ -686,5 +785,20 @@ ul a:hover {
 }
 .text-normal {
   font-weight: normal;
+}
+
+.wrapper {
+  z-index: 9;
+}
+
+@media only screen and (max-width: 767px) {
+  .wrapper {
+    margin-top: 70px;
+  }
+  #sidebar {
+    max-width: 100vw;
+    width: 100vw;
+    overflow-y: auto;
+  }
 }
 </style>

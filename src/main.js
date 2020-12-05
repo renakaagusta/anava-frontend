@@ -17,6 +17,7 @@ import HighchartsVue from 'highcharts-vue'
 import VueParticles from 'vue-particles'
 import VueTabs from 'vue-nav-tabs'
 import 'vue-nav-tabs/themes/vue-tabs.css'
+import Vuelidate from 'vuelidate'
 
 Vue.use(BootstrapVue);
 Vue.use(Vue2Editor);
@@ -25,6 +26,7 @@ Vue.use(HighchartsVue);
 Vue.use(VueCarousel);
 Vue.use(VueParticles)
 Vue.use(VueTabs)
+Vue.use(Vuelidate)
 
 Vue.config.productionTip = false;
 

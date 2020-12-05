@@ -2,6 +2,7 @@ export default function header(isForm) {
   let user = JSON.parse(localStorage.getItem('user'));
   
   if (user && user.accessToken) {
+    console.log(user.accessToken);
     if(isForm) {
       return { 
         headers: {    

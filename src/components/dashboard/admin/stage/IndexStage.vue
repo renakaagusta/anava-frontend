@@ -4,7 +4,7 @@
       <h3
         v-if="stage.name == 'preliminary'"
         class="text-left d-inline float-left">
-        <i class="fas fa-users mr-2"></i>
+        <i class="fas fa-trophy"></i>
         {{ getStageName(stage.name) }}
       </h3>
       <div class="float-right">

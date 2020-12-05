@@ -12,9 +12,6 @@
       <b-col class="text-center" md="2">
         <p>Event</p>
       </b-col>
-      <b-col class="text-center" md="2">
-        <p>Diterima oleh</p>
-      </b-col>
       <b-col class="text-center" md="4">
         <p>Tanggal pembayaran</p>
       </b-col>
@@ -28,7 +25,7 @@
       <b-col md="1">
         <img
           class="profile"
-          v-bind:src="'http://localhost:8080/' + payment.participant.image"
+          v-bind:src="'http://anavaugm.com/' + payment.participant.image"
         />
       </b-col>
       <b-col md="2">
@@ -44,22 +41,16 @@
         <p>{{ payment.event.name }}</p>
         <br />
       </b-col>
-      <b-col class="pt-2" md="2">
-        <p>
-          {{
-            payment.verified_by.firstname + " " + payment.verified_by.lastname
-          }}
-        </p>
-        <br />
-      </b-col>
       <b-col class="pt-2" md="4">
-        <p>{{ payment.created_at }}</p>
+        <p>{{ getDateTime('datetime', payment.created_at) }}</p>
         <br />
       </b-col>
     </b-row>
   </div>
 </template>
 <script>
+import * as datetime from "./../../../../services/datetime";
+
 export default {
   name: "MainSchedule",
   computed: {
@@ -70,6 +61,9 @@ export default {
   methods: {
     getPayments() {
       this.$store.dispatch("payment/getAllPayment");
+    },
+    getDateTime: function(type, date) {
+      return datetime.getDateTime(type, date);
     },
   },
   created() {

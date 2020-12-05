@@ -1,101 +1,130 @@
 <template>
-    <div id="preloder">
-        <div class="preloader-content">
-            <b-row>
-                <b-col sm="4">
-                    <img class="logo" src="@/assets/logo-white.png"/>
-                </b-col>
-                <b-col sm="8">
-                    <b-container class="text-center">     
-                    <h4 class="title text-white">ANAVA 2020</h4>
-                    <div class="loader"></div>
-                    </b-container>
-                </b-col>
-            </b-row>
-        </div>
+  <div id="preloder">
+    <div class="preloader-content">
+      <b-row>
+        <b-col lg="6">
+          <img class="logo" src="@/assets/logo-anava-white.png" />
+        </b-col>
+        <b-col lg="6">
+          <b-container class="name">
+            <h4 class="title text-white">
+              ANAVA <br />
+              UGM 2020
+            </h4>
+            <div class="loader"></div>
+          </b-container>
+        </b-col>
+      </b-row>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
-    name : 'Loader'
-}
+  name: "Loader",
+};
 </script>
 
 <style scoped>
 .logo {
-    height: 80px;
-    width: 110px;
+  height: 120px;
+  width: 120px;
 }
 
 .title {
-    text-align:left;
+  text-align: left;
 }
 
 #preloder {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 999999;
-    background: rgb(1, 0, 17);
-    padding-top: 200px;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 999999;
+  background-image: linear-gradient(
+      to right top,
+      rgb(13, 33, 60),
+      rgb(52, 3, 62, 0.8)
+    );
+  padding-top: 200px;
 }
 
 .preloader-content {
-    width: 350px;
-    position: absolute;
-    top: calc(50% - 50px);
-    left: calc(50% - 175px);
+  width: 440px;
+  position: absolute;
+  top: calc(50% - 100px);
+  left: calc(50% - 230px);
+}
+
+.name {
+    margin: 0;
+    padding: 0;
 }
 
 .loader {
-    width: 30px;
-    height: 30px;
-    margin-top: 15px;
-    margin-left: 5px;
-    border-radius: 60px;
-    animation: loader 0.8s linear infinite;
-    -webkit-animation: loader 0.8s linear infinite;
+  width: 40px;
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 60px;
+  animation: loader 0.8s linear infinite;
+  -webkit-animation: loader 0.8s linear infinite;
 }
 
 @keyframes loader {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-        border: 4px solid #eee;
-        border-left-color: transparent;
-    }
-    50% {
-        -webkit-transform: rotate(180deg);
-        transform: rotate(180deg);
-        border: 4px solid #eee;
-        border-left-color: transparent;
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-        border: 4px solid #eee;
-        border-left-color: transparent;
-    }
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    border: 4px solid #eee;
+    border-left-color: transparent;
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    border: 4px solid #eee;
+    border-left-color: transparent;
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+    border: 4px solid #eee;
+    border-left-color: transparent;
+  }
 }
 
 @-webkit-keyframes loader {
-    0% {
-        -webkit-transform: rotate(0deg);
-        border: 4px solid #eee;
-        border-left-color: transparent;
-    }
-    50% {
-        -webkit-transform: rotate(180deg);
-        border: 4px solid #eee;
-        border-left-color: transparent;
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        border: 4px solid #eee;
-        border-left-color: transparent;
-    }
+  0% {
+    -webkit-transform: rotate(0deg);
+    border: 4px solid #eee;
+    border-left-color: transparent;
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+    border: 4px solid #eee;
+    border-left-color: transparent;
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    border: 4px solid #eee;
+    border-left-color: transparent;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  h1 {
+    font-size: 30px;
+  }
+  .name {
+      margin-top: 30px;
+      margin-left: calc(50% - 100px);
+      text-align: center;
+  }
+  .title {
+      display: none;
+  }
+  .name .loader {
+      margin-top: 20px;
+      margin-left: calc(50% - 140px);
+  }
 }
 </style>

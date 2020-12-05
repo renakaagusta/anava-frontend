@@ -27,17 +27,13 @@
             </b-col>
             <b-col class="pt-2" md="2">
                 <div v-if="participant.participant.document">
-                    <p class="text-warning" v-if="participant.participant.document.osis_card.status = 1">Menunggu</p>
-                    <p class="text-danger" v-if="participant.participant.document.osis_card.status = 2">Ditolak</p>
-                    <p class="text-success" v-if="participant.participant.document.osis_card.status = 3">Diterima</p>
+                    <p class="text-success" v-if="participant.participant.document.osis_card.status = 1"><i class="fas fa-check"></i></p>
                 </div>
                 <p v-else>-</p>
             </b-col>
             <b-col class="pt-2" md="2">
                 <div v-if="participant.participant.document">
-                    <p class="text-warning" v-if="participant.participant.document.image.status = 1">Menunggu</p>
-                    <p class="text-danger" v-if="participant.participant.document.image.status = 2">Ditolak</p>
-                    <p class="text-success" v-if="participant.participant.document.image.status = 3">Diterima</p>
+                    <p class="text-success" v-if="participant.participant.document.image.status = 1"><i class="fas fa-check"></i></p>
                 </div>
                 <p v-else>-</p>
             </b-col>

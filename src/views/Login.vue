@@ -95,21 +95,29 @@ export default {
       if (this.user.username && this.user.password) {
         this.$store.dispatch("auth/login", this.user).then(
           () => {
-            this.$router.push("/dashboard");
             Swal.fire({
               icon: "success",
               title: "Login berhasil",
               showConfirmButton: true,
-            }).then(() => {});
+            }).then(() => {
+              this.$router.push("/dashboard");
+            });
           },
           (error) => {
-            this.loading = false;
             this.message =
               (error.response &&
                 error.response.data &&
                 error.response.data.message) ||
               error.message ||
               error.toString();
+            Swal.fire({
+              icon: "error",
+              title: "Login gagal",
+              text: this.message,
+              showConfirmButton: true,
+            }).then(() => {
+              
+            });
           }
         );
       }

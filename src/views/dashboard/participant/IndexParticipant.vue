@@ -15,6 +15,8 @@ export default {
         user() {
             return this.$store.state.auth.user;
         }
+    },
+    created() {
     }
 }
 </script>

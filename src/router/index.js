@@ -9,6 +9,10 @@ import ChangePassword from "../views/ChangePassword.vue";
 import ConfirmationEmail from "../views/ConfirmationEmail.vue";
 
 import OSM from "../views/articles/OSM.vue";
+import Poster from "../views/articles/Poster.vue";
+import Rank1 from "../views/articles/Rank1.vue";
+import Sigma from "../views/articles/Sigma.vue";
+import OpenHouse from "../views/articles/OpenHouse.vue";
 
 import IndexArticle from "../views/dashboard/article/IndexArticle.vue";
 
@@ -24,6 +28,8 @@ import CreatePayment from "../views/dashboard/payment/CreatePayment.vue";
 import IndexAnnouncement from "../views/dashboard/announcement/IndexAnnouncement.vue";
 import MainAnnouncement from "../views/dashboard/announcement/MainAnnouncement.vue";
 import CreateAnnouncement from "../views/dashboard/announcement/CreateAnnouncement.vue";
+import DetailAnnouncement from "../views/dashboard/announcement/DetailAnnouncement.vue";
+import EditAnnouncement from "../views/dashboard/announcement/EditAnnouncement.vue";
 
 import IndexDocument from "../views/dashboard/document/IndexDocument.vue";
 import MainDocument from "../views/dashboard/document/MainDocument.vue";
@@ -93,6 +99,26 @@ const routes = [
         component: OSM,
       },
       {
+        path: "poster",
+        name: "Poster",
+        component: Poster,
+      },
+      {
+        path: "rank1",
+        name: "Rank1",
+        component: Rank1,
+      },
+      {
+        path: "sigma",
+        name: "Sigma",
+        component: Sigma,
+      },
+      {
+        path: "openhouse",
+        name: "OpenHouse",
+        component: OpenHouse,
+      },
+      {
         path: "dashboard",
         name: "Dashboard",
         component: Dashboard,
@@ -160,6 +186,16 @@ const routes = [
                 path: "add",
                 name: "CreateAnnouncement",
                 component: CreateAnnouncement,
+              },
+              {
+                path: ":id",
+                name: "DetailAnnouncement",
+                component: DetailAnnouncement,
+              },
+              {
+                path: ":id/edit",
+                name: "EditAnnouncement",
+                component: EditAnnouncement,
               },
             ],
           },

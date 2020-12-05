@@ -33,6 +33,17 @@ export const event = {
         }
       );
     },
+    joinEvent({ commit }, data) {
+      return EventService.joinEvent(data).then(
+        (response) => {
+          commit("addEvent", response.data.data);
+          return Promise.resolve(response.data.data);
+        },
+        (error) => {
+          return Promise.reject(error);
+        }
+      );
+    },
   },
   mutations: {
     setEvents(state, events) {
@@ -43,12 +54,29 @@ export const event = {
     },
     selectEvent(state, selectedEvent) {
       if (selectedEvent.roles.includes("admin")) {
-        if (selectedEvent.item >= 5) state.event = state.events[selectedEvent.item - 5];
+        if (selectedEvent.item >= 5)
+          state.event = state.events[selectedEvent.item - 5];
       } else {
-        if (selectedEvent.item >= 4) state.event = state.events[selectedEvent.item - 4];
+        if (selectedEvent.item >= 7)
+          state.event = state.events[selectedEvent.item - 7];
       }
 
+      console.log(state.event.name);
+
       localStorage.setItem("event", JSON.stringify(state.event));
+    },
+    addEvent(state, user) {
+      var oldUser = JSON.parse(localStorage.getItem("user"));
+      const newUser = user;
+      console.log(newUser);
+      oldUser.firstname = newUser.firstname;
+      oldUser.lastname = newUser.lastname;
+      oldUser.password = newUser.password;
+      oldUser.verification = newUser.verification;
+      oldUser.participant = newUser.participant;
+      state.user = oldUser;
+      console.log(oldUser);
+      localStorage.setItem("user", JSON.stringify(oldUser));
     },
   },
 };

@@ -4,6 +4,7 @@ export const announcement = {
   namespaced: true,
   state: {
     announcements: [],
+    participantAnnouncements: [],
     announcement: {}
   },
   getters: {
@@ -14,6 +15,39 @@ export const announcement = {
       return AnnouncementService.getAllAnnouncement().then(
         (response) => {
           commit("setAnnouncements", response.data.data);
+          return Promise.resolve(response.data.data);
+        },
+        (error) => {
+          return Promise.reject(error);
+        }
+      );
+    },
+    getGeneralAnnouncement({ commit }) {
+      return AnnouncementService.getGeneralAnnouncement().then(
+        (response) => {
+          commit("setAnnouncements", response.data.data);
+          return Promise.resolve(response.data.data);
+        },
+        (error) => {
+          return Promise.reject(error);
+        }
+      );
+    },
+    getAllAnnouncementByStage({ commit }, stageId) {
+      return AnnouncementService.getAllAnnouncementByStage(stageId).then(
+        (response) => {
+          commit("setAnnouncements", response.data.data);
+          return Promise.resolve(response.data.data);
+        },
+        (error) => {
+          return Promise.reject(error);
+        }
+      );
+    },
+    getAllAnnouncementByParticipant({ commit }, participantId) {
+      return AnnouncementService.getAllAnnouncementByParticipant(participantId).then(
+        (response) => {
+          commit("setParticipantAnnouncements", response.data.data);
           return Promise.resolve(response.data.data);
         },
         (error) => {
@@ -33,7 +67,6 @@ export const announcement = {
       );
     },
     createAnnouncement({ commit },announcement) {
-      alert(JSON.stringify(announcement))
       return AnnouncementService.createAnnouncement(announcement).then(
         (response) => {
           commit("createAnnouncement", response.data.data);
@@ -48,6 +81,9 @@ export const announcement = {
   mutations: {
     setAnnouncements(state, announcements) {
       state.announcements = announcements;
+    },
+    setParticipantAnnouncements(state, announcements) {
+      state.participantAnnouncements = announcements;
     },
     setAnnouncement(state, announcement) {
       state.announcement = announcement;

@@ -1,11 +1,12 @@
 <template>
   <b-container>
     <div class="bg-light text-dark mb-3 rounded shadow-sm header">
-      <h3
-        class="text-left d-inline float-left">
+      <h3 class="text-left d-inline float-left">
         <i class="fas fa-trophy"></i>
-        {{ getStageName(stage.name) }}
+        {{ event.name }}
+        <small> {{ getStageName(stage.name) }}</small>
       </h3>
+      <br />
     </div>
     <hr />
     <router-view :key="$route.fullPath" />
@@ -14,12 +15,14 @@
 <script>
 export default {
   name: "IndexStage",
+  data() {
+    return {
+      event: {},
+    };
+  },
   computed: {
     stage() {
       return this.$store.state.stage.stage;
-    },
-    event() {
-      return JSON.parse(localStorage.getItem("event"));
     },
   },
   methods: {
@@ -27,15 +30,45 @@ export default {
       this.$store.dispatch("stage/getStage", this.$route.params.idStage);
     },
     getStageName(name) {
-      switch (name) {
-        case "preliminary":
-          name = "Penyisihan";
+      switch (this.event.name) {
+        case "OSM":
+          switch (name) {
+            case "preliminary":
+              name = "Penyisihan";
+              break;
+            case "semifinal":
+              name = "Semifinal";
+              break;
+            case "final":
+              name = "Final";
+              break;
+          }
           break;
-        case "semifinal":
-          name = "Semifinal";
+        case "The One":
+          switch (name) {
+            case "preliminary":
+              name = "Babak Gugur";
+              break;
+            case "semifinal":
+              name = "Babak Paket";
+              break;
+          }
           break;
-        case "final":
-          name = "Final";
+        case "Started":
+          switch (name) {
+            case "preliminary":
+              name = "Penyisihan";
+              break;
+            case "semifinal":
+              name = "Final";
+              break;
+          }
+          break;
+        case "Sigma":
+          name = "";
+          break;
+        case "Open House":
+          name = "";
           break;
       }
       return name;
@@ -43,9 +76,13 @@ export default {
   },
   created() {
     this.getStage();
+
+    const that = this;
+
+    setInterval(() => {
+      that.event = JSON.parse(localStorage.getItem("event"));
+    }, 100);
   },
-  updated() {
-  }
 };
 </script>
 <style scoped>

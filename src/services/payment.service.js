@@ -7,6 +7,9 @@ class PaymentService {
   getAllPayment() {
     return axios.get(API_URL + 'all', header());
   }
+  getAllPaymentByParticipant(participantId) {
+    return axios.get(API_URL + 'participant/' +participantId, header());
+  }
   getPayment(id) {
     return axios.get(API_URL + id, header());
   }

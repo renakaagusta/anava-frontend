@@ -28,7 +28,6 @@ export const stage = {
           return Promise.resolve(response.data.data);
         },
         (error) => {
-          alert("error");
           return Promise.reject(error);
         }
       );
@@ -48,6 +47,7 @@ export const stage = {
   mutations: {
     setStages(state, stages) {
       state.stages = stages;
+      localStorage.setItem("stages", JSON.stringify(state.stages));
     },
     setStage(state, stage) {
       state.stage = stage;
