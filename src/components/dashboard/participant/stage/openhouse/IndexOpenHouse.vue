@@ -3,24 +3,14 @@
     <b-container class="bg-white p-3 rounded shadow-sm mb-4" v-if="step == 0">
       <b-container class="border">
         <vue-tabs>
-          <v-tab title="Jadwal">
-            <table class="table table-border">
-              <tr class="border">
-                <td><b>Mulai pengerjaan</b></td>
-                <td>-</td>
-              </tr>
-              <tr class="border">
-                <td><b>Selesai pengerjaan</b></td>
-                <td>-</td>
-              </tr>
-            </table>
-          </v-tab>
-          <v-tab title="Data Peserta">
+           <v-tab title="Data Peserta">
             <table class="table table-border">
               <tr class="border">
                 <td><b>Status Pembayaran</b></td>
-                <td v-if="stageInformationOfParticipant.number == null">-</td>
-                <td v-if="stageInformationOfParticipant.number != null">
+                <td v-if="stageInformationOfParticipant.number.length == 0">
+                  -
+                </td>
+                <td v-if="stageInformationOfParticipant.number > 0">
                   <i class="fas fa-check text-success"></i>
                 </td>
               </tr>
@@ -45,32 +35,27 @@
               </tr>
             </table>
           </v-tab>
-          <v-tab title="Surat Orisinalitas"
-            ><div id="dropFileForm">
-              <input
-                type="file"
-                id="fileInput"
-                ref="osis_card"
-                @change="addFile('osis_card')"
-              />
-
-              <label for="fileInput" id="fileLabel">
-                <i class="fa fa-upload fa-5x"></i>
+          <v-tab title="Jadwal">
+            <table class="table table-border">
+              <tr class="border">
+                <td><b>Mulai pengerjaan</b></td>
+                <td>-</td>
+              </tr>
+              <tr class="border">
+                <td><b>Selesai pengerjaan</b></td>
+                <td>-</td>
+              </tr>
+            </table>
+          </v-tab>
+          <v-tab title="Meet">
+            <div
+              class="container bg-white p-3 text-center text-dark rounded-lg mt-2 mb-2"
+            >
+              <p>
+                <i class="fas fa-exclamation-triangle fa-2x"></i>
                 <br />
-                <span id="fileLabelText">
-                  Unggah surat orisinalitas
-                </span>
-                <br />
-                <span id="uploadStatus"></span>
-              </label>
-
-              <input
-                type="submit"
-                value="Upload"
-                class="btn btn-purple"
-                @click="uploadFile('osis_card')"
-                disabled="true"
-              />
+                Link meet belum diunggah
+              </p>
             </div>
           </v-tab>
           <v-tab title="Pengumuman">
@@ -81,39 +66,6 @@
                 <i class="fas fa-exclamation-triangle fa-2x"></i>
                 <br />
                 Belum ada pengumuman
-              </p>
-            </div>
-          </v-tab>
-          <v-tab title="Dokumen">
-            <b-container class="text-left p-3 border mt-2">
-              <b-container class="bg-white p-3 rounded shadow-sm border">
-                <a
-                  target="blank"
-                  href="http://193.168.195.181/STARTED/guidebook.pdf"
-                >
-                  <i class="fa fa-download fa-3x text-dark"></i>
-                  <h2 class="d-inline ml-4">Guidebook</h2>
-                </a>
-              </b-container>
-              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
-                <a
-                  target="blank"
-                  href="http://193.168.195.181/STARTED/surat-orisinalitas.pdf"
-                >
-                  <i class="fa fa-download fa-3x text-dark"></i>
-                  <h2 class="d-inline ml-4">Surat Orisinalitas</h2>
-                </a>
-              </b-container>
-            </b-container>
-          </v-tab>
-          <v-tab title="Tutorial">
-            <div
-              class="container bg-white p-3 text-center text-dark rounded-lg mt-2 mb-2"
-            >
-              <p>
-                <i class="fas fa-exclamation-triangle fa-2x"></i>
-                <br />
-                Tutorial belum diunggah
               </p>
             </div>
           </v-tab>

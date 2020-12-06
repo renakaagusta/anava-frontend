@@ -43,7 +43,7 @@
       <b-col md="1">
         <img
           class="profile"
-          v-bind:src="'http://193.168.195.181/' + participant.image"
+          v-bind:src="'http://anavaugm.com/' + participant.image"
         />
       </b-col>
       <b-col md="2">
@@ -74,6 +74,8 @@ export default {
   name: "ListParticipantStage",
   data() {
     return {
+      event: {},
+      stage: {},
       outline: {
         participants: 0,
         pay: 0,
@@ -82,23 +84,20 @@ export default {
       indexStage: 0,
     };
   },
-  computed: {
-    event() {
-      return this.$store.state.event.event;
-    },
-    stage() {
-      return this.$store.state.stage.stage;
-    },
-  },
   methods: {
     getStage() {
       this.$store
         .dispatch("stage/getStage", this.$route.params.idStage)
         .then(() => {
+          this.stage = this.$store.state.stage.stage;
+          this.outline.participants = 0;
+          this.outline.pay = 0;
           this.stage.participants.forEach((participant) => {
             this.outline.participants++;
             participant.participant.events.forEach((event) => {
-              if (event.paymentStatus == 1) this.outline.pay++;
+              if (event.id == this.event._id &&event.number) {
+                this.outline.pay++;
+              }
             });
           });
         });
@@ -107,23 +106,33 @@ export default {
       var paymentStatus = false;
       participant.participant.events.forEach((event) => {
         event.stages.forEach((stage) => {
-          if (stage.id == this.stage._id && event.paymentStatus == 1)
-            paymentStatus = true;
+          if (stage.id == this.stage._id && event.number) paymentStatus = true;
         });
       });
       return paymentStatus;
     },
     getNumberParticipant(participant) {
-      var indexEvent = 0;
+      var number = false;
       participant.participant.events.forEach((event) => {
-        if (event.id == this.event._id) return indexEvent;
-        indexEvent++;
+        if (event.id == this.event._id) {
+          number = event.number;
+        }
       });
-      return false;
+      return number;
     },
   },
+  updated() {
+    if (this.$route.params.idStage != this.stage._id) {
+      this.getStage();
+    }
+  },
   created() {
-    this.getStage();
+    const that = this;
+
+    setInterval(() => {
+      that.event = JSON.parse(localStorage.getItem("event"));
+      that.stage = this.$store.state.stage.stage;
+    }, 100);
   },
 };
 </script>

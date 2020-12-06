@@ -31,7 +31,7 @@
               <b-card
                 title="Kartu Pelajar"
                 :img-src="
-                  'http://193.168.195.181/osis_card_' + participant.id + '.jpg'
+                  'http://anavaugm.com/osis_card_' + participant.id + '.jpg'
                 "
                 style="width: 500px;"
               >
@@ -59,19 +59,17 @@
                   <span id="uploadStatus"></span>
                 </label>
 
-                <input
-                  type="submit"
-                  value="Upload"
-                  class="uploadButton"
-                  @click="uploadFile('image')"
-                />
+                 <button class="uploadButton" @click="uploadFile('image')">
+                  <b-spinner v-if="loading2" label="Spinning"></b-spinner>
+                  <p v-if="!loading2" class="d-inline">Unggah</p>
+                </button>
               </div>
             </div>
             <div v-else>
               <b-card
                 title="Pas foto"
                 :img-src="
-                  'http://193.168.195.181/image_' + participant.id + '.jpg'
+                  'http://anavaugm.com/image_' + participant.id + '.jpg'
                 "
                 style="width: 500px;"
               >

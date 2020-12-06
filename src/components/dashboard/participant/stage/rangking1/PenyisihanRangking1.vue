@@ -3,24 +3,14 @@
     <b-container class="bg-white p-3 rounded shadow-sm mb-4" v-if="step == 0">
       <b-container class="border">
         <vue-tabs>
-          <v-tab title="Jadwal">
-            <table class="table table-border">
-              <tr class="border">
-                <td><b>Mulai pengerjaan</b></td>
-                <td>-</td>
-              </tr>
-              <tr class="border">
-                <td><b>Selesai pengerjaan</b></td>
-                <td>-</td>
-              </tr>
-            </table>
-          </v-tab>
           <v-tab title="Data Peserta">
             <table class="table table-border">
               <tr class="border">
                 <td><b>Status Pembayaran</b></td>
-                <td v-if="stageInformationOfParticipant.number == null">-</td>
-                <td v-if="stageInformationOfParticipant.number != null">
+                <td v-if="stageInformationOfParticipant.number.length == 0">
+                  -
+                </td>
+                <td v-if="stageInformationOfParticipant.number > 0">
                   <i class="fas fa-check text-success"></i>
                 </td>
               </tr>
@@ -42,6 +32,18 @@
                     )
                   }}
                 </td>
+              </tr>
+            </table>
+          </v-tab>
+          <v-tab title="Jadwal">
+            <table class="table table-border">
+              <tr class="border">
+                <td><b>Mulai pengerjaan</b></td>
+                <td>-</td>
+              </tr>
+              <tr class="border">
+                <td><b>Selesai pengerjaan</b></td>
+                <td>-</td>
               </tr>
             </table>
           </v-tab>
@@ -89,7 +91,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://193.168.195.181/THE ONE/guidebook.pdf"
+                  href="http://anavaugm.com/THE ONE/guidebook.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Guidebook</h2>
@@ -98,7 +100,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://193.168.195.181/THE ONE/pakta-integritas.pdf"
+                  href="http://anavaugm.com/THE ONE/pakta-integritas.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Pakta Integritas</h2>
@@ -121,7 +123,7 @@
       </b-container>
 
       <input
-      type="submit"
+        type="submit"
         value="Mulai"
         class="btn btn-purple mt-3"
         @click="nextStep()"
@@ -302,6 +304,7 @@ export default {
         event.stages.forEach((stage) => {
           if (stage.id == this.stage._id) {
             this.stageInformationOfParticipant = stage;
+            this.stageInformationOfParticipant.number = event.number;
           }
         });
       });

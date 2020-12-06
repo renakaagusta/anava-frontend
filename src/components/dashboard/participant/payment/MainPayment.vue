@@ -80,7 +80,7 @@
               <p class="text-left p-3">
                 1. Melakukan pembayaran ke Nomor Rekening di bawah ini <br />
                 2. Melakukan konfirmasi ke CP event dengan format <br /><b
-                  >Nama Lengkap_Email_Tanggal Transfer_Waktu Transfer Asal
+                  >Nama Lengkap_Email_Tanggal Transfer_Waktu Transfer_Asal
                   Sekolah</b
                 ><br />
                 3. Tunggu email bukti pembayaran dari panitia <br />
@@ -92,7 +92,7 @@
               <h3>Rekening Pembayaran</h3>
               <hr />
               <div
-                style="border: 1px solid #ddd; border-radius:5px; padding: 5px;"
+                style="border: 1px solid #ddd; border-radius:5px; padding: 10px; padding-left: 20px; padding-right: 20px; margin-bottom: 10px;"
               >
                 <b-row>
                   <b-col cols="3"
@@ -108,16 +108,73 @@
                   </b-col>
                 </b-row>
               </div>
+              <div
+                v-if="events[payment.eventIndex].name == 'Sigma'"
+                style="border: 1px solid #ddd; border-radius:5px; padding: 10px; padding-left: 20px; padding-right: 20px; margin-bottom: 10px;"
+              >
+                <b-row>
+                  <b-col cols="3"
+                    ><img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Logo_ovo_purple.svg/1024px-Logo_ovo_purple.svg.png"
+                      style="width:150px;height:60px;margin-top:10px;"
+                  /></b-col>
+                  <b-col cols="9">
+                    <div class="text-left p-3">
+                      <b>No. Rekening: </b>1020007964346<br />
+                      <b>Atas Nama: </b>Julius Satya Ratnandi<br />
+                    </div>
+                  </b-col>
+                </b-row>
+              </div>
+              <div
+                v-if="events[payment.eventIndex].name == 'Sigma'"
+                style="border: 1px solid #ddd; border-radius:5px; padding: 10px; padding-left: 20px; padding-right: 20px; margin-bottom: 10px;"
+              >
+                <b-row>
+                  <b-col cols="3"
+                    ><img
+                      src="https://1.bp.blogspot.com/-NwSMFZdU8l4/XZxj8FxN6II/AAAAAAAABdM/oTjizwstkRIqQZ7LOZSPMsUG3EYXF3E4wCEwYBhgL/s1600/logo-gopay-vector.png"
+                      style="width:150px;height:60px;margin-top:10px;"
+                    />
+                  </b-col>
+                  <b-col cols="9">
+                    <div class="text-left p-3">
+                      <b>No. Rekening: </b>1020007964346<br />
+                      <b>Atas Nama: </b>Julius Satya Ratnandi<br />
+                    </div>
+                  </b-col>
+                </b-row>
+              </div>
+              <div
+                v-if="events[payment.eventIndex].name == 'Sigma'"
+                style="border: 1px solid #ddd; border-radius:5px; padding: 10px; padding-left: 20px; padding-right: 20px; margin-bottom: 10px;"
+              >
+                <b-row>
+                  <b-col cols="3"
+                    ><img
+                      src="https://upload.wikimedia.org/wikipedia/commons/5/52/Dana_logo.png"
+                      style="width:150px;height:60px;margin-top:10px;"
+                  /></b-col>
+                  <b-col cols="9">
+                    <div class="text-left p-3">
+                      <b>No. Rekening: </b>1020007964346<br />
+                      <b>Atas Nama: </b>Julius Satya Ratnandi<br />
+                    </div>
+                  </b-col>
+                </b-row>
+              </div>
             </div>
           </b-col>
-          <b-col md="12 mt-3">
-            <div class="container bg-white p-3 text-center rounded-lg  border">
+
+          <b-col steps="2" md="12 mt-3">
+            <div class="container bg-white p-3 text-center rounded-lg  border" style="padding: 10px;">
               <h3>Contact Person</h3>
               <hr />
 
               <b-row>
-                <b-col cols="1 p-3"><i class="fa fa-user fa-5x"></i></b-col>
-                <b-col cols="11">
+                <b-col cols="3"
+                class="text-center"><i class="fa fa-user fa-5x"></i></b-col>
+                <b-col cols="6">
                   <div class="text-left p-3">
                     <b>Nama: </b
                     >{{ events[payment.eventIndex].contact_person.name }}<br />
@@ -198,6 +255,16 @@ export default {
       });
 
       if (this.newEvent) this.joinEvent();
+    },
+    checkJoinEvent() {
+      /*var joinEvent = false;
+
+      if (this.user.participant.events.length > 0)
+        this.user.participant.events.forEach((event) => {
+          if (payment.event.name == name) joinEvent = true;
+        });
+
+      return joinEvent;*/
     },
     getDateTime: function(type, date) {
       return datetime.getDateTime(type, date);

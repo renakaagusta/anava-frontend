@@ -1,9 +1,9 @@
 <template>
   <div>
     <AdminIndexAnnouncement v-if="user.roles.includes('admin')" />
+    <ParticipantIndexAnnouncement v-if="user.roles.includes('participant')" />
     <div v-if="user.roles.includes('participant')">
-      <ParticipantIndexAnnouncement v-if="(user.verification == 1)"/>
-      <b-col lg="12 mt-1" v-if="(user.verification == 0)">
+      <b-col lg="12" v-if="user.verification == 0">
         <div class="container bg-white p-3 text-center rounded-lg shadow">
           <p>
             <i style="font-size:30px" class="far fa-envelope"></i>

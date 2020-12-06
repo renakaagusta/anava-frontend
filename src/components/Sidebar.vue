@@ -8,7 +8,7 @@
               <b-col cols="2" lg="3">
                 <img
                   class="img-profile"
-                  v-bind:src="'http://193.168.195.181/' + user.image"
+                  v-bind:src="'http://anavaugm.com/' + user.image"
                 />
               </b-col>
               <b-col cols="2" class="sidebar-text text-left" lg="8">
@@ -260,7 +260,7 @@
                       <div class="inline"><i class="fas fa-trophy"></i></div>
                     </b-col>
                     <b-col class="sidebar-text" lg="10">
-                      Penyisihan
+                      Pekan Kreativitas
                     </b-col>
                   </b-row>
                 </router-link>
@@ -507,7 +507,7 @@
                       <div class="inline"><i class="fas fa-trophy"></i></div>
                     </b-col>
                     <b-col class="sidebar-text" lg="10">
-                      Penyisihan
+                      Pekan Kreativitas
                     </b-col>
                   </b-row>
                 </router-link>

@@ -19,8 +19,10 @@
             <table class="table table-border">
               <tr class="border">
                 <td><b>Status Pembayaran</b></td>
-                <td v-if="stageInformationOfParticipant.number == null">-</td>
-                <td v-if="stageInformationOfParticipant.number != null">
+                <td v-if="stageInformationOfParticipant.number.length == 0">
+                  -
+                </td>
+                <td v-if="stageInformationOfParticipant.number > 0">
                   <i class="fas fa-check text-success"></i>
                 </td>
               </tr>
@@ -89,7 +91,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://193.168.195.181/STARTED/guidebook.pdf"
+                  href="http://anavaugm.com/STARTED/guidebook.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Guidebook</h2>
@@ -98,7 +100,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://193.168.195.181/STARTED/surat-orisinalitas.pdf"
+                  href="http://anavaugm.com/STARTED/surat-orisinalitas.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Surat Orisinalitas</h2>
@@ -302,6 +304,7 @@ export default {
         event.stages.forEach((stage) => {
           if (stage.id == this.stage._id) {
             this.stageInformationOfParticipant = stage;
+            this.stageInformationOfParticipant.number = event.number;
           }
         });
       });

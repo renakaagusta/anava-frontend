@@ -23,7 +23,7 @@
               </b-col>
               <b-col md="3" class="p-3">
                 <router-link
-                  :to="{ name: 'DetailAnnouncement' }"
+                  :to="{ name: 'DetailAnnouncement', params: {id:announcement._id} }"
                   class="btn btn-primary"
                   ><i class="fas fa-search"></i>&nbsp;Detail</router-link
                 >
@@ -60,7 +60,7 @@
               </b-col>
               <b-col md="3" class="p-3">
                 <router-link
-                  :to="{ name: 'DetailAnnouncement' }"
+                  :to="{ name: 'DetailAnnouncement', params:{id:announcement._id} }"
                   class="btn btn-primary"
                   ><i class="fas fa-search"></i>&nbsp;Detail</router-link
                 >
@@ -107,6 +107,10 @@ export default {
       this.$store.dispatch(
         "announcement/getAllAnnouncementByParticipant",
         this.participant.id
+      ).then(
+        (response) =>{
+          console.log(response)
+        }
       );
     },
     getDateTime: function(type, date) {

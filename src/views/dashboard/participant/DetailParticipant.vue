@@ -97,7 +97,7 @@
           v-if="participant.participant.document.osis_card == 1"
           title="Kartu Osis"
           :img-src="
-            'http://193.168.195.181/osis_card_' + participant._id + '.jpg'
+            'http://anavaugm.com/osis_card_' + participant._id + '.jpg'
           "
           style="width: 500px;"
         >
@@ -116,7 +116,7 @@
         <b-card
           v-if="participant.participant.document.image == 1"
           title="Kartu Osis"
-          :img-src="'http://193.168.195.181/image_' + participant._id + '.jpg'"
+          :img-src="'http://anavaugm.com/image_' + participant._id + '.jpg'"
           style="width: 500px;"
         >
         </b-card>
@@ -154,7 +154,7 @@
           </small><br/>
           <small>
             Nomor Peserta:
-            <p v-if="event.number">{{ event.number }}</p>
+            <p class="d-inline" v-if="event.number">{{ event.number }}</p>
             <p class="d-inline" v-else>-</p>
           </small>
           <div v-for="stage in event.stages" :key="stage.id">
@@ -215,7 +215,7 @@ export default {
         case "Started":
           switch (name) {
             case "preliminary":
-              name = "Penyisihan";
+              name = "Pekan Kreativitas";
               break;
             case "semifinal":
               name = "Final";

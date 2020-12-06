@@ -2,7 +2,7 @@
   <b-container>
     <div class="bg-light text-dark mb-3 rounded shadow-sm header">
       <h3 class="text-left d-inline float-left">
-        <i class="far fa-copy"></i>
+        <i class="far fa-image"></i>
         Twibbon
       </h3>
     </div>
@@ -23,7 +23,7 @@
       <a
         class="btn btn-primary ml-3 mt-3"
         target="blank"
-        href="http://193.168.195.181/twibbon.png"
+        href="http://anavaugm.com/twibbon.png"
       >
         <i class="fa fa-download" />&nbsp;Unduh Twibbon Anava
       </a>
@@ -66,11 +66,9 @@ export default {
 
       var that = this;
 
-      // listen for 'load' events on the FileReader
       reader.addEventListener(
         "load",
         function() {
-          // change the preview's src to be the "result" of reading the uploaded file (below)
           preview.src = reader.result;
           that.uploaded = 1;
           console.log(that.uploaded);
@@ -78,8 +76,6 @@ export default {
         false
       );
 
-      // if there's a file, tell the reader to read the data
-      // which triggers the load event above
       if (file) {
         reader.readAsDataURL(file);
       }

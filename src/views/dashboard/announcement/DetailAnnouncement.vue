@@ -5,10 +5,10 @@
       Umum
     </p>
     <p v-if="announcement.stage != null">
-      {{ "Peserta " + getEventName(announcement.stage) }}
+      {{ "Kepada peserta " + getEventName(announcement.stage._id) }}
     </p>
     <p v-if="announcement.participant != null">
-      {{ announcement.participant.username }}
+      {{ "Kepada " + announcement.participant.username }}
     </p>
     <br />
     <small>{{ getDateTime("datetime", announcement.created_at) }}</small>
@@ -69,7 +69,7 @@ export default {
               case "Started":
                 switch (stage.name) {
                   case "preliminary":
-                    name = event.name + " Penyisihan";
+                    name = event.name + " Pekan Kreativitas";
                     break;
                   case "semifinal":
                     name = event.name + " Final";

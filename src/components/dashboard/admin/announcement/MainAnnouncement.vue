@@ -13,13 +13,14 @@
     >
       <b-col md="9" class="text-left p-3">
         <h4 class="text-bold">{{ announcement.title }}</h4>
-        <p v-if="announcement"></p>
-        
-        <p class="text-secondary">{{ getDateTime("datetime", announcement.created_at) }}</p>
+        <br />
+        <p class="text-secondary">
+          {{ getDateTime("datetime", announcement.created_at) }}
+        </p>
       </b-col>
       <b-col md="3" class="p-3">
         <router-link
-          :to="{ name: 'DetailAnnouncement', params: {id: announcement._id} }"
+          :to="{ name: 'DetailAnnouncement', params: { id: announcement._id } }"
           class="btn btn-primary"
           ><i class="fas fa-search"></i>&nbsp;Detail</router-link
         >
@@ -36,6 +37,9 @@ export default {
     announcements() {
       return this.$store.state.announcement.announcements;
     },
+    events() {
+      return this.$store.state.event.events;
+    },
   },
   methods: {
     getAnnouncements() {
@@ -43,6 +47,58 @@ export default {
     },
     getDateTime: function(type, date) {
       return datetime.getDateTime(type, date);
+    },
+    getEventName(stageId) {
+      var name = "";
+      console.log("stage participant" + stageId);
+      this.events.forEach((event) => {
+        event.stages.forEach((stage) => {
+          if (stageId == stage._id) {
+            switch (event.name) {
+              case "OSM":
+                switch (stage.name) {
+                  case "preliminary":
+                    name = event.name + " Penyisihan";
+                    break;
+                  case "semifinal":
+                    name = event.name + " Semifinal";
+                    break;
+                  case "final":
+                    name = event.name + " Final";
+                    break;
+                }
+                break;
+              case "The One":
+                switch (stage.name) {
+                  case "preliminary":
+                    name = event.name + " Babak Gugur";
+                    break;
+                  case "semifinal":
+                    name = event.name + " Babak Paket";
+                    break;
+                }
+                break;
+              case "Started":
+                switch (stage.name) {
+                  case "preliminary":
+                    name = event.name + " Penyisihan";
+                    break;
+                  case "semifinal":
+                    name = event.name + " Final";
+                    break;
+                }
+                break;
+              case "Sigma":
+                name = event.name
+                break;
+              case "Open House":
+                name = event.name
+                break;
+            }
+          }
+        });
+      });
+      return name;
     },
   },
   created() {

@@ -57,7 +57,7 @@ export default {
         case "Started":
           switch (name) {
             case "preliminary":
-              name = "Penyisihan";
+              name = "Pekan Kreativitas";
               break;
             case "semifinal":
               name = "Final";
