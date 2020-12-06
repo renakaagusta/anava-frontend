@@ -12,13 +12,13 @@
       <NavBar />
       <div class="sub-page" id="home">
         <h1 class="text-white" style="padding-top:200px;">
-          Selamat datang di ANAVA 2020
+          Selamat datang di ANAVA #15
         </h1>
         <div class="rotate">
           <span>
-            Tagline 3<br />
-            Tagline 2<br />
-            Tagline 1
+            with Statistics!<br />
+            Let's Find Your True Self<br />
+            Dig Your Curiosity
           </span>
         </div>
         <b-container class="scroll-down text-white">
@@ -440,7 +440,7 @@ b-button {
   overflow: hidden;
   display: inline-block;
   min-width: 400px;
-  left: calc(50% - 200px);
+  left: calc(50% - 300px);
   margin-bottom: 50px;
 }
 

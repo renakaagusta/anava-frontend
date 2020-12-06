@@ -23,14 +23,13 @@
       <a
         class="btn btn-primary ml-3 mt-3"
         target="blank"
-        href="http://193.168.195.181.com/twibbon.png"
+        href="http://localhost:8080/twibbon.png"
       >
         <i class="fa fa-download" />&nbsp;Unduh Twibbon Anava
       </a>
     </b-container>
     <div v-if="user.verification == 0">
-      <div class="mt-3">
-        <div class="bg-white p-3 text-center text-dark rounded-lg shadow">
+        <div class="bg-white mt-3 p-3 pb-5 text-center text-dark rounded-lg shadow">
           <p>
             <i style="font-size:30px" class="far fa-envelope"></i>
             <br />
@@ -38,7 +37,6 @@
             Email Anda Terlebih Dahulu!
           </p>
         </div>
-      </div>
     </div>
   </b-container>
 </template>

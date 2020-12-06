@@ -169,7 +169,7 @@
                       <p>Anava</p>
                       <p>
                         <a href="https://www.niagahoster.co.id/"
-                          >193.168.195.181.com</a
+                          >193.168.195.181</a
                         >
                       </p>
                     </td>
@@ -209,7 +209,7 @@
         <b-col md="1">
           <img
             class="profile"
-            v-bind:src="'http://193.168.195.181.com/' + participant.image"
+            v-bind:src="'http://193.168.195.181/' + participant.image"
           />
         </b-col>
         <b-col md="2">

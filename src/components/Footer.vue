@@ -21,21 +21,28 @@
             <h5>Hubungi kami</h5>
             <ul>
               <li>
-                <a href="#">
+                <a target="blank" href="https://www.instagram.com/anavaugm/">
                   <i class="fab fa-instagram"></i>
                   Instagram
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a target="blank" href="https://www.facebook.com/anavaugm">
                   <i class="fab fa-facebook-f"></i>
                   Facebook
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a target="blank" href="anava.mipa.ugm@gmail.com">
                   <i class="far fa-envelope"></i>
                   Email
+                </a>
+              </li>
+              <li>
+                <a target="blank" href="https://wa.me/6287777006263">
+                  <i class="fab fa-whatsapp"></i>
+                  Whatsapp<br/>
+                  087777006263 (Nuni)
                 </a>
               </li>
             </ul>
@@ -44,10 +51,16 @@
         <div class="col-lg-4 text-left">
           <div class="footer-widget">
             <h5>Tentang Kami</h5>
+
             <ul>
               <li>
-                Alamat : <br />Bulaksumur, Caturtunggal, Kec. Depok, Kabupaten
-                Sleman, Daerah Istimewa Yogyakarta 55281
+                HIMASTA FMIPA UGM Sekip Utara <br />(<a target="blank" href="https://himasta.ugm.ac.id"
+                  >himasta.ugm.ac.id</a
+                >)
+              </li>
+              <li>
+                <br/>Alamat : <br />PO. BOX BLS-21 Bulaksumur, Caturtunggal, Depok,
+                Sleman Yogyakarta 55281
               </li>
             </ul>
           </div>

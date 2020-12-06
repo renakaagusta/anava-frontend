@@ -73,7 +73,7 @@ export default {
     },
     mounted() {
     axios
-        .get('http://193.168.195.181.com:3000/api/v1/session/all')
+        .get('http://193.168.195.181:3000/api/v1/session/all')
         .then(res => {
             res.data.data.forEach((event)=>{
                 this.timeline.push({
