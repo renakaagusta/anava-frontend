@@ -66,7 +66,6 @@
               Pelaksanaan lomba
             </h2>
             <h5 class="text-white">
-              Pekan Kreativitas : <br />
               Minggu, 31 Januari 2021
             </h5>
           </b-container>
