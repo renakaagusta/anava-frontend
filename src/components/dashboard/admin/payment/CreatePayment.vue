@@ -1,186 +1,198 @@
 <template>
-  <div>
-    <div id="mail" class="bg-white" v-if="step == 3">
-      <body
-        width="100%"
-        style="margin: 0; mso-line-height-rule: exactly;"
-        id="payment-success"
-      >
-        <center style="width: 100%; background: #F7F7F7; text-align: left;">
-          <table
-            role="presentation"
-            cellspacing="0"
-            cellpadding="0"
-            border="0"
-            align="center"
-            width="600"
-            style="margin: auto;"
-            class="email-container"
-          >
-            <tr>
-              <td
-                style="padding: 20px 0; text-align: center; background: #ffffff;"
-              >
-                <img
-                  src="https://himasta.ugm.ac.id/wp-content/uploads/sites/868/2014/11/anava.png"
-                  width="auto"
-                  height="100"
-                  alt="alt_text"
-                  border="0"
-                  style="heightimg: auto; background: #ffffff; font-family: sans-serif; font-size: 14px; line-height: 140%; color: #555555; height: 100px"
-                />
-              </td>
-            </tr>
-          </table>
-
-          <table
-            role="presentation"
-            cellspacing="0"
-            cellpadding="0"
-            border="0"
-            align="center"
-            width="600"
-            style="margin: auto;"
-            class="email-container"
-          >
-            <tr>
-              <td bgcolor="#ffffff" align="center"></td>
-            </tr>
-            <tr>
-              <td
-                bgcolor="#ffffff"
-                style="padding: 40px 20px 20px; text-align: center;"
-              >
-                <h1
-                  style="margin: 0; font-family: sans-serif; font-size: 20px; line-height: 125%; color: #333333; font-weight: bold;"
+  <div class="pb-3">
+    <div v-if="step == 3">
+      <div id="mail" class="bg-white">
+        <body
+          width="100%"
+          style="margin: 0; mso-line-height-rule: exactly;"
+          id="payment-success"
+        >
+          <center style="width: 100%; background: #F7F7F7; text-align: left;">
+            <table
+              role="presentation"
+              cellspacing="0"
+              cellpadding="0"
+              border="0"
+              align="center"
+              width="600"
+              style="margin: auto;"
+              class="email-container"
+            >
+              <tr>
+                <td
+                  style="padding: 20px 0; text-align: center; background: #ffffff;"
                 >
-                  Pembayaran Biaya Pendaftaran Sukses
-                </h1>
-              </td>
-            </tr>
-            <tr>
-              <td
-                bgcolor="#ffffff"
-                style="padding: 0 20px 0px; font-family: sans-serif; font-size: 14px; line-height: 140%; color: #555555; text-align: left;"
-              >
-                <p style="margin: 0;">
-                  Kepada <b>Yth. {{ this.selectedParticipant.username }}</b
-                  ><br />Terimakasih kami telah menerima pembayaran Anda pada
-                  <b>{{ getDateTime("dateDay", new Date()) }}</b>
-                </p>
-                <br />
+                  <img
+                    src="http://anavaugm.com/logo-anava.png"
+                    width="100"
+                    height="100"
+                    alt="alt_text"
+                    border="0"
+                    style="heightimg: auto; background: #ffffff; font-family: sans-serif; font-size: 14px; line-height: 140%; color: #555555; height: 100px; width: 100px;"
+                  />
+                </td>
+              </tr>
+            </table>
 
-                <p>
-                  Bersama email ini, kami informasikan bahwa Anda akan
-                  <b
-                    >langsung terdaftar di satu event ANAVA yang anda
-                    bayarkan</b
-                  >
-                </p>
-
-                <p>Berikut informasi lengkap mengenai pembayaran Anda :</p>
-                <p><b>Jumlah Tagihan</b> : Rp {{ totalBill }}<br /></p>
-              </td>
-            </tr>
-
-            <tr>
-              <td
-                bgcolor="#ffffff"
-                style="padding: 20px 20px 0px; font-family: sans-serif; font-size: 14px; line-height: 140%; color: #555555;"
-              >
-                <table
-                  role="presentation"
-                  cellspacing="0"
-                  cellpadding="0"
-                  border="0"
-                  align="center"
-                  style="margin: auto"
+            <table
+              role="presentation"
+              cellspacing="0"
+              cellpadding="0"
+              border="0"
+              align="center"
+              width="600"
+              style="margin: auto;"
+              class="email-container"
+            >
+              <tr>
+                <td bgcolor="#ffffff" align="center"></td>
+              </tr>
+              <tr>
+                <td
+                  bgcolor="#ffffff"
+                  style="padding: 40px 20px 20px; text-align: center;"
                 >
-                  <tr>
-                    <td
-                      style="border-radius: 0px; background: rgb(88, 66, 124,1); text-align: left; padding: 0px 20px; color: #ffffff;"
-                      colspan="3"
-                    >
-                      <p>Rincian Pembayaran</p>
-                    </td>
-                  </tr>
-                  <tr
-                    style="font-size: 12px; border-bottom: 1px solid #eaeaea;"
+                  <h1
+                    style="margin: 0; font-family: sans-serif; font-size: 20px; line-height: 125%; color: #333333; font-weight: bold;"
                   >
-                    <td
-                      style="border-radius: 0px; background: #f7f7f7; text-align: left; padding: 0px 20px;"
-                    >
-                      <p><b>Nama Event</b></p>
-                    </td>
-                    <td
-                      style="border-radius: 0px; background: #f7f7f7; text-align: right; padding: 0px 20px;"
-                    >
-                      <p><b>Harga</b></p>
-                    </td>
-                  </tr>
-                  <tr
-                    style="font-size: 12px; border-bottom: 1px solid #eaeaea;"
-                    v-for="event in selectedEvent"
-                    :key="event._id"
-                  >
-                    <td
-                      style="border-radius: 0px; background: #ffffff; text-align: left; padding: 0px 20px;"
-                    >
-                      <p>Registrasi {{ event.name }}</p>
-                    </td>
-                    <td
-                      style="border-radius: 0px; background: #ffffff; text-align: right; padding: 0px 20px;"
-                    >
-                      <p>Rp {{ event.price }}</p>
-                    </td>
-                  </tr>
-                  <tr style="font-size: 12px;">
-                    <td
-                      style="border-radius: 0px; background: #ffffff; text-align: left; padding: 0px 20px;"
-                      colspan="2"
-                    >
-                      <p><b>TOTAL PEMBAYARAN</b></p>
-                    </td>
-                    <td
-                      style="border-radius: 0px; background: rgba(116, 108, 192, 1); text-align: right; padding: 0px 20px; color: #ffffff;"
-                    >
-                      <p>
-                        <b>Rp {{ totalBill }}</b>
-                      </p>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td bgcolor="#ffffff">
-                <table
-                  role="presentation"
-                  cellspacing="0"
-                  cellpadding="0"
-                  border="0"
-                  width="100%"
+                    Pembayaran Biaya Pendaftaran Sukses
+                  </h1>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  bgcolor="#ffffff"
+                  style="padding: 0 20px 0px; font-family: sans-serif; font-size: 14px; line-height: 140%; color: #555555; text-align: left;"
                 >
-                  <tr>
-                    <td
-                      style="padding: 20px 20px 40px; font-family: sans-serif; font-size: 14px; line-height: 50%; color: #555555; text-align: left;"
+                  <p style="margin: 0;">
+                    Kepada <b>Yth. {{ this.selectedParticipant.username }}</b
+                    ><br />Terimakasih kami telah menerima pembayaran Anda pada
+                    <b>{{ getDateTime("dateDay", new Date()) }}</b>
+                  </p>
+                  <br />
+
+                  <p>
+                    Bersama email ini, kami informasikan bahwa Anda akan
+                    <b
+                      >langsung terdaftar di satu event ANAVA yang anda
+                      bayarkan</b
                     >
-                      <p>Hormat kami,</p>
-                      <p>Anava</p>
-                      <p>
-                        <a href="https://www.niagahoster.co.id/"
-                          >193.168.195.181</a
-                        >
-                      </p>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </center>
-      </body>
-      <button class="btn btn-primary" @click="createPayment()">
+                  </p>
+
+                  <p>Berikut informasi lengkap mengenai pembayaran Anda :</p>
+                  <p><b>Jumlah Tagihan</b> : Rp {{ totalBill }}<br /></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td
+                  bgcolor="#ffffff"
+                  style="padding: 20px 20px 0px; font-family: sans-serif; font-size: 14px; line-height: 140%; color: #555555;"
+                >
+                  <table
+                    role="presentation"
+                    cellspacing="0"
+                    cellpadding="0"
+                    border="0"
+                    align="center"
+                    style="margin: auto"
+                  >
+                    <tr>
+                      <td
+                        style="border-radius: 0px; background: rgb(88, 66, 124,1); text-align: left; padding: 0px 20px; color: #ffffff;"
+                        colspan="3"
+                      >
+                        <p>Rincian Pembayaran</p>
+                      </td>
+                    </tr>
+                    <tr
+                      style="font-size: 12px; border-bottom: 1px solid #eaeaea;"
+                    >
+                      <td
+                        style="border-radius: 0px; background: #f7f7f7; text-align: left; padding: 0px 20px;"
+                      >
+                        <p><b>Nama Event</b></p>
+                      </td>
+                      <td
+                        style="border-radius: 0px; background: #f7f7f7; text-align: right; padding: 0px 20px;"
+                      >
+                        <p><b></b></p>
+                      </td>
+                      <td
+                        style="border-radius: 0px; background: #f7f7f7; text-align: right; padding: 0px 20px;"
+                      >
+                        <p><b>Harga</b></p>
+                      </td>
+                    </tr>
+                    <tr
+                      style="font-size: 12px; border-bottom: 1px solid #eaeaea;"
+                      v-for="event in selectedEvent"
+                      :key="event._id"
+                    >
+                      <td
+                        style="border-radius: 0px; background: #ffffff; text-align: left; padding: 0px 20px;"
+                      >
+                        <p>Registrasi {{ event.name }}</p>
+                      </td>
+                      <td
+                        style="border-radius: 0px; background: #ffffff; text-align: right; padding: 0px 20px;"
+                      >
+                        <p></p>
+                      </td>
+                      <td
+                        style="border-radius: 0px; background: #ffffff; text-align: right; padding: 0px 20px;"
+                      >
+                        <p>Rp {{ event.price }}</p>
+                      </td>
+                    </tr>
+                    <tr style="font-size: 12px;">
+                      <td
+                        style="border-radius: 0px; background: #ffffff; text-align: left; padding: 0px 20px;"
+                        colspan="2"
+                      >
+                        <p><b>TOTAL PEMBAYARAN</b></p>
+                      </td>
+                      <td
+                        style="border-radius: 0px; background: rgba(116, 108, 192, 1); text-align: right; padding: 0px 20px; color: #ffffff;"
+                      >
+                        <p>
+                          <b>Rp {{ totalBill }}</b>
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td bgcolor="#ffffff">
+                  <table
+                    role="presentation"
+                    cellspacing="0"
+                    cellpadding="0"
+                    border="0"
+                    width="100%"
+                  >
+                    <tr>
+                      <td
+                        style="padding: 20px 20px 40px; font-family: sans-serif; font-size: 14px; line-height: 50%; color: #555555; text-align: left;"
+                      >
+                        <p>Hormat kami,</p>
+                        <p>Anava</p>
+                        <p>
+                          <a href="http://www.anavaugm.com/"
+                            >www.anavaugm.com</a
+                          >
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </center>
+        </body>
+      </div>
+      <button class="btn btn-primary mt-3 pl-3 pr-3" @click="createPayment()">
         <i class="fas fa-paper-plane"></i> Kirim
       </button>
     </div>
@@ -209,7 +221,7 @@
         <b-col md="1">
           <img
             class="profile"
-            v-bind:src="'http://193.168.195.181/' + participant.image"
+            v-bind:src="'http://localhost/' + participant.image"
           />
         </b-col>
         <b-col md="2">
@@ -227,30 +239,30 @@
           </p>
           <p v-else>-</p>
         </b-col>
-       <b-col class="pt-2" md="2">
-        <div v-if="participant.participant.document">
-          <p
-            class="text-success"
-            v-if="participant.participant.document.osis_card == 1"
-          >
-            <i class="fas fa-check"></i>
-          </p>
+        <b-col class="pt-2" md="2">
+          <div v-if="participant.participant.document">
+            <p
+              class="text-success"
+              v-if="participant.participant.document.osis_card == 1"
+            >
+              <i class="fas fa-check"></i>
+            </p>
+            <p v-else>-</p>
+          </div>
           <p v-else>-</p>
-        </div>
-        <p v-else>-</p>
-      </b-col>
-      <b-col class="pt-2" md="2">
-        <div v-if="participant.participant.document">
-          <p
-            class="text-success"
-            v-if="participant.participant.document.image == 1"
-          >
-            <i class="fas fa-check"></i>
-          </p>
+        </b-col>
+        <b-col class="pt-2" md="2">
+          <div v-if="participant.participant.document">
+            <p
+              class="text-success"
+              v-if="participant.participant.document.image == 1"
+            >
+              <i class="fas fa-check"></i>
+            </p>
+            <p v-else>-</p>
+          </div>
           <p v-else>-</p>
-        </div>
-        <p v-else>-</p>
-      </b-col>
+        </b-col>
         <b-col md="3">
           <button
             class="btn btn-primary"

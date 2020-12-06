@@ -4,7 +4,7 @@
       <img src="@/assets/logo-white.png" />
       <h1 class="text-white d-inline-block">ANAVA</h1>
     </div>
-    <a @click="$store.dispatch('ui/changeWelcomeComponent', 'welcome')">
+    <a v-if="!getUrl()" @click="$store.dispatch('ui/changeWelcomeComponent', 'welcome')">
       <img class="close" src="@/assets/close.png" />
     </a>
     <div class="login-container shadow">
@@ -42,8 +42,14 @@
       <p class="text-center mt-2">
         Belum punya akun?
         <a
+          v-if="!getUrl()" 
           @click="$store.dispatch('ui/changeWelcomeComponent', 'register')"
           href="#"
+          >Daftar</a
+        >
+        <a
+          v-if="getUrl()" 
+          href="/register"
           >Daftar</a
         >
       </p>
@@ -80,6 +86,7 @@ export default {
       user: new User("", ""),
       loading: false,
       message: "",
+      url: window.location.href,
     };
   },
   computed: {
@@ -121,6 +128,9 @@ export default {
           }
         );
       }
+    },
+    getUrl() {
+      return this.url.includes("login");
     },
   },
 };
@@ -164,10 +174,10 @@ export default {
 }
 
 .login-container {
-  width: 400px;
+  width: 420px;
   height: 400px;
   margin-top: 40px;
-  margin-left: calc(50% - 200px);
+  margin-left: calc(50% - 210px);
   margin-bottom: 20px;
   background: #fff;
   box-sizing: border-box;

@@ -60,7 +60,8 @@
         @click="handleRegister()"
       />
       <p class="text-center mt-2">
-        Sudah punya akun? <a @click="moveToLogin()" href="#">Login</a>
+        Sudah punya akun? <a v-if="!getUrl()" @click="$store.dispatch('ui/changeWelcomeComponent', 'login')" href="#">Login</a>
+        <a v-if="getUrl()" href="/login">Login</a>
       </p>
     </div>
     <vue-particles
@@ -237,9 +238,9 @@ export default {
 }
 
 .register-container {
-  width: 450px;
+  width: 420px;
   margin-top: 40px;
-  margin-left: calc(50% - 225px);
+  margin-left: calc(50% - 210px);
   margin-bottom: 20px;
   background: #fff;
   box-sizing: border-box;

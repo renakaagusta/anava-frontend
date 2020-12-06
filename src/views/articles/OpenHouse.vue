@@ -35,9 +35,8 @@
         <b-col lg="10" cols="9">
           <b-container class="description">
             <h2 class="text  text-white">
-              Terbuka untuk pelajar SMA/MA Sederajat
+              Terbuka untuk umum
             </h2>
-            <h5 class=" text-white">Team 2 Orang</h5>
           </b-container>
         </b-col>
       </b-row>
@@ -58,20 +57,13 @@
             </h2>
             <h5 class="text-white">
               Senin, 7 Desember 2020 s/d <br />
-              Sabtu, 2 Januari 2021
+              Senin, 16 Januari 2021
             </h5>
             <h2 class="text text-white mt-4">
-              Pelaksanaan lomba
+              Pelaksanaan
             </h2>
             <h5 class="text-white">
-              Pekan Kreativitas : <br />
-              3 Januari 2021(08.00 WIB) s/d <br />
-              16 Januari 2021 (12.00 WIB)
-            </h5>
-            <h5 class="text-white">
-              Pekan Final : <br />
-              26 Januari 2021(08.00 WIB) s/d <br />
-              29 Januari 2021 (12.00 WIB)
+              Minggu, 17 Januari 2021
             </h5>
           </b-container>
         </b-col>
@@ -89,27 +81,9 @@
         <b-col lg="10" cols="9">
           <b-container class="description">
             <h2 class="text  text-white">
-              Tara Dwipa A. T.
+              Cicil
             </h2>
-            <h5 class="text-white">085869502968</h5>
-          </b-container>
-        </b-col>
-      </b-row>
-    </b-container>
-    <b-container
-      id="prize"
-      class="bg-purple shawod-sm rounded text-white text-left"
-    >
-      <h1>Total hadiah</h1>
-      <b-row>
-        <b-col lg="1" cols="1">
-          <i class="icon fas fa-gift fa-9x"></i>
-        </b-col>
-        <b-col lg="10" cols="9">
-          <b-container class="description">
-            <h2 class="text text-white">
-              Rp 950.000
-            </h2>
+            <h5 class="text-white">081351366118</h5>
           </b-container>
         </b-col>
       </b-row>
@@ -126,27 +100,8 @@
         <b-col lg="10" cols="9">
           <b-container class="description">
             <h2 class="text text-white">
-              Rp 35 K (Presale) <br />
-              RP 40 K (Sale)
+              FREE
             </h2>
-          </b-container>
-        </b-col>
-      </b-row>
-    </b-container>
-    <b-container
-      id="guidebook"
-      class="bg-purple shawod-sm rounded text-white text-left"
-    >
-      <h1>Guidebook</h1>
-      <b-row>
-        <b-col lg="1" cols="1">
-          <i class="icon fas fa-book fa-9x"></i>
-        </b-col>
-        <b-col lg="10" cols="9">
-          <b-container class="description">
-            <button class="btn">
-              Unduh guidebook
-            </button>
           </b-container>
         </b-col>
       </b-row>

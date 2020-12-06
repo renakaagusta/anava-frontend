@@ -39,12 +39,12 @@
         >
           <b-container class="mt-5">
             <b-row>
-              <b-col lg="5" cols="11">
+              <b-col lg="4"  cols="12">
                 <div class="logo">
                   <img src="@/assets/logo-anava-white.png" />
                 </div>
               </b-col>
-              <b-col lg="5" offset="1" cols="10">
+              <b-col lg="7" cols="12">
                 <div class="content">
                   <h1>About Us</h1>
                   <hr />
@@ -55,6 +55,7 @@
                   kalinya. Meskipun terhalang kondisi pandemi, tapi kami tetap
                   akan hadir tentunya dengan berbagai inovasi baru dari Anava
                   yang lalu.
+                  <a href="#event" v-smooth-scroll="{ duration: 1000 }" class="btn btn-white d-inline">Event</a>
                 </div>
                 <!-- <button
                   class="btn text"
@@ -160,75 +161,15 @@
           </div>
         </div>
       </div>
-      <div class="sub-page" id="documentation">
-        <div data-aos="fade-in" data-aos-duration="1000" data-aos-delay="200">
-          <h1 class="text-white">Dokumentasi</h1>
-          <div class="content mt-5">
-            <carousel
-              :perPage="1"
-              :navigationEnabled="false"
-              :autoplay="true"
-              :scrollPerPage="false"
-            >
-              <slide>
-                <img
-                  src="https://s31450.pcdn.co/wp-content/uploads/2019/06/what-to-do-when-a-student-is-failing-190715.jpg"
-                />
-              </slide>
-              <slide>
-                <img
-                  src="https://d1e2bohyu2u2w9.cloudfront.net/education/sites/default/files/styles/16_9_medium/public/tlr-blog/7_ways_to_make_distance_learning_more_equitable_article.png?itok=ef1dbV5s"
-                />
-              </slide>
-              <slide>
-                <img
-                  src="https://rogersbh.org/application/files/thumbnails/small/2815/3632/7168/podcastblog2.jpg"
-                />
-              </slide>
-              <slide>
-                <img
-                  src="https://ichef.bbci.co.uk/news/976/cpsprodpb/7805/production/_104352703_students.jpg"
-                />
-              </slide>
-            </carousel>
-          </div>
-        </div>
-      </div>
       <div class="sub-page" id="partner">
         <div data-aos="fade-in" data-aos-duration="1000" data-aos-delay="200">
           <h1>Partnership</h1>
           <hr />
           <div class="content bg-white p-5 rounded shadow-sm">
             <h3>Sponsor :</h3>
-            <b-row>
-              <b-col lg="3">
-                <img src="@/assets/grab.png" />
-              </b-col>
-              <b-col lg="3">
-                <img src="@/assets/grab.png" />
-              </b-col>
-              <b-col lg="3">
-                <img src="@/assets/grab.png" />
-              </b-col>
-              <b-col lg="3">
-                <img src="@/assets/grab.png" />
-              </b-col>
-            </b-row>
+            <img src="sponsors.png"/>
             <h3 class="mt-4">Media Partner :</h3>
-            <b-row>
-              <b-col lg="3">
-                <img src="@/assets/grab.png" />
-              </b-col>
-              <b-col lg="3">
-                <img src="@/assets/grab.png" />
-              </b-col>
-              <b-col lg="3">
-                <img src="@/assets/grab.png" />
-              </b-col>
-              <b-col lg="3">
-                <img src="@/assets/grab.png" />
-              </b-col>
-            </b-row>
+            <img src="media-partners.png"/>
           </div>
         </div>
       </div>
@@ -247,7 +188,6 @@ import Rank1 from "@/views/articles/Rank1.vue";
 import Poster from "@/views/articles/Poster.vue";
 import Sigma from "@/views/articles/Sigma.vue";
 import OpenHouse from "@/views/articles/OpenHouse.vue";
-import { Carousel, Slide } from "vue-carousel";
 
 export default {
   name: "Welcome",
@@ -262,8 +202,6 @@ export default {
     Poster,
     Sigma,
     OpenHouse,
-    Carousel,
-    Slide,
   },
   computed: {
     show() {
@@ -271,7 +209,6 @@ export default {
     },
   },
   created() {
-    document.title = "ANAVA UGM 2020";
     window.scrollTo(0, 0);
   },
 };
@@ -317,8 +254,11 @@ export default {
     ),
     url("http://ayokuliahs2.com/wp-content/uploads/2018/01/maxresdefault-1.jpg");
   background-size: cover;
-  padding-top: 110px;
-  padding-bottom: 150px;
+  min-height: 100%;
+  padding-top: 100px;
+  padding-bottom: 180px;
+  padding-left: 200px;
+  padding-right: 40px;
 }
 
 #about hr {
@@ -331,6 +271,7 @@ export default {
 }
 
 #about .content {
+  padding-left: 50px;
   text-align: left;
   font-size: 17px;
   color: #fff;
@@ -339,13 +280,12 @@ export default {
 
 #about .btn {
   padding: 10px 30px;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgb(255, 255, 255);
   border-color: rgb(255, 255, 255);
-  color: #fff;
   display: inline;
   position: absolute;
   margin-top: 50px;
-  left: 20px;
+  left: 70px;
 }
 
 #about .btn:hover {
@@ -420,7 +360,7 @@ export default {
 }
 
 #partner .content img {
-  width: 230px;
+  width: 400px;
 }
 
 #partner h3 {
@@ -534,6 +474,14 @@ b-button {
   #partner h3 {
     text-align: center;
     font-size: 1.5em;
+  }
+  #about{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .rotate{
+    font-size: 25px;
+    margin-left: calc(50% - 150px);
   }
 }
 </style>
