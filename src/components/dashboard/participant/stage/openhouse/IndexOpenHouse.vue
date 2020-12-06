@@ -89,7 +89,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://193.168.195.181.com/STARTED/guidebook.pdf"
+                  href="http://anavaugm.com/STARTED/guidebook.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Guidebook</h2>
@@ -98,7 +98,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://193.168.195.181.com/STARTED/surat-orisinalitas.pdf"
+                  href="http://anavaugm.com/STARTED/surat-orisinalitas.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Surat Orisinalitas</h2>

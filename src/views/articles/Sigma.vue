@@ -104,8 +104,7 @@
         <b-col lg="10" cols="9">
           <b-container class="description">
             <h2 class="text text-white">
-              Rp 35 K (Presale) <br />
-              RP 40 K (Sale)
+              Rp 5.000
             </h2>
           </b-container>
         </b-col>

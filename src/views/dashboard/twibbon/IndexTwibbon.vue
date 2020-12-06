@@ -23,7 +23,7 @@
       <a
         class="btn btn-primary ml-3 mt-3"
         target="blank"
-        href="http://localhost:8080/twibbon.png"
+        href="http://anavaugm.com/twibbon.png"
       >
         <i class="fa fa-download" />&nbsp;Unduh Twibbon Anava
       </a>
