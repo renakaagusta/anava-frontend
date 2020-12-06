@@ -43,7 +43,7 @@
       <b-col md="1">
         <img
           class="profile"
-          v-bind:src="'http://anavaugm.com/' + participant.image"
+          v-bind:src="'http://193.168.195.181/' + participant.image"
         />
       </b-col>
       <b-col md="2">

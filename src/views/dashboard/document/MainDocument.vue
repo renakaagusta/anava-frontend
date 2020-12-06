@@ -31,7 +31,7 @@
               <b-card
                 title="Kartu Pelajar"
                 :img-src="
-                  'http://anavaugm.com/osis_card_' + participant.id + '.jpg'
+                  'http://193.168.195.181/osis_card_' + participant.id + '.jpg'
                 "
                 style="width: 500px;"
               >
@@ -71,7 +71,7 @@
               <b-card
                 title="Pas foto"
                 :img-src="
-                  'http://anavaugm.com/image_' + participant.id + '.jpg'
+                  'http://193.168.195.181/image_' + participant.id + '.jpg'
                 "
                 style="width: 500px;"
               >
