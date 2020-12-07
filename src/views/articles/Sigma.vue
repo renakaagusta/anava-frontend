@@ -109,7 +109,11 @@
         </b-col>
       </b-row>
     </b-container>
-    <button class="btn btn-register"><h3>Daftar sekarang</h3></button>
+    <router-link :to="{ name: 'Register' }"
+      ><button class="btn btn-register">
+        <h3>Daftar sekarang</h3>
+      </button></router-link
+    >
   </div>
 </template>
 <script>

@@ -104,9 +104,12 @@
             </h2>
           </b-container>
         </b-col>
-      </b-row>
-    </b-container>
-    <button class="btn btn-register"><h3>Daftar sekarang</h3></button>
+      </b-row> </b-container
+    ><router-link :to="{ name: 'Register' }"
+      ><button class="btn btn-register">
+        <h3>Daftar sekarang</h3>
+      </button></router-link
+    >
   </div>
 </template>
 <script>
@@ -241,10 +244,10 @@ export default {
 }
 
 #guidebook .description {
-    margin-top: 10px;
-    margin-left: 60px;
-    padding: 10px;
-  }
+  margin-top: 10px;
+  margin-left: 60px;
+  padding: 10px;
+}
 
 #guidebook .btn {
   background: #fff;
