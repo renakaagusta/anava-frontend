@@ -143,7 +143,7 @@
           <i class="icon fas fa-book fa-9x"></i>
         </b-col>
         <b-col lg="10" cols="9">
-          <b-container class="description">
+          <b-container class="description mt-4">
             <a target="blank" href="STARTED/guidebook.pdf" class="btn">
               Unduh guidebook
             </a>
@@ -286,15 +286,17 @@ export default {
 }
 
 #guidebook .description {
-  margin-top: 20px;
-  margin-left: 130px;
-}
+    margin-left: 60px;
+    padding: 10px;
+    padding-top: 30px;
+  }
 
 #guidebook .btn {
   background: #fff;
   padding: 15px;
   border-radius: 2px;
   margin-top: 20px;
+  font-size: 20px;
 }
 
 .btn-register {
@@ -339,6 +341,10 @@ p {
   .osm-page .logo h1 {
     margin-top: 100px;
     font-size: 60px;
+  }
+
+  #description {
+    font-size: 18px;
   }
 
   #category h1 {
@@ -463,6 +469,7 @@ p {
   #guidebook .description {
     margin-top: -5px;
     margin-left: 60px;
+    padding: 10px;
   }
 
   #guidebook .description h2 {

@@ -32,7 +32,6 @@ export default {
   .content {
     max-width: 100%;
     width: 100%;
-    position: fixed;
   }
 }
 </style>

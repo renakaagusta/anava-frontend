@@ -6,7 +6,10 @@
       <h2 class="text-white">Olimpiade Statistika Matematika</h2>
       <hr />
     </div>
-    <a v-if="!getUrl()" @click="$store.dispatch('ui/changeWelcomeComponent', 'welcome')">
+    <a
+      v-if="!getUrl()"
+      @click="$store.dispatch('ui/changeWelcomeComponent', 'welcome')"
+    >
       <img class="close" src="@/assets/close.png" />
     </a>
     <b-container
@@ -146,8 +149,8 @@
           <i class="icon fas fa-book fa-9x"></i>
         </b-col>
         <b-col lg="10" cols="9">
-          <b-container class="description">
-            <a target="blank" href="OSM/guidebook.pdf" class="btn">
+          <b-container class="description  mt-4">
+            <a target="blank" href="OSM/guidebook.pdf" class="btn d-inline">
               Unduh guidebook
             </a>
           </b-container>
@@ -293,8 +296,9 @@ export default {
 }
 
 #guidebook .description {
-  margin-top: 20px;
+  padding: 20px;
   margin-left: 130px;
+  padding-top: 20px;
 }
 
 #guidebook .btn {
@@ -302,6 +306,7 @@ export default {
   padding: 15px;
   border-radius: 2px;
   margin-top: 20px;
+  font-size: 20px;
 }
 
 .btn-register {
@@ -346,6 +351,10 @@ p {
   .osm-page .logo h1 {
     margin-top: 100px;
     font-size: 60px;
+  }
+
+  #description {
+    font-size: 18px;
   }
 
   #category h1 {
@@ -470,6 +479,7 @@ p {
   #guidebook .description {
     margin-top: -5px;
     margin-left: 60px;
+    padding: 10px;
   }
 
   #guidebook .description h2 {
@@ -478,6 +488,10 @@ p {
 
   #guidebook .description h5 {
     font-size: 1.1em;
+  }
+
+  #guidebook .btn {
+    font-size: 20px;
   }
 
   .btn-register {

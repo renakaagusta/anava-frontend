@@ -247,4 +247,14 @@ p {
   margin: 0;
   padding: 0;
 }
+
+@media (max-width: 700px) {
+  .login-container {
+    max-width: 360px;
+    margin-left: calc(50% - 180px);
+  }
+  .login-page {
+    height: calc(100% + 100px);
+  }
+}
 </style>

@@ -39,7 +39,7 @@
         >
           <b-container class="mt-5">
             <b-row>
-              <b-col lg="4"  cols="12">
+              <b-col lg="4" cols="12">
                 <div class="logo">
                   <img src="@/assets/logo-anava-white.png" />
                 </div>
@@ -55,7 +55,12 @@
                   kalinya. Meskipun terhalang kondisi pandemi, tapi kami tetap
                   akan hadir tentunya dengan berbagai inovasi baru dari Anava
                   yang lalu.
-                  <a href="#event" v-smooth-scroll="{ duration: 1000 }" class="btn btn-white d-inline">Event</a>
+                  <a
+                    href="#event"
+                    v-smooth-scroll="{ duration: 1000 }"
+                    class="btn btn-white d-inline"
+                    >Event</a
+                  >
                 </div>
                 <!-- <button
                   class="btn text"
@@ -167,9 +172,9 @@
           <hr />
           <div class="content bg-white p-5 rounded shadow-sm">
             <h3>Sponsor :</h3>
-            <img src="sponsors.png"/>
+            <img src="sponsors.png" />
             <h3 class="mt-4">Media Partner :</h3>
-            <img src="media-partners.png"/>
+            <img src="media-partners.png" />
           </div>
         </div>
       </div>
@@ -457,7 +462,7 @@ b-button {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 800px) {
   #documentation img {
     height: 200px;
     size: 200px;
@@ -475,13 +480,41 @@ b-button {
     text-align: center;
     font-size: 1.5em;
   }
-  #about{
+  #about {
     padding-left: 10px;
     padding-right: 10px;
   }
-  .rotate{
-    font-size: 25px;
-    margin-left: calc(50% - 150px);
+}
+
+@media (max-width: 700px) {
+  #documentation img {
+    height: 200px;
+    size: 200px;
+  }
+  #event {
+    padding: 100px 40px;
+  }
+  #partner {
+    padding: 40px 50px;
+  }
+  #partner .content img {
+    width: 180px;
+  }
+  #partner h3 {
+    text-align: center;
+    font-size: 1.5em;
+  }
+  #about {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .rotate {
+    min-width: 100px;
+    padding: 0;
+    margin: 0;
+    font-size: 22px;
+    margin-left: calc(50% - 20px);
+    overflow: hidden;
   }
 }
 </style>

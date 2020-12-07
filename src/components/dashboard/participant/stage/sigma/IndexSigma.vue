@@ -41,6 +41,7 @@
                 <td><b>Jadwal Meet</b></td>
                 <td>-</td>
               </tr>
+            </table>
           </v-tab>
           <v-tab title="Pengumuman">
             <div
@@ -57,7 +58,7 @@
       </b-container>
 
       <input
-      type="submit"
+        type="submit"
         value="Mulai"
         class="btn btn-purple mt-3"
         @click="nextStep()"

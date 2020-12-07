@@ -60,7 +60,13 @@
         @click="handleRegister()"
       />
       <p class="text-center mt-2">
-        Sudah punya akun? <a v-if="!getUrl()" @click="$store.dispatch('ui/changeWelcomeComponent', 'login')" href="#">Login</a>
+        Sudah punya akun?
+        <a
+          v-if="!getUrl()"
+          @click="$store.dispatch('ui/changeWelcomeComponent', 'login')"
+          href="#"
+          >Login</a
+        >
         <a v-if="getUrl()" href="/login">Login</a>
       </p>
     </div>
@@ -325,5 +331,15 @@ p {
 
 .is-invalid {
   border-color: red;
+}
+
+@media (max-width: 700px) {
+  .register-container {
+    max-width: 360px;
+    margin-left: calc(50% - 180px);
+  }
+  .register-page {
+    height: calc(100% + 100px);
+  }
 }
 </style>

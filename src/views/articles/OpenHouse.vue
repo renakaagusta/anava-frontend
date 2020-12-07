@@ -241,15 +241,16 @@ export default {
 }
 
 #guidebook .description {
-  margin-top: 20px;
-  margin-left: 130px;
-}
+    margin-top: 10px;
+    margin-left: 60px;
+    padding: 10px;
+  }
 
 #guidebook .btn {
   background: #fff;
   padding: 15px;
   border-radius: 2px;
-  margin-top: 20px;
+  font-size: 20px;
 }
 
 .btn-register {
@@ -294,6 +295,10 @@ p {
   .osm-page .logo h1 {
     margin-top: 100px;
     font-size: 60px;
+  }
+
+  #description {
+    font-size: 18px;
   }
 
   #category h1 {
@@ -418,6 +423,7 @@ p {
   #guidebook .description {
     margin-top: -5px;
     margin-left: 60px;
+    padding: 10px;
   }
 
   #guidebook .description h2 {
