@@ -133,7 +133,7 @@
         <b-col lg="10" cols="9">
           <b-container class="description">
             <h2 class="text text-white">
-              Rp 50.000
+              Rp 35.000
             </h2>
           </b-container>
         </b-col>
