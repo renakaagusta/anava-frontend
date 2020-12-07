@@ -8,35 +8,25 @@
     </div>
     <hr />
     <b-container v-if="user.verification" class="bg-white mt-3 p-5">
-      <div id="twibbon-container">
-        <img
-          id="twibbon"
-          v-bind:class="['twibbon-content']"
-          src="@/assets/avatar.jpg"
-        />
-        <img class="twibbon mt-100" src="@/assets/twibbon.png" />
+      <div class="container bg-white p-3 text-center rounded-lg shadow">
+        <p>
+          <i class="fas fa-exclamation-triangle fa-2x"></i>
+          <br />
+          Halaman ini masih kosong
+        </p>
       </div>
-      <input id="upload" type="file" class="mt-3" @change="onFileChange" />
-      <button class="btn btn-primary mt-3" @click="download()">
-        <i class="fa fa-download" />&nbsp;Unduh Twibbon Anda
-      </button>
-      <a
-        class="btn btn-primary ml-3 mt-3"
-        target="blank"
-        href="http://anavaugm.com/twibbon.png"
-      >
-        <i class="fa fa-download" />&nbsp;Unduh Twibbon Anava
-      </a>
     </b-container>
     <div v-if="user.verification == 0">
-        <div class="bg-white mt-3 p-3 pb-5 text-center text-dark rounded-lg shadow">
-          <p>
-            <i style="font-size:30px" class="far fa-envelope"></i>
-            <br />
-            Anda Belum Melakukan Verifikasi Email, Harap Lakukan Verifikasi
-            Email Anda Terlebih Dahulu!
-          </p>
-        </div>
+      <div
+        class="bg-white mt-3 p-3 pb-5 text-center text-dark rounded-lg shadow"
+      >
+        <p>
+          <i style="font-size:30px" class="far fa-envelope"></i>
+          <br />
+          Anda Belum Melakukan Verifikasi Email, Harap Lakukan Verifikasi Email
+          Anda Terlebih Dahulu!
+        </p>
+      </div>
     </div>
   </b-container>
 </template>
