@@ -6,16 +6,16 @@
           <b-container class="bg-white p-4 mt-3">
             <h2 class="text-left ml-3">Kartu Pelajar</h2>
             <hr />
-            <div v-if="participant.participant.document.osis_card == 0">
+            <div v-if="participant.participant.document.osis_card == 0 || changeOsisCard == 1">
               <div id="dropFileForm">
                 <input
                   type="file"
-                  id="fileInput"
+                  id="fileOsis"
                   ref="osis_card"
                   @change="addFile('osis_card')"
                 />
 
-                <label for="fileInput" id="fileLabel">
+                <label for="fileOsis" id="fileLabel">
                   <i class="fa fa-upload fa-5x"></i>
                   <br />
                   <span id="fileLabelText" v-html="fileName.osis_card" />
@@ -29,27 +29,27 @@
             </div>
             <div v-else>
               <b-card
-                title="Kartu Pelajar"
                 :img-src="
                   'http://anavaugm.com/osis_card_' + participant.id + '.jpg'
                 "
                 style="width: 500px;"
-              >
+                ><button class="btn-purple" @click="changeOsisCard = 1">
+                  Ganti
+                </button>
               </b-card>
             </div>
             <h2 class="text-left ml-3 mt-5">Pas Foto</h2>
             <hr />
-
-            <div v-if="participant.participant.document.image == 0">
+            <div v-if="participant.participant.document.image == 0 || changeImage == 1">
               <div id="dropFileForm">
                 <input
                   type="file"
                   ref="image"
-                  id="fileInput"
+                  id="fileImage"
                   @change="addFile('image')"
                 />
 
-                <label for="fileInput" id="fileLabel">
+                <label for="fileImage" id="fileLabel">
                   <i class="fa fa-upload fa-5x"></i>
                   <br />
                   <span id="fileLabelText">
@@ -59,7 +59,7 @@
                   <span id="uploadStatus"></span>
                 </label>
 
-                 <button class="uploadButton" @click="uploadFile('image')">
+                <button class="uploadButton" @click="uploadFile('image')">
                   <b-spinner v-if="loading2" label="Spinning"></b-spinner>
                   <p v-if="!loading2" class="d-inline">Unggah</p>
                 </button>
@@ -67,12 +67,14 @@
             </div>
             <div v-else>
               <b-card
-                title="Pas foto"
                 :img-src="
                   'http://anavaugm.com/image_' + participant.id + '.jpg'
                 "
                 style="width: 500px;"
               >
+                <button class="btn-purple" @click="changeImage = 1">
+                  Ganti
+                </button>
               </b-card>
             </div>
           </b-container>
@@ -240,6 +242,8 @@ export default {
       document: {
         type: "",
       },
+      changeImage: 0,
+      changeOsisCard: 0,
       loading: false,
       loading1: false,
       loading2: false,
@@ -298,7 +302,6 @@ export default {
       } else {
         this.fileName.image = this.$refs.image.files[0].name.toString();
       }
-      console.log(this.fileName);
     },
     uploadFile(type) {
       var document = new FormData();
@@ -323,6 +326,11 @@ export default {
         .dispatch("participant/uploadParticipant", formParticipant)
         .then(
           (response) => {
+            Swal.fire({
+              title: "Berhasil mengunggah dokumen",
+              icon: "success",
+              showConfirmButton: true,
+            }).then();
             if (this.loading1) this.loading1 = false;
             if (this.loading2) this.loading2 = false;
             const participant = response.data.data;
@@ -339,11 +347,24 @@ export default {
             this.formParticipant.address = this.participant.participant.address;
             this.formParticipant.schoolName = this.participant.participant.school.name;
             this.formParticipant.schoolAddress = this.participant.participant.school.address;
-            Swal.fire({
-              title: "Berhasil mengunggah dokumen",
-              icon: "success",
-              showConfirmButton: true,
-            }).then();
+
+            this.formParticipant.id = this.participant.id;
+            this.formParticipant.firstname = this.participant.firstname;
+            this.formParticipant.lastname = this.participant.lastname;
+            this.formParticipant.birthDate = this.participant.participant.birth_date.substr(
+              0,
+              10
+            );
+            this.formParticipant.phoneNumber = this.participant.participant.phone_number;
+            this.formParticipant.grade = this.participant.participant.grade;
+            this.formParticipant.address = this.participant.participant.address;
+            this.formParticipant.schoolName = this.participant.participant.school.name;
+            this.formParticipant.schoolAddress = this.participant.participant.school.address;
+
+            if (this.participant.participant.document == null) {
+              this.participant.participant.document.osis_card == 0;
+              this.participant.participant.document.image == 0;
+            }
           },
           () => {}
         );
@@ -370,6 +391,7 @@ export default {
             this.formParticipant.address = this.participant.participant.address;
             this.formParticipant.schoolName = this.participant.participant.school.name;
             this.formParticipant.schoolAddress = this.participant.participant.school.address;
+
             Swal.fire({
               title: "Berhasil memperbarui identitas",
               icon: "success",
@@ -396,9 +418,13 @@ export default {
     this.formParticipant.schoolName = this.participant.participant.school.name;
     this.formParticipant.schoolAddress = this.participant.participant.school.address;
 
-    if (this.participant.participant.document == null) {
+    if (this.participant.participant.document.osis_card == 0) {
       this.participant.participant.document.osis_card == 0;
+      this.changeOsisCard = 1;
+    }
+    if (this.participant.participant.document.image  == 0) {
       this.participant.participant.document.image == 0;
+      this.changeImage = 1;
     }
   },
 };
@@ -426,7 +452,11 @@ input {
   border: 2px dashed #555;
 }
 
-#dropFileForm #fileInput {
+#dropFileForm #fileImage {
+  display: none;
+}
+
+#dropFileForm #fileOsis {
   display: none;
 }
 
