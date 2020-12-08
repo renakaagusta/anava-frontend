@@ -115,9 +115,9 @@
         </b-container>
         <b-card
           v-if="participant.participant.document.image == 1"
-          title="Kartu Osis"
+          title="Pas Foto"
           :img-src="'http://anavaugm.com/image_' + participant._id + '.jpg'"
-          style="width: 500px;"
+          style="width: 300px; height: 500px;"
         >
         </b-card>
         <b-container
