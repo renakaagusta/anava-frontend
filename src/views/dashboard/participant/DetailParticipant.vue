@@ -62,6 +62,33 @@
       </b-row>
     </div>
     <div class="bg-white rounded shadow-sm p-4 mb-3">
+      <h2 class="text-left">Kontak</h2>
+      <hr />
+      <br />
+      <b-row>
+        <b-col lg="2">
+          <p class="text-left text-bold">Email:</p>
+        </b-col>
+        <b-col lg="8">
+          <p v-if="participant.email" class="text-left">
+            {{ participant.email }}
+          </p>
+          <p v-else>-</p>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col lg="2">
+          <p class="text-left text-bold">Nomor HP:</p>
+        </b-col>
+        <b-col lg="8">
+          <p v-if="participant.participant.phone_number" class="text-left">
+            {{ participant.participant.phone_number }}
+          </p>
+          <p>-</p>
+        </b-col>
+      </b-row>
+    </div>
+    <div class="bg-white rounded shadow-sm p-4 mb-3">
       <h2 class="text-left">Sekolah</h2>
       <hr />
       <br />
