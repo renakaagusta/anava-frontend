@@ -244,7 +244,7 @@ export default {
       rgb(13, 33, 60),
       rgb(52, 3, 62, 0.8)
     ),
-    url("https://assets.nst.com.my/images/articles/top3ch_NSTfield_image_socialmedia.var_1582008561.jpg");
+    url("http://anavaugm.com/bg-home.jpg");
   background-size: cover;
   padding-bottom: 20px;
 }
@@ -257,7 +257,7 @@ export default {
       rgb(13, 33, 60),
       rgb(52, 3, 62, 0.8)
     ),
-    url("http://ayokuliahs2.com/wp-content/uploads/2018/01/maxresdefault-1.jpg");
+    url("http://anavaugm.com/bg-about.jpg");
   background-size: cover;
   min-height: 100%;
   padding-top: 100px;
