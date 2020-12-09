@@ -63,7 +63,7 @@
               Sabtu, 17 Januari 2021
             </h5>
             <h2 class="text text-white mt-4">
-              Pelaksanaan lomba
+              Pelaksanaan
             </h2>
             <h5 class="text-white">
               Minggu, 31 Januari 2021

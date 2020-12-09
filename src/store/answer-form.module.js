@@ -47,6 +47,8 @@ export const answerForm = {
     createAnswerForm({ commit }, answerForm) {
       return AnswerFormService.createAnswerForm(answerForm).then(
         (response) => {
+          console.log("module")
+          console.log(response.data.data);
           commit("createAnswerForm", response.data.data);
           return Promise.resolve(response.data.data);
         },
@@ -73,6 +75,10 @@ export const answerForm = {
     },
     setAnswerForm(state, answerForm) {
       state.answerForm = answerForm;
+
+      alert("oke");
+      console.log("answer form");
+      console.log(state.answerForm);
     },
     createAnswerForm() {
       

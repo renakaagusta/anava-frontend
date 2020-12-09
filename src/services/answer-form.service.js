@@ -1,7 +1,7 @@
 import axios from 'axios';
 import header from './header';
 
-const API_URL = 'http://anavaugm.com:3000/api/answer-form/';
+const API_URL = 'http://localhost:3000/api/answer-form/';
 
 class AnswerFormService {
   getAllAnswerForm() {
@@ -14,8 +14,8 @@ class AnswerFormService {
     return axios.get(API_URL + id, header());
   }
   createAnswerForm(answerForm) {
-    alert(JSON.stringify(header(true)));
-    return axios.post(API_URL,answerForm, header(true));
+    alert(JSON.stringify(answerForm))
+    return axios.post(API_URL,answerForm, header());
   }
   updateAnswerForm(answerForm) {
     return axios.put(API_URL + answerForm._id,answerForm, header());

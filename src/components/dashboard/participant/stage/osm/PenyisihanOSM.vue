@@ -135,7 +135,7 @@
         value="Mulai"
         class="btn btn-purple mt-3"
         @click="nextStep()"
-        disabled
+        disabled="true"
       />
     </b-container>
     <b-row v-if="step == 1">
@@ -201,7 +201,6 @@
             <b-button class="mt-3" block variant="warning">
               <b-form-checkbox
                 id="checkbox-1"
-                v-model="status"
                 name="checkbox-1"
                 value="accepted"
                 unchecked-value="not_accepted"
@@ -282,15 +281,13 @@ export default {
   methods: {
     nextStep() {
       this.step = 1;
+      this.createAnswerForm()
     },
     createAnswerForm() {
-      let answerForm = new FormData();
-
-      answerForm.append("participantId", this.answerForm.participantId);
-      answerForm.append("stageId", this.answerForm.stageId);
-      answerForm.append("file", this.$refs.file.files[0]);
-
-      this.$store.dispatch("answerForm/createAnswerForm", answerForm);
+      this.$store.dispatch("answerForm/createAnswerForm", this.answerForm).then((response)=>{
+        console.log("answerForm");
+        console.log(response);
+      });
     },
     getQuestion() {
       this.$store.dispatch(
