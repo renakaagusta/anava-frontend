@@ -79,6 +79,14 @@
             <option value="E">E</option>
           </select>
         </b-form-group>
+         <b-form-group>
+          <h2>Sesi</h2>
+          <select class="custom-select" v-model="question.session">
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </b-form-group>
         <b-form-group>
           <h2>Solusi</h2>
           <vue-editor

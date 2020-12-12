@@ -10,7 +10,7 @@
         <p>Nomor</p>
       </b-col>
       <b-col class="text-center" md="2">
-        <p>Kesulitan</p>
+        <p>Sesi</p>
       </b-col>
     </b-row>
     <b-row
@@ -23,7 +23,7 @@
         <p class="text-bold">{{ question.number }}</p>
       </b-col>
       <b-col md="2">
-        <p class="text-bold">-</p>
+        <p>{{ question.session }}</p>
       </b-col>
       <b-col md="8">
         <router-link class="btn btn-primary float-right" :to="'question/'+question._id">
