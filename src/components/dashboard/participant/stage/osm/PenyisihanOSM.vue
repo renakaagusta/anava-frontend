@@ -135,7 +135,7 @@
         value="Mulai"
         class="btn btn-purple mt-3"
         @click="nextStep()"
-        disabled="false"
+        disbaled="false"
       />
     </b-container>
     <b-row v-if="step == 1">
@@ -164,7 +164,10 @@
             <b-card-text class="text-left">
               <div v-html="answerForm.questions[currentNumber].content" />
               <br />
-              <b-form-radio-group class="mt-2" v-model="answerForm.answers[currentNumber]">
+              <b-form-radio-group
+                class="mt-2"
+                v-model="answerForm.answers[currentNumber]"
+              >
                 <b-form-radio
                   name="some-radios"
                   value="A"
@@ -173,8 +176,8 @@
                     v-html="
                       answerForm.questions[currentNumber].options[0].content
                     "
-                  ></div
-                ></b-form-radio><br />
+                  ></div></b-form-radio
+                ><br />
 
                 <b-form-radio
                   name="some-radios"
@@ -184,8 +187,8 @@
                     v-html="
                       answerForm.questions[currentNumber].options[1].content
                     "
-                  ></div
-                ></b-form-radio><br />
+                  ></div></b-form-radio
+                ><br />
 
                 <b-form-radio
                   name="some-radios"
@@ -195,8 +198,8 @@
                     v-html="
                       answerForm.questions[currentNumber].options[2].content
                     "
-                  ></div
-                ></b-form-radio><br />
+                  ></div></b-form-radio
+                ><br />
 
                 <b-form-radio
                   name="some-radios"
@@ -206,9 +209,9 @@
                     v-html="
                       answerForm.questions[currentNumber].options[3].content
                     "
-                  ></div
-                ></b-form-radio><br />
-                
+                  ></div></b-form-radio
+                ><br />
+
                 <b-form-radio
                   name="some-radios"
                   value="E"
@@ -231,16 +234,7 @@
             </b-button>
           </b-col>
           <b-col cols="6 offset-1" md="4 offset-1">
-            <b-button class="mt-3" block variant="warning">
-              <b-form-checkbox
-                id="checkbox-1"
-                name="checkbox-1"
-                value="accepted"
-                unchecked-value="not_accepted"
-              >
-                Ragu-Ragu
-              </b-form-checkbox>
-            </b-button>
+            
           </b-col>
           <b-col id="nav-btn" cols="2 offset-1" md="3 offset-1">
             <b-button class="mt-3 mb-4" block variant="primary" @click="next()">
@@ -253,13 +247,7 @@
       <!-- nomor soal -->
       <b-col col md="3">
         <b-card-group deck>
-          <b-card
-            border-variant="secondary"
-            header="Nomor Soal"
-            header-bg-variant="white"
-            header-text-variant="black"
-            align="center"
-          >
+          <b-card header="Nomor Soal" align="center">
             <b-card-text>
               <b-row>
                 <b-col
@@ -268,9 +256,27 @@
                   v-for="(question, index) in answerForm.questions"
                   :key="question._id"
                 >
-                  <b-button id="number-question" @click="selectNumber(index)">
+                  <div
+                    v-if="answerForm.answers[index] != 'F' && answerForm.answers[index] != null"
+                    class="btn btn-primary"
+                    @click="selectNumber(index)"
+                  >
                     <p>{{ index + 1 }}</p>
-                  </b-button>
+                  </div>
+                  <div
+                    v-if="answerForm.answers[index] == 'F'"
+                    class="btn btn-warning"
+                    @click="selectNumber(index)"
+                  >
+                    <p>{{ index + 1 }}</p>
+                  </div>
+                  <div
+                    v-if="answerForm.answers[index] == null"
+                    class="btn btn-secondary"
+                    @click="selectNumber(index)"
+                  >
+                    <p>{{ index + 1 }}</p>
+                  </div>
                 </b-col>
               </b-row>
             </b-card-text>
@@ -319,26 +325,28 @@ export default {
       this.currentNumber = number;
     },
     next() {
-      if(this.currentNumber < this.answerForm.questions.length - 1)
+      if (this.currentNumber < this.answerForm.questions.length - 1)
         this.currentNumber++;
     },
     back() {
-      if(this.currentNumber > 0)
-        this.currentNumber--;
+      if (this.currentNumber > 0) this.currentNumber--;
+    },
+    setDoubtful() {
+      this.answerForm.answers[this.currentNumber] = 'F';
     },
     selectAnswer(letter) {
-      alert(letter)
       this.answerForm.answers[this.currentNumber] = letter;
-      console.log(this.answerForm.answers);
     },
+
     createAnswerForm() {
       this.$store
         .dispatch("answerForm/createAnswerForm", this.answerForm)
         .then((response) => {
           this.answerForm = response;
-          this.answerForm.questions.forEach(()=>{
+          this.answerForm.answers = [];
+          this.answerForm.questions.forEach(() => {
             this.answerForm.answers.push(null);
-          })
+          });
         });
     },
     getAllQuestionByStage() {
