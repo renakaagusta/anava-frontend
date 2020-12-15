@@ -109,7 +109,7 @@
         </b-col>
       </b-row>
     </b-container>
-    <a href="https://bit.ly/SigmaAnava15"
+    <a target="blank" href="https://bit.ly/SigmaAnava15"
       ><button class="btn btn-register">
         <h3>Daftar sekarang</h3>
       </button></a
