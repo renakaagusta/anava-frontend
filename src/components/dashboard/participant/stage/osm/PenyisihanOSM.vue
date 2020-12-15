@@ -135,7 +135,7 @@
         value="Mulai"
         class="btn btn-purple mt-3"
         @click="nextStep()"
-        disabled="true"
+        disabled="false"
       />
     </b-container>
     <b-row v-if="step == 1">
@@ -152,7 +152,7 @@
           >
             <template #header>
               <b-row class="text-left">
-                <b-col md="8">Soal No. 25</b-col>
+                <b-col md="8">Soal No. {{ currentNumber + 1 }}</b-col>
                 <b-col md="4" class="text-right">
                   <b-button-group size="sm">
                     <b-button variant="secondary">Sisa Waktu</b-button>
@@ -162,37 +162,70 @@
               </b-row>
             </template>
             <b-card-text class="text-left">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Accusantium porro quas ea iusto voluptas ullam quisquam quis
-              nostrum nemo ipsam obcaecati, nam illum hic. Unde ipsam nostrum
-              debitis delectus nobis. Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Quod, esse ab? Amet minima quaerat facilis,
-              ratione corrupti odio! Nam deleniti accusamus reiciendis sit vero
-              accusantium minus autem placeat voluptatibus sunt.
+              <div v-html="answerForm.questions[currentNumber].content" />
               <br />
-              <b-form-group class="mt-2">
-                <b-form-radio name="some-radios" value="A"
-                  >Option A</b-form-radio
-                >
-                <b-form-radio name="some-radios" value="B"
-                  >Option B</b-form-radio
-                >
-                <b-form-radio name="some-radios" value="C"
-                  >Option C</b-form-radio
-                >
-                <b-form-radio name="some-radios" value="D"
-                  >Option D</b-form-radio
-                >
-                <b-form-radio name="some-radios" value="E"
-                  >Option E</b-form-radio
-                >
-              </b-form-group>
+              <b-form-radio-group class="mt-2" v-model="answerForm.answers[currentNumber]">
+                <b-form-radio
+                  name="some-radios"
+                  value="A"
+                  @change="selectAnswer('A')"
+                  ><div
+                    v-html="
+                      answerForm.questions[currentNumber].options[0].content
+                    "
+                  ></div
+                ></b-form-radio><br />
+
+                <b-form-radio
+                  name="some-radios"
+                  value="B"
+                  @change="selectAnswer('B')"
+                  ><div
+                    v-html="
+                      answerForm.questions[currentNumber].options[1].content
+                    "
+                  ></div
+                ></b-form-radio><br />
+
+                <b-form-radio
+                  name="some-radios"
+                  value="C"
+                  @change="selectAnswer('C')"
+                  ><div
+                    v-html="
+                      answerForm.questions[currentNumber].options[2].content
+                    "
+                  ></div
+                ></b-form-radio><br />
+
+                <b-form-radio
+                  name="some-radios"
+                  value="D"
+                  @change="selectAnswer('D')"
+                  ><div
+                    v-html="
+                      answerForm.questions[currentNumber].options[3].content
+                    "
+                  ></div
+                ></b-form-radio><br />
+                
+                <b-form-radio
+                  name="some-radios"
+                  value="E"
+                  @change="selectAnswer('E')"
+                  ><div
+                    v-html="
+                      answerForm.questions[currentNumber].options[4].content
+                    "
+                  ></div
+                ></b-form-radio>
+              </b-form-radio-group>
             </b-card-text>
           </b-card>
         </b-card-group>
         <b-row>
           <b-col id="nav-btn" cols="2" md="3">
-            <b-button class="mt-3" block variant="primary">
+            <b-button class="mt-3" block variant="primary" @click="back()">
               <i class="fas fa-arrow-left"></i>
               <p>Sebelumnya</p>
             </b-button>
@@ -210,14 +243,13 @@
             </b-button>
           </b-col>
           <b-col id="nav-btn" cols="2 offset-1" md="3 offset-1">
-            <b-button class="mt-3 mb-4" block variant="primary">
+            <b-button class="mt-3 mb-4" block variant="primary" @click="next()">
               <p>Selanjutnya</p>
               <i class="fas fa-arrow-right"></i>
             </b-button>
           </b-col>
         </b-row>
       </b-col>
-
       <!-- nomor soal -->
       <b-col col md="3">
         <b-card-group deck>
@@ -230,15 +262,14 @@
           >
             <b-card-text>
               <b-row>
-                {{ JumlahSoal() }}
                 <b-col
                   cols="2"
                   md="2 mr-1 mb-2"
-                  v-for="number in data"
-                  :key="number"
+                  v-for="(question, index) in answerForm.questions"
+                  :key="question._id"
                 >
-                  <b-button id="number-question">
-                    <p>{{ number }}</p>
+                  <b-button id="number-question" @click="selectNumber(index)">
+                    <p>{{ index + 1 }}</p>
                   </b-button>
                 </b-col>
               </b-row>
@@ -262,13 +293,14 @@ export default {
       step: 0,
       data: [],
       answerForm: {},
+      currentNumber: 0,
       stageInformationOfParticipant: {},
       itemsTab1: [],
       itemsTab2: [{ "Nomor pendaftaran": 0, "Terdaftar pada": 0 }],
     };
   },
   computed: {
-    questions() {
+    totalQuestion() {
       return this.$store.state.question.questions;
     },
     stage() {
@@ -281,15 +313,35 @@ export default {
   methods: {
     nextStep() {
       this.step = 1;
-      this.createAnswerForm()
+      this.createAnswerForm();
+    },
+    selectNumber(number) {
+      this.currentNumber = number;
+    },
+    next() {
+      if(this.currentNumber < this.answerForm.questions.length - 1)
+        this.currentNumber++;
+    },
+    back() {
+      if(this.currentNumber > 0)
+        this.currentNumber--;
+    },
+    selectAnswer(letter) {
+      alert(letter)
+      this.answerForm.answers[this.currentNumber] = letter;
+      console.log(this.answerForm.answers);
     },
     createAnswerForm() {
-      this.$store.dispatch("answerForm/createAnswerForm", this.answerForm).then((response)=>{
-        console.log("answerForm");
-        console.log(response);
-      });
+      this.$store
+        .dispatch("answerForm/createAnswerForm", this.answerForm)
+        .then((response) => {
+          this.answerForm = response;
+          this.answerForm.questions.forEach(()=>{
+            this.answerForm.answers.push(null);
+          })
+        });
     },
-    getQuestion() {
+    getAllQuestionByStage() {
       this.$store.dispatch(
         "question/getAllQuestionByStage",
         this.$route.params.idStage

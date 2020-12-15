@@ -148,9 +148,15 @@
           <i class="icon fas fa-book fa-9x"></i>
         </b-col>
         <b-col lg="10" cols="9">
+          
           <b-container class="description  mt-4">
             <a target="blank" href="OSM/guidebook.pdf" class="btn d-inline">
               Unduh guidebook
+            </a>
+          </b-container>
+          <b-container class="description  mt-4"><br/>
+            <a target="blank" href="http://anavaugm.com/OSM/silabus.pdf" class="btn d-inline">
+              Unduh silabus
             </a>
           </b-container>
         </b-col>

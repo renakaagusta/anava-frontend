@@ -14,7 +14,6 @@ class AnswerFormService {
     return axios.get(API_URL + id, header());
   }
   createAnswerForm(answerForm) {
-    alert(JSON.stringify(answerForm))
     return axios.post(API_URL,answerForm, header());
   }
   updateAnswerForm(answerForm) {
