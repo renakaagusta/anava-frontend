@@ -33,6 +33,17 @@ export const event = {
         }
       );
     },
+    uploadEvent({ commit }, data) {
+      return EventService.uploadEvent(data).then(
+        (response) => {
+          commit("addEvent", response.data.data);
+          return Promise.resolve(response.data.data);
+        },
+        (error) => {
+          return Promise.reject(error);
+        }
+      );
+    },
     joinEvent({ commit }, data) {
       return EventService.joinEvent(data).then(
         (response) => {

@@ -1,15 +1,12 @@
 import AnswerFormService from "../services/answer-form.service";
 
-
 export const answerForm = {
   namespaced: true,
   state: {
     answerForms: [],
-    answerForm: {}
+    answerForm: {},
   },
-  getters: {
-    
-  },
+  getters: {},
   actions: {
     getAllAnswerForm({ commit }) {
       return AnswerFormService.getAllAnswerForm().then(
@@ -55,6 +52,17 @@ export const answerForm = {
         }
       );
     },
+    submitAnswerForm({ commit }, answerForm) {
+      return AnswerFormService.submitAnswerForm(answerForm).then(
+        (response) => {
+          commit("submitAnswerForm", response.data.data);
+          return Promise.resolve(response.data.data);
+        },
+        (error) => {
+          return Promise.reject(error);
+        }
+      );
+    },
     updateAnswerForm({ commit }, answerForm) {
       return AnswerFormService.updateAnswerForm(answerForm).then(
         (response) => {
@@ -73,13 +81,15 @@ export const answerForm = {
     },
     setAnswerForm(state, answerForm) {
       state.answerForm = answerForm;
-      localStorage.setItem('answerForm', JSON.stringify(answerForm));
     },
-    createAnswerForm() {
-      
+    createAnswerForm(state, answerForm) {
+      answerForm.answers = [];
+      answerForm.questions.forEach(() => {
+        answerForm.answers.push(null);
+      });
+      //localStorage.setItem("answerForm", JSON.stringify(answerForm));
     },
-    updateAnswerForm() {
-      
-    },
+    submitAnswerForm() {},
+    updateAnswerForm() {},
   },
 };

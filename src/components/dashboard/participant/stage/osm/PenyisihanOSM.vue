@@ -7,7 +7,7 @@
             <table class="table table-border">
               <tr class="border">
                 <td><b>Status Pembayaran</b></td>
-                <td v-if="stageInformationOfParticipant.number.length == 0">
+                <td v-if="stageInformationOfParticipant.number == null">
                   -
                 </td>
                 <td v-if="stageInformationOfParticipant.number > 0">
@@ -43,41 +43,59 @@
               </tr>
               <tr class="border">
                 <td><b>Mulai pengerjaan</b></td>
-                <td>-</td>
+                <td>
+                  {{
+                    getDateTime(
+                      "datetime",
+                      this.stageInformationOfParticipant.started_at
+                    )
+                  }}
+                </td>
               </tr>
               <tr class="border">
                 <td><b>Selesai pengerjaan</b></td>
-                <td>-</td>
+                <td>
+                  {{
+                    getDateTime(
+                      "datetime",
+                      this.stageInformationOfParticipant.finished_at
+                    )
+                  }}
+                </td>
               </tr>
             </table>
           </v-tab>
 
-          <v-tab title="Pakta Integritas"
-            ><div id="dropFileForm">
+          <v-tab title="Pakta Integritas">  
+            <div id="dropFileForm" v-if="stageInformationOfParticipant.document == 1">
               <input
                 type="file"
-                id="fileInput"
-                ref="osis_card"
-                @change="addFile('osis_card')"
+                id="fileEventDocument"
+                ref="event_document"
+                @change="addFile()"
               />
 
-              <label for="fileInput" id="fileLabel">
+              <label for="fileEventDocument" id="fileLabel">
                 <i class="fa fa-upload fa-5x"></i>
                 <br />
-                <span id="fileLabelText">
-                  Unggah pakta integritas
-                </span>
-                <br />
-                <span id="uploadStatus"></span>
+                <span id="fileLabelText" v-html="fileName.event_document" />
               </label>
 
-              <input
-                type="submit"
-                value="Upload"
-                class="btn btn-purple"
-                @click="uploadFile('osis_card')"
-                disabled="true"
-              />
+              <button class="uploadButton" @click="uploadFile()" v-if="false" disabled="disabled">
+                <b-spinner v-if="loading" label="Spinning"></b-spinner>
+                <p v-if="!loading" class="d-inline">Unggah</p>
+              </button>
+            </div>
+            <div v-else>
+              <b-card
+                :img-src="
+                  'http://anavaugm.com/event_document_' + event._id + '.jpg'
+                "
+                style="width: 500px;"
+                ><button class="btn-purple" v-if="0" @click="changeEventDocument = 1">
+                  Ganti
+                </button>
+              </b-card>
             </div>
           </v-tab>
           <v-tab title="Pengumuman">
@@ -129,13 +147,12 @@
           </v-tab>
         </vue-tabs>
       </b-container>
-
       <input
         type="submit"
         value="Mulai"
         class="btn btn-purple mt-3"
         @click="nextStep()"
-        disbaled="false"
+        :disabled="!time"
       />
     </b-container>
     <b-row v-if="step == 1">
@@ -152,11 +169,25 @@
           >
             <template #header>
               <b-row class="text-left">
-                <b-col md="8">Soal No. {{ currentNumber + 1 }}</b-col>
-                <b-col md="4" class="text-right">
+                <b-col md="5">Soal No. {{ currentNumber + 1 }}</b-col>
+                <b-col md="7" class="text-right">
                   <b-button-group size="sm">
                     <b-button variant="secondary">Sisa Waktu</b-button>
-                    <b-button variant="success">01:00:02</b-button>
+                    <b-button variant="success"
+                      ><b-row class="mt-0" style="font-size: 16px;">
+                        <b-col
+                          ><small>{{ displayHours }}</small></b-col
+                        >
+                        :
+                        <b-col
+                          ><small>{{ displayMinutes }}</small></b-col
+                        >
+                        :
+                        <b-col
+                          ><small>{{ displaySeconds }}</small></b-col
+                        >:
+                      </b-row></b-button
+                    >
                   </b-button-group>
                 </b-col>
               </b-row>
@@ -234,7 +265,15 @@
             </b-button>
           </b-col>
           <b-col cols="6 offset-1" md="4 offset-1">
-            
+            <b-form-checkbox
+              id="checkbox-1"
+              name="checkbox-1"
+              class="bg-warning mt-3 checkbox"
+              :checked="answerForm.doubtful[currentNumber] == true"
+              @change="setDoubtful()"
+            >
+              Ragu-Ragu
+            </b-form-checkbox>
           </b-col>
           <b-col id="nav-btn" cols="2 offset-1" md="3 offset-1">
             <b-button class="mt-3 mb-4" block variant="primary" @click="next()">
@@ -257,22 +296,28 @@
                   :key="question._id"
                 >
                   <div
-                    v-if="answerForm.answers[index] != 'F' && answerForm.answers[index] != null"
-                    class="btn btn-primary"
+                    v-if="
+                      answerForm.doubtful[index] != true &&
+                        answerForm.answers[index] != null
+                    "
+                    class="btn btn-primary number-question"
                     @click="selectNumber(index)"
                   >
                     <p>{{ index + 1 }}</p>
                   </div>
                   <div
-                    v-if="answerForm.answers[index] == 'F'"
-                    class="btn btn-warning"
+                    v-if="answerForm.doubtful[index] == true"
+                    class="btn btn-warning number-question"
                     @click="selectNumber(index)"
                   >
                     <p>{{ index + 1 }}</p>
                   </div>
                   <div
-                    v-if="answerForm.answers[index] == null"
-                    class="btn btn-secondary"
+                    v-if="
+                      answerForm.doubtful[index] != true &&
+                        answerForm.answers[index] == null
+                    "
+                    class="btn btn-secondary number-question"
                     @click="selectNumber(index)"
                   >
                     <p>{{ index + 1 }}</p>
@@ -282,7 +327,11 @@
             </b-card-text>
           </b-card>
         </b-card-group>
-        <b-button class="mt-3 mb-5" block variant="danger"
+        <b-button
+          class="mt-3 mb-5"
+          block
+          variant="danger"
+          @click="submitAnswerForm()"
           >Hentikan Ujian</b-button
         >
       </b-col>
@@ -291,6 +340,7 @@
 </template>
 <script>
 import * as datetime from "./../../../../../services/datetime";
+import Swal from "sweetalert2";
 
 export default {
   name: "PenyisihanOSM",
@@ -298,11 +348,39 @@ export default {
     return {
       step: 0,
       data: [],
-      answerForm: {},
+      answerForm: null,
       currentNumber: 0,
       stageInformationOfParticipant: {},
       itemsTab1: [],
       itemsTab2: [{ "Nomor pendaftaran": 0, "Terdaftar pada": 0 }],
+      displayHours: 0,
+      displayMinutes: 0,
+      displaySeconds: 0,
+      doubtful: [],
+      year: 0,
+      month: 0,
+      day: 0,
+      hour: 0,
+      minute: 0,
+      formParticipant: {
+        firstname: "",
+        lastname: "",
+        grade: 10,
+        birthDate: "",
+        address: "",
+        phoneNumber: "",
+        schoolName: "",
+        schoolAddress: "",
+        region: 1,
+      },
+      document: {
+        type: "",
+      },
+      changeEventDocument: 0,
+      loading: false,
+      fileName: {
+        event_document: "Unggah pakta integritas",
+      },
     };
   },
   computed: {
@@ -312,14 +390,90 @@ export default {
     stage() {
       return this.$store.state.stage.stage;
     },
+    event() {
+      return JSON.parse(localStorage.getItem("event"));
+    },
     participant() {
       return JSON.parse(localStorage.getItem("user"));
     },
+    time() {
+      var today = new Date();
+      var started_at = new Date(this.stage.started_at);
+      var finished_at = new Date(this.stage.finished_at);
+
+      today = new Date(
+        today.getTime() + (today.getTimezoneOffset() + 420) * 60 * 1000
+      );
+      started_at = new Date(
+        started_at.getTime() + (today.getTimezoneOffset() + 420) * 60 * 1000
+      );
+      finished_at = new Date(
+        finished_at.getTime() + (today.getTimezoneOffset() + 420) * 60 * 1000
+      );
+
+      return today > started_at && today < finished_at;
+    },
+    _seconds: () => 1000,
+    _minutes() {
+      return this._seconds * 60;
+    },
+    _hours() {
+      return this._minutes * 60;
+    },
+    _days() {
+      return this._hours * 24;
+    },
+    end() {
+      return new Date(
+        this.year,
+        this.month - 1,
+        this.date,
+        this.hour,
+        this.minute
+      );
+    },
   },
   methods: {
+    addFile() {
+      this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
+    },
+    uploadFile() {
+      var document = new FormData();
+
+      this.loading = true;
+      document.append("file", this.$refs.event_document.files[0]);
+      document.append("participantId", this.participant.id);
+
+      var formParticipant = {
+        id: this.event._id,
+        document: document,
+        participantId: this.participant.id,
+      };
+
+      alert("participant")
+      alert(JSON.stringify(formParticipant));
+
+      this.$store.dispatch("event/uploadEvent", formParticipant).then(
+        (response) => {
+          Swal.fire({
+            title: "Berhasil mengunggah dokumen",
+            icon: "success",
+            showConfirmButton: true,
+          }).then();
+          this.loading = false;
+          const participant = response.data.data;
+          var user = JSON.parse(localStorage.getItem("user"));
+          user.participant = participant.participant;
+          localStorage.setItem("user", JSON.stringify(user));
+        },
+        () => {}
+      );
+    },
     nextStep() {
       this.step = 1;
-      this.createAnswerForm();
+      if (this.answerForm == null) {
+        this.createAnswerForm();
+      }
     },
     selectNumber(number) {
       this.currentNumber = number;
@@ -332,21 +486,95 @@ export default {
       if (this.currentNumber > 0) this.currentNumber--;
     },
     setDoubtful() {
-      this.answerForm.answers[this.currentNumber] = 'F';
+      var _answerForm = this.answerForm;
+      if (_answerForm.doubtful[this.currentNumber] != true) {
+        _answerForm.doubtful[this.currentNumber] = true;
+      } else {
+        _answerForm.answers[this.currentNumber] = false;
+      }
+      var number = this.currentNumber;
+      this.currentNumber = -1;
+      this.currentNumber = number;
+
+      this.saveAnswerForm(_answerForm);
     },
     selectAnswer(letter) {
-      this.answerForm.answers[this.currentNumber] = letter;
+      var _answerForm = this.answerForm;
+      _answerForm.answers[this.currentNumber] = letter;
+      this.saveAnswerForm(_answerForm);
     },
-
+    saveAnswerForm(_answerForm) {
+      localStorage.setItem("answerForm", JSON.stringify(_answerForm));
+    },
     createAnswerForm() {
+      var _answerForm = {};
+
+      _answerForm.stageId = this.$route.params.idStage;
+      _answerForm.participantId = this.participant.id;
+
       this.$store
-        .dispatch("answerForm/createAnswerForm", this.answerForm)
+        .dispatch("answerForm/createAnswerForm", _answerForm)
+        .then((answerForm) => {
+          var _answerForm = JSON.parse(JSON.stringify(answerForm));
+
+          if (!_answerForm.session) {
+            var today = new Date();
+            var started_at = new Date(this.stage.started_at);
+            var finished_at = new Date(this.stage.finished_at);
+
+            started_at = new Date(
+              started_at.getTime() + today.getTimezoneOffset() * 60 * 1000
+            );
+            finished_at = new Date(
+              finished_at.getTime() + today.getTimezoneOffset() * 60 * 1000
+            );
+
+            started_at.setHours(
+              started_at.getHours() +
+                parseInt(this.stageInformationOfParticipant.session)
+            );
+            finished_at.setHours(
+              finished_at.getHours() +
+                parseInt(this.stageInformationOfParticipant.session)
+            );
+
+            _answerForm.started_at = started_at.toISOString();
+            _answerForm.finished_at = finished_at.toISOString();
+
+            _answerForm.session = this.stageInformationOfParticipant.session;
+
+            const format = _answerForm.finished_at.split("-");
+            this.year = parseInt(format[0]);
+            this.month = parseInt(format[1]);
+            const time = format[2].split("T");
+            this.date = parseInt(time[0]);
+            const clock = time[1].split(":");
+            this.hour = parseInt(clock[0]);
+            this.minute = parseInt(clock[1]);
+
+            this.showRemaining();
+
+            var doubtful = [];
+            _answerForm.answers = [];
+
+            _answerForm.questions.forEach(() => {
+              doubtful.push(null);
+              _answerForm.answers.push(null);
+            });
+
+            _answerForm.doubtful = doubtful;
+
+            localStorage.setItem("answerForm", JSON.stringify(_answerForm));
+          }
+        });
+    },
+    submitAnswerForm() {
+      this.answerForm.eventName = "OSM";
+      this.answerForm.stageName = "preliminary";
+      this.$store
+        .dispatch("answerForm/submitAnswerForm", this.answerForm)
         .then((response) => {
-          this.answerForm = response;
-          this.answerForm.answers = [];
-          this.answerForm.questions.forEach(() => {
-            this.answerForm.answers.push(null);
-          });
+          console.log("submitResponse" + JSON.stringify(response));
         });
     },
     getAllQuestionByStage() {
@@ -370,20 +598,86 @@ export default {
           if (stage.id == this.stage._id) {
             this.stageInformationOfParticipant = stage;
             this.stageInformationOfParticipant.number = event.number;
+            this.stageInformationOfParticipant.document = event.document;
+
+            var today = new Date();
+            var started_at = new Date(this.stage.started_at);
+            var finished_at = new Date(this.stage.finished_at);
+
+            started_at = new Date(
+              started_at.getTime() + today.getTimezoneOffset() * 60 * 1000
+            );
+            finished_at = new Date(
+              finished_at.getTime() + today.getTimezoneOffset() * 60 * 1000
+            );
+
+            started_at.setHours(
+              started_at.getHours() +
+                parseInt(this.stageInformationOfParticipant.session)
+            );
+            finished_at.setHours(
+              finished_at.getHours() +
+                parseInt(this.stageInformationOfParticipant.session)
+            );
+
+            this.stageInformationOfParticipant.started_at = started_at.toISOString();
+            this.stageInformationOfParticipant.finished_at = finished_at.toISOString();
           }
         });
       });
     },
-    JumlahSoal() {
-      for (let i = 0; i < 60; i++) {
-        this.data[i] = i + 1;
-      }
+    showRemaining() {
+      const timer = setInterval(() => {
+        var now = new Date();
+
+        const distance = this.end.getTime() - now.getTime();
+
+        if (distance < 0) {
+          this.step = 0;
+        }
+
+        if (distance < 0) {
+          clearInterval(timer);
+          this.show = false;
+          return;
+        }
+        const days = Math.floor(distance / this._days);
+        const hours = Math.floor((distance % this._days) / this._hours);
+        const minutes = Math.floor((distance % this._hours) / this._minutes);
+        const seconds = Math.floor((distance % this._minutes) / this._seconds);
+
+        this.displaySeconds = seconds < 10 ? "0" + seconds : seconds;
+        this.displayMinutes = minutes < 10 ? "0" + minutes : minutes;
+        this.displayHours = hours < 10 ? "0" + hours : hours;
+        this.displayDays = days < 10 ? "0" + days : days;
+      }, 1000);
+    },
+    getAnswerForm() {
+      setInterval(() => {
+        this.answerForm = JSON.parse(localStorage.getItem("answerForm"));
+
+        if (this.answerForm != null) {
+          this.step = 1;
+
+          const format = this.answerForm.finished_at.split("-");
+          this.year = parseInt(format[0]);
+          this.month = parseInt(format[1]);
+          const time = format[2].split("T");
+          this.date = parseInt(time[0]);
+          const clock = time[1].split(":");
+          this.hour = parseInt(clock[0]);
+          this.minute = parseInt(clock[1]);
+
+          this.showRemaining();
+        }
+      }, 200);
     },
   },
   created() {
     this.getStage();
-    this.answerForm.stageId = this.$route.params.idStage;
-    this.answerForm.participantId = this.participant.id;
+    this.showRemaining();
+    this.getAnswerForm();
+
     this.items = [
       {
         "Mulai pengerjaan": this.getDateTime("datetime", this.stage.started_at),
@@ -403,12 +697,12 @@ export default {
   height: 100%;
 }
 
-#number-question {
+.number-question {
   width: 40px;
   height: 40px;
 }
 
-#number-question p {
+.number-question p {
   font-size: 11px;
   margin-top: 5px;
 }
@@ -417,16 +711,91 @@ export default {
   display: inline;
 }
 
+.checkbox {
+  padding: 0;
+  margin: 0;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  border-radius: 5px;
+  color: white;
+}
+
+#dropFileForm {
+  margin: 16px;
+  text-align: center;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: 0.5s;
+}
+
+#dropFileForm #fileLabel {
+  background-color: rgba(200, 200, 200, 0.5);
+  display: block;
+  padding: 16px;
+  position: relative;
+  cursor: pointer;
+
+  border: 2px dashed #555;
+}
+
+#dropFileForm #fileEventDocument {
+  display: none;
+}
+
+#dropFileForm #fileLabel:after,
+#dropFileForm #fileLabel:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  z-index: -2;
+  border-radius: 8px 8px 0 0;
+}
+
+#dropFileForm #fileLabel:before {
+  z-index: -1;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 5%,
+    black 5%,
+    black 10%
+  );
+  opacity: 0;
+  transition: 0.5s;
+}
+
+#dropFileForm.fileHover #fileLabel:before {
+  opacity: 0.25;
+}
+
+#dropFileForm .uploadButton {
+  border: 0;
+  outline: 0;
+  width: 100%;
+  padding: 8px;
+  background-color: #58427c;
+  color: #fff;
+  cursor: pointer;
+}
+
+#dropFileForm.fileHover {
+  box-shadow: 0 0 16px limeGreen;
+}
+
 @media (max-width: 767px) {
   #nav-btn p {
     display: none;
   }
-  #number-question {
+  .number-question {
     width: 45px;
     height: 45px;
     margin-left: 15px;
   }
-  #number-question p {
+  .number-question p {
     font-size: 15px;
     margin-top: 5px;
   }
