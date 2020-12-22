@@ -1,7 +1,7 @@
 import axios from 'axios';
 import header from './header';
 
-const API_URL = 'http://anavaugm.com/api/question/';
+const API_URL = 'http://anavaugm.com:3000/api/question/';
 
 class QuestionService {
   getAllQuestion() {
