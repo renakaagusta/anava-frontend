@@ -72,8 +72,6 @@ export const event = {
           state.event = state.events[selectedEvent.item - 7];
       }
 
-      console.log(state.event.name);
-
       localStorage.setItem("event", JSON.stringify(state.event));
     },
     addEvent(state, user) {

@@ -9,8 +9,26 @@
       <b-col class="text-center" md="2">
         <p>Nomor</p>
       </b-col>
-      <b-col class="text-center" md="2">
+      <b-col
+        class="text-center"
+        md="2"
+        v-if="event.name == 'OSM' && stage.name == 'preliminary'"
+      >
         <p>Sesi</p>
+      </b-col>
+      <b-col
+        class="text-center"
+        md="2"
+        v-if="event.name == 'The One' && stage.name == 'preliminary'"
+      >
+        <p>Mata pelajaran</p>
+      </b-col>
+      <b-col
+        class="text-center"
+        md="2"
+        v-if="event.name == 'The One' && stage.name == 'preliminary'"
+      >
+        <p>Poin</p>
       </b-col>
     </b-row>
     <b-row
@@ -22,11 +40,20 @@
       <b-col md="2">
         <p class="text-bold">{{ question.number }}</p>
       </b-col>
-      <b-col md="2">
+      <b-col md="2" v-if="event.name == 'OSM' && stage.name == 'preliminary'">
         <p>{{ question.session }}</p>
       </b-col>
+      <b-col md="2" v-if="event.name == 'The One' && stage.name == 'preliminary'">
+        <p>{{ question.lesson }}</p>
+      </b-col>
+      <b-col md="2" v-if="event.name == 'The One' && stage.name == 'preliminary'">
+        <p>{{ question.poin }}</p>
+      </b-col>
       <b-col md="8">
-        <router-link class="btn btn-primary float-right" :to="'question/'+question._id">
+        <router-link
+          class="btn btn-primary float-right"
+          :to="'question/' + question._id"
+        >
           <i class="fas fa-pencil-alt"></i>
           Sunting
         </router-link>
@@ -40,6 +67,12 @@ export default {
   computed: {
     questions() {
       return this.$store.state.question.questions;
+    },
+    stage() {
+      return this.$store.state.stage.stage;
+    },
+    event() {
+      return this.$store.state.event.event;
     },
   },
   methods: {

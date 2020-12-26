@@ -79,14 +79,33 @@
             <option value="E">E</option>
           </select>
         </b-form-group>
-        <b-form-group>
-          <h2>Solusi</h2>
-          <vue-editor
-            type="text"
-            id="solution"
-            placeholder="Masukan Solusi"
-            v-model="question.solution"
-          ></vue-editor>
+        <b-form-group v-if="event.name == 'OSM' && stage.name == 'preliminary'">
+          <h2>Sesi</h2>
+          <select class="custom-select" v-model="question.session">
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </b-form-group>
+        <b-form-group
+          v-if="event.name == 'The One' && stage.name == 'preliminary'"
+        >
+          <h2>Poin</h2>
+          <input
+            type="number"
+            placeholder="masukan Poin"
+            v-model="question.poin"
+            value="1"
+          />
+          <b-form-group>
+            <h2>Mata Pelajaran</h2>
+            <select class="custom-select" v-model="question.lesson">
+              <option value="Matematika" selected>Matematika</option>
+              <option value="Fisika">Fisika</option>
+              <option value="Kimia">Kimia</option>
+              <option value="Biologi">Biologi</option>
+            </select>
+          </b-form-group>
         </b-form-group>
         <a
           @click="updateQuestion()"
@@ -105,8 +124,7 @@
 export default {
   name: "EditQuestionStage",
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     question() {
@@ -116,12 +134,15 @@ export default {
       return this.$store.state.stage.stage;
     },
     event() {
-      return this.$store.state.stage.stage;
+      return this.$store.state.event.event;
     },
   },
   methods: {
     getQuestion() {
-      this.$store.dispatch("question/getQuestion", this.$route.params.idQuestion);
+      this.$store.dispatch(
+        "question/getQuestion",
+        this.$route.params.idQuestion
+      );
     },
     updateQuestion() {
       this.$store.dispatch("question/updateQuestion", this.question);

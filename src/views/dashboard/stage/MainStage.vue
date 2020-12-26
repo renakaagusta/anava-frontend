@@ -77,7 +77,6 @@ export default {
       return this.$store.state.auth.user;
     },
     stage() {
-      console.log(this.$store.state.stage.stage);
       return this.$store.state.stage.stage;
     },
     event() {

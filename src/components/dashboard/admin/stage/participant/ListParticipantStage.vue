@@ -1,6 +1,7 @@
 <template>
   <div>
     <b-container class="p-0 m-0">
+      {{ outline }}
       <h3 class="text-left">Outline</h3>
       <b-row>
         <b-col class="mt-3" cols="3">

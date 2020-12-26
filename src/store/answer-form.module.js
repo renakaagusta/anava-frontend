@@ -41,6 +41,17 @@ export const answerForm = {
         }
       );
     },
+    getAnswerFormByParticipantAndStage({ commit }, answerForm) {
+      return AnswerFormService.getAnswerFormByParticipantAndStage(answerForm).then(
+        (response) => {
+          commit("setAnswerForm", response.data.data[0]);
+          return Promise.resolve(response.data.data[0]);
+        },
+        (error) => {
+          return Promise.reject(error);
+        }
+      );
+    },
     createAnswerForm({ commit }, answerForm) {
       return AnswerFormService.createAnswerForm(answerForm).then(
         (response) => {
@@ -81,13 +92,10 @@ export const answerForm = {
     },
     setAnswerForm(state, answerForm) {
       state.answerForm = answerForm;
+      localStorage.setItem("answerForm", JSON.stringify(answerForm));
     },
-    createAnswerForm(state, answerForm) {
-      answerForm.answers = [];
-      answerForm.questions.forEach(() => {
-        answerForm.answers.push(null);
-      });
-      //localStorage.setItem("answerForm", JSON.stringify(answerForm));
+    createAnswerForm() {
+      
     },
     submitAnswerForm() {},
     updateAnswerForm() {},

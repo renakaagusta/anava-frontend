@@ -121,135 +121,94 @@
           </v-tab>
         </vue-tabs>
       </b-container>
-
       <input
-      type="submit"
+        type="submit"
         value="Mulai"
         class="btn btn-purple mt-3"
-        @click="nextStep()"
-        disabled
+        click=""
+        :disabled="false"
       />
     </b-container>
-    <b-row v-if="step == 1">
-      <!-- soal -->
-      <b-col col cols="9" md="9">
-        <b-card-group deck>
-          <b-card
-            border-variant="secondary"
-            header="featured"
-            header-tag="header"
-            header-bg-variant="white"
-            header-text-variant="black"
-            align="center"
-          >
-            <template #header>
-              <b-row class="text-left">
-                <b-col md="8">Soal No. 25</b-col>
-                <b-col md="4" class="text-right">
-                  <b-button-group size="sm">
-                    <b-button variant="secondary">Sisa Waktu</b-button>
-                    <b-button variant="success">01:00:02</b-button>
-                  </b-button-group>
-                </b-col>
-              </b-row>
-            </template>
-            <b-card-text class="text-left">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Accusantium porro quas ea iusto voluptas ullam quisquam quis
-              nostrum nemo ipsam obcaecati, nam illum hic. Unde ipsam nostrum
-              debitis delectus nobis. Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Quod, esse ab? Amet minima quaerat facilis,
-              ratione corrupti odio! Nam deleniti accusamus reiciendis sit vero
-              accusantium minus autem placeat voluptatibus sunt.
-              <br />
-              <b-form-group class="mt-2">
-                <b-form-radio name="some-radios" value="A"
-                  >Option A</b-form-radio
-                >
-                <b-form-radio name="some-radios" value="B"
-                  >Option B</b-form-radio
-                >
-                <b-form-radio name="some-radios" value="C"
-                  >Option C</b-form-radio
-                >
-                <b-form-radio name="some-radios" value="D"
-                  >Option D</b-form-radio
-                >
-                <b-form-radio name="some-radios" value="E"
-                  >Option E</b-form-radio
-                >
-              </b-form-group>
-            </b-card-text>
-          </b-card>
-        </b-card-group>
+    <b-row class="pl-3 pr-3 mb-3" v-if="step == 1">
+      <b-container class="bg-white p-4 shadow-sm">
+        <b-row class="mt-0" style="font-size: 16px;">
+                        <b-col
+                          ><small>{{ displayHours }}</small></b-col
+                        >
+                        :
+                        <b-col
+                          ><small>{{ displayMinutes }}</small></b-col
+                        >
+                        :
+                        <b-col
+                          ><small>{{ displaySeconds }}</small></b-col
+                        >:
+                      </b-row>
+        <h1>Ketentuan Poster</h1>
+        <hr />
+        <br />
         <b-row>
-          <b-col id="nav-btn" cols="2" md="3">
-            <b-button class="mt-3" block variant="primary">
-              <i class="fas fa-arrow-left"></i>
-              <p>Sebelumnya</p>
-            </b-button>
+          <b-col cols="12" md="12">
+            <p class="text-left">
+              Membuat essay terkait Analisa Tema LKMM Pra-TD III FTE ITS yaitu
+              Avatar [The Last Gen of FTE] dengan ketentuan : <br />
+              1. Diketik di kertas ukuran A4 dengan margin 3333 <br />
+              2. Font Times New Roman dengan ukuran 12 <br />
+              3. Space 1.0 No Before-After <br />
+              4. Rata kanan kiri (Justify) tanpa paragraf, dengan judul <br />
+              5. Identitas di tulis di Header dengan berisikan Nama, NRP dan
+              Nama Kelas Kecil <br />
+              6. Minimal satu halaman penuh <br />
+              7. Format file pdf.
+            </p>
           </b-col>
-          <b-col cols="6 offset-1" md="4 offset-1">
-            <b-button class="mt-3" block variant="warning">
-              <b-form-checkbox
-                id="checkbox-1"
-                v-model="status"
-                name="checkbox-1"
-                value="accepted"
-                unchecked-value="not_accepted"
-              >
-                Ragu-Ragu
-              </b-form-checkbox>
-            </b-button>
-          </b-col>
-          <b-col id="nav-btn" cols="2 offset-1" md="3 offset-1">
-            <b-button class="mt-3 mb-4" block variant="primary">
-              <p>Selanjutnya</p>
-              <i class="fas fa-arrow-right"></i>
-            </b-button>
+          <b-col cols="12" md="12">
+            <div id="dropFileForm" v-if="changeStartedPoster == 0">
+              <input
+                type="file"
+                id="fileStartedPoster"
+                ref="started_poster"
+                @change="addFile('started_poster')"
+              />
+
+              <label for="fileStartedPoster" id="fileLabel">
+                <i class="fa fa-upload fa-5x"></i>
+                <br />
+                <span id="fileLabelText" v-html="fileName.started_poster" />
+              </label>
+
+              <button class="uploadButton" @click="uploadAnswer()">
+                <b-spinner v-if="loading" label="Spinning"></b-spinner>
+                <p v-if="!loading" class="d-inline">Unggah</p>
+              </button>
+            </div>
+            <div v-else>
+              <b-card
+                :img-src="
+                  'http://anavaugm.com/started_poster_' + event._id + '.jpg'
+                "
+                style="width: 500px;"
+                ><button
+                  class="btn-purple"
+                  v-if="true"
+                  @click="changeStartedPoster = 1"
+                >
+                  Ganti
+                </button>
+              </b-card>
+            </div>
           </b-col>
         </b-row>
-      </b-col>
-
-      <!-- nomor soal -->
-      <b-col col md="3">
-        <b-card-group deck>
-          <b-card
-            border-variant="secondary"
-            header="Nomor Soal"
-            header-bg-variant="white"
-            header-text-variant="black"
-            align="center"
-          >
-            <b-card-text>
-              <b-row>
-                {{ JumlahSoal() }}
-                <b-col
-                  cols="2"
-                  md="2 mr-1 mb-2"
-                  v-for="number in data"
-                  :key="number"
-                >
-                  <b-button id="number-question">
-                    <p>{{ number }}</p>
-                  </b-button>
-                </b-col>
-              </b-row>
-            </b-card-text>
-          </b-card>
-        </b-card-group>
-        <b-button class="mt-3 mb-5" block variant="danger"
-          >Hentikan Ujian</b-button
-        >
-      </b-col>
+      </b-container>
     </b-row>
   </div>
 </template>
 <script>
 import * as datetime from "./../../../../../services/datetime";
+import Swal from "sweetalert2";
 
 export default {
-  name: "PenyisihanTheOne",
+  name: "PenyisihanStarted",
   data() {
     return {
       step: 0,
@@ -258,43 +217,126 @@ export default {
       stageInformationOfParticipant: {},
       itemsTab1: [],
       itemsTab2: [{ "Nomor pendaftaran": 0, "Terdaftar pada": 0 }],
+      displayHours: 0,
+      displayMinutes: 0,
+      displaySeconds: 0,
+      doubtful: [],
+      year: 0,
+      month: 0,
+      day: 0,
+      hour: 0,
+      minute: 0,
+      timer: null,
+      formParticipant: {
+        firstname: "",
+        lastname: "",
+        grade: 10,
+        birthDate: "",
+        address: "",
+        phoneNumber: "",
+        schoolName: "",
+        schoolAddress: "",
+        region: 1,
+      },
+      document: {
+        type: "",
+      },
+      changeStartedPoster: 0,
+      changeEventDocument: 0,
+      loading: false,
+      fileName: {
+        started_poster: "Unggah file poster",
+        event_document: "Unggah surat orisinalitas",
+      },
     };
   },
   computed: {
-    questions() {
-      return this.$store.state.question.questions;
-    },
     stage() {
       return this.$store.state.stage.stage;
     },
+    event() {
+      return JSON.parse(localStorage.getItem("event"));
+    },
+    answerFormByParticipantAndStage() {
+      return JSON.parse(localStorage.getItem("answerForm"));
+    },
     participant() {
       return JSON.parse(localStorage.getItem("user"));
+    },
+    time() {
+      var today = new Date();
+      var started_at = new Date(this.stage.started_at);
+      var finished_at = new Date(this.stage.finished_at);
+
+      today = new Date(
+        today.getTime() + (today.getTimezoneOffset() + 420) * 60 * 1000
+      );
+      started_at = new Date(
+        started_at.getTime() + (today.getTimezoneOffset() + 420) * 60 * 1000
+      );
+      finished_at = new Date(
+        finished_at.getTime() + (today.getTimezoneOffset() + 420) * 60 * 1000
+      );
+
+      return today > started_at && today < finished_at;
+    },
+    _seconds: () => 1000,
+    _minutes() {
+      return this._seconds * 60;
+    },
+    _hours() {
+      return this._minutes * 60;
+    },
+    _days() {
+      return this._hours * 24;
+    },
+    end() {
+      return new Date(
+        this.year,
+        this.month - 1,
+        this.date,
+        this.hour,
+        this.minute
+      );
     },
   },
   methods: {
     nextStep() {
       this.step = 1;
-    },
-    createAnswerForm() {
-      let answerForm = new FormData();
 
-      answerForm.append("participantId", this.answerForm.participantId);
-      answerForm.append("stageId", this.answerForm.stageId);
-      answerForm.append("file", this.$refs.file.files[0]);
-
-      this.$store.dispatch("answerForm/createAnswerForm", answerForm);
-    },
-    getQuestion() {
-      this.$store.dispatch(
-        "question/getAllQuestionByStage",
-        this.$route.params.idStage
-      );
-    },
-    updateQuestion() {
-      this.$store.dispatch("question/updateQuestion", this.question);
+      this.createAnswerForm();
     },
     getDateTime: function(type, date) {
       return datetime.getDateTime(type, date);
+    },
+    addFile(type) {
+      if (type == "started_poster")
+        this.fileName.started_poster = this.$refs.started_poster.files[0].name.toString();
+      else
+        this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
+    },
+    uploadAnswer() {
+      var document = new FormData();
+
+      this.loading = true;
+      document.append("file", this.$refs.started_poster.files[0]);
+
+      var formAnswer = {
+        id: this.answerForm.answers[0],
+        data: document,
+      };
+
+      this.$store.dispatch("answer/uploadAnswer", formAnswer).then(
+        () => {
+          Swal.fire({
+            title: "Berhasil mengunggah poster",
+            icon: "success",
+            showConfirmButton: true,
+          }).then();
+          this.loading = false;
+        },
+        () => {}
+      );
     },
     getStage() {
       this.$store.dispatch("stage/getStage", this.$route.params.idStage);
@@ -305,20 +347,183 @@ export default {
           if (stage.id == this.stage._id) {
             this.stageInformationOfParticipant = stage;
             this.stageInformationOfParticipant.number = event.number;
+            this.stageInformationOfParticipant.document = event.document;
           }
         });
       });
     },
-    JumlahSoal() {
-      for (let i = 0; i < 60; i++) {
-        this.data[i] = i + 1;
+    getAnswerFormByParticipantAndStage() {
+      var answerForm = {};
+
+      answerForm.stageId = this.$route.params.idStage;
+      answerForm.participantId = this.participant.id;
+
+      this.$store.dispatch(
+        "answerForm/getAnswerFormByParticipantAndStage",
+        answerForm
+      );
+    },
+    saveAnswerForm(_answerForm) {
+      localStorage.setItem("answerForm", JSON.stringify(_answerForm));
+    },
+    createAnswerForm() {
+      if (this.stageInformationOfParticipant.document == 0) {
+        var _answerForm = {};
+        _answerForm.stageId = this.$route.params.idStage;
+        _answerForm.participantId = this.participant.id;
+
+        this.$store
+          .dispatch("answerForm/createAnswerForm", _answerForm)
+          .then((answerForm) => {
+            var _answerForm = JSON.parse(JSON.stringify(answerForm));
+
+            if (!_answerForm.session) {
+              var today = new Date();
+              var started_at = new Date(this.stage.started_at);
+              var finished_at = new Date(this.stage.finished_at);
+
+              started_at = new Date(
+                started_at.getTime() + today.getTimezoneOffset() * 60 * 1000
+              );
+              finished_at = new Date(
+                finished_at.getTime() + today.getTimezoneOffset() * 60 * 1000
+              );
+
+              started_at.setHours(
+                started_at.getHours() +
+                  parseInt(this.stageInformationOfParticipant.session)
+              );
+              finished_at.setHours(
+                finished_at.getHours() +
+                  parseInt(this.stageInformationOfParticipant.session)
+              );
+
+              _answerForm.started_at = started_at.toISOString();
+              _answerForm.finished_at = finished_at.toISOString();
+
+              _answerForm.session = this.stageInformationOfParticipant.session;
+
+              const format = _answerForm.finished_at.split("-");
+              this.year = parseInt(format[0]);
+              this.month = parseInt(format[1]);
+              const time = format[2].split("T");
+              this.date = parseInt(time[0]);
+              const clock = time[1].split(":");
+              this.hour = parseInt(clock[0]);
+              this.minute = parseInt(clock[1]);
+
+              this.showRemaining();
+
+              localStorage.setItem("answerForm", JSON.stringify(_answerForm));
+              alert(JSON.stringify(_answerForm));
+            }
+          });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Surat Orisinalitas belum diunggah",
+          text: this.message,
+          showConfirmButton: true,
+        }).then(() => {});
       }
+    },
+    submitAnswerForm() {
+      this.answerForm.eventName = "Started";
+      this.answerForm.stageName = "preliminary";
+      this.$store
+        .dispatch("answerForm/submitAnswerForm", this.answerForm)
+        .then((response) => {
+          console.log("submitResponse" + JSON.stringify(response));
+        });
+    },
+    showRemaining() {
+      const timer = setInterval(() => {
+        var now = new Date();
+
+        const distance = this.end.getTime() - now.getTime();
+
+        if (distance < 0) {
+          this.submitAnswerForm();
+        }
+
+        if (distance < 0) {
+          clearInterval(timer);
+          this.show = false;
+          return;
+        }
+        const days = Math.floor(distance / this._days);
+        const hours = Math.floor((distance % this._days) / this._hours);
+        const minutes = Math.floor((distance % this._hours) / this._minutes);
+        const seconds = Math.floor((distance % this._minutes) / this._seconds);
+
+        this.displaySeconds = seconds < 10 ? "0" + seconds : seconds;
+        this.displayMinutes = minutes < 10 ? "0" + minutes : minutes;
+        this.displayHours = hours < 10 ? "0" + hours : hours;
+        this.displayDays = days < 10 ? "0" + days : days;
+      }, 1000);
+    },
+    getAnswerForm() {
+      this.timer = setInterval(() => {
+        console.log(this.event.name);
+        console.log(this.stage.name);
+        if (this.answerForm != null) {
+          if (
+            this.stageInformationOfParticipant.id == this.$route.params.idStage
+          ) {
+            if (this.step == 1) {
+              if (this.answerFormByParticipantAndStage.score != null)
+                clearInterval(this.timer);
+
+              this.answerForm = JSON.parse(localStorage.getItem("answerForm"));
+
+              if (this.answerForm != null) {
+                this.step = 1;
+
+                const format = this.answerForm.finished_at.split("-");
+                this.year = parseInt(format[0]);
+                this.month = parseInt(format[1]);
+                const time = format[2].split("T");
+                this.date = parseInt(time[0]);
+                const clock = time[1].split(":");
+                this.hour = parseInt(clock[0]);
+                this.minute = parseInt(clock[1]);
+
+                this.showRemaining();
+              }
+            }
+          } else {
+            this.getStage();
+            this.answerForm.stageId = this.$route.params.idStage;
+            this.answerForm.participantId = this.participant.id;
+            this.items = [
+              {
+                "Mulai pengerjaan": this.getDateTime(
+                  "datetime",
+                  this.stage.started_at
+                ),
+                "Selesai pengerjaan": this.getDateTime(
+                  "datetime",
+                  this.stage.finished_at
+                ),
+                "Pengumuman lolos": this.getDateTime(
+                  "datetime",
+                  this.stage.started_at
+                ),
+              },
+            ];
+            this.getStageInformationOfParticipant();
+          }
+        }
+      }, 200);
     },
   },
   created() {
-    this.getStage();
     this.answerForm.stageId = this.$route.params.idStage;
     this.answerForm.participantId = this.participant.id;
+
+    this.getStage();
+    this.getAnswerForm();
+
     this.items = [
       {
         "Mulai pengerjaan": this.getDateTime("datetime", this.stage.started_at),
@@ -393,7 +598,11 @@ export default {
   border: 2px dashed #555;
 }
 
-#dropFileForm #fileInput {
+#dropFileForm #fileEventDocument {
+  display: none;
+}
+
+#dropFileForm #fileStartedPoster {
   display: none;
 }
 

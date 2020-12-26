@@ -65,9 +65,14 @@
               </tr>
             </table>
           </v-tab>
-
-          <v-tab title="Pakta Integritas">  
-            <div id="dropFileForm" v-if="stageInformationOfParticipant.document == 1">
+          <v-tab title="Pakta Integritas">
+            <div
+              id="dropFileForm"
+              v-if="
+                stageInformationOfParticipant.document == 0 ||
+                  changeEventDocument == 1
+              "
+            >
               <input
                 type="file"
                 id="fileEventDocument"
@@ -81,7 +86,12 @@
                 <span id="fileLabelText" v-html="fileName.event_document" />
               </label>
 
-              <button class="uploadButton" @click="uploadFile()" v-if="false" disabled="disabled">
+              <button
+                class="uploadButton"
+                @click="uploadFile()"
+                v-if="false"
+                disabled="disabled"
+              >
                 <b-spinner v-if="loading" label="Spinning"></b-spinner>
                 <p v-if="!loading" class="d-inline">Unggah</p>
               </button>
@@ -92,7 +102,11 @@
                   'http://anavaugm.com/event_document_' + event._id + '.jpg'
                 "
                 style="width: 500px;"
-                ><button class="btn-purple" v-if="0" @click="changeEventDocument = 1">
+                ><button
+                  class="btn-purple"
+                  v-if="true"
+                  @click="changeEventDocument = 1"
+                >
                   Ganti
                 </button>
               </b-card>
@@ -151,8 +165,8 @@
         type="submit"
         value="Mulai"
         class="btn btn-purple mt-3"
-        @click="nextStep()"
-        :disabled="!time"
+        click=""
+        :disabled="false"
       />
     </b-container>
     <b-row v-if="step == 1">
@@ -362,6 +376,7 @@ export default {
       day: 0,
       hour: 0,
       minute: 0,
+      timer: null,
       formParticipant: {
         firstname: "",
         lastname: "",
@@ -392,6 +407,9 @@ export default {
     },
     event() {
       return JSON.parse(localStorage.getItem("event"));
+    },
+    answerFormByParticipantAndStage() {
+      return JSON.parse(localStorage.getItem("answerForm"));
     },
     participant() {
       return JSON.parse(localStorage.getItem("user"));
@@ -450,7 +468,7 @@ export default {
         participantId: this.participant.id,
       };
 
-      alert("participant")
+      alert("participant");
       alert(JSON.stringify(formParticipant));
 
       this.$store.dispatch("event/uploadEvent", formParticipant).then(
@@ -503,70 +521,90 @@ export default {
       _answerForm.answers[this.currentNumber] = letter;
       this.saveAnswerForm(_answerForm);
     },
+    getAnswerFormByParticipantAndStage() {
+      var answerForm = {};
+
+      answerForm.stageId = this.$route.params.idStage;
+      answerForm.participantId = this.participant.id;
+
+      this.$store.dispatch(
+        "answerForm/getAnswerFormByParticipantAndStage",
+        answerForm
+      );
+    },
     saveAnswerForm(_answerForm) {
       localStorage.setItem("answerForm", JSON.stringify(_answerForm));
     },
     createAnswerForm() {
-      var _answerForm = {};
+      if (this.stageInformationOfParticipant.document == 1) {
+        var _answerForm = {};
 
-      _answerForm.stageId = this.$route.params.idStage;
-      _answerForm.participantId = this.participant.id;
+        _answerForm.stageId = this.$route.params.idStage;
+        _answerForm.participantId = this.participant.id;
 
-      this.$store
-        .dispatch("answerForm/createAnswerForm", _answerForm)
-        .then((answerForm) => {
-          var _answerForm = JSON.parse(JSON.stringify(answerForm));
+        this.$store
+          .dispatch("answerForm/createAnswerForm", _answerForm)
+          .then((answerForm) => {
+            var _answerForm = JSON.parse(JSON.stringify(answerForm));
 
-          if (!_answerForm.session) {
-            var today = new Date();
-            var started_at = new Date(this.stage.started_at);
-            var finished_at = new Date(this.stage.finished_at);
+            if (!_answerForm.session) {
+              var today = new Date();
+              var started_at = new Date(this.stage.started_at);
+              var finished_at = new Date(this.stage.finished_at);
 
-            started_at = new Date(
-              started_at.getTime() + today.getTimezoneOffset() * 60 * 1000
-            );
-            finished_at = new Date(
-              finished_at.getTime() + today.getTimezoneOffset() * 60 * 1000
-            );
+              started_at = new Date(
+                started_at.getTime() + today.getTimezoneOffset() * 60 * 1000
+              );
+              finished_at = new Date(
+                finished_at.getTime() + today.getTimezoneOffset() * 60 * 1000
+              );
 
-            started_at.setHours(
-              started_at.getHours() +
-                parseInt(this.stageInformationOfParticipant.session)
-            );
-            finished_at.setHours(
-              finished_at.getHours() +
-                parseInt(this.stageInformationOfParticipant.session)
-            );
+              started_at.setHours(
+                started_at.getHours() +
+                  parseInt(this.stageInformationOfParticipant.session)
+              );
+              finished_at.setHours(
+                finished_at.getHours() +
+                  parseInt(this.stageInformationOfParticipant.session)
+              );
 
-            _answerForm.started_at = started_at.toISOString();
-            _answerForm.finished_at = finished_at.toISOString();
+              _answerForm.started_at = started_at.toISOString();
+              _answerForm.finished_at = finished_at.toISOString();
 
-            _answerForm.session = this.stageInformationOfParticipant.session;
+              _answerForm.session = this.stageInformationOfParticipant.session;
 
-            const format = _answerForm.finished_at.split("-");
-            this.year = parseInt(format[0]);
-            this.month = parseInt(format[1]);
-            const time = format[2].split("T");
-            this.date = parseInt(time[0]);
-            const clock = time[1].split(":");
-            this.hour = parseInt(clock[0]);
-            this.minute = parseInt(clock[1]);
+              const format = _answerForm.finished_at.split("-");
+              this.year = parseInt(format[0]);
+              this.month = parseInt(format[1]);
+              const time = format[2].split("T");
+              this.date = parseInt(time[0]);
+              const clock = time[1].split(":");
+              this.hour = parseInt(clock[0]);
+              this.minute = parseInt(clock[1]);
 
-            this.showRemaining();
+              this.showRemaining();
 
-            var doubtful = [];
-            _answerForm.answers = [];
+              var doubtful = [];
+              _answerForm.answers = [];
 
-            _answerForm.questions.forEach(() => {
-              doubtful.push(null);
-              _answerForm.answers.push(null);
-            });
+              _answerForm.questions.forEach(() => {
+                doubtful.push(null);
+                _answerForm.answers.push(null);
+              });
 
-            _answerForm.doubtful = doubtful;
+              _answerForm.doubtful = doubtful;
 
-            localStorage.setItem("answerForm", JSON.stringify(_answerForm));
-          }
-        });
+              localStorage.setItem("answerForm", JSON.stringify(_answerForm));
+            }
+          });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Pakta integritas belum diunggah",
+          text: this.message,
+          showConfirmButton: true,
+        }).then(() => {});
+      }
     },
     submitAnswerForm() {
       this.answerForm.eventName = "OSM";
@@ -595,7 +633,7 @@ export default {
     getStageInformationOfParticipant() {
       this.participant.participant.events.forEach((event) => {
         event.stages.forEach((stage) => {
-          if (stage.id == this.stage._id) {
+          if (stage.id == this.$route.params.idStage) {
             this.stageInformationOfParticipant = stage;
             this.stageInformationOfParticipant.number = event.number;
             this.stageInformationOfParticipant.document = event.document;
@@ -633,7 +671,7 @@ export default {
         const distance = this.end.getTime() - now.getTime();
 
         if (distance < 0) {
-          this.step = 0;
+          this.submitAnswerForm();
         }
 
         if (distance < 0) {
@@ -653,29 +691,71 @@ export default {
       }, 1000);
     },
     getAnswerForm() {
-      setInterval(() => {
-        this.answerForm = JSON.parse(localStorage.getItem("answerForm"));
-
+      this.timer = setInterval(() => {
+        console.log(this.event.name);
+        console.log(this.stage.name);
         if (this.answerForm != null) {
-          this.step = 1;
+          if (
+            this.stageInformationOfParticipant.id == this.$route.params.idStage
+          ) {
+            if (this.step == 1) {
+              if (this.answerFormByParticipantAndStage.score != null)
+                clearInterval(this.timer);
 
-          const format = this.answerForm.finished_at.split("-");
-          this.year = parseInt(format[0]);
-          this.month = parseInt(format[1]);
-          const time = format[2].split("T");
-          this.date = parseInt(time[0]);
-          const clock = time[1].split(":");
-          this.hour = parseInt(clock[0]);
-          this.minute = parseInt(clock[1]);
+              this.answerForm = JSON.parse(localStorage.getItem("answerForm"));
 
-          this.showRemaining();
+              if (this.answerForm != null) {
+                this.step = 1;
+
+                const format = this.answerForm.finished_at.split("-");
+                this.year = parseInt(format[0]);
+                this.month = parseInt(format[1]);
+                const time = format[2].split("T");
+                this.date = parseInt(time[0]);
+                const clock = time[1].split(":");
+                this.hour = parseInt(clock[0]);
+                this.minute = parseInt(clock[1]);
+
+                this.showRemaining();
+              }
+            }
+          } else {
+            this.answerForm.stageId = this.$route.params.idStage;
+            this.answerForm.participantId = this.participant.id;
+
+            this.getStage();
+            this.showRemaining();
+            this.getAnswerFormByParticipantAndStage();
+
+            this.items = [
+              {
+                "Mulai pengerjaan": this.getDateTime(
+                  "datetime",
+                  this.stage.started_at
+                ),
+                "Selesai pengerjaan": this.getDateTime(
+                  "datetime",
+                  this.stage.finished_at
+                ),
+                "Pengumuman lolos": this.getDateTime(
+                  "datetime",
+                  this.stage.started_at
+                ),
+              },
+            ];
+            this.getStageInformationOfParticipant();
+          }
         }
       }, 200);
     },
   },
+  beforeDestroy() {
+    clearInterval(this.timer);
+  },
   created() {
     this.getStage();
     this.showRemaining();
+    this.getAnswerFormByParticipantAndStage();
     this.getAnswerForm();
 
     this.items = [

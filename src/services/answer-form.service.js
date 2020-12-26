@@ -13,11 +13,13 @@ class AnswerFormService {
   getAnswerForm(id) {
     return axios.get(API_URL + id, header());
   }
+  getAnswerFormByParticipantAndStage(answerForm) {
+    return axios.get(API_URL + answerForm.participantId + '/' + answerForm.stageId, header());
+  }
   createAnswerForm(answerForm) {
     return axios.post(API_URL,answerForm, header());
   }
   submitAnswerForm(answerForm) {
-    alert("oke");
     return axios.put(API_URL + answerForm._id, answerForm, header());
   }
   updateAnswerForm(answerForm) {

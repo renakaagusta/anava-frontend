@@ -35,6 +35,33 @@
               </tr>
             </table>
           </v-tab>
+          <v-tab title="Pengerjaan">
+            <table class="table table-border">
+              <tr class="border">
+                <td><b>Selesai Pengerjaan</b></td>
+                <td v-if="answerFormByParticipantAndStage.score == null">
+                  -
+                </td>
+                <td v-else>
+                  {{
+                    getDateTime(
+                      "datetime",
+                      answerFormByParticipantAndStage.updated_at
+                    )
+                  }}
+                </td>
+              </tr>
+              <tr class="border">
+                <td><b>Skor</b></td>
+                <td v-if="answerFormByParticipantAndStage.score == null">
+                  -
+                </td>
+                <td v-else>
+                  {{ answerFormByParticipantAndStage.score }}
+                </td>
+              </tr>
+            </table>
+          </v-tab>
           <v-tab title="Jadwal">
             <table class="table table-border">
               <tr class="border">
@@ -126,8 +153,8 @@
         type="submit"
         value="Mulai"
         class="btn btn-purple mt-3"
-        @click="nextStep()"
-        disabled
+        click=""
+        :disabled="false"
       />
     </b-container>
     <b-row v-if="step == 1">
@@ -144,102 +171,173 @@
           >
             <template #header>
               <b-row class="text-left">
-                <b-col md="8">Soal No. 25</b-col>
-                <b-col md="4" class="text-right">
+                <b-col md="5">Soal No. {{ currentNumber + 1 }}</b-col>
+                <b-col md="7" class="text-right">
                   <b-button-group size="sm">
                     <b-button variant="secondary">Sisa Waktu</b-button>
-                    <b-button variant="success">01:00:02</b-button>
+                    <b-button variant="success"
+                      ><b-row class="mt-0" style="font-size: 16px;">
+                        <b-col
+                          ><small>{{ displayHours }}</small></b-col
+                        >
+                        :
+                        <b-col
+                          ><small>{{ displayMinutes }}</small></b-col
+                        >
+                        :
+                        <b-col
+                          ><small>{{ displaySeconds }}</small></b-col
+                        >:
+                      </b-row></b-button
+                    >
                   </b-button-group>
                 </b-col>
               </b-row>
             </template>
             <b-card-text class="text-left">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Accusantium porro quas ea iusto voluptas ullam quisquam quis
-              nostrum nemo ipsam obcaecati, nam illum hic. Unde ipsam nostrum
-              debitis delectus nobis. Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Quod, esse ab? Amet minima quaerat facilis,
-              ratione corrupti odio! Nam deleniti accusamus reiciendis sit vero
-              accusantium minus autem placeat voluptatibus sunt.
+              <div v-html="answerForm.questions[currentNumber].content" />
               <br />
-              <b-form-group class="mt-2">
-                <b-form-radio name="some-radios" value="A"
-                  >Option A</b-form-radio
-                >
-                <b-form-radio name="some-radios" value="B"
-                  >Option B</b-form-radio
-                >
-                <b-form-radio name="some-radios" value="C"
-                  >Option C</b-form-radio
-                >
-                <b-form-radio name="some-radios" value="D"
-                  >Option D</b-form-radio
-                >
-                <b-form-radio name="some-radios" value="E"
-                  >Option E</b-form-radio
-                >
-              </b-form-group>
+              <b-form-radio-group
+                class="mt-2"
+                v-model="answerForm.answers[currentNumber]"
+              >
+                <b-form-radio
+                  name="some-radios"
+                  value="A"
+                  @change="selectAnswer('A')"
+                  ><div
+                    v-html="
+                      answerForm.questions[currentNumber].options[0].content
+                    "
+                  ></div></b-form-radio
+                ><br />
+
+                <b-form-radio
+                  name="some-radios"
+                  value="B"
+                  @change="selectAnswer('B')"
+                  ><div
+                    v-html="
+                      answerForm.questions[currentNumber].options[1].content
+                    "
+                  ></div></b-form-radio
+                ><br />
+
+                <b-form-radio
+                  name="some-radios"
+                  value="C"
+                  @change="selectAnswer('C')"
+                  ><div
+                    v-html="
+                      answerForm.questions[currentNumber].options[2].content
+                    "
+                  ></div></b-form-radio
+                ><br />
+
+                <b-form-radio
+                  name="some-radios"
+                  value="D"
+                  @change="selectAnswer('D')"
+                  ><div
+                    v-html="
+                      answerForm.questions[currentNumber].options[3].content
+                    "
+                  ></div></b-form-radio
+                ><br />
+
+                <b-form-radio
+                  name="some-radios"
+                  value="E"
+                  @change="selectAnswer('E')"
+                  ><div
+                    v-html="
+                      answerForm.questions[currentNumber].options[4].content
+                    "
+                  ></div
+                ></b-form-radio>
+              </b-form-radio-group>
             </b-card-text>
           </b-card>
         </b-card-group>
         <b-row>
           <b-col id="nav-btn" cols="2" md="3">
-            <b-button class="mt-3" block variant="primary">
-              <i class="fas fa-arrow-left"></i>
+            <b-button
+              class="mt-3"
+              block
+              variant="primary"
+              @click="back()"
+              :disabled="answerForm.disable[currentNumber - 1]"
+            >
+              <i class="fas fa-arrow-left mr-2"></i>
               <p>Sebelumnya</p>
             </b-button>
           </b-col>
-          <b-col cols="6 offset-1" md="4 offset-1">
-            <b-button class="mt-3" block variant="warning">
-              <b-form-checkbox
-                id="checkbox-1"
-                v-model="status"
-                name="checkbox-1"
-                value="accepted"
-                unchecked-value="not_accepted"
-              >
-                Ragu-Ragu
-              </b-form-checkbox>
-            </b-button>
-          </b-col>
+          <b-col cols="6 offset-1" md="4 offset-1"> </b-col>
           <b-col id="nav-btn" cols="2 offset-1" md="3 offset-1">
-            <b-button class="mt-3 mb-4" block variant="primary">
+            <b-button
+              class="mt-3 mb-4"
+              block
+              variant="primary"
+              @click="next()"
+              :disabled="answerForm.disable[currentNumber + 1]"
+            >
               <p>Selanjutnya</p>
-              <i class="fas fa-arrow-right"></i>
+              <i class="fas fa-arrow-right ml-2"></i>
             </b-button>
           </b-col>
         </b-row>
       </b-col>
-
       <!-- nomor soal -->
       <b-col col md="3">
         <b-card-group deck>
-          <b-card
-            border-variant="secondary"
-            header="Nomor Soal"
-            header-bg-variant="white"
-            header-text-variant="black"
-            align="center"
-          >
+          <b-card header="Nomor Soal" align="center">
             <b-card-text>
               <b-row>
-                {{ JumlahSoal() }}
                 <b-col
                   cols="2"
                   md="2 mr-1 mb-2"
-                  v-for="number in data"
-                  :key="number"
+                  v-for="(question, index) in answerForm.questions"
+                  :key="question._id"
                 >
-                  <b-button id="number-question">
-                    <p>{{ number }}</p>
-                  </b-button>
+                  <div
+                    v-if="
+                      answerForm.disable[index] != true &&
+                        answerForm.answers[index] != null
+                    "
+                    class="btn btn-primary number-question"
+                    @click="selectNumber(index)"
+                  >
+                    <p>{{ index + 1 }}</p>
+                  </div>
+                  <div
+                    v-if="answerForm.disable[index] == true"
+                    class="btn btn-light number-question"
+                    disabled="disabled"
+                    @click="selectNumber(index)"
+                  >
+                    <p>{{ index + 1 }}</p>
+                  </div>
+                  <div
+                    v-if="
+                      answerForm.disable[index] != true &&
+                        answerForm.answers[index] == null
+                    "
+                    class="btn btn-secondary number-question"
+                    @click="selectNumber(index)"
+                  >
+                    <p>{{ index + 1 }}</p>
+                  </div>
                 </b-col>
               </b-row>
             </b-card-text>
           </b-card>
         </b-card-group>
-        <b-button class="mt-3 mb-5" block variant="danger"
-          >Hentikan Ujian</b-button
+        <b-button
+          class="mt-3 mb-5"
+          block
+          variant="success"
+          @click="submitAnswerForm()"
+          >Selesai</b-button
         >
       </b-col>
     </b-row>
@@ -247,6 +345,7 @@
 </template>
 <script>
 import * as datetime from "./../../../../../services/datetime";
+import Swal from "sweetalert2";
 
 export default {
   name: "PenyisihanTheOne",
@@ -255,36 +354,260 @@ export default {
       step: 0,
       data: [],
       answerForm: {},
+      currentNumber: 0,
       stageInformationOfParticipant: {},
       itemsTab1: [],
       itemsTab2: [{ "Nomor pendaftaran": 0, "Terdaftar pada": 0 }],
+      displayHours: 0,
+      displayMinutes: 0,
+      displaySeconds: 0,
+      disable: [],
+      year: 0,
+      month: 0,
+      day: 0,
+      hour: 0,
+      minute: 0,
+      timer: null,
+      formParticipant: {
+        firstname: "",
+        lastname: "",
+        grade: 10,
+        birthDate: "",
+        address: "",
+        phoneNumber: "",
+        schoolName: "",
+        schoolAddress: "",
+        region: 1,
+      },
+      document: {
+        type: "",
+      },
+      changeEventDocument: 0,
+      loading: false,
+      fileName: {
+        event_document: "Unggah pakta integritas",
+      },
     };
   },
   computed: {
-    questions() {
+    totalQuestion() {
       return this.$store.state.question.questions;
     },
     stage() {
       return this.$store.state.stage.stage;
     },
+    event() {
+      return JSON.parse(localStorage.getItem("event"));
+    },
     participant() {
       return JSON.parse(localStorage.getItem("user"));
     },
+    answerFormByParticipantAndStage() {
+      return JSON.parse(localStorage.getItem("answerForm"));
+    },
+    time() {
+      var today = new Date();
+      var started_at = new Date(this.stage.started_at);
+      var finished_at = new Date(this.stage.finished_at);
+
+      today = new Date(
+        today.getTime() + (today.getTimezoneOffset() + 420) * 60 * 1000
+      );
+      started_at = new Date(
+        started_at.getTime() + (today.getTimezoneOffset() + 420) * 60 * 1000
+      );
+      finished_at = new Date(
+        finished_at.getTime() + (today.getTimezoneOffset() + 420) * 60 * 1000
+      );
+
+      return today > started_at && today < finished_at;
+    },
+    _seconds: () => 1000,
+    _minutes() {
+      return this._seconds * 60;
+    },
+    _hours() {
+      return this._minutes * 60;
+    },
+    _days() {
+      return this._hours * 24;
+    },
+    end() {
+      return new Date(
+        this.year,
+        this.month - 1,
+        this.date,
+        this.hour,
+        this.minute
+      );
+    },
   },
   methods: {
+    addFile() {
+      this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
+    },
+    uploadFile() {
+      var document = new FormData();
+
+      this.loading = true;
+      document.append("file", this.$refs.event_document.files[0]);
+      document.append("participantId", this.participant.id);
+
+      var formParticipant = {
+        id: this.event._id,
+        document: document,
+        participantId: this.participant.id,
+      };
+
+      this.$store.dispatch("event/uploadEvent", formParticipant).then(
+        (response) => {
+          Swal.fire({
+            title: "Berhasil mengunggah dokumen",
+            icon: "success",
+            showConfirmButton: true,
+          }).then();
+          this.loading = false;
+          const participant = response.data.data;
+          var user = JSON.parse(localStorage.getItem("user"));
+          user.participant = participant.participant;
+          localStorage.setItem("user", JSON.stringify(user));
+        },
+        () => {}
+      );
+    },
     nextStep() {
       this.step = 1;
+      if (this.answerForm == null) {
+        this.createAnswerForm();
+      }
+    },
+    selectNumber(number) {
+      if (this.answerForm.disable[number] == null) {
+        this.currentNumber = number;
+        this.answerForm.currentNumber = this.currentNumber;
+        this.setDisable();
+      }
+    },
+    next() {
+      if (this.answerForm.disable[this.currentNumber + 1] == null) {
+        this.setDisable();
+        if (this.currentNumber < this.answerForm.questions.length - 1)
+          this.currentNumber++;
+        this.answerForm.currentNumber = this.currentNumber;
+        this.answerForm();
+      }
+    },
+    back() {
+      if (this.answerForm.disable[this.currentNumber - 1] == null) {
+        this.setDisable();
+        if (this.currentNumber > 0) this.currentNumber--;
+        this.answerForm.currentNumber = this.currentNumber;
+        this.answerForm();
+      }
+    },
+    setDisable() {
+      var _answerForm = this.answerForm;
+      if (_answerForm.disable[this.currentNumber] != true) {
+        _answerForm.disable[this.currentNumber] = true;
+      } else {
+        _answerForm.answers[this.currentNumber] = false;
+      }
+      var number = this.currentNumber;
+      this.currentNumber = -1;
+      this.currentNumber = number;
+
+      this.saveAnswerForm(_answerForm);
+    },
+    selectAnswer(letter) {
+      var _answerForm = this.answerForm;
+      _answerForm.answers[this.currentNumber] = letter;
+      this.saveAnswerForm(_answerForm);
+    },
+    saveAnswerForm(_answerForm) {
+      localStorage.setItem("answerForm", JSON.stringify(_answerForm));
     },
     createAnswerForm() {
-      let answerForm = new FormData();
+      var _answerForm = {};
 
-      answerForm.append("participantId", this.answerForm.participantId);
-      answerForm.append("stageId", this.answerForm.stageId);
-      answerForm.append("file", this.$refs.file.files[0]);
+      _answerForm.stageId = this.$route.params.idStage;
+      _answerForm.participantId = this.participant.id;
 
-      this.$store.dispatch("answerForm/createAnswerForm", answerForm);
+      this.$store
+        .dispatch("answerForm/createAnswerForm", _answerForm)
+        .then((answerForm) => {
+          var _answerForm = JSON.parse(JSON.stringify(answerForm));
+
+          if (!_answerForm.session) {
+            var today = new Date();
+            var started_at = new Date(this.stage.started_at);
+            var finished_at = new Date(this.stage.finished_at);
+
+            started_at = new Date(
+              started_at.getTime() + today.getTimezoneOffset() * 60 * 1000
+            );
+            finished_at = new Date(
+              finished_at.getTime() + today.getTimezoneOffset() * 60 * 1000
+            );
+
+            started_at.setHours(
+              started_at.getHours() +
+                parseInt(this.stageInformationOfParticipant.session)
+            );
+            finished_at.setHours(
+              finished_at.getHours() +
+                parseInt(this.stageInformationOfParticipant.session)
+            );
+
+            _answerForm.started_at = started_at.toISOString();
+            _answerForm.finished_at = finished_at.toISOString();
+
+            _answerForm.session = this.stageInformationOfParticipant.session;
+
+            const format = _answerForm.finished_at.split("-");
+            this.year = parseInt(format[0]);
+            this.month = parseInt(format[1]);
+            const time = format[2].split("T");
+            this.date = parseInt(time[0]);
+            const clock = time[1].split(":");
+            this.hour = parseInt(clock[0]);
+            this.minute = parseInt(clock[1]);
+
+            this.showRemaining();
+
+            var disable = [];
+            _answerForm.answers = [];
+
+            _answerForm.questions.forEach(() => {
+              disable.push(null);
+              _answerForm.answers.push(null);
+            });
+
+            _answerForm.disable = disable;
+
+            localStorage.setItem("answerForm", JSON.stringify(_answerForm));
+          }
+        });
     },
-    getQuestion() {
+    submitAnswerForm() {
+      new Swal({
+        title: "Apakah anda yakin untuk menyelesaikan saat ini?",
+        showDenyButton: true,
+        buttons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.answerForm.eventName = "The One";
+          this.answerForm.stageName = "preliminary";
+          this.$store
+            .dispatch("answerForm/submitAnswerForm", this.answerForm)
+            .then((response) => {
+              this.answerForm = response;
+              this.AnswerForm();
+              this.step = 0;
+            });
+        }
+      });
+    },
+    getAllQuestionByStage() {
       this.$store.dispatch(
         "question/getAllQuestionByStage",
         this.$route.params.idStage
@@ -299,26 +622,149 @@ export default {
     getStage() {
       this.$store.dispatch("stage/getStage", this.$route.params.idStage);
     },
+    getAnswerFormByParticipantAndStage() {
+      this.$store.dispatch(
+        "answerForm/getAnswerFormByParticipantAndStage",
+        this.answerForm
+      );
+    },
     getStageInformationOfParticipant() {
       this.participant.participant.events.forEach((event) => {
         event.stages.forEach((stage) => {
-          if (stage.id == this.stage._id) {
-            this.stageInformationOfParticipant = stage;
-            this.stageInformationOfParticipant.number = event.number;
+          if (this.stage._id == this.$route.params.idStage) {
+            if (stage.id == this.$route.params.idStage) {
+              this.stageInformationOfParticipant = stage;
+              this.stageInformationOfParticipant.number = event.number;
+              this.stageInformationOfParticipant.document = event.document;
+
+              var today = new Date();
+              var started_at = new Date(this.stage.started_at);
+              var finished_at = new Date(this.stage.finished_at);
+
+              started_at = new Date(
+                started_at.getTime() + today.getTimezoneOffset() * 60 * 1000
+              );
+              finished_at = new Date(
+                finished_at.getTime() + today.getTimezoneOffset() * 60 * 1000
+              );
+
+              started_at.setHours(
+                started_at.getHours() +
+                  parseInt(this.stageInformationOfParticipant.session)
+              );
+              finished_at.setHours(
+                finished_at.getHours() +
+                  parseInt(this.stageInformationOfParticipant.session)
+              );
+
+              this.stageInformationOfParticipant.started_at = started_at.toISOString();
+              this.stageInformationOfParticipant.finished_at = finished_at.toISOString();
+            }
           }
         });
       });
     },
-    JumlahSoal() {
-      for (let i = 0; i < 60; i++) {
-        this.data[i] = i + 1;
-      }
+    showRemaining() {
+      const timer = setInterval(() => {
+        var now = new Date();
+
+        const distance = this.end.getTime() - now.getTime();
+
+        if (distance < 0) {
+          this.submitAnswerForm();
+        }
+
+        if (distance < 0) {
+          clearInterval(timer);
+          this.show = false;
+          return;
+        }
+
+        const days = Math.floor(distance / this._days);
+        const hours = Math.floor((distance % this._days) / this._hours);
+        const minutes = Math.floor((distance % this._hours) / this._minutes);
+        const seconds = Math.floor((distance % this._minutes) / this._seconds);
+
+        this.displaySeconds = seconds < 10 ? "0" + seconds : seconds;
+        this.displayMinutes = minutes < 10 ? "0" + minutes : minutes;
+        this.displayHours = hours < 10 ? "0" + hours : hours;
+        this.displayDays = days < 10 ? "0" + days : days;
+      }, 1000);
+    },
+    getAnswerForm() {
+      this.timer = setInterval(() => {
+        console.log(this.event.name);
+        console.log(this.stage.name);
+        if (this.answerForm.stage == this.$route.params.idStage) {
+          if (this.answerFormByParticipantAndStage.score != null)
+            clearInterval(this.timer);
+
+          this.answerForm = JSON.parse(localStorage.getItem("answerForm"));
+
+          if (this.answerForm.currentNumber != null)
+            this.currentNumber = this.answerForm.currentNumber;
+
+          if (this.answerForm != null) {
+            this.step = 1;
+
+            const format = this.answerForm.finished_at.split("-");
+            this.year = parseInt(format[0]);
+            this.month = parseInt(format[1]);
+            const time = format[2].split("T");
+            this.date = parseInt(time[0]);
+            const clock = time[1].split(":");
+            this.hour = parseInt(clock[0]);
+            this.minute = parseInt(clock[1]);
+
+            this.showRemaining();
+          }
+
+          if (this.answerForm.score != null) {
+            this.step = 0;
+          }
+        } else {
+          //localStorage.removeItem("answerForm")
+
+          this.answerForm.stageId = this.$route.params.idStage;
+          this.answerForm.participantId = this.participant.id;
+
+          this.getStage();
+          this.showRemaining();
+          this.getAnswerFormByParticipantAndStage();
+
+          this.items = [
+            {
+              "Mulai pengerjaan": this.getDateTime(
+                "datetime",
+                this.stage.started_at
+              ),
+              "Selesai pengerjaan": this.getDateTime(
+                "datetime",
+                this.stage.finished_at
+              ),
+              "Pengumuman lolos": this.getDateTime(
+                "datetime",
+                this.stage.started_at
+              ),
+            },
+          ];
+          this.getStageInformationOfParticipant();
+        }
+      }, 200);
     },
   },
+  beforeDestroy() {
+    clearInterval(this.timer);
+  },
   created() {
-    this.getStage();
     this.answerForm.stageId = this.$route.params.idStage;
     this.answerForm.participantId = this.participant.id;
+
+    this.getStage();
+    this.showRemaining();
+    this.getAnswerFormByParticipantAndStage();
+    this.getAnswerForm();
+
     this.items = [
       {
         "Mulai pengerjaan": this.getDateTime("datetime", this.stage.started_at),
