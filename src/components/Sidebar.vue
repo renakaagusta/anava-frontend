@@ -139,7 +139,7 @@
             v-bind:class="[selectedItem == 7 ? 'active' : '']"
             v-if="checkJoinEvent('OSM')"
           >
-            <a class="text-white" @click="performToggle(7)">
+            <a class="text-white" @click="performToggle(7, 'OSM')">
               <b-row>
                 <b-col cols="1" lg="1">
                   <div class="inline"><i class="fas fa-trophy"></i></div>
@@ -183,7 +183,7 @@
             v-bind:class="[selectedItem == 8 ? 'active' : '']"
             v-if="checkJoinEvent('The One')"
           >
-            <a class="text-white" @click="performToggle(8)">
+            <a class="text-white" @click="performToggle(8, 'The One')">
               <b-row>
                 <b-col cols="1" lg="1">
                   <div class="inline"><i class="fas fa-trophy"></i></div>
@@ -227,7 +227,7 @@
             v-bind:class="[selectedItem == 9 ? 'active' : '']"
             v-if="checkJoinEvent('Started')"
           >
-            <a class="text-white" @click="performToggle(9)">
+            <a class="text-white" @click="performToggle(9, 'Started')">
               <b-row>
                 <b-col cols="1" lg="1">
                   <div class="inline"><i class="fas fa-trophy"></i></div>
@@ -278,7 +278,7 @@
                 params: { idStage: events[3].stages[0]._id },
               }"
             >
-              <b-row @click="performToggle(10)">
+              <b-row @click="performToggle(10, 'Sigma')">
                 <b-col cols="1" lg="1">
                   <div class="inline"><i class="fas fa-trophy"></i></div>
                 </b-col>
@@ -299,7 +299,7 @@
                 params: { idStage: events[4].stages[0]._id },
               }"
             >
-              <b-row @click="performToggle(11)">
+              <b-row @click="performToggle(11, 'Open House')">
                 <b-col cols="1" lg="1">
                   <div class="inline"><i class="fas fa-trophy"></i></div>
                 </b-col>
@@ -392,7 +392,7 @@
             </router-link>
           </li>
           <li v-bind:class="[selectedItem == 5 ? 'active' : '']">
-            <a class="text-white" @click="performToggle(5)">
+            <a class="text-white" @click="performToggle(5, 'OSM')">
               <b-row>
                 <b-col lg="1">
                   <div class="inline"><i class="fas fa-trophy"></i></div>
@@ -433,7 +433,7 @@
             </ul>
           </li>
           <li v-bind:class="[selectedItem == 6 ? 'active' : '']">
-            <a class="text-white" @click="performToggle(6)">
+            <a class="text-white" @click="performToggle(6, 'The One')">
               <b-row>
                 <b-col lg="1">
                   <div class="inline"><i class="fas fa-trophy"></i></div>
@@ -474,7 +474,7 @@
             </ul>
           </li>
           <li v-bind:class="[selectedItem == 7 ? 'active' : '']">
-            <a class="text-white" @click="performToggle(7)">
+            <a class="text-white" @click="performToggle(7, 'Started')">
               <b-row>
                 <b-col lg="1">
                   <div class="inline"><i class="fas fa-trophy"></i></div>
@@ -522,7 +522,7 @@
                 params: { idStage: events[3].stages[0]._id },
               }"
             >
-              <b-row @click="performToggle(8)">
+              <b-row @click="performToggle(8, 'Sigma')">
                 <b-col lg="1">
                   <div class="inline"><i class="fas fa-trophy"></i></div>
                 </b-col>
@@ -540,7 +540,7 @@
                 params: { idStage: events[4].stages[0]._id },
               }"
             >
-              <b-row @click="performToggle(9)">
+              <b-row @click="performToggle(9, 'Open House')">
                 <b-col lg="1">
                   <div class="inline"><i class="fas fa-trophy"></i></div>
                 </b-col>
@@ -596,11 +596,18 @@ export default {
     },
   },
   methods: {
-    performToggle(item) {
+    performToggle(item, eventName) {
+      var index = 0;  var eventIndex = 0;
+      this.events.forEach((event)=>{
+        if(event.name == eventName)
+          eventIndex = index;
+        index++;
+      })
       var event = {
         roles: this.user.roles,
-        item: item,
+        item: eventIndex,
       };
+      
       this.$store.dispatch("event/selectEvent", event);
 
       if (this.selectedItem == item && this.toggle != 0) {

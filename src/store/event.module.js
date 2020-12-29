@@ -64,13 +64,7 @@ export const event = {
       state.event = event;
     },
     selectEvent(state, selectedEvent) {
-      if (selectedEvent.roles.includes("admin")) {
-        if (selectedEvent.item >= 5)
-          state.event = state.events[selectedEvent.item - 5];
-      } else {
-        if (selectedEvent.item >= 7)
-          state.event = state.events[selectedEvent.item - 7];
-      }
+      state.event = state.events[selectedEvent.item];
 
       localStorage.setItem("event", JSON.stringify(state.event));
     },

@@ -5,6 +5,7 @@ export const announcement = {
   state: {
     announcements: [],
     participantAnnouncements: [],
+    stageAnnouncements: [],
     announcement: {}
   },
   getters: {
@@ -36,7 +37,7 @@ export const announcement = {
     getAllAnnouncementByStage({ commit }, stageId) {
       return AnnouncementService.getAllAnnouncementByStage(stageId).then(
         (response) => {
-          commit("setAnnouncements", response.data.data);
+          commit("setStageAnnouncements", response.data.data);
           return Promise.resolve(response.data.data);
         },
         (error) => {
@@ -82,6 +83,9 @@ export const announcement = {
     setAnnouncements(state, announcements) {
       state.announcements = announcements;
     },
+    setStageAnnouncements(state, announcements) {
+      state.participantAnnouncements = announcements;
+    },
     setParticipantAnnouncements(state, announcements) {
       state.participantAnnouncements = announcements;
     },
@@ -93,3 +97,4 @@ export const announcement = {
     }
   },
 };
+  

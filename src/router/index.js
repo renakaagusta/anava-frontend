@@ -54,6 +54,8 @@ import AddParticipantStage from "../views/dashboard/stage/participant/AddPartici
 import MainQuestionStage from "../views/dashboard/stage/question/MainQuestionStage.vue";
 import CreateQuestionStage from "../views/dashboard/stage/question/CreateQuestionStage.vue";
 import EditQuestionStage from "../views/dashboard/stage/question/EditQuestionStage.vue";
+import ListResultStage from "../views/dashboard/stage/result/ListResultStage.vue";
+import DetailResultStage from "../views/dashboard/stage/result/DetailResultStage.vue";
 
 Vue.use(VueRouter);
 
@@ -289,6 +291,16 @@ const routes = [
                 path: "question/add",
                 name: "CreateQuestionStage",
                 component: CreateQuestionStage,
+              },
+              {
+                path: "result",
+                name: "ListResultStage",
+                component: ListResultStage,
+              },
+              {
+                path: "result/:idResult",
+                name: "DetailResultStage",
+                component: DetailResultStage,
               },
             ],
           },

@@ -1,7 +1,6 @@
 <template>
   <div>
     <b-container class="p-0 m-0">
-      {{ outline }}
       <h3 class="text-left">Outline</h3>
       <b-row>
         <b-col class="mt-3" cols="3">
@@ -33,6 +32,10 @@
       </b-col>
       <b-col class="text-center" md="3">
         <p>Status Pembayaran</p>
+      </b-col>
+      <b-col class="text-center" md="3">
+        <p v-if="event.name == 'Started'">Surat Orisinalitas</p>
+        <p v-else>Pakta Integritas</p>
       </b-col>
     </b-row>
     <b-row
@@ -67,6 +70,22 @@
         ></i>
         <p v-else>-</p>
       </b-col>
+      <b-col md="3">
+        <a
+          class="btn btn-primary ml-3 mt-3"
+          target="blank"
+          :href="
+            'http://anavaugm.com/event_document_' +
+              event._id +
+              participant._id +
+              '.pdf'
+          "
+          v-if="getDocumentStatus(participant)"
+        >
+          <i class="fa fa-download" />&nbsp;Unduh
+        </a>
+        <p v-else>-</p>
+      </b-col>
     </b-row>
   </div>
 </template>
@@ -96,7 +115,7 @@ export default {
           this.stage.participants.forEach((participant) => {
             this.outline.participants++;
             participant.participant.events.forEach((event) => {
-              if (event.id == this.event._id &&event.number) {
+              if (event.id == this.event._id && event.number) {
                 this.outline.pay++;
               }
             });
@@ -111,6 +130,15 @@ export default {
         });
       });
       return paymentStatus;
+    },
+    getDocumentStatus(participant) {
+      var documentStatus = false;
+      participant.participant.events.forEach((event) => {
+        event.stages.forEach(() => {
+          if (this.event.name == event.name && event.document == 1) documentStatus = true;
+        });
+      });
+      return documentStatus;
     },
     getNumberParticipant(participant) {
       var number = false;

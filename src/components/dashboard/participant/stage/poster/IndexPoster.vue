@@ -3,23 +3,11 @@
     <b-container class="bg-white p-3 rounded shadow-sm mb-4" v-if="step == 0">
       <b-container class="border">
         <vue-tabs>
-          <v-tab title="Jadwal">
-            <table class="table table-border">
-              <tr class="border">
-                <td><b>Mulai pengerjaan</b></td>
-                <td>-</td>
-              </tr>
-              <tr class="border">
-                <td><b>Selesai pengerjaan</b></td>
-                <td>-</td>
-              </tr>
-            </table>
-          </v-tab>
           <v-tab title="Data Peserta">
             <table class="table table-border">
               <tr class="border">
                 <td><b>Status Pembayaran</b></td>
-                <td v-if="stageInformationOfParticipant.number.length == 0">
+                <td v-if="stageInformationOfParticipant.number == null">
                   -
                 </td>
                 <td v-if="stageInformationOfParticipant.number > 0">
@@ -47,43 +35,106 @@
               </tr>
             </table>
           </v-tab>
+          <v-tab title="Jadwal">
+            <table class="table table-border">
+              <tr class="border">
+                <td><b>Mulai pengerjaan</b></td>
+                <td v-if="stage.started_at != null">
+                  {{ getDateTime("datetime", getTime(stage.started_at)) }}
+                </td>
+                <td v-else>-</td>
+              </tr>
+              <tr class="border">
+                <td><b>Selesai pengerjaan</b></td>
+                <td v-if="stage.finished_at != null">
+                  {{ getDateTime("datetime", getTime(stage.finished_at)) }}
+                </td>
+                <td v-else>-</td>
+              </tr>
+            </table>
+          </v-tab>
           <v-tab title="Surat Orisinalitas"
-            ><div id="dropFileForm">
+            ><div
+              id="dropFileForm"
+              v-if="
+                stageInformationOfParticipant.document == 0 ||
+                  changeEventDocument == 1
+              "
+            >
               <input
                 type="file"
-                id="fileInput"
-                ref="osis_card"
-                @change="addFile('osis_card')"
+                id="fileEventDocument"
+                ref="event_document"
+                @change="addFile('event_document')"
               />
 
-              <label for="fileInput" id="fileLabel">
+              <label for="fileEventDocument" id="fileLabel">
                 <i class="fa fa-upload fa-5x"></i>
                 <br />
-                <span id="fileLabelText">
-                  Unggah surat orisinalitas
-                </span>
-                <br />
-                <span id="uploadStatus"></span>
+                <span id="fileLabelText" v-html="fileName.event_document" />
               </label>
 
-              <input
-                type="submit"
-                value="Upload"
-                class="btn btn-purple"
-                @click="uploadFile('osis_card')"
-                disabled="true"
+              <button class="uploadButton" @click="uploadFile()">
+                <b-spinner v-if="loading" label="Spinning"></b-spinner>
+                <p v-if="!loading" class="d-inline">Unggah</p>
+              </button>
+            </div>
+            <div>
+              <embed
+                :src="
+                  'http://anavaugm.com/event_document_' +
+                    event._id +
+                    participant.id +
+                    '.pdf'
+                "
+                width="700px"
+                height="1800px"
               />
+              <button
+                class="btn-purple"
+                v-if="true"
+                @click="changeEventDocument = 1"
+              >
+                Ganti
+              </button>
             </div>
           </v-tab>
           <v-tab title="Pengumuman">
-            <div
-              class="container bg-white p-3 text-center text-dark rounded-lg mt-2 mb-2"
-            >
-              <p>
-                <i class="fas fa-exclamation-triangle fa-2x"></i>
-                <br />
-                Belum ada pengumuman
-              </p>
+            <div class="mt-3" v-if="stageAnnouncements">
+              <b-row
+                class="bg-white p-2 mb-2 shadow-sm rounded"
+                no-gutters
+                v-for="announcement in stageAnnouncements"
+                :key="announcement._id"
+              >
+                <b-col md="9" class="text-left p-3">
+                  <h4 class="text-bold">{{ announcement.title }}</h4>
+                  <p v-if="announcement"></p>
+
+                  <p class="text-secondary">
+                    {{ getDateTime("datetime", announcement.created_at) }}
+                  </p>
+                </b-col>
+                <b-col md="3" class="p-3">
+                  <a
+                    class="btn btn-primary"
+                    @click="showAnnouncement(announcement)"
+                  >
+                    <i class="fas fa-search"></i>&nbsp;Detail
+                  </a>
+                </b-col>
+              </b-row>
+            </div>
+            <div v-else>
+              <div
+                class="container bg-white p-3 text-center text-dark rounded-lg mt-2 mb-2"
+              >
+                <p>
+                  <i class="fas fa-exclamation-triangle fa-2x"></i>
+                  <br />
+                  Belum ada pengumuman
+                </p>
+              </div>
             </div>
           </v-tab>
           <v-tab title="Dokumen">
@@ -97,7 +148,7 @@
                   <h2 class="d-inline ml-4">Guidebook</h2>
                 </a>
               </b-container>
-              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
+              <b-container class="bg-w  hite p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
                   href="http://anavaugm.com/STARTED/surat-orisinalitas.pdf"
@@ -108,42 +159,17 @@
               </b-container>
             </b-container>
           </v-tab>
-          <v-tab title="Tutorial">
-            <div
-              class="container bg-white p-3 text-center text-dark rounded-lg mt-2 mb-2"
-            >
-              <p>
-                <i class="fas fa-exclamation-triangle fa-2x"></i>
-                <br />
-                Tutorial belum diunggah
-              </p>
-            </div>
-          </v-tab>
         </vue-tabs>
       </b-container>
       <input
         type="submit"
         value="Mulai"
         class="btn btn-purple mt-3"
-        click=""
-        :disabled="false"
+        @click="nextStep()"
       />
     </b-container>
     <b-row class="pl-3 pr-3 mb-3" v-if="step == 1">
       <b-container class="bg-white p-4 shadow-sm">
-        <b-row class="mt-0" style="font-size: 16px;">
-                        <b-col
-                          ><small>{{ displayHours }}</small></b-col
-                        >
-                        :
-                        <b-col
-                          ><small>{{ displayMinutes }}</small></b-col
-                        >
-                        :
-                        <b-col
-                          ><small>{{ displaySeconds }}</small></b-col
-                        >:
-                      </b-row>
         <h1>Ketentuan Poster</h1>
         <hr />
         <br />
@@ -163,7 +189,31 @@
             </p>
           </b-col>
           <b-col cols="12" md="12">
-            <div id="dropFileForm" v-if="changeStartedPoster == 0">
+            <h1>Sisa Waktu</h1>
+            <hr />
+            <br />
+            <b-col lg="12">
+              <b-card>
+                <b-row class="h2 mt-4">
+                  <b-col>{{ displayDays }}</b-col> :
+                  <b-col>{{ displayHours }}</b-col> :
+                  <b-col>{{ displayMinutes }}</b-col> :
+                  <b-col>{{ displaySeconds }}</b-col>
+                </b-row>
+                <b-row>
+                  <b-col>Hari</b-col>
+                  <b-col>Jam</b-col>
+                  <b-col>Menit</b-col>
+                  <b-col>Detik</b-col>
+                </b-row>
+              </b-card>
+            </b-col>
+          </b-col>
+          <b-col class="mt-4" cols="12" md="12">
+            <h1>Form Pengumpulan</h1>
+            <hr />
+            <br />
+            <div id="dropFileForm" v-if="!uploaded">
               <input
                 type="file"
                 id="fileStartedPoster"
@@ -183,22 +233,46 @@
               </button>
             </div>
             <div v-else>
-              <b-card
-                :img-src="
-                  'http://anavaugm.com/started_poster_' + event._id + '.jpg'
-                "
-                style="width: 500px;"
-                ><button
-                  class="btn-purple"
+              <div class="p-4 border">
+                <img
+                  :src="
+                    'http://anavaugm.com/answer_' +
+                      answerForm.answers[0] +
+                      '.png'
+                  "
+                  style="height:900px; width:600px;"
+                />
+                <button
+                  class="btn-purple mt-3"
                   v-if="true"
-                  @click="changeStartedPoster = 1"
+                  @click="uploaded = false"
                 >
                   Ganti
                 </button>
-              </b-card>
+              </div>
             </div>
           </b-col>
         </b-row>
+      </b-container>
+    </b-row>
+    <b-row v-if="step == 2" class="pl-3 pr-3">
+      <b-container class="bg-white p-4 shadow rounded text-left">
+        <h2>{{ announcement.title }}</h2>
+        <p
+          v-if="announcement.stage == null && announcement.participant == null"
+        >
+          Umum
+        </p>
+        <p v-if="announcement.stage != null">
+          {{ "Kepada peserta " + getEventName(announcement.stage._id) }}
+        </p>
+        <p v-if="announcement.participant != null">
+          {{ "Kepada " + announcement.participant.username }}
+        </p>
+        <br />
+        <small>{{ getDateTime("datetime", announcement.created_at) }}</small>
+        <hr />
+        <div class="mt-4" v-html="announcement.content" />
       </b-container>
     </b-row>
   </div>
@@ -217,6 +291,7 @@ export default {
       stageInformationOfParticipant: {},
       itemsTab1: [],
       itemsTab2: [{ "Nomor pendaftaran": 0, "Terdaftar pada": 0 }],
+      displayDays: 0,
       displayHours: 0,
       displayMinutes: 0,
       displaySeconds: 0,
@@ -227,6 +302,7 @@ export default {
       hour: 0,
       minute: 0,
       timer: null,
+      announcement: {},
       formParticipant: {
         firstname: "",
         lastname: "",
@@ -244,9 +320,10 @@ export default {
       changeStartedPoster: 0,
       changeEventDocument: 0,
       loading: false,
+      uploaded: false,
       fileName: {
-        started_poster: "Unggah file poster",
-        event_document: "Unggah surat orisinalitas",
+        started_poster: "Unggah file poster (*.png)",
+        event_document: "Unggah surat orisinalitas (*.pdf)",
       },
     };
   },
@@ -257,11 +334,17 @@ export default {
     event() {
       return JSON.parse(localStorage.getItem("event"));
     },
+    events() {
+      return this.$store.state.event.events;
+    },
     answerFormByParticipantAndStage() {
       return JSON.parse(localStorage.getItem("answerForm"));
     },
     participant() {
       return JSON.parse(localStorage.getItem("user"));
+    },
+    stageAnnouncements() {
+      return this.$store.state.announcement.participantAnnouncements;
     },
     time() {
       var today = new Date();
@@ -301,19 +384,111 @@ export default {
     },
   },
   methods: {
-    nextStep() {
-      this.step = 1;
+    getEventName(stageId) {
+      var name = "";
+      this.events.forEach((event) => {
+        event.stages.forEach((stage) => {
+          if (stageId == stage._id) {
+            switch (event.name) {
+              case "OSM":
+                switch (stage.name) {
+                  case "preliminary":
+                    name = event.name + " Penyisihan";
+                    break;
+                  case "semifinal":
+                    name = event.name + " Semifinal";
+                    break;
+                  case "final":
+                    name = event.name + " Final";
+                    break;
+                }
+                break;
+              case "The One":
+                switch (stage.name) {
+                  case "preliminary":
+                    name = event.name + " Babak Gugur";
+                    break;
+                  case "semifinal":
+                    name = event.name + " Babak Paket";
+                    break;
+                }
+                break;
+              case "Started":
+                switch (stage.name) {
+                  case "preliminary":
+                    name = event.name + " Pekan Kreativitas";
+                    break;
+                  case "semifinal":
+                    name = event.name + " Final";
+                    break;
+                }
+                break;
+              case "Sigma":
+                name = event.name;
+                break;
+              case "Open House":
+                name = event.name;
+                break;
+            }
+          }
+        });
+      });
+      return name;
+    },
+    showAnnouncement(announcement) {
+      this.announcement = announcement;
+      this.step = 2;
+    },
+    getTime(_time) {
+      var time = new Date(_time);
 
-      this.createAnswerForm();
+      time = new Date(
+        time.getTime() + (time.getTimezoneOffset() + 660) * 60 * 1000
+      );
+
+      return time;
+    },
+    nextStep() {
+      if (this.time) {
+        if (this.stageInformationOfParticipant.document == 1) {
+          this.step = 1;
+          this.createAnswerForm();
+        } else {
+          Swal.fire({
+            title: "Anda belum mengunggah Surat Orisinalitas",
+            icon: "error",
+            showConfirmButton: true,
+          }).then();
+        }
+      } else {
+        Swal.fire({
+          title: "Waktu pengerjaan belum dimulai",
+          icon: "error",
+          showConfirmButton: true,
+        }).then();
+      }
     },
     getDateTime: function(type, date) {
       return datetime.getDateTime(type, date);
     },
     addFile(type) {
-      if (type == "started_poster")
+      if (type == "started_poster") {
         this.fileName.started_poster = this.$refs.started_poster.files[0].name.toString();
-      else
+      } else {
         this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
+        this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
+        var fileExtension = /[.]/.exec(this.fileName.event_document)
+          ? /[^.]+$/.exec(this.fileName.event_document)
+          : undefined;
+        if (fileExtension != "pdf") {
+          Swal.fire({
+            title: "Format file tidak sesuai",
+            icon: "error",
+            showConfirmButton: true,
+          }).then();
+          this.fileName.event_document = "Unggah surat orisinalitas (*.pdf)";
+        }
+      }
     },
     uploadAnswer() {
       var document = new FormData();
@@ -334,6 +509,37 @@ export default {
             showConfirmButton: true,
           }).then();
           this.loading = false;
+          this.uploaded = true;
+        },
+        () => {}
+      );
+    },
+    uploadFile() {
+      var document = new FormData();
+
+      this.loading = true;
+      document.append("file", this.$refs.event_document.files[0]);
+      document.append("participantId", this.participant.id);
+
+      var formParticipant = {
+        id: this.event._id,
+        document: document,
+        participantId: this.participant.id,
+      };
+
+      this.$store.dispatch("event/uploadEvent", formParticipant).then(
+        (response) => {
+          Swal.fire({
+            title: "Berhasil mengunggah dokumen",
+            icon: "success",
+            showConfirmButton: true,
+          }).then();
+          this.loading = false;
+          const participant = response.data.data;
+          var user = JSON.parse(localStorage.getItem("user"));
+          user.participant = participant.participant;
+          localStorage.setItem("user", JSON.stringify(user));
+          this.getStageInformationOfParticipant();
         },
         () => {}
       );
@@ -341,10 +547,20 @@ export default {
     getStage() {
       this.$store.dispatch("stage/getStage", this.$route.params.idStage);
     },
+    getAllAnnouncementByStage() {
+      this.$store
+        .dispatch(
+          "announcement/getAllAnnouncementByStage",
+          this.$route.params.idStage
+        )
+        .then((response) => {
+          console.log(response);
+        });
+    },
     getStageInformationOfParticipant() {
       this.participant.participant.events.forEach((event) => {
         event.stages.forEach((stage) => {
-          if (stage.id == this.stage._id) {
+          if (stage.id == this.$route.params.idStage) {
             this.stageInformationOfParticipant = stage;
             this.stageInformationOfParticipant.number = event.number;
             this.stageInformationOfParticipant.document = event.document;
@@ -415,16 +631,8 @@ export default {
               this.showRemaining();
 
               localStorage.setItem("answerForm", JSON.stringify(_answerForm));
-              alert(JSON.stringify(_answerForm));
             }
           });
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Surat Orisinalitas belum diunggah",
-          text: this.message,
-          showConfirmButton: true,
-        }).then(() => {});
       }
     },
     submitAnswerForm() {
@@ -439,18 +647,16 @@ export default {
     showRemaining() {
       const timer = setInterval(() => {
         var now = new Date();
+        var end = new Date(this.stage.finished_at);
 
-        const distance = this.end.getTime() - now.getTime();
+        const distance = end.getTime() - now.getTime();
 
-        if (distance < 0) {
+        if (!this.time) {
+          clearInterval(timer);
+          this.step = 0;
           this.submitAnswerForm();
         }
 
-        if (distance < 0) {
-          clearInterval(timer);
-          this.show = false;
-          return;
-        }
         const days = Math.floor(distance / this._days);
         const hours = Math.floor((distance % this._days) / this._hours);
         const minutes = Math.floor((distance % this._hours) / this._minutes);
@@ -462,67 +668,65 @@ export default {
         this.displayDays = days < 10 ? "0" + days : days;
       }, 1000);
     },
-    getAnswerForm() {
-      this.timer = setInterval(() => {
-        console.log(this.event.name);
-        console.log(this.stage.name);
-        if (this.answerForm != null) {
-          if (
-            this.stageInformationOfParticipant.id == this.$route.params.idStage
-          ) {
-            if (this.step == 1) {
-              if (this.answerFormByParticipantAndStage.score != null)
-                clearInterval(this.timer);
+  },
+  updated() {
+    console.log(this.event.name);
+    console.log(this.stage.name);
+    if (this.answerForm != null) {
+      if (this.stageInformationOfParticipant.id == this.$route.params.idStage) {
+        if (this.step == 1) {
+          console.log(this.answerFormByParticipantAndStage);
+          if (this.answerFormByParticipantAndStage.score != null)
+            clearInterval(this.timer);
 
-              this.answerForm = JSON.parse(localStorage.getItem("answerForm"));
+          this.answerForm = JSON.parse(localStorage.getItem("answerForm"));
 
-              if (this.answerForm != null) {
-                this.step = 1;
+          if (this.answerForm != null) {
+            this.step = 1;
 
-                const format = this.answerForm.finished_at.split("-");
-                this.year = parseInt(format[0]);
-                this.month = parseInt(format[1]);
-                const time = format[2].split("T");
-                this.date = parseInt(time[0]);
-                const clock = time[1].split(":");
-                this.hour = parseInt(clock[0]);
-                this.minute = parseInt(clock[1]);
+            const format = this.stage.finished_at.split("-");
+            this.year = parseInt(format[0]);
+            this.month = parseInt(format[1]);
+            const time = format[2].split("T");
+            this.date = parseInt(time[0]);
+            const clock = time[1].split(":");
+            this.hour = parseInt(clock[0]);
+            this.minute = parseInt(clock[1]);
 
-                this.showRemaining();
-              }
-            }
-          } else {
-            this.getStage();
-            this.answerForm.stageId = this.$route.params.idStage;
-            this.answerForm.participantId = this.participant.id;
-            this.items = [
-              {
-                "Mulai pengerjaan": this.getDateTime(
-                  "datetime",
-                  this.stage.started_at
-                ),
-                "Selesai pengerjaan": this.getDateTime(
-                  "datetime",
-                  this.stage.finished_at
-                ),
-                "Pengumuman lolos": this.getDateTime(
-                  "datetime",
-                  this.stage.started_at
-                ),
-              },
-            ];
-            this.getStageInformationOfParticipant();
+            this.showRemaining();
           }
         }
-      }, 200);
-    },
+      } else {
+        this.getStage();
+        this.answerForm.stageId = this.$route.params.idStage;
+        this.answerForm.participantId = this.participant.id;
+        this.items = [
+          {
+            "Mulai pengerjaan": this.getDateTime(
+              "datetime",
+              this.stage.started_at
+            ),
+            "Selesai pengerjaan": this.getDateTime(
+              "datetime",
+              this.stage.finished_at
+            ),
+            "Pengumuman lolos": this.getDateTime(
+              "datetime",
+              this.stage.started_at
+            ),
+          },
+        ];
+        this.getStageInformationOfParticipant();
+      }
+    }
   },
   created() {
     this.answerForm.stageId = this.$route.params.idStage;
     this.answerForm.participantId = this.participant.id;
 
     this.getStage();
-    this.getAnswerForm();
+    this.getAllAnnouncementByStage();
+    this.getAnswerFormByParticipantAndStage();
 
     this.items = [
       {

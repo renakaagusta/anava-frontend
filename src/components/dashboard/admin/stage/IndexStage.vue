@@ -14,6 +14,9 @@
         <router-link :to="{ name: 'MainQuestionStage' }">
           <button class="btn btn-secondary ml-2">Soal</button>
         </router-link>
+        <router-link :to="{ name: 'ListResultStage' }">
+          <button class="btn btn-secondary active ml-2">Hasil</button>
+        </router-link>
       </div>
     </div>
     <hr />

@@ -66,40 +66,64 @@
             <table class="table table-border">
               <tr class="border">
                 <td><b>Mulai pengerjaan</b></td>
-                <td>-</td>
+                <td v-if="stage.started_at != null">
+                  {{ getDateTime("datetime", stage.started_at) }}
+                </td>
+                <td v-else>-</td>
               </tr>
               <tr class="border">
                 <td><b>Selesai pengerjaan</b></td>
-                <td>-</td>
+                <td v-if="stage.finished_at != null">
+                  {{ getDateTime("datetime", stage.finished_at) }}
+                </td>
+                <td v-else>-</td>
               </tr>
             </table>
           </v-tab>
           <v-tab title="Pakta Integritas"
-            ><div id="dropFileForm">
+            ><div
+              id="dropFileForm"
+              v-if="
+                stageInformationOfParticipant.document == 0 ||
+                  changeEventDocument == 1
+              "
+            >
               <input
                 type="file"
-                id="fileInput"
-                ref="osis_card"
-                @change="addFile('osis_card')"
+                id="fileEventDocument"
+                ref="event_document"
+                @change="addFile()"
               />
 
-              <label for="fileInput" id="fileLabel">
+              <label for="fileEventDocument" id="fileLabel">
                 <i class="fa fa-upload fa-5x"></i>
                 <br />
-                <span id="fileLabelText">
-                  Unggah pakta integritas
-                </span>
-                <br />
-                <span id="uploadStatus"></span>
+                <span id="fileLabelText" v-html="fileName.event_document" />
               </label>
 
-              <input
-                type="submit"
-                value="Upload"
-                class="btn btn-purple"
-                @click="uploadFile('osis_card')"
-                disabled="true"
+              <button class="uploadButton" @click="uploadFile()">
+                <b-spinner v-if="loading" label="Spinning"></b-spinner>
+                <p v-if="!loading" class="d-inline">Unggah</p>
+              </button>
+            </div>
+            <div v-else>
+              <embed
+                :src="
+                  'http://anavaugm.com/event_document_' +
+                    event._id +
+                    participant.id +
+                    '.pdf'
+                "
+                width="700px"
+                height="1800px"
               />
+              <button
+                class="btn-purple"
+                v-if="true"
+                @click="changeEventDocument = 1"
+              >
+                Ganti
+              </button>
             </div>
           </v-tab>
           <v-tab title="Pengumuman">
@@ -148,7 +172,6 @@
           </v-tab>
         </vue-tabs>
       </b-container>
-
       <input
         type="submit"
         value="Mulai"
@@ -348,7 +371,7 @@ import * as datetime from "./../../../../../services/datetime";
 import Swal from "sweetalert2";
 
 export default {
-  name: "PenyisihanTheOne",
+  name: "BabakGugurTheOne",
   data() {
     return {
       step: 0,
@@ -385,7 +408,7 @@ export default {
       changeEventDocument: 0,
       loading: false,
       fileName: {
-        event_document: "Unggah pakta integritas",
+        event_document: "Unggah pakta integritas (*.pdf)",
       },
     };
   },
@@ -445,6 +468,17 @@ export default {
   methods: {
     addFile() {
       this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
+      var fileExtension = /[.]/.exec(this.fileName.event_document)
+        ? /[^.]+$/.exec(this.fileName.event_document)
+        : undefined;
+      if (fileExtension != "pdf") {
+        Swal.fire({
+          title: "Format file tidak sesuai",
+          icon: "error",
+          showConfirmButton: true,
+        }).then();
+        this.fileName.event_document = "Unggah pakta integritas (*.pdf)";
+      }
     },
     uploadFile() {
       var document = new FormData();
@@ -631,35 +665,33 @@ export default {
     getStageInformationOfParticipant() {
       this.participant.participant.events.forEach((event) => {
         event.stages.forEach((stage) => {
-          if (this.stage._id == this.$route.params.idStage) {
-            if (stage.id == this.$route.params.idStage) {
-              this.stageInformationOfParticipant = stage;
-              this.stageInformationOfParticipant.number = event.number;
-              this.stageInformationOfParticipant.document = event.document;
+          if (stage.id == this.$route.params.idStage) {
+            this.stageInformationOfParticipant = stage;
+            this.stageInformationOfParticipant.number = event.number;
+            this.stageInformationOfParticipant.document = event.document;
 
-              var today = new Date();
-              var started_at = new Date(this.stage.started_at);
-              var finished_at = new Date(this.stage.finished_at);
+            var today = new Date();
+            var started_at = new Date(this.stage.started_at);
+            var finished_at = new Date(this.stage.finished_at);
 
-              started_at = new Date(
-                started_at.getTime() + today.getTimezoneOffset() * 60 * 1000
-              );
-              finished_at = new Date(
-                finished_at.getTime() + today.getTimezoneOffset() * 60 * 1000
-              );
+            started_at = new Date(
+              started_at.getTime() + today.getTimezoneOffset() * 60 * 1000
+            );
+            finished_at = new Date(
+              finished_at.getTime() + today.getTimezoneOffset() * 60 * 1000
+            );
 
-              started_at.setHours(
-                started_at.getHours() +
-                  parseInt(this.stageInformationOfParticipant.session)
-              );
-              finished_at.setHours(
-                finished_at.getHours() +
-                  parseInt(this.stageInformationOfParticipant.session)
-              );
+            started_at.setHours(
+              started_at.getHours() +
+                parseInt(this.stageInformationOfParticipant.session)
+            );
+            finished_at.setHours(
+              finished_at.getHours() +
+                parseInt(this.stageInformationOfParticipant.session)
+            );
 
-              this.stageInformationOfParticipant.started_at = started_at.toISOString();
-              this.stageInformationOfParticipant.finished_at = finished_at.toISOString();
-            }
+            this.stageInformationOfParticipant.started_at = started_at.toISOString();
+            this.stageInformationOfParticipant.finished_at = finished_at.toISOString();
           }
         });
       });
@@ -693,9 +725,10 @@ export default {
     },
     getAnswerForm() {
       this.timer = setInterval(() => {
-        console.log(this.event.name);
-        console.log(this.stage.name);
-        if (this.answerForm.stage == this.$route.params.idStage) {
+        if (
+          this.answerForm.stage == this.$route.params.idStage ||
+          this.answerForm.stageId == this.$route.params.idStage
+        ) {
           if (this.answerFormByParticipantAndStage.score != null)
             clearInterval(this.timer);
 
@@ -704,7 +737,7 @@ export default {
           if (this.answerForm.currentNumber != null)
             this.currentNumber = this.answerForm.currentNumber;
 
-          if (this.answerForm != null) {
+          if (this.answerForm != null && this.answerForm.finished_at != null) {
             this.step = 1;
 
             const format = this.answerForm.finished_at.split("-");
@@ -723,14 +756,12 @@ export default {
             this.step = 0;
           }
         } else {
-          //localStorage.removeItem("answerForm")
-
           this.answerForm.stageId = this.$route.params.idStage;
           this.answerForm.participantId = this.participant.id;
 
           this.getStage();
           this.showRemaining();
-          this.getAnswerFormByParticipantAndStage();
+          //this.getAnswerFormByParticipantAndStage();
 
           this.items = [
             {
@@ -821,6 +852,7 @@ export default {
   color: #fff;
   cursor: pointer;
 }
+
 #dropFileForm {
   margin: 16px;
   text-align: center;
@@ -839,7 +871,7 @@ export default {
   border: 2px dashed #555;
 }
 
-#dropFileForm #fileInput {
+#dropFileForm #fileEventDocument {
   display: none;
 }
 

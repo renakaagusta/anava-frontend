@@ -41,10 +41,23 @@ export const answerForm = {
         }
       );
     },
-    getAnswerFormByParticipantAndStage({ commit }, answerForm) {
-      return AnswerFormService.getAnswerFormByParticipantAndStage(answerForm).then(
+    getAnswerFormByStage({ commit }, answerForm) {
+      return AnswerFormService.getAllAnswerFormByStage(answerForm).then(
         (response) => {
-          commit("setAnswerForm", response.data.data[0]);
+          commit("setAnswerForms", response.data.data);
+          return Promise.resolve(response.data.data);
+        },
+        (error) => {
+          return Promise.reject(error);
+        }
+      );
+    },
+    getAnswerFormByParticipantAndStage({ commit }, answerForm) {
+      return AnswerFormService.getAnswerFormByParticipantAndStage(
+        answerForm
+      ).then(
+        (response) => {
+          if (response.data.data[0] != undefined) commit("setAnswerForm", response.data.data[0]);
           return Promise.resolve(response.data.data[0]);
         },
         (error) => {
@@ -85,6 +98,17 @@ export const answerForm = {
         }
       );
     },
+    setAnswerFormScore({ commit }, answerForm) {
+      return AnswerFormService.setAnswerFormScore(answerForm).then(
+        (response) => {
+          commit("updateAnswerForm", response.data.data);
+          return Promise.resolve(response.data.data);
+        },
+        (error) => {
+          return Promise.reject(error);
+        }
+      );
+    },
   },
   mutations: {
     setAnswerForms(state, answerForms) {
@@ -94,9 +118,7 @@ export const answerForm = {
       state.answerForm = answerForm;
       localStorage.setItem("answerForm", JSON.stringify(answerForm));
     },
-    createAnswerForm() {
-      
-    },
+    createAnswerForm() {},
     submitAnswerForm() {},
     updateAnswerForm() {},
   },

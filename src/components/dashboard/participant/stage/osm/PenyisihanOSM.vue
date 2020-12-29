@@ -86,30 +86,29 @@
                 <span id="fileLabelText" v-html="fileName.event_document" />
               </label>
 
-              <button
-                class="uploadButton"
-                @click="uploadFile()"
-                v-if="false"
-                disabled="disabled"
-              >
+              <button class="uploadButton" @click="uploadFile()">
                 <b-spinner v-if="loading" label="Spinning"></b-spinner>
                 <p v-if="!loading" class="d-inline">Unggah</p>
               </button>
             </div>
             <div v-else>
-              <b-card
-                :img-src="
-                  'http://anavaugm.com/event_document_' + event._id + '.jpg'
+              <embed
+                :src="
+                  'http://anavaugm.com/event_document_' +
+                    event._id +
+                    participant.id +
+                    '.pdf'
                 "
-                style="width: 500px;"
-                ><button
-                  class="btn-purple"
-                  v-if="true"
-                  @click="changeEventDocument = 1"
-                >
-                  Ganti
-                </button>
-              </b-card>
+                width="700px"
+                height="1800px"
+              />
+              <button
+                class="btn-purple"
+                v-if="true"
+                @click="changeEventDocument = 1"
+              >
+                Ganti
+              </button>
             </div>
           </v-tab>
           <v-tab title="Pengumuman">
@@ -394,7 +393,7 @@ export default {
       changeEventDocument: 0,
       loading: false,
       fileName: {
-        event_document: "Unggah pakta integritas",
+        event_document: "Unggah pakta integritas (*.pdf)",
       },
     };
   },
@@ -454,6 +453,17 @@ export default {
   methods: {
     addFile() {
       this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
+      var fileExtension = /[.]/.exec(this.fileName.event_document)
+        ? /[^.]+$/.exec(this.fileName.event_document)
+        : undefined;
+      if (fileExtension != "pdf") {
+        Swal.fire({
+          title: "Format file tidak sesuai",
+          icon: "error",
+          showConfirmButton: true,
+        }).then();
+        this.fileName.event_document = "Unggah pakta integritas (*.pdf)";
+      }
     },
     uploadFile() {
       var document = new FormData();
@@ -467,9 +477,6 @@ export default {
         document: document,
         participantId: this.participant.id,
       };
-
-      alert("participant");
-      alert(JSON.stringify(formParticipant));
 
       this.$store.dispatch("event/uploadEvent", formParticipant).then(
         (response) => {
@@ -690,73 +697,68 @@ export default {
         this.displayDays = days < 10 ? "0" + days : days;
       }, 1000);
     },
-    getAnswerForm() {
-      this.timer = setInterval(() => {
-        console.log(this.event.name);
-        console.log(this.stage.name);
-        if (this.answerForm != null) {
-          if (
-            this.stageInformationOfParticipant.id == this.$route.params.idStage
-          ) {
-            if (this.step == 1) {
-              if (this.answerFormByParticipantAndStage.score != null)
-                clearInterval(this.timer);
-
-              this.answerForm = JSON.parse(localStorage.getItem("answerForm"));
-
-              if (this.answerForm != null) {
-                this.step = 1;
-
-                const format = this.answerForm.finished_at.split("-");
-                this.year = parseInt(format[0]);
-                this.month = parseInt(format[1]);
-                const time = format[2].split("T");
-                this.date = parseInt(time[0]);
-                const clock = time[1].split(":");
-                this.hour = parseInt(clock[0]);
-                this.minute = parseInt(clock[1]);
-
-                this.showRemaining();
-              }
-            }
-          } else {
-            this.answerForm.stageId = this.$route.params.idStage;
-            this.answerForm.participantId = this.participant.id;
-
-            this.getStage();
-            this.showRemaining();
-            this.getAnswerFormByParticipantAndStage();
-
-            this.items = [
-              {
-                "Mulai pengerjaan": this.getDateTime(
-                  "datetime",
-                  this.stage.started_at
-                ),
-                "Selesai pengerjaan": this.getDateTime(
-                  "datetime",
-                  this.stage.finished_at
-                ),
-                "Pengumuman lolos": this.getDateTime(
-                  "datetime",
-                  this.stage.started_at
-                ),
-              },
-            ];
-            this.getStageInformationOfParticipant();
-          }
-        }
-      }, 200);
-    },
   },
   beforeDestroy() {
     clearInterval(this.timer);
+  },
+  updated() {
+    console.log(this.event.name);
+    console.log(this.stage.name);
+    if (this.answerForm != null) {
+      if (this.stageInformationOfParticipant.id == this.$route.params.idStage) {
+        if (this.step == 1) {
+          if (this.answerFormByParticipantAndStage.score != null)
+            clearInterval(this.timer);
+
+          this.answerForm = JSON.parse(localStorage.getItem("answerForm"));
+
+          if (this.answerForm != null) {
+            this.step = 1;
+
+            const format = this.answerForm.finished_at.split("-");
+            this.year = parseInt(format[0]);
+            this.month = parseInt(format[1]);
+            const time = format[2].split("T");
+            this.date = parseInt(time[0]);
+            const clock = time[1].split(":");
+            this.hour = parseInt(clock[0]);
+            this.minute = parseInt(clock[1]);
+
+            this.showRemaining();
+          }
+        }
+      } else {
+        this.answerForm.stageId = this.$route.params.idStage;
+        this.answerForm.participantId = this.participant.id;
+
+        this.getStage();
+        this.showRemaining();
+        this.getAnswerFormByParticipantAndStage();
+
+        this.items = [
+          {
+            "Mulai pengerjaan": this.getDateTime(
+              "datetime",
+              this.stage.started_at
+            ),
+            "Selesai pengerjaan": this.getDateTime(
+              "datetime",
+              this.stage.finished_at
+            ),
+            "Pengumuman lolos": this.getDateTime(
+              "datetime",
+              this.stage.started_at
+            ),
+          },
+        ];
+        this.getStageInformationOfParticipant();
+      }
+    }
   },
   created() {
     this.getStage();
     this.showRemaining();
     this.getAnswerFormByParticipantAndStage();
-    this.getAnswerForm();
 
     this.items = [
       {

@@ -213,8 +213,8 @@ export default {
     createAnswerForm() {
       let answerForm = new FormData();
 
-      answerForm.append("participantId", this.answerForm.participantId);
-      answerForm.append("stageId", this.answerForm.stageId);
+      answerForm.append("participantId", this.answerForm.participant);
+      answerForm.append("stageId", this.answerForm.stage);
       answerForm.append("file", this.$refs.file.files[0]);
 
       this.$store.dispatch("answerForm/createAnswerForm", answerForm);
@@ -252,8 +252,8 @@ export default {
   },
   created() {
     this.getStage();
-    this.answerForm.stageId = this.$route.params.idStage;
-    this.answerForm.participantId = this.participant.id;
+    this.answerForm.stage = this.$route.params.idStage;
+    this.answerForm.participant = this.participant.id;
     this.items = [
       {
         "Mulai pengerjaan": this.getDateTime("datetime", this.stage.started_at),

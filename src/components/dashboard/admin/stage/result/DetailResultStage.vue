@@ -1,0 +1,170 @@
+<template>
+  <div>
+    <div v-if="event.name == 'Started'">
+      <b-container
+        class="bg-white p-3 mt-3 shadow-sm rounded"
+        v-if="stage.name == 'preliminary'"
+      >
+        <h1 class="mt-2">Data Peserta</h1>
+        <hr />
+        <br />
+        <div class="p-3 border">
+          <table class="table">
+            <tr>
+              <td><b>Nama Pengguna</b></td>
+              <td>{{ answerForm.participant.username }}</td>
+            </tr>
+            <tr>
+              <td><b>Nama Lengkap</b></td>
+              <td>
+                {{
+                  answerForm.participant.firstname +
+                    " " +
+                    answerForm.participant.lastname
+                }}
+              </td>
+            </tr>
+            <tr>
+              <td><b>Nomor Peserta</b></td>
+              <td>{{ stageInformationOfParticipant.number }}</td>
+            </tr>
+            <tr>
+              <td><b>Surat Orisinalitas</b></td>
+              <td>
+                <a
+                  class="btn btn-primary ml-3 mt-3"
+                  target="blank"
+                  :href="'http://anavaugm.com/event_document_' + event._id + answerForm.participant._id + '.pdf'"
+                >
+                  <i class="fa fa-download" />&nbsp;Unduh
+                </a>  
+              </td>
+            </tr>
+          </table>
+        </div>
+        <h1 class="mt-3">Poster</h1>
+        <hr />
+        <br />
+        <div class="p-3 border">
+          <img
+            :src="
+              'http://anavaugm.com/answer_' + answerForm.answers[0] + '.png'
+            "
+            style="height:900px; width: 600px;"
+          />
+        </div>
+        <h1 class="mt-3">Penilaian</h1>
+        <hr />
+        <br />
+        <div class="p-3 border">
+          <b-form-input
+            type="text"
+            id="title"
+            placeholder="Masukan Nilai"
+            v-model="answerForm.score"
+          ></b-form-input>
+          <a
+            href="#"
+            @click="setAnswerFormScore()"
+            class="btn btn-primary  mt-3"
+            type="submit"
+          >
+            <i class="far fa-save text-white"></i>
+            Simpan
+          </a>
+        </div>
+      </b-container>
+    </div>
+  </div>
+</template>
+<script>
+import Swal from "sweetalert2";
+
+export default {
+  name: "DetailResultStage",
+  data() {
+    return {
+      stageInformationOfParticipant: {},
+    };
+  },
+  computed: {
+    answerForm() {
+      return this.$store.state.answerForm.answerForm;
+    },
+    stage() {
+      return this.$store.state.stage.stage;
+    },
+    event() {
+      return JSON.parse(localStorage.getItem("event"));
+    },
+  },
+  methods: {
+    getAnswerForm() {
+      this.$store
+        .dispatch("answerForm/getAnswerForm", this.$route.params.idResult)
+        .then(() => {
+          this.getStageInformationOfParticipant();
+        });
+    },
+    setAnswerFormScore() {
+      this.$store
+        .dispatch("answerForm/setAnswerFormScore", this.answerForm)
+        .then(() => {
+          Swal.fire({
+            icon: "success",
+            title: "Nilai berhasil diubah",
+            showConfirmButton: true,
+          }).then(() => {
+          });
+        });
+    },
+    getStageInformationOfParticipant() {
+      this.answerForm.participant.participant.events.forEach((event) => {
+        event.stages.forEach((stage) => {
+          if (stage.id == this.$route.params.idStage) {
+            this.stageInformationOfParticipant = stage;
+            this.stageInformationOfParticipant.number = event.number;
+            this.stageInformationOfParticipant.document = event.document;
+
+            var today = new Date();
+            var started_at = new Date(this.stage.started_at);
+            var finished_at = new Date(this.stage.finished_at);
+
+            started_at = new Date(
+              started_at.getTime() + today.getTimezoneOffset() * 60 * 1000
+            );
+            finished_at = new Date(
+              finished_at.getTime() + today.getTimezoneOffset() * 60 * 1000
+            );
+
+            started_at.setHours(
+              started_at.getHours() +
+                parseInt(this.stageInformationOfParticipant.session)
+            );
+            finished_at.setHours(
+              finished_at.getHours() +
+                parseInt(this.stageInformationOfParticipant.session)
+            );
+
+            this.stageInformationOfParticipant.started_at = started_at.toISOString();
+            this.stageInformationOfParticipant.finished_at = finished_at.toISOString();
+          }
+        });
+      });
+    },
+  },
+  created() {
+    this.getAnswerForm();
+  },
+};
+</script>
+<style scoped>
+p {
+  display: inline;
+}
+.profile {
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+}
+</style>
