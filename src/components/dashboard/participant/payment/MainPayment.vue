@@ -32,7 +32,7 @@
                 payment.event.name
               }}</b-col>
               <b-col lg="5" class="p-3 text-center">{{
-                getDateTime("datetime", payment.created_at)
+                getDateTime("datetime", getTime(payment.created_at))
               }}</b-col>
             </b-row>
           </div>
@@ -228,8 +228,19 @@ export default {
     user() {
       return this.$store.state.auth.user;
     },
+    
   },
   methods: {
+    getTime(_datetime) {
+      var today = new Date();
+      var datetime = new Date(_datetime);
+
+      datetime = new Date(
+        datetime.getTime() + (today.getTimezoneOffset() + 780) * 60 * 1000
+      );
+
+      return datetime;
+    },
     getEvents() {
       this.$store.dispatch("event/getAllEvent");
     },
