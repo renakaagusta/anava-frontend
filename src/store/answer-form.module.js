@@ -57,8 +57,8 @@ export const answerForm = {
         answerForm
       ).then(
         (response) => {
-          if (response.data.data[0] != undefined) commit("setAnswerForm", response.data.data[0]);
-          return Promise.resolve(response.data.data[0]);
+          if (response.data.data != undefined) commit("setAnswerForm", response.data.data);
+          return Promise.resolve(response.data.data);
         },
         (error) => {
           return Promise.reject(error);
@@ -116,7 +116,8 @@ export const answerForm = {
     },
     setAnswerForm(state, answerForm) {
       state.answerForm = answerForm;
-      localStorage.setItem("answerForm", JSON.stringify(answerForm));
+
+      localStorage.setItem("answerForm"+answerForm.stage, JSON.stringify(answerForm));
     },
     createAnswerForm() {},
     submitAnswerForm() {},

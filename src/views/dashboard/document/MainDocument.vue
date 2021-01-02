@@ -6,7 +6,12 @@
           <b-container class="bg-white p-4 mt-3">
             <h2 class="text-left ml-3">Kartu Pelajar</h2>
             <hr />
-            <div v-if="participant.participant.document.osis_card == 0 || changeOsisCard == 1">
+            <div
+              v-if="
+                participant.participant.document.osis_card == 0 ||
+                  changeOsisCard == 1
+              "
+            >
               <div id="dropFileForm">
                 <input
                   type="file"
@@ -40,7 +45,11 @@
             </div>
             <h2 class="text-left ml-3 mt-5">Pas Foto</h2>
             <hr />
-            <div v-if="participant.participant.document.image == 0 || changeImage == 1">
+            <div
+              v-if="
+                participant.participant.document.image == 0 || changeImage == 1
+              "
+            >
               <div id="dropFileForm">
                 <input
                   type="file"
@@ -248,8 +257,8 @@ export default {
       loading1: false,
       loading2: false,
       fileName: {
-        osis_card: "Unggah scan kartu pelajar",
-        image: "Unggah pas foto",
+        osis_card: "Unggah scan kartu pelajar (*.jpg)",
+        image: "Unggah pas foto (*.jpg)",
       },
     };
   },
@@ -297,10 +306,36 @@ export default {
   methods: {
     addFile(type) {
       this.document.type = type;
+      var fileExtension = "";
       if (type == "osis_card") {
         this.fileName.osis_card = this.$refs.osis_card.files[0].name.toString();
+
+        fileExtension = /[.]/.exec(this.fileName.osis_card)
+          ? /[^.]+$/.exec(this.fileName.osis_card)
+          : undefined;
+        if (fileExtension != "jpg") {
+          Swal.fire({
+            title: "Format file tidak sesuai",
+            icon: "error",
+            showConfirmButton: true,
+          }).then();
+          this.fileName.osis_card = "Unggah scan kartu pelajar (*.jpg)";
+        }
       } else {
         this.fileName.image = this.$refs.image.files[0].name.toString();
+        this.fileName.osis_card = this.$refs.osis_card.files[0].name.toString();
+
+        fileExtension = /[.]/.exec(this.fileName.image)
+          ? /[^.]+$/.exec(this.fileName.image)
+          : undefined;
+        if (fileExtension != "jpg") {
+          Swal.fire({
+            title: "Format file tidak sesuai",
+            icon: "error",
+            showConfirmButton: true,
+          }).then();
+          this.fileName.image = "Unggah pas foto (*.jpg)";
+        }
       }
     },
     uploadFile(type) {
@@ -422,7 +457,7 @@ export default {
       this.participant.participant.document.osis_card == 0;
       this.changeOsisCard = 1;
     }
-    if (this.participant.participant.document.image  == 0) {
+    if (this.participant.participant.document.image == 0) {
       this.participant.participant.document.image == 0;
       this.changeImage = 1;
     }

@@ -2,8 +2,7 @@
   <div>
     <b-container
       class="bg-white p-3 rounded shadow-sm"
-      v-if="participant.verification == 1"
-    >
+      v-if="participant.verification == 1">
       <vue-tabs>
         <v-tab title="Umum" @click="getGeneralAnnouncement()">
           <div v-if="announcements.length > 0">

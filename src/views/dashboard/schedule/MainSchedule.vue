@@ -124,7 +124,7 @@
       <b-row no-gutters>
         <b-col md="4">
           <b-card-text>
-            <p class="mt-4">Kamis</p>
+            <p class="mt-4">Sabtu</p>
             <p style="font-size: 70px;margin-top:-25px;">23</p>
             <p style="margin-top:-20px;">Januari 2021</p>
           </b-card-text>
@@ -185,7 +185,7 @@
       <b-row no-gutters>
         <b-col md="4">
           <b-card-text>
-            <p class="mt-4">Kamis</p>
+            <p class="mt-4">Sabtu</p>
             <p style="font-size: 70px;margin-top:-25px;">30</p>
             <p style="margin-top:-20px;">Januari 2021</p>
           </b-card-text>
@@ -204,10 +204,10 @@
       <b-row no-gutters>
         <b-col md="4">
           <b-card-text>
-            <p class="mt-4">Jumat</p>
+            <p class="mt-4">Minggu</p>
             <p style="font-size: 70px;margin-top:-25px;">31</p>
             <p style="margin-top:-20px;">Januari 2021</p>
-          </b-card-text>
+          </b-card-text>P
         </b-col>
         <b-col md="8 text-left">
           <b-card-body>

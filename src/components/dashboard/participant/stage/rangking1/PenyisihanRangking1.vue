@@ -37,7 +37,7 @@
           </v-tab>
           <v-tab title="Pengerjaan">
             <table class="table table-border">
-              <tr class="border">
+              <tr class="border" v-if="answerFormByParticipantAndStage != null">
                 <td><b>Selesai Pengerjaan</b></td>
                 <td v-if="answerFormByParticipantAndStage.score == null">
                   -
@@ -51,13 +51,16 @@
                   }}
                 </td>
               </tr>
-              <tr class="border">
-                <td><b>Skor</b></td>
-                <td v-if="answerFormByParticipantAndStage.score == null">
+              <tr class="border" v-else>
+                <td><b>Selesai Pengerjaan</b></td>
+                <td>
                   -
                 </td>
-                <td v-else>
-                  {{ answerFormByParticipantAndStage.score }}
+              </tr>
+              <tr class="border">
+                <td><b>Skor</b></td>
+                <td>
+                  -
                 </td>
               </tr>
             </table>
@@ -176,8 +179,7 @@
         type="submit"
         value="Mulai"
         class="btn btn-purple mt-3"
-        click=""
-        :disabled="false"
+        @click="nextStep()"
       />
     </b-container>
     <b-row v-if="step == 1">
@@ -426,7 +428,7 @@ export default {
       return JSON.parse(localStorage.getItem("user"));
     },
     answerFormByParticipantAndStage() {
-      return JSON.parse(localStorage.getItem("answerForm"));
+      return JSON.parse(localStorage.getItem("answerForm" + this.$route.params.idStage));
     },
     time() {
       var today = new Date();
@@ -558,7 +560,7 @@ export default {
       this.saveAnswerForm(_answerForm);
     },
     saveAnswerForm(_answerForm) {
-      localStorage.setItem("answerForm", JSON.stringify(_answerForm));
+      localStorage.setItem("answerForm" + this.$route.params.idStage, JSON.stringify(_answerForm));
     },
     createAnswerForm() {
       var _answerForm = {};
@@ -618,7 +620,7 @@ export default {
 
             _answerForm.disable = disable;
 
-            localStorage.setItem("answerForm", JSON.stringify(_answerForm));
+            localStorage.setItem("answerForm" + this.$route.params.idStage, JSON.stringify(_answerForm));
           }
         });
     },
@@ -732,9 +734,9 @@ export default {
           if (this.answerFormByParticipantAndStage.score != null)
             clearInterval(this.timer);
 
-          this.answerForm = JSON.parse(localStorage.getItem("answerForm"));
+          this.answerForm = JSON.parse(localStorage.getItem("answerForm" + this.$route.params.idStage));
 
-          if (this.answerForm.currentNumber != null)
+          /*if (this.answerForm.currentNumber != null)
             this.currentNumber = this.answerForm.currentNumber;
 
           if (this.answerForm != null && this.answerForm.finished_at != null) {
@@ -754,14 +756,14 @@ export default {
 
           if (this.answerForm.score != null) {
             this.step = 0;
-          }
+          }*/
         } else {
           this.answerForm.stageId = this.$route.params.idStage;
           this.answerForm.participantId = this.participant.id;
 
           this.getStage();
           this.showRemaining();
-          //this.getAnswerFormByParticipantAndStage();
+          this.getAnswerFormByParticipantAndStage();
 
           this.items = [
             {

@@ -157,6 +157,15 @@
                   <h2 class="d-inline ml-4">Surat Orisinalitas</h2>
                 </a>
               </b-container>
+              <b-container class="bg-white p-3 rounded shadow-sm border">
+                <a
+                  target="blank"
+                  href="http://anavaugm.com/STARTED/tor-pekan-kreativitas.pdf"
+                >
+                  <i class="fa fa-download fa-3x text-dark"></i>
+                  <h2 class="d-inline ml-4">TOR</h2>
+                </a>
+              </b-container>
             </b-container>
           </v-tab>
         </vue-tabs>
@@ -176,20 +185,52 @@
         <b-row>
           <b-col cols="12" md="12">
             <p class="text-left">
-              Membuat essay terkait Analisa Tema LKMM Pra-TD III FTE ITS yaitu
-              Avatar [The Last Gen of FTE] dengan ketentuan : <br />
-              1. Diketik di kertas ukuran A4 dengan margin 3333 <br />
-              2. Font Times New Roman dengan ukuran 12 <br />
-              3. Space 1.0 No Before-After <br />
-              4. Rata kanan kiri (Justify) tanpa paragraf, dengan judul <br />
-              5. Identitas di tulis di Header dengan berisikan Nama, NRP dan
-              Nama Kelas Kecil <br />
-              6. Minimal satu halaman penuh <br />
-              7. Format file pdf.
+              1. Poster yang diikutsertakan dalam lomba merupakan hasil karya
+              orisinil peserta yang belum pernah dipublikasikan sebelumnya di
+              media manapun dan belum pernah diikutsertakan dalam perlombaan
+              lain (dinyatakan dalam lembar pernyataan orisinilitas karya yang
+              dapat diunduh di web ANAVA).<br />
+              2. Peserta wajib membuat surat pernyataan orisinalitas poster yang
+              ditandatangani oleh peserta (format terlampir) yang akan
+              disertakan dalam pengunggahan berkas-berkas lainnya.<br />
+              3. Poster dibuat sesuai topik utama dan dapat memilih satu
+              sub-topik yang disediakan.<br />
+              4. Topik umum Lomba Poster STARTED adalah “Implementasi Statistika
+              dalam Kehidupan Sehari-hari”.<br />
+              5. Sub topik dalam Lomba Poster STARTED antara lain :<br />
+              a. Bidang Ekonomi<br />
+              b. Bidang Pendidikan<br />
+              c. Bidang Kesehatan<br />
+              d. Bidang Sosial Budaya<br />
+              e. Bidang Teknologi<br />
+              6. Konten dalam poster dapat memuat Teori, Studi kasus, Analisis,
+              dan/atau Penyajian Data.<br />
+              7. Poster dibuat secara digital pada kanvas dengan rasio 6 : 9 ,
+              resolusi 300 dpi, format .PNG dan ukuran file maksimal 10 MB.<br />
+              8. Peserta diperbolehkan menggunakan aplikasi berjenis apapun
+              (corel draw, adobe photoshop, dan sebagainya). <br />
+              9. Ketentuan lebih rinci dapat dilihat pada ToR (Term of
+              Reference).<br />
             </p>
           </b-col>
           <b-col cols="12" md="12">
-            <h1>Sisa Waktu</h1>
+            <h1>TOR</h1>
+            <hr />
+            <br />
+            <b-col lg="12">
+              <b-container class="bg-white p-3 rounded shadow-sm border">
+                <a
+                  target="blank"
+                  href="http://anavaugm.com/STARTED/tor-pekan-kreativitas.pdf"
+                >
+                  <i class="fa fa-download fa-3x text-dark"></i>
+                  <h2 class="d-inline ml-4">TOR</h2>
+                </a>
+              </b-container>
+            </b-col>
+          </b-col>
+          <b-col cols="12" md="12">
+            <h1 class="mt-3">Sisa Waktu</h1>
             <hr />
             <br />
             <b-col lg="12">
@@ -213,42 +254,44 @@
             <h1>Form Pengumpulan</h1>
             <hr />
             <br />
-            <div id="dropFileForm" v-if="!uploaded">
-              <input
-                type="file"
-                id="fileStartedPoster"
-                ref="started_poster"
-                @change="addFile('started_poster')"
-              />
-
-              <label for="fileStartedPoster" id="fileLabel">
-                <i class="fa fa-upload fa-5x"></i>
-                <br />
-                <span id="fileLabelText" v-html="fileName.started_poster" />
-              </label>
-
-              <button class="uploadButton" @click="uploadAnswer()">
-                <b-spinner v-if="loading" label="Spinning"></b-spinner>
-                <p v-if="!loading" class="d-inline">Unggah</p>
-              </button>
-            </div>
-            <div v-else>
-              <div class="p-4 border">
-                <img
-                  :src="
-                    'http://anavaugm.com/answer_' +
-                      answerForm.answers[0] +
-                      '.png'
-                  "
-                  style="height:900px; width:600px;"
+            <div v-if="answerFormByParticipantAndStage.answers != null">
+              <div id="dropFileForm" v-if="uploaded == false || changeStartedPoster == 1">
+                <input
+                  type="file"
+                  id="fileStartedPoster"
+                  ref="started_poster"
+                  @change="addFile('started_poster')"
                 />
-                <button
-                  class="btn-purple mt-3"
-                  v-if="true"
-                  @click="uploaded = false"
-                >
-                  Ganti
+
+                <label for="fileStartedPoster" id="fileLabel">
+                  <i class="fa fa-upload fa-5x"></i>
+                  <br />
+                  <span id="fileLabelText" v-html="fileName.started_poster" />
+                </label>
+
+                <button class="uploadButton" @click="uploadAnswer()">
+                  <b-spinner v-if="loading" label="Spinning"></b-spinner>
+                  <p v-if="!loading" class="d-inline">Unggah</p>
                 </button>
+              </div>
+              <div v-else>
+                <div class="p-4 border">
+                  <img
+                    :src="
+                      'http://anavaugm.com/answer_' +
+                        answerFormByParticipantAndStage.answers[0]._id +
+                        '.png'
+                    "
+                    style="height:900px; width:600px;"
+                  />
+                  <button
+                    class="btn-purple mt-3"
+                    v-if="true"
+                    @click="changeStartedPoster = 1"
+                  >
+                    Ganti
+                  </button>
+                </div>
               </div>
             </div>
           </b-col>
@@ -319,6 +362,7 @@ export default {
       },
       changeStartedPoster: 0,
       changeEventDocument: 0,
+      initialCheck: 0,
       loading: false,
       uploaded: false,
       fileName: {
@@ -472,12 +516,23 @@ export default {
       return datetime.getDateTime(type, date);
     },
     addFile(type) {
+      var fileExtension = "";
       if (type == "started_poster") {
         this.fileName.started_poster = this.$refs.started_poster.files[0].name.toString();
+        fileExtension = /[.]/.exec(this.fileName.started_poster)
+          ? /[^.]+$/.exec(this.fileName.started_poster)
+          : undefined;
+        if (fileExtension != "png") {
+          Swal.fire({
+            title: "Format file tidak sesuai",
+            icon: "error",
+            showConfirmButton: true,
+          }).then();
+          this.fileName.started_poster = "Unggah file poster (*.png)";
+        }
       } else {
         this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
-        this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
-        var fileExtension = /[.]/.exec(this.fileName.event_document)
+        fileExtension = /[.]/.exec(this.fileName.event_document)
           ? /[^.]+$/.exec(this.fileName.event_document)
           : undefined;
         if (fileExtension != "pdf") {
@@ -491,6 +546,8 @@ export default {
       }
     },
     uploadAnswer() {
+      this.loading = true;
+
       var document = new FormData();
 
       this.loading = true;
@@ -500,18 +557,21 @@ export default {
         id: this.answerForm.answers[0],
         data: document,
       };
-
       this.$store.dispatch("answer/uploadAnswer", formAnswer).then(
         () => {
           Swal.fire({
-            title: "Berhasil mengunggah poster",
-            icon: "success",
-            showConfirmButton: true,
-          }).then();
+              icon: "success",
+              title: "File berhasil diunggah",
+              showConfirmButton: true,
+            }).then(() => {
+              
+            });
           this.loading = false;
           this.uploaded = true;
         },
-        () => {}
+        () => {
+          alert("errror");
+        }
       );
     },
     uploadFile() {
@@ -574,16 +634,17 @@ export default {
       answerForm.stageId = this.$route.params.idStage;
       answerForm.participantId = this.participant.id;
 
-      this.$store.dispatch(
-        "answerForm/getAnswerFormByParticipantAndStage",
-        answerForm
-      );
+      this.$store
+        .dispatch("answerForm/getAnswerFormByParticipantAndStage", answerForm)
+        .then((result) => {
+          localStorage.setItem("answerForm", JSON.stringify(result));
+        });
     },
     saveAnswerForm(_answerForm) {
       localStorage.setItem("answerForm", JSON.stringify(_answerForm));
     },
     createAnswerForm() {
-      if (this.stageInformationOfParticipant.document == 0) {
+      if (this.stageInformationOfParticipant.document == 1) {
         var _answerForm = {};
         _answerForm.stageId = this.$route.params.idStage;
         _answerForm.participantId = this.participant.id;
@@ -633,6 +694,13 @@ export default {
               localStorage.setItem("answerForm", JSON.stringify(_answerForm));
             }
           });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Surat orisinalitas belum diunggah",
+          text: this.message,
+          showConfirmButton: true,
+        }).then(() => {});
       }
     },
     submitAnswerForm() {
@@ -670,15 +738,17 @@ export default {
     },
   },
   updated() {
-    console.log(this.event.name);
-    console.log(this.stage.name);
     if (this.answerForm != null) {
       if (this.stageInformationOfParticipant.id == this.$route.params.idStage) {
         if (this.step == 1) {
-          console.log(this.answerFormByParticipantAndStage);
           if (this.answerFormByParticipantAndStage.score != null)
             clearInterval(this.timer);
 
+          if(this.answerFormByParticipantAndStage.answers[0].uploaded == 1 && this.initialCheck == 0) {
+            this.uploaded = true;
+            this.initialCheck = 1;
+          }
+            
           this.answerForm = JSON.parse(localStorage.getItem("answerForm"));
 
           if (this.answerForm != null) {

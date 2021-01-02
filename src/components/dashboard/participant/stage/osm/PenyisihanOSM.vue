@@ -164,8 +164,7 @@
         type="submit"
         value="Mulai"
         class="btn btn-purple mt-3"
-        click=""
-        :disabled="false"
+        @click="nextStep()"
       />
     </b-container>
     <b-row v-if="step == 1">
@@ -408,7 +407,7 @@ export default {
       return JSON.parse(localStorage.getItem("event"));
     },
     answerFormByParticipantAndStage() {
-      return JSON.parse(localStorage.getItem("answerForm"));
+      return JSON.parse(localStorage.getItem("answerForm" + this.$route.params.idStage));
     },
     participant() {
       return JSON.parse(localStorage.getItem("user"));
@@ -540,7 +539,7 @@ export default {
       );
     },
     saveAnswerForm(_answerForm) {
-      localStorage.setItem("answerForm", JSON.stringify(_answerForm));
+      localStorage.setItem("answerForm" + this.$route.params.idStage, JSON.stringify(_answerForm));
     },
     createAnswerForm() {
       if (this.stageInformationOfParticipant.document == 1) {
@@ -601,7 +600,7 @@ export default {
 
               _answerForm.doubtful = doubtful;
 
-              localStorage.setItem("answerForm", JSON.stringify(_answerForm));
+              localStorage.setItem("answerForm" + this.$route.params.idStage, JSON.stringify(_answerForm));
             }
           });
       } else {
@@ -710,7 +709,7 @@ export default {
           if (this.answerFormByParticipantAndStage.score != null)
             clearInterval(this.timer);
 
-          this.answerForm = JSON.parse(localStorage.getItem("answerForm"));
+          this.answerForm = JSON.parse(localStorage.getItem("answerForm" + this.$route.params.idStage));
 
           if (this.answerForm != null) {
             this.step = 1;
