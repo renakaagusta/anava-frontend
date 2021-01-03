@@ -396,13 +396,13 @@ export default {
       var finished_at = new Date(this.stage.finished_at);
 
       today = new Date(
-        today.getTime() + (today.getTimezoneOffset() + 840) * 60 * 1000
+        today.getTime() + (today.getTimezoneOffset() + 930) * 60 * 1000
       );
       started_at = new Date(
-        started_at.getTime() + (today.getTimezoneOffset() + 840) * 60 * 1000
+        started_at.getTime() + (today.getTimezoneOffset() + 930) * 60 * 1000
       );
       finished_at = new Date(
-        finished_at.getTime() + (today.getTimezoneOffset() + 840) * 60 * 1000
+        finished_at.getTime() + (today.getTimezoneOffset() + 930) * 60 * 1000
       );
 
       return today > started_at && today < finished_at;
