@@ -169,10 +169,10 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://anavaugm.com/started.png"
+                  href="http://anavaugm.com/logo-anava.png"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
-                  <h2 class="d-inline ml-4">Logo STARTED</h2>
+                  <h2 class="d-inline ml-4">Logo ANAVA</h2>
                 </a>
               </b-container>
             </b-container>
