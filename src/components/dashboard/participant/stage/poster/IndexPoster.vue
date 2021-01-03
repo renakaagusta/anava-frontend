@@ -148,7 +148,7 @@
                   <h2 class="d-inline ml-4">Guidebook</h2>
                 </a>
               </b-container>
-              <b-container class="bg-w  hite p-3 rounded shadow-sm border mt-3">
+              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
                   href="http://anavaugm.com/STARTED/surat-orisinalitas.pdf"
@@ -157,7 +157,7 @@
                   <h2 class="d-inline ml-4">Surat Orisinalitas</h2>
                 </a>
               </b-container>
-              <b-container class="bg-white p-3 rounded shadow-sm border">
+              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
                   href="http://anavaugm.com/STARTED/tor-pekan-kreativitas.pdf"
@@ -166,7 +166,7 @@
                   <h2 class="d-inline ml-4">TOR</h2>
                 </a>
               </b-container>
-              <b-container class="bg-white p-3 rounded shadow-sm border">
+              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
                   href="http://anavaugm.com/started.png"
