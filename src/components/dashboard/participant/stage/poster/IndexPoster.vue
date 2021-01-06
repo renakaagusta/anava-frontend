@@ -549,7 +549,7 @@ export default {
       document.append("file", this.$refs.started_poster.files[0]);
 
       var formAnswer = {
-        id: this.participant.id + this.answerForm.answers[0]._id,
+        id: this.answerForm.answers[0]._id,
         data: document,
       };
       this.$store.dispatch("answer/uploadAnswer", formAnswer).then(
