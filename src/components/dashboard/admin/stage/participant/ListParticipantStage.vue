@@ -126,7 +126,7 @@ export default {
       var paymentStatus = false;
       participant.participant.events.forEach((event) => {
         event.stages.forEach((stage) => {
-          if (stage.id == this.stage._id && event.number) paymentStatus = true;
+          if (stage.id == this.$route.params.idStage && event.number) paymentStatus = true;
         });
       });
       return paymentStatus;

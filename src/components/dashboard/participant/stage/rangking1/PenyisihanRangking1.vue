@@ -35,49 +35,19 @@
               </tr>
             </table>
           </v-tab>
-          <v-tab title="Pengerjaan">
-            <table class="table table-border">
-              <tr class="border" v-if="answerFormByParticipantAndStage != null">
-                <td><b>Selesai Pengerjaan</b></td>
-                <td v-if="answerFormByParticipantAndStage.score == null">
-                  -
-                </td>
-                <td v-else>
-                  {{
-                    getDateTime(
-                      "datetime",
-                      answerFormByParticipantAndStage.updated_at
-                    )
-                  }}
-                </td>
-              </tr>
-              <tr class="border" v-else>
-                <td><b>Selesai Pengerjaan</b></td>
-                <td>
-                  -
-                </td>
-              </tr>
-              <tr class="border">
-                <td><b>Skor</b></td>
-                <td>
-                  -
-                </td>
-              </tr>
-            </table>
-          </v-tab>
           <v-tab title="Jadwal">
             <table class="table table-border">
               <tr class="border">
                 <td><b>Mulai pengerjaan</b></td>
                 <td v-if="stage.started_at != null">
-                  {{ getDateTime("datetime", stage.started_at) }}
+                  {{ getDateTime("datetime", started_at) }}
                 </td>
                 <td v-else>-</td>
               </tr>
               <tr class="border">
                 <td><b>Selesai pengerjaan</b></td>
                 <td v-if="stage.finished_at != null">
-                  {{ getDateTime("datetime", stage.finished_at) }}
+                  {{ getDateTime("datetime", finished_at) }}
                 </td>
                 <td v-else>-</td>
               </tr>
@@ -291,7 +261,7 @@
               block
               variant="primary"
               @click="back()"
-              :disabled="answerForm.disable[currentNumber - 1]"
+              :disabled="currentNumber == 0"
             >
               <i class="fas fa-arrow-left mr-2"></i>
               <p>Sebelumnya</p>
@@ -304,7 +274,7 @@
               block
               variant="primary"
               @click="next()"
-              :disabled="answerForm.disable[currentNumber + 1]"
+              :disabled="currentNumber == answerForm.disable.length - 1"
             >
               <p>Selanjutnya</p>
               <i class="fas fa-arrow-right ml-2"></i>
@@ -366,6 +336,26 @@
         >
       </b-col>
     </b-row>
+    <b-row v-if="step == 2" class="pl-3 pr-3">
+      <b-container class="bg-white p-4 shadow rounded text-left">
+        <h2>{{ announcement.title }}</h2>
+        <p
+          v-if="announcement.stage == null && announcement.participant == null"
+        >
+          Umum
+        </p>
+        <p v-if="announcement.stage != null">
+          {{ "Kepada peserta " + getEventName(announcement.stage._id) }}
+        </p>
+        <p v-if="announcement.participant != null">
+          {{ "Kepada " + announcement.participant.username }}
+        </p>
+        <br />
+        <small>{{ getDateTime("datetime", announcement.created_at) }}</small>
+        <hr />
+        <div class="mt-4" v-html="announcement.content" />
+      </b-container>
+    </b-row>
   </div>
 </template>
 <script>
@@ -376,6 +366,8 @@ export default {
   name: "BabakGugurTheOne",
   data() {
     return {
+      started_at: new Date(2021, 0, 17, 14, 0, 0),
+      finished_at: new Date(2021, 0, 17, 31, 0, 0),
       step: 0,
       data: [],
       answerForm: {},
@@ -393,6 +385,7 @@ export default {
       hour: 0,
       minute: 0,
       timer: null,
+      announcement: {},
       formParticipant: {
         firstname: "",
         lastname: "",
@@ -419,7 +412,9 @@ export default {
       return this.$store.state.question.questions;
     },
     stage() {
-      return this.$store.state.stage.stage;
+      return JSON.parse(
+        localStorage.getItem("stage" + this.$route.params.idStage)
+      );
     },
     event() {
       return JSON.parse(localStorage.getItem("event"));
@@ -427,8 +422,13 @@ export default {
     participant() {
       return JSON.parse(localStorage.getItem("user"));
     },
+    stageAnnouncements() {
+      return this.$store.state.announcement.participantAnnouncements;
+    },
     answerFormByParticipantAndStage() {
-      return JSON.parse(localStorage.getItem("answerForm" + this.$route.params.idStage));
+      return JSON.parse(
+        localStorage.getItem("answerForm" + this.$route.params.idStage)
+      );
     },
     time() {
       var today = new Date();
@@ -513,7 +513,7 @@ export default {
     },
     nextStep() {
       this.step = 1;
-      if (this.answerForm == null) {
+      if (this.answerFormByParticipantAndStage == null) {
         this.createAnswerForm();
       }
     },
@@ -525,6 +525,7 @@ export default {
       }
     },
     next() {
+      //this.setDisable();
       if (this.answerForm.disable[this.currentNumber + 1] == null) {
         this.setDisable();
         if (this.currentNumber < this.answerForm.questions.length - 1)
@@ -534,6 +535,7 @@ export default {
       }
     },
     back() {
+      //this.setDisable();
       if (this.answerForm.disable[this.currentNumber - 1] == null) {
         this.setDisable();
         if (this.currentNumber > 0) this.currentNumber--;
@@ -541,13 +543,21 @@ export default {
         this.answerForm();
       }
     },
+    getAllAnnouncementByStage() {
+      this.$store
+        .dispatch(
+          "announcement/getAllAnnouncementByStage",
+          this.$route.params.idStage
+        )
+        .then((response) => {
+          console.log(response);
+        });
+    },
     setDisable() {
       var _answerForm = this.answerForm;
       if (_answerForm.disable[this.currentNumber] != true) {
         _answerForm.disable[this.currentNumber] = true;
-      } else {
-        _answerForm.answers[this.currentNumber] = false;
-      }
+      } 
       var number = this.currentNumber;
       this.currentNumber = -1;
       this.currentNumber = number;
@@ -560,7 +570,10 @@ export default {
       this.saveAnswerForm(_answerForm);
     },
     saveAnswerForm(_answerForm) {
-      localStorage.setItem("answerForm" + this.$route.params.idStage, JSON.stringify(_answerForm));
+      localStorage.setItem(
+        "answerForm" + this.$route.params.idStage,
+        JSON.stringify(_answerForm)
+      );
     },
     createAnswerForm() {
       var _answerForm = {};
@@ -620,7 +633,12 @@ export default {
 
             _answerForm.disable = disable;
 
-            localStorage.setItem("answerForm" + this.$route.params.idStage, JSON.stringify(_answerForm));
+            localStorage.setItem(
+              "answerForm" + this.$route.params.idStage,
+              JSON.stringify(_answerForm)
+            );
+
+            this.answerForm = _answerForm;
           }
         });
     },
@@ -637,8 +655,8 @@ export default {
             .dispatch("answerForm/submitAnswerForm", this.answerForm)
             .then((response) => {
               this.answerForm = response;
-              this.AnswerForm();
-              this.step = 0;
+              this.saveAnswerForm(response);
+              //this.step = 0;
             });
         }
       });
@@ -659,10 +677,12 @@ export default {
       this.$store.dispatch("stage/getStage", this.$route.params.idStage);
     },
     getAnswerFormByParticipantAndStage() {
-      this.$store.dispatch(
-        "answerForm/getAnswerFormByParticipantAndStage",
-        this.answerForm
-      );
+      if (this.answerFormByParticipantAndStage == null) {
+        this.$store.dispatch(
+          "answerForm/getAnswerFormByParticipantAndStage",
+          this.answerForm
+        );
+      }
     },
     getStageInformationOfParticipant() {
       this.participant.participant.events.forEach((event) => {
@@ -672,28 +692,8 @@ export default {
             this.stageInformationOfParticipant.number = event.number;
             this.stageInformationOfParticipant.document = event.document;
 
-            var today = new Date();
-            var started_at = new Date(this.stage.started_at);
-            var finished_at = new Date(this.stage.finished_at);
-
-            started_at = new Date(
-              started_at.getTime() + today.getTimezoneOffset() * 60 * 1000
-            );
-            finished_at = new Date(
-              finished_at.getTime() + today.getTimezoneOffset() * 60 * 1000
-            );
-
-            started_at.setHours(
-              started_at.getHours() +
-                parseInt(this.stageInformationOfParticipant.session)
-            );
-            finished_at.setHours(
-              finished_at.getHours() +
-                parseInt(this.stageInformationOfParticipant.session)
-            );
-
-            this.stageInformationOfParticipant.started_at = started_at.toISOString();
-            this.stageInformationOfParticipant.finished_at = finished_at.toISOString();
+            this.stageInformationOfParticipant.started_at = this.started_at.toISOString();
+            this.stageInformationOfParticipant.finished_at = this.finished_at.toISOString();
           }
         });
       });
@@ -701,17 +701,33 @@ export default {
     showRemaining() {
       const timer = setInterval(() => {
         var now = new Date();
+        now.setHours(now.getHours() + 7);
 
-        const distance = this.end.getTime() - now.getTime();
+        const distance = this.finished_at.getTime() - now.getTime();
 
-        if (distance < 0) {
-          this.submitAnswerForm();
+        this.setDisable();
+
+        if (this.answerForm.correct != 0 && this.answerForm.wrong != 0) {
+          this.step = 0;
         }
 
         if (distance < 0) {
           clearInterval(timer);
           this.show = false;
+          this.step = 0;
           return;
+        }
+
+        if (distance < 0) {
+          this.answerForm.eventName = "The One";
+          this.answerForm.stageName = "preliminary";
+          this.$store
+            .dispatch("answerForm/submitAnswerForm", this.answerForm)
+            .then((response) => {
+              //this.step = 0;
+              this.answerForm = response;
+              this.saveAnswerForm(response);
+            });
         }
 
         const days = Math.floor(distance / this._days);
@@ -731,17 +747,17 @@ export default {
           this.answerForm.stage == this.$route.params.idStage ||
           this.answerForm.stageId == this.$route.params.idStage
         ) {
-          if (this.answerFormByParticipantAndStage.score != null)
-            clearInterval(this.timer);
+          if (this.answerFormByParticipantAndStage != null) {
+            if (this.answerFormByParticipantAndStage.score != null)
+              clearInterval(this.timer);
+          }
 
-          this.answerForm = JSON.parse(localStorage.getItem("answerForm" + this.$route.params.idStage));
-
-          /*if (this.answerForm.currentNumber != null)
-            this.currentNumber = this.answerForm.currentNumber;
+          if (this.answerFormByParticipantAndStage != null)
+            this.answerForm = JSON.parse(
+              localStorage.getItem("answerForm" + this.$route.params.idStage)
+            );
 
           if (this.answerForm != null && this.answerForm.finished_at != null) {
-            this.step = 1;
-
             const format = this.answerForm.finished_at.split("-");
             this.year = parseInt(format[0]);
             this.month = parseInt(format[1]);
@@ -753,11 +769,8 @@ export default {
 
             this.showRemaining();
           }
-
-          if (this.answerForm.score != null) {
-            this.step = 0;
-          }*/
         } else {
+
           this.answerForm.stageId = this.$route.params.idStage;
           this.answerForm.participantId = this.participant.id;
 
@@ -795,6 +808,7 @@ export default {
 
     this.getStage();
     this.showRemaining();
+    this.getAllAnnouncementByStage();
     this.getAnswerFormByParticipantAndStage();
     this.getAnswerForm();
 

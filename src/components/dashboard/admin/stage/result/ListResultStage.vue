@@ -6,9 +6,6 @@
         <p>Peserta</p>
       </b-col>
       <b-col class="text-center" md="3">
-        <p>Nomor Peserta</p>
-      </b-col>
-      <b-col class="text-center" md="3">
         <p>Nilai</p>
       </b-col>
     </b-row>
@@ -32,13 +29,10 @@
         </p>
       </b-col>
       <b-col md="3">
-        <b v-if="getNumberParticipant(answerForm.participant)">
-          {{ getNumberParticipant(answerForm.participant) }}
-        </b>
-        <p v-else>-</p>
+        {{ answerForm.score }}
       </b-col>
       <b-col md="3">
-        {{ answerForm.score }}
+        
       </b-col>
       <b-col md="3">
         <router-link class="btn btn-primary" :to="'result/' + answerForm._id">
@@ -54,8 +48,6 @@ export default {
   name: "ListParticipantStage",
   data() {
     return {
-      event: {},
-      stage: {},
       outline: {
         participants: 0,
         pay: 0,
@@ -70,27 +62,22 @@ export default {
       list.sort((a, b) => a.score - b.score);
       return list;
     },
+    stage() {
+      return JSON.parse(
+        localStorage.getItem("stage" + this.$route.params.idStage)
+      );
+    },
+    event() {
+      return JSON.parse(localStorage.getItem("event"));
+    },
   },
   methods: {
     getAnswerForm() {
       this.$store
         .dispatch("answerForm/getAnswerFormByStage", this.$route.params.idStage)
-        .then(() => {
-          /*this.stage = this.$store.state.stage.stage;
-          this.outline.participants = 0;
-          this.outline.pay = 0;
-          this.stage.participants.forEach((participant) => {
-            this.outline.participants++;
-            participant.participant.events.forEach((event) => {
-              if (event.id == this.event._id &&event.number) {
-                this.outline.pay++;
-              }
-            });
-          });*/
-        });
     },
     getPaymentStatus(participant) {
-      var paymentStatus = false;
+      var paymentStatus = 0;
       participant.participant.events.forEach((event) => {
         event.stages.forEach((stage) => {
           if (stage.id == this.stage._id && event.number) paymentStatus = true;
@@ -99,28 +86,15 @@ export default {
       return paymentStatus;
     },
     getNumberParticipant(participant) {
-      var number = false;
       participant.participant.events.forEach((event) => {
-        if (event.id == this.event._id) {
-          number = event.number;
+        if (event.name == this.event.name) {
+          return event.number;
         }
       });
-      return number;
     },
   },
-  updated() {
-    if (this.$route.params.idStage != this.stage._id) {
-      this.getAnswerForm();
-    }
-  },
   created() {
-    const that = this;
     this.getAnswerForm();
-
-    setInterval(() => {
-      that.event = JSON.parse(localStorage.getItem("event"));
-      that.stage = this.$store.state.stage.stage;
-    }, 100);
   },
 };
 </script>

@@ -1,5 +1,247 @@
 <template>
   <div>
+    <div v-if="event.name == 'OSM'">
+      <b-container
+        class="bg-white p-3 mt-3 shadow-sm rounded"
+        v-if="stage.name == 'preliminary'"
+      >
+        <h1 class="mt-2">Data Peserta</h1>
+        <hr />
+        <br />
+        <div class="p-3 border">
+          <table class="table">
+            <tr>
+              <td><b>Nama Pengguna</b></td>
+              <td>{{ answerForm.participant.username }}</td>
+            </tr>
+            <tr>
+              <td><b>Nama Lengkap</b></td>
+              <td>
+                {{
+                  answerForm.participant.firstname +
+                    " " +
+                    answerForm.participant.lastname
+                }}
+              </td>
+            </tr>
+            <tr>
+              <td><b>Nomor Peserta</b></td>
+              <td>{{ stageInformationOfParticipant.number }}</td>
+            </tr>
+            <tr>
+              <td><b>Pakta Integritas</b></td>
+              <td>
+                <a
+                  class="btn btn-primary ml-3 mt-3"
+                  target="blank"
+                  :href="
+                    'http://anavaugm.com/event_document_' +
+                      event._id +
+                      answerForm.participant._id +
+                      '.pdf'
+                  "
+                >
+                  <i class="fa fa-download" />&nbsp;Unduh
+                </a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <h1 class="mt-3">Lembar Jawaban</h1>
+        <hr />
+        <br />
+        <div class="p-3 border">
+          <b-row
+            class="bg-white p-3 mb-2 shadow-sm rounded text-bold"
+            no-gutters
+          >
+            <b-col class="text-center" md="3">
+              <p>Nomor</p>
+            </b-col>
+            <b-col class="text-center" md="3">
+              <p>Kunci</p>
+            </b-col>
+            <b-col class="text-center" md="3">
+              <p>Jawaban</p>
+            </b-col>
+            <b-col class="text-center" md="3">
+              <p>Status</p>
+            </b-col>
+          </b-row>
+          <b-row
+            class="bg-white p-3 mb-2 shadow-sm rounded"
+            no-gutters
+            v-for="(question, index) in questions"
+            :key="question._id"
+          >
+            <b-col class="text-center" md="3">
+              <p>{{ question.number }}</p>
+            </b-col>
+            <b-col class="text-center" md="3">{{ question._id }}
+              <p>{{ question.key }}</p>
+            </b-col>
+            <b-col class="text-center" md="3">
+              <p v-if="answers[index].choosed_option != null">
+                {{ answers[index].choosed_option }}
+              </p>
+              <p v-else>-</p>
+            </b-col>
+            <b-col
+              class="text-center text-success"
+              md="2"
+              v-if="answers[index].choosed_option == question.key"
+            >
+              <i class="fas fa-check"></i>
+            </b-col>
+            <b-col class="text-center text-danger" md="2" v-else>
+              <i class="fas fa-times"></i>
+            </b-col>
+          </b-row>
+        </div>
+        <h1 class="mt-3">Penilaian</h1>
+        <hr />
+        <br />
+        <div class="p-3 border text-center">
+          <p>
+            Benar : <b>{{ answerForm.correct }}</b>
+          </p>
+          <br />
+          <p>
+            Salah : <b>{{ answerForm.wrong }}</b>
+          </p>
+          <br />
+          <p>
+            Kosong : <b>{{ answerForm.empty }}</b>
+          </p>
+          <br />
+          <p>
+            Nilai akhir : <b>{{ answerForm.score }}</b>
+          </p>
+          <br />
+        </div>
+      </b-container>
+    </div>
+    <div v-if="event.name == 'The One'">
+      <b-container
+        class="bg-white p-3 mt-3 shadow-sm rounded"
+        v-if="stage.name == 'preliminary'"
+      >
+        <h1 class="mt-2">Data Peserta</h1>
+        <hr />
+        <br />
+        <div class="p-3 border">
+          <table class="table">
+            <tr>
+              <td><b>Nama Pengguna</b></td>
+              <td>{{ answerForm.participant.username }}</td>
+            </tr>
+            <tr>
+              <td><b>Nama Lengkap</b></td>
+              <td>
+                {{
+                  answerForm.participant.firstname +
+                    " " +
+                    answerForm.participant.lastname
+                }}
+              </td>
+            </tr>
+            <tr>
+              <td><b>Nomor Peserta</b></td>
+              <td>{{ stageInformationOfParticipant.number }}</td>
+            </tr>
+            <tr>
+              <td><b>Pakta Integritas</b></td>
+              <td>
+                <a
+                  class="btn btn-primary ml-3 mt-3"
+                  target="blank"
+                  :href="
+                    'http://anavaugm.com/event_document_' +
+                      event._id +
+                      answerForm.participant._id +
+                      '.pdf'
+                  "
+                >
+                  <i class="fa fa-download" />&nbsp;Unduh
+                </a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <h1 class="mt-3">Lembar Jawaban</h1>
+        <hr />
+        <br />
+        <div class="p-3 border">
+          <b-row
+            class="bg-white p-3 mb-2 shadow-sm rounded text-bold"
+            no-gutters
+          >
+            <b-col class="text-center" md="3">
+              <p>Nomor</p>
+            </b-col>
+            <b-col class="text-center" md="3">
+              <p>Kunci</p>
+            </b-col>
+            <b-col class="text-center" md="3">
+              <p>Jawaban</p>
+            </b-col>
+            <b-col class="text-center" md="3">
+              <p>Status</p>
+            </b-col>
+          </b-row>
+          <b-row
+            class="bg-white p-3 mb-2 shadow-sm rounded"
+            no-gutters
+            v-for="(question, index) in questions"
+            :key="question._id"
+          >
+            <b-col class="text-center" md="3">
+              <p>{{ question.number }}</p>
+            </b-col>
+            <b-col class="text-center" md="3">
+              <p>{{ question.key }}</p>
+            </b-col>
+            <b-col class="text-center" md="3">
+              <p v-if="answers[index].choosed_option != null">
+                {{ answers[index].choosed_option }}
+              </p>
+              <p v-else>-</p>
+            </b-col>
+            <b-col
+              class="text-center text-success"
+              md="2"
+              v-if="answers[index].choosed_option == question.key"
+            >
+              <i class="fas fa-check"></i>
+            </b-col>
+            <b-col class="text-center text-danger" md="2" v-else>
+              <i class="fas fa-times"></i>
+            </b-col>
+          </b-row>
+        </div>
+        <h1 class="mt-3">Penilaian</h1>
+        <hr />
+        <br />
+        <div class="p-3 border text-center">
+          <p>
+            Benar : <b>{{ answerForm.correct }}</b>
+          </p>
+          <br />
+          <p>
+            Salah : <b>{{ answerForm.wrong }}</b>
+          </p>
+          <br />
+          <p>
+            Kosong : <b>{{ answerForm.empty }}</b>
+          </p>
+          <br />
+          <p>
+            Nilai akhir : <b>{{ answerForm.score }}</b>
+          </p>
+          <br />
+        </div>
+      </b-container>
+    </div>
     <div v-if="event.name == 'Started'">
       <b-container
         class="bg-white p-3 mt-3 shadow-sm rounded"
@@ -34,10 +276,15 @@
                 <a
                   class="btn btn-primary ml-3 mt-3"
                   target="blank"
-                  :href="'http://anavaugm.com/event_document_' + event._id + answerForm.participant._id + '.pdf'"
+                  :href="
+                    'http://anavaugm.com/event_document_' +
+                      event._id +
+                      answerForm.participant._id +
+                      '.pdf'
+                  "
                 >
                   <i class="fa fa-download" />&nbsp;Unduh
-                </a>  
+                </a>
               </td>
             </tr>
           </table>
@@ -91,6 +338,22 @@ export default {
     answerForm() {
       return this.$store.state.answerForm.answerForm;
     },
+    questions() {
+      var questions = this.answerForm.questions;
+      questions.sort(function(a, b) {
+        return parseFloat(a._id) - parseFloat(b._id);
+      });
+
+      return questions;
+    },
+    answers() {
+      var answers = this.answerForm.answers;
+      answers.sort(function(a, b) {
+        return parseFloat(a._id) - parseFloat(b._id);
+      });
+
+      return answers;
+    },
     stage() {
       return this.$store.state.stage.stage;
     },
@@ -114,8 +377,7 @@ export default {
             icon: "success",
             title: "Nilai berhasil diubah",
             showConfirmButton: true,
-          }).then(() => {
-          });
+          }).then(() => {});
         });
     },
     getStageInformationOfParticipant() {

@@ -47,7 +47,7 @@
                   {{
                     getDateTime(
                       "datetime",
-                      this.stageInformationOfParticipant.started_at
+                      stageInformationOfParticipant.started_at
                     )
                   }}
                 </td>
@@ -58,7 +58,7 @@
                   {{
                     getDateTime(
                       "datetime",
-                      this.stageInformationOfParticipant.finished_at
+                      stageInformationOfParticipant.finished_at
                     )
                   }}
                 </td>
@@ -342,9 +342,9 @@
         <b-button
           class="mt-3 mb-5"
           block
-          variant="danger"
+          variant="success"
           @click="submitAnswerForm()"
-          >Hentikan Ujian</b-button
+          >Selesai</b-button
         >
       </b-col>
     </b-row>
@@ -358,6 +358,8 @@ export default {
   name: "PenyisihanOSM",
   data() {
     return {
+      started_at: new Date(2021, 0, 17, 14, 0, 0),
+      finished_at: new Date(2021, 0, 17, 30, 0, 0),
       step: 0,
       data: [],
       answerForm: null,
@@ -375,6 +377,7 @@ export default {
       hour: 0,
       minute: 0,
       timer: null,
+      announcement: {},
       formParticipant: {
         firstname: "",
         lastname: "",
@@ -401,33 +404,29 @@ export default {
       return this.$store.state.question.questions;
     },
     stage() {
-      return this.$store.state.stage.stage;
+      return JSON.parse(
+        localStorage.getItem("stage" + this.$route.params.idStage)
+      );
     },
     event() {
       return JSON.parse(localStorage.getItem("event"));
     },
     answerFormByParticipantAndStage() {
-      return JSON.parse(localStorage.getItem("answerForm" + this.$route.params.idStage));
+      return JSON.parse(
+        localStorage.getItem("answerForm" + this.$route.params.idStage)
+      );
     },
     participant() {
       return JSON.parse(localStorage.getItem("user"));
     },
+    stageAnnouncements() {
+      return this.$store.state.announcement.participantAnnouncements;
+    },
     time() {
       var today = new Date();
-      var started_at = new Date(this.stage.started_at);
-      var finished_at = new Date(this.stage.finished_at);
+      today.setHours(today.getHours() + 6);
 
-      today = new Date(
-        today.getTime() + (today.getTimezoneOffset() + 420) * 60 * 1000
-      );
-      started_at = new Date(
-        started_at.getTime() + (today.getTimezoneOffset() + 420) * 60 * 1000
-      );
-      finished_at = new Date(
-        finished_at.getTime() + (today.getTimezoneOffset() + 420) * 60 * 1000
-      );
-
-      return today > started_at && today < finished_at;
+      return today > this.started_at && today < this.finished_at;
     },
     _seconds: () => 1000,
     _minutes() {
@@ -522,24 +521,41 @@ export default {
 
       this.saveAnswerForm(_answerForm);
     },
+    getAllAnnouncementByStage() {
+      this.$store
+        .dispatch(
+          "announcement/getAllAnnouncementByStage",
+          this.$route.params.idStage
+        )
+        .then((response) => {
+          console.log(response);
+        });
+    },
     selectAnswer(letter) {
       var _answerForm = this.answerForm;
       _answerForm.answers[this.currentNumber] = letter;
       this.saveAnswerForm(_answerForm);
     },
     getAnswerFormByParticipantAndStage() {
-      var answerForm = {};
+      if (this.answerFormByParticipantAndStage == null) {
+        var answerForm = {};
 
-      answerForm.stageId = this.$route.params.idStage;
-      answerForm.participantId = this.participant.id;
+        answerForm.stageId = this.$route.params.idStage;
+        answerForm.participantId = this.participant.id;
 
-      this.$store.dispatch(
-        "answerForm/getAnswerFormByParticipantAndStage",
-        answerForm
-      );
+        this.$store.dispatch(
+          "answerForm/getAnswerFormByParticipantAndStage",
+          answerForm
+        );
+      } else {
+        this.answerForm = this.answerFormByParticipantAndStage;
+      }
     },
     saveAnswerForm(_answerForm) {
-      localStorage.setItem("answerForm" + this.$route.params.idStage, JSON.stringify(_answerForm));
+      localStorage.setItem(
+        "answerForm" + this.$route.params.idStage,
+        JSON.stringify(_answerForm)
+      );
     },
     createAnswerForm() {
       if (this.stageInformationOfParticipant.document == 1) {
@@ -600,7 +616,12 @@ export default {
 
               _answerForm.doubtful = doubtful;
 
-              localStorage.setItem("answerForm" + this.$route.params.idStage, JSON.stringify(_answerForm));
+              localStorage.setItem(
+                "answerForm" + this.$route.params.idStage,
+                JSON.stringify(_answerForm)
+              );
+
+              this.answerForm = _answerForm;
             }
           });
       } else {
@@ -613,13 +634,23 @@ export default {
       }
     },
     submitAnswerForm() {
-      this.answerForm.eventName = "OSM";
-      this.answerForm.stageName = "preliminary";
-      this.$store
-        .dispatch("answerForm/submitAnswerForm", this.answerForm)
-        .then((response) => {
-          console.log("submitResponse" + JSON.stringify(response));
-        });
+      new Swal({
+        title: "Apakah anda yakin untuk menyelesaikan saat ini?",
+        showDenyButton: true,
+        buttons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.answerForm.eventName = "OSM";
+          this.answerForm.stageName = "preliminary";
+          this.$store
+            .dispatch("answerForm/submitAnswerForm", this.answerForm)
+            .then((response) => {
+              this.answerForm = response;
+              this.saveAnswerForm(response);
+              this.step = 0;
+            });
+        }
+      });
     },
     getAllQuestionByStage() {
       this.$store.dispatch(
@@ -644,24 +675,21 @@ export default {
             this.stageInformationOfParticipant.number = event.number;
             this.stageInformationOfParticipant.document = event.document;
 
-            var today = new Date();
             var started_at = new Date(this.stage.started_at);
             var finished_at = new Date(this.stage.finished_at);
 
-            started_at = new Date(
-              started_at.getTime() + today.getTimezoneOffset() * 60 * 1000
-            );
-            finished_at = new Date(
-              finished_at.getTime() + today.getTimezoneOffset() * 60 * 1000
-            );
+            started_at = this.started_at;
+            finished_at = this.finished_at;
+
+            this.stageInformationOfParticipant.now = new Date();
 
             started_at.setHours(
               started_at.getHours() +
-                parseInt(this.stageInformationOfParticipant.session)
+                parseInt(this.stageInformationOfParticipant.session) - 1
             );
             finished_at.setHours(
               finished_at.getHours() +
-                parseInt(this.stageInformationOfParticipant.session)
+                parseInt(this.stageInformationOfParticipant.session) - 1
             );
 
             this.stageInformationOfParticipant.started_at = started_at.toISOString();
@@ -673,27 +701,41 @@ export default {
     showRemaining() {
       const timer = setInterval(() => {
         var now = new Date();
+        now.setHours(now.getHours() + 7);
+        var finished_at = new Date(this.stageInformationOfParticipant.finished_at);
 
-        const distance = this.end.getTime() - now.getTime();
-
-        if (distance < 0) {
-          this.submitAnswerForm();
+        if (this.answerForm.correct != 0 && this.answerForm.wrong != 0) { 
+          this.step = 0;
         }
-
-        if (distance < 0) {
+        if (now > finished_at) {
+          this.answerForm.eventName = "OSM";
+          this.answerForm.stageName = "preliminary";
+          this.$store
+            .dispatch("answerForm/submitAnswerForm", this.answerForm)
+            .then((response) => {
+              this.answerForm = response;
+              this.saveAnswerForm(response);
+              this.step = 0;
+            });
           clearInterval(timer);
           this.show = false;
+          this.step = 0;
           return;
-        }
-        const days = Math.floor(distance / this._days);
-        const hours = Math.floor((distance % this._days) / this._hours);
-        const minutes = Math.floor((distance % this._hours) / this._minutes);
-        const seconds = Math.floor((distance % this._minutes) / this._seconds);
+        } else {
+          const distance = finished_at.getTime() - now.getTime();
 
-        this.displaySeconds = seconds < 10 ? "0" + seconds : seconds;
-        this.displayMinutes = minutes < 10 ? "0" + minutes : minutes;
-        this.displayHours = hours < 10 ? "0" + hours : hours;
-        this.displayDays = days < 10 ? "0" + days : days;
+          const days = Math.floor(distance / this._days);
+          const hours = Math.floor((distance % this._days) / this._hours);
+          const minutes = Math.floor((distance % this._hours) / this._minutes);
+          const seconds = Math.floor(
+            (distance % this._minutes) / this._seconds
+          );
+
+          this.displaySeconds = seconds < 10 ? "0" + seconds : seconds;
+          this.displayMinutes = minutes < 10 ? "0" + minutes : minutes;
+          this.displayHours = hours < 10 ? "0" + hours : hours;
+          this.displayDays = days < 10 ? "0" + days : days;
+        }
       }, 1000);
     },
   },
@@ -701,33 +743,27 @@ export default {
     clearInterval(this.timer);
   },
   updated() {
-    console.log(this.event.name);
-    console.log(this.stage.name);
     if (this.answerForm != null) {
       if (this.stageInformationOfParticipant.id == this.$route.params.idStage) {
         if (this.step == 1) {
           if (this.answerFormByParticipantAndStage.score != null)
             clearInterval(this.timer);
 
-          this.answerForm = JSON.parse(localStorage.getItem("answerForm" + this.$route.params.idStage));
+          this.step = 1;
 
-          if (this.answerForm != null) {
-            this.step = 1;
+          const format = this.answerForm.finished_at.split("-");
+          this.year = parseInt(format[0]);
+          this.month = parseInt(format[1]);
+          const time = format[2].split("T");
+          this.date = parseInt(time[0]);
+          const clock = time[1].split(":");
+          this.hour = parseInt(clock[0]);
+          this.minute = parseInt(clock[1]);
 
-            const format = this.answerForm.finished_at.split("-");
-            this.year = parseInt(format[0]);
-            this.month = parseInt(format[1]);
-            const time = format[2].split("T");
-            this.date = parseInt(time[0]);
-            const clock = time[1].split(":");
-            this.hour = parseInt(clock[0]);
-            this.minute = parseInt(clock[1]);
-
-            this.showRemaining();
-          }
+          this.showRemaining();
         }
       } else {
-        this.answerForm.stageId = this.$route.params.idStage;
+        /*this.answerForm.stageId = this.$route.params.idStage;
         this.answerForm.participantId = this.participant.id;
 
         this.getStage();
@@ -751,6 +787,7 @@ export default {
           },
         ];
         this.getStageInformationOfParticipant();
+      */
       }
     }
   },
@@ -758,6 +795,7 @@ export default {
     this.getStage();
     this.showRemaining();
     this.getAnswerFormByParticipantAndStage();
+    this.getAllAnnouncementByStage();
 
     this.items = [
       {

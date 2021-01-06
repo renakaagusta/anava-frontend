@@ -177,6 +177,27 @@
                   </b-row>
                 </router-link>
               </li>
+              <li
+                @click="selectedSubItem = 2"
+                v-bind:class="[selectedSubItem == 2 ? 'active' : '']"
+              >
+                <router-link
+                  class="text-white"
+                  :to="{
+                    name: 'MainStage',
+                    params: { idStage: events[0].stages[1]._id },
+                  }"
+                >
+                  <b-row>
+                    <b-col lg="1">
+                      <div class="inline"><i class="fas fa-trophy"></i></div>
+                    </b-col>
+                    <b-col class="sidebar-text" lg="10">
+                      Semifinal
+                    </b-col>
+                  </b-row>
+                </router-link>
+              </li>
             </ul>
           </li>
           <li
@@ -426,6 +447,27 @@
                     </b-col>
                     <b-col class="sidebar-text" lg="10">
                       Penyisihan
+                    </b-col>
+                  </b-row>
+                </router-link>
+              </li>
+              <li
+                @click="selectedSubItem = 2"
+                v-bind:class="[selectedSubItem == 2 ? 'active' : '']"
+              >
+                <router-link
+                  class="text-white"
+                  :to="{
+                    name: 'ListParticipantStage',
+                    params: { idStage: events[0].stages[1]._id },
+                  }"
+                >
+                  <b-row>
+                    <b-col lg="1">
+                      <div class="inline"><i class="fas fa-trophy"></i></div>
+                    </b-col>
+                    <b-col class="sidebar-text" lg="10">
+                      Semifinal
                     </b-col>
                   </b-row>
                 </router-link>

@@ -40,14 +40,14 @@
               <tr class="border">
                 <td><b>Mulai pengerjaan</b></td>
                 <td v-if="stage.started_at != null">
-                  {{ getDateTime("datetime", getTime(stage.started_at)) }}
+                  {{ getDateTime("datetime", getTime(started_at)) }}
                 </td>
                 <td v-else>-</td>
               </tr>
               <tr class="border">
                 <td><b>Selesai pengerjaan</b></td>
                 <td v-if="stage.finished_at != null">
-                  {{ getDateTime("datetime", getTime(stage.finished_at)) }}
+                  {{ getDateTime("datetime", getTime(finished_at)) }}
                 </td>
                 <td v-else>-</td>
               </tr>
@@ -337,6 +337,8 @@ export default {
   name: "PenyisihanStarted",
   data() {
     return {
+      started_at: new Date(2021, 0, 3, 15, 0, 0),
+      finished_at: new Date(2021, 0, 16, 19, 0, 0),
       step: 0,
       data: [],
       answerForm: {},
@@ -382,7 +384,7 @@ export default {
   },
   computed: {
     stage() {
-      return this.$store.state.stage.stage;
+      return JSON.parse(localStorage.getItem("stage" + this.$route.params.idStage));
     },
     event() {
       return JSON.parse(localStorage.getItem("event"));
@@ -401,20 +403,8 @@ export default {
     },
     time() {
       var today = new Date();
-      var started_at = new Date(this.stage.started_at);
-      var finished_at = new Date(this.stage.finished_at);
 
-      today = new Date(
-        today.getTime() + (today.getTimezoneOffset() + 990) * 60 * 1000
-      );
-      started_at = new Date(
-        started_at.getTime() + (today.getTimezoneOffset() + 990) * 60 * 1000
-      );
-      finished_at = new Date(
-        finished_at.getTime() + (today.getTimezoneOffset() + 990) * 60 * 1000
-      );
-
-      return today > started_at && today < finished_at;
+      return today > this.started_at && today < this.finished_at;
     },
     _seconds: () => 1000,
     _minutes() {
@@ -495,10 +485,6 @@ export default {
     getTime(_time) {
       var time = new Date(_time);
 
-      time = new Date(
-        time.getTime() + (time.getTimezoneOffset() + 660) * 60 * 1000
-      );
-
       return time;
     },
     nextStep() {
@@ -563,7 +549,7 @@ export default {
       document.append("file", this.$refs.started_poster.files[0]);
 
       var formAnswer = {
-        id: this.answerForm.answers[0],
+        id: this.participant.id + this.answerForm.answers[0]._id,
         data: document,
       };
       this.$store.dispatch("answer/uploadAnswer", formAnswer).then(
@@ -629,7 +615,7 @@ export default {
     getStageInformationOfParticipant() {
       this.participant.participant.events.forEach((event) => {
         event.stages.forEach((stage) => {
-          if (stage.id == this.$route.params.idStage) {
+          if (stage.name == this.stage.name &&  event.name == this.event.name) {
             this.stageInformationOfParticipant = stage;
             this.stageInformationOfParticipant.number = event.number;
             this.stageInformationOfParticipant.document = event.document;
@@ -664,25 +650,8 @@ export default {
             var _answerForm = JSON.parse(JSON.stringify(answerForm));
 
             if (!_answerForm.session) {
-              var today = new Date();
-              var started_at = new Date(this.stage.started_at);
-              var finished_at = new Date(this.stage.finished_at);
-
-              started_at = new Date(
-                started_at.getTime() + today.getTimezoneOffset() * 60 * 1000
-              );
-              finished_at = new Date(
-                finished_at.getTime() + today.getTimezoneOffset() * 60 * 1000
-              );
-
-              started_at.setHours(
-                started_at.getHours() +
-                  parseInt(this.stageInformationOfParticipant.session)
-              );
-              finished_at.setHours(
-                finished_at.getHours() +
-                  parseInt(this.stageInformationOfParticipant.session)
-              );
+              var started_at = new Date(this.started_at);
+              var finished_at = new Date(this.finished_at);
 
               _answerForm.started_at = started_at.toISOString();
               _answerForm.finished_at = finished_at.toISOString();
@@ -724,7 +693,7 @@ export default {
     showRemaining() {
       const timer = setInterval(() => {
         var now = new Date();
-        var end = new Date(this.stage.finished_at);
+        var end = this.finished_at;
 
         const distance = end.getTime() - now.getTime();
 

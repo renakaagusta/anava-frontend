@@ -51,7 +51,7 @@
             class="btn-white event text-dark p-3 w-100 text-left"
             @click="selectEvent(event._id, index)"
           >
-            <b-row>
+            <b-row v-if="event.name != 'Started'">
               <b-col lg="2">
                 <img class="logo" v-bind:src="'../../../' + event.logo" />
               </b-col>
@@ -167,13 +167,17 @@
           </b-col>
 
           <b-col steps="2" md="12 mt-3">
-            <div class="container bg-white p-3 text-center rounded-lg  border" style="padding: 10px;">
+            <div
+              class="container bg-white p-3 text-center rounded-lg  border"
+              style="padding: 10px;"
+            >
               <h3>Contact Person</h3>
               <hr />
 
               <b-row>
-                <b-col cols="3"
-                class="text-center"><i class="fa fa-user fa-5x"></i></b-col>
+                <b-col cols="3" class="text-center"
+                  ><i class="fa fa-user fa-5x"></i
+                ></b-col>
                 <b-col cols="6">
                   <div class="text-left p-3">
                     <b>Nama: </b
@@ -228,7 +232,6 @@ export default {
     user() {
       return this.$store.state.auth.user;
     },
-    
   },
   methods: {
     getTime(_datetime) {
@@ -255,17 +258,19 @@ export default {
       this.$store.dispatch("event/joinEvent", this.payment);
     },
     selectEvent(id, index) {
-      (this.payment.event = id),
-        (this.payment.eventIndex = index),
-        (this.step = 1);
+      if (event.name != "Started") {
+        (this.payment.event = id),
+          (this.payment.eventIndex = index),
+          (this.step = 1);
 
-      this.payment.id = id;
+        this.payment.id = id;
 
-      this.user.participant.events.forEach((event) => {
-        if (event.id == id) this.newEvent = false;
-      });
+        this.user.participant.events.forEach((event) => {
+          if (event.id == id) this.newEvent = false;
+        });
 
-      if (this.newEvent) this.joinEvent();
+        if (this.newEvent) this.joinEvent();
+      }
     },
     checkJoinEvent() {
       /*var joinEvent = false;
