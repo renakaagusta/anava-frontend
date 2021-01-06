@@ -224,7 +224,9 @@ export default {
   },
   computed: {
     events() {
-      return this.$store.state.event.events;
+      return this.$store.state.event.events.filter(function(event){
+        return event.name != 'Started';
+      });
     },
     payments() {
       return this.$store.state.payment.payments;
@@ -258,19 +260,17 @@ export default {
       this.$store.dispatch("event/joinEvent", this.payment);
     },
     selectEvent(id, index) {
-      if (event.name != "Started") {
-        (this.payment.event = id),
-          (this.payment.eventIndex = index),
-          (this.step = 1);
+      (this.payment.event = id),
+        (this.payment.eventIndex = index),
+        (this.step = 1);
 
-        this.payment.id = id;
+      this.payment.id = id;
 
-        this.user.participant.events.forEach((event) => {
-          if (event.id == id) this.newEvent = false;
-        });
+      this.user.participant.events.forEach((event) => {
+        if (event.id == id) this.newEvent = false;
+      });
 
-        if (this.newEvent) this.joinEvent();
-      }
+      if (this.newEvent) this.joinEvent();
     },
     checkJoinEvent() {
       /*var joinEvent = false;
