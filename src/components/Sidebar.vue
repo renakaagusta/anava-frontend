@@ -177,7 +177,7 @@
                   </b-row>
                 </router-link>
               </li>
-              <li
+              <!--li
                 @click="selectedSubItem = 2"
                 v-bind:class="[selectedSubItem == 2 ? 'active' : '']"
               >
@@ -197,7 +197,7 @@
                     </b-col>
                   </b-row>
                 </router-link>
-              </li>
+              </li-->
             </ul>
           </li>
           <li
