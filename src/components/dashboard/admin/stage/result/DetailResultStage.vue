@@ -35,7 +35,7 @@
                   class="btn btn-primary ml-3 mt-3"
                   target="blank"
                   :href="
-                    'http://52.163.218.138/event_document_' +
+                    'http://anavaugm.com/event_document_' +
                       event._id +
                       answerForm.participant._id +
                       '.pdf'
@@ -157,7 +157,7 @@
                   class="btn btn-primary ml-3 mt-3"
                   target="blank"
                   :href="
-                    'http://52.163.218.138/event_document_' +
+                    'http://anavaugm.com/event_document_' +
                       event._id +
                       answerForm.participant._id +
                       '.pdf'
@@ -283,7 +283,7 @@
                   class="btn btn-primary ml-3 mt-3"
                   target="blank"
                   :href="
-                    'http://52.163.218.138/event_document_' +
+                    'http://anavaugm.com/event_document_' +
                       event._id +
                       answerForm.participant._id +
                       '.pdf'
@@ -414,7 +414,7 @@
                   class="btn btn-primary ml-3 mt-3"
                   target="blank"
                   :href="
-                    'http://52.163.218.138/event_document_' +
+                    'http://anavaugm.com/event_document_' +
                       event._id +
                       answerForm.participant._id +
                       '.pdf'
@@ -432,7 +432,7 @@
         <div class="p-3 border">
           <img
             :src="
-              'http://52.163.218.138/answer_' + answerForm.answers[0] + '.png'
+              'http://anavaugm.com/answer_' + answerForm.answers[0] + '.png'
             "
             style="height:900px; width: 600px;"
           />

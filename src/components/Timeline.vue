@@ -73,7 +73,7 @@ export default {
     },
     mounted() {
     axios
-        .get('http://52.163.218.138/api/v1/session/all')
+        .get('http://anavaugm.com/api/v1/session/all')
         .then(res => {
             res.data.data.forEach((event)=>{
                 this.timeline.push({

@@ -2,7 +2,7 @@
   <b-container>
     <form
       id="dropFileForm"
-      action="http://52.163.218.138/upload.php"
+      action="http://anavaugm.com/upload.php"
       method="post"
       onsubmit="uploadFiles(event)"
     >

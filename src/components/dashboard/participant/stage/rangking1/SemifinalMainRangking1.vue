@@ -85,7 +85,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://52.163.218.138/THE ONE/guidebook.pdf"
+                  href="http://anavaugm.com/THE ONE/guidebook.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Guidebook</h2>
@@ -320,7 +320,7 @@ export default {
   name: "BabakChampionTheOne",
   data() {
     return {
-      started_at: new Date(2021, 0, 1, 14, 0, 0),
+      started_at: new Date(2021, 0, 17, 14, 0, 0),
       finished_at: new Date(2021, 0, 17, 31, 0, 0),
       step: 0,
       data: [],
