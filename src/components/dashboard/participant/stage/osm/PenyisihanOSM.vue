@@ -112,14 +112,30 @@
             </div>
           </v-tab>
           <v-tab title="Pengumuman">
-            <div
-              class="container bg-white p-3 text-center text-dark rounded-lg mt-2 mb-2"
-            >
-              <p>
-                <i class="fas fa-exclamation-triangle fa-2x"></i>
-                <br />
-                Belum ada pengumuman
-              </p>
+            <div class="mt-3" v-if="stageAnnouncements">
+              <b-row
+                class="bg-white p-2 mb-2 shadow-sm rounded"
+                no-gutters
+                v-for="announcement in stageAnnouncements"
+                :key="announcement._id"
+              >
+                <b-col md="9" class="text-left p-3">
+                  <h4 class="text-bold">{{ announcement.title }}</h4>
+                  <p v-if="announcement"></p>
+
+                  <p class="text-secondary">
+                    {{ getDateTime("datetime", announcement.created_at) }}
+                  </p>
+                </b-col>
+                <b-col md="3" class="p-3">
+                  <a
+                    class="btn btn-primary"
+                    @click="showAnnouncement(announcement)"
+                  >
+                    <i class="fas fa-search"></i>&nbsp;Detail
+                  </a>
+                </b-col>
+              </b-row>
             </div>
           </v-tab>
           <v-tab title="Dokumen">
@@ -348,6 +364,26 @@
         >
       </b-col>
     </b-row>
+    <b-row v-if="step == 2" class="pl-3 pr-3">
+      <b-container class="bg-white p-4 shadow rounded text-left">
+        <h2>{{ announcement.title }}</h2>
+        <p
+          v-if="announcement.stage == null && announcement.participant == null"
+        >
+          Umum
+        </p>
+        <p v-if="announcement.stage != null">
+          {{ "Kepada peserta " + getEventName(announcement.stage._id) }}
+        </p>
+        <p v-if="announcement.participant != null">
+          {{ "Kepada " + announcement.participant.username }}
+        </p>
+        <br />
+        <small>{{ getDateTime("datetime", announcement.created_at) }}</small>
+        <hr />
+        <div class="mt-4" v-html="announcement.content" />
+      </b-container>
+    </b-row>
   </div>
 </template>
 <script>
@@ -408,6 +444,9 @@ export default {
         localStorage.getItem("stage" + this.$route.params.idStage)
       );
     },
+    events() {
+      return this.$store.state.event.events;
+    },
     event() {
       return JSON.parse(localStorage.getItem("event"));
     },
@@ -449,6 +488,61 @@ export default {
     },
   },
   methods: {
+    getEventName(stageId) {
+      var name = "";
+      this.events.forEach((event) => {
+        event.stages.forEach((stage) => {
+          if (stageId == stage._id) {
+            switch (event.name) {
+              case "OSM":
+                switch (stage.name) {
+                  case "preliminary":
+                    name = event.name + " Penyisihan";
+                    break;
+                  case "semifinal":
+                    name = event.name + " Semifinal";
+                    break;
+                  case "final":
+                    name = event.name + " Final";
+                    break;
+                }
+                break;
+              case "The One":
+                switch (stage.name) {
+                  case "preliminary":
+                    name = event.name + " Babak Gugur";
+                    break;
+                  case "semifinal":
+                    name = event.name + " Babak Championship";
+                    break;
+                }
+                break;
+              case "Started":
+                switch (stage.name) {
+                  case "preliminary":
+                    name = event.name + " Pekan Kreativitas";
+                    break;
+                  case "semifinal":
+                    name = event.name + " Final";
+                    break;
+                }
+                break;
+              case "Sigma":
+                name = event.name;
+                break;
+              case "Open House":
+                name = event.name;
+                break;
+            }
+          }
+        });
+      });
+      return name;
+    },
+    showAnnouncement(announcement) {
+      this.announcement = announcement;
+      this.step = 2;
+    },
     addFile() {
       this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
       var fileExtension = /[.]/.exec(this.fileName.event_document)
@@ -493,9 +587,25 @@ export default {
       );
     },
     nextStep() {
-      this.step = 1;
-      if (this.answerForm == null) {
-        this.createAnswerForm();
+      if (this.time) {
+        if (this.stageInformationOfParticipant.document == 1) {
+          this.step = 1;
+          if (this.answerFormByParticipantAndStage == null) {
+            this.createAnswerForm();
+          }
+        } else {
+          Swal.fire({
+            title: "Pakta integritas belum diunggah",
+            icon: "error",
+            showConfirmButton: true,
+          });
+        }
+      } else {
+        Swal.fire({
+          title: "Waktu pengerjaan belum dimulai",
+          icon: "error",
+          showConfirmButton: true,
+        });
       }
     },
     selectNumber(number) {
@@ -647,7 +757,7 @@ export default {
             .then((response) => {
               this.answerForm = response;
               this.saveAnswerForm(response);
-              this.step = 0;
+              if (this.step == 1) this.step = 0;
             });
         }
       });
@@ -685,11 +795,13 @@ export default {
 
             started_at.setHours(
               started_at.getHours() +
-                parseInt(this.stageInformationOfParticipant.session) - 1
+                parseInt(this.stageInformationOfParticipant.session) -
+                1
             );
             finished_at.setHours(
               finished_at.getHours() +
-                parseInt(this.stageInformationOfParticipant.session) - 1
+                parseInt(this.stageInformationOfParticipant.session) -
+                1
             );
 
             this.stageInformationOfParticipant.started_at = started_at.toISOString();
@@ -702,10 +814,12 @@ export default {
       const timer = setInterval(() => {
         var now = new Date();
         now.setHours(now.getHours() + 7);
-        var finished_at = new Date(this.stageInformationOfParticipant.finished_at);
+        var finished_at = new Date(
+          this.stageInformationOfParticipant.finished_at
+        );
 
-        if (this.answerForm.correct != 0 && this.answerForm.wrong != 0) { 
-          this.step = 0;
+        if (this.answerForm.correct != 0 && this.answerForm.wrong != 0) {
+          if (this.step == 1) this.step = 0;
         }
         if (now > finished_at) {
           this.answerForm.eventName = "OSM";
@@ -715,11 +829,11 @@ export default {
             .then((response) => {
               this.answerForm = response;
               this.saveAnswerForm(response);
-              this.step = 0;
+              if (this.step == 1) this.step = 0;
             });
           clearInterval(timer);
           this.show = false;
-          this.step = 0;
+          if (this.step == 1) this.step = 0;
           return;
         } else {
           const distance = finished_at.getTime() - now.getTime();

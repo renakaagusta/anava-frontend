@@ -19,16 +19,23 @@
       <b-col
         class="text-center"
         md="2"
-        v-if="event.name == 'The One' && stage.name == 'preliminary'"
+        v-if="event.name == 'The One'"
       >
         <p>Mata pelajaran</p>
       </b-col>
       <b-col
         class="text-center"
         md="2"
-        v-if="event.name == 'The One' && stage.name == 'preliminary'"
+        v-if="event.name == 'The One'"
       >
         <p>Poin</p>
+      </b-col>
+      <b-col
+        class="text-center"
+        md="2"
+        v-if="event.name == 'The One'"
+      >
+        <p>Harga</p>
       </b-col>
     </b-row>
     <b-row
@@ -43,13 +50,16 @@
       <b-col md="2" v-if="event.name == 'OSM' && stage.name == 'preliminary'">
         <p>{{ question.session }}</p>
       </b-col>
-      <b-col md="2" v-if="event.name == 'The One' && stage.name == 'preliminary'">
+      <b-col md="2" v-if="event.name == 'The One'">
         <p>{{ question.lesson }}</p>
       </b-col>
-      <b-col md="2" v-if="event.name == 'The One' && stage.name == 'preliminary'">
+      <b-col md="2" v-if="event.name == 'The One'">
         <p>{{ question.poin }}</p>
       </b-col>
-      <b-col md="8">
+      <b-col md="2" v-if="event.name == 'The One' && stage.name == 'semifinal'">
+        <p>{{ question.price }}</p>
+      </b-col>
+      <b-col md="2">
         <router-link
           class="btn btn-primary float-right"
           :to="'question/' + question._id"

@@ -1,9 +1,6 @@
 <template>
   <div>
-    <b-container
-      class="bg-white p-3 mt-3 shadow-sm rounded"
-      v-if="this.stage.name == 'preliminary'"
-    >
+    <b-container class="bg-white p-3 mt-3 shadow-sm rounded">
       <h1 class="mt-2">Sunting soal</h1>
       <b-form class="text-left ml-5 mt-4 mr-5">
         <b-form-group>
@@ -87,15 +84,21 @@
             <option value="3">3</option>
           </select>
         </b-form-group>
-        <b-form-group
-          v-if="event.name == 'The One' && stage.name == 'preliminary'"
-        >
+        <b-form-group v-if="event.name == 'The One'">
           <h2>Poin</h2>
           <input
             type="number"
             placeholder="masukan Poin"
             v-model="question.poin"
             value="1"
+          />
+          <h2 v-if="stage.name == 'semifinal'">Harga</h2>
+          <input
+            type="number"
+            placeholder="masukan Harga"
+            v-model="question.price"
+            value="1"
+            v-if="stage.name == 'semifinal'"
           />
           <b-form-group>
             <h2>Mata Pelajaran</h2>
@@ -107,12 +110,7 @@
             </select>
           </b-form-group>
         </b-form-group>
-        <a
-          @click="updateQuestion()"
-          href="#"
-          class="btn btn-primary"
-          type="submit"
-        >
+        <a @click="updateQuestion()" class="btn btn-primary" type="submit">
           <i class="far fa-save text-white"></i>
           Simpan
         </a>
@@ -121,6 +119,8 @@
   </div>
 </template>
 <script>
+import Swal from "sweetalert2";
+
 export default {
   name: "EditQuestionStage",
   data() {
@@ -145,7 +145,22 @@ export default {
       );
     },
     updateQuestion() {
-      this.$store.dispatch("question/updateQuestion", this.question);
+      this.$store.dispatch("question/updateQuestion", this.question).then(
+        () => {
+          Swal.fire({
+            icon: "success",
+            title: "Soal berhasil diperbarui",
+            showConfirmButton: true,
+          }).then(() => {
+            this.$router.push(
+              "/dashboard/stage/" + this.stage._id + "/question/"
+            );
+          });
+        },
+        (err) => {
+          alert("error");
+        }
+      );
     },
   },
   created() {

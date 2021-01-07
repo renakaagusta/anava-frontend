@@ -1,9 +1,6 @@
 <template>
   <div>
-    <b-container
-      class="bg-white p-3 mt-3 shadow-sm rounded"
-      v-if="this.stage.name == 'preliminary'"
-    >
+    <b-container class="bg-white p-3 mt-3 shadow-sm rounded">
       <h1 class="mt-2">Buat soal</h1>
       <b-form class="text-left ml-5 mt-4 mr-5">
         <b-form-group>
@@ -107,12 +104,37 @@
             </select>
           </b-form-group>
         </b-form-group>
-        <a
-          @click="createQuestion()"
-          href="#"
-          class="btn btn-primary"
-          type="submit"
+        <b-form-group
+          v-if="event.name == 'The One' && stage.name == 'semifinal'"
         >
+          <h2>Poin</h2>
+          <input
+            type="number"
+            placeholder="masukan Poin"
+            v-model="question.poin"
+            value="1"
+          />
+          <b-form-group
+            ><br />
+            <h2>Mata Pelajaran</h2>
+            <select class="custom-select" v-model="question.lesson">
+              <option value="Matematika" selected>Matematika</option>
+              <option value="Fisika">Fisika</option>
+              <option value="Kimia">Kimia</option>
+              <option value="Biologi">Biologi</option>
+            </select>
+          </b-form-group>
+          <b-form-group>
+            <h2>Harga</h2>
+            <input
+              type="number"
+              placeholder="masukan Harga"
+              v-model="question.price"
+              value="1"
+            />
+          </b-form-group>
+        </b-form-group>
+        <a @click="createQuestion()" class="btn btn-primary" type="submit">
           <i class="far fa-save text-white"></i>
           Simpan
         </a>
@@ -121,6 +143,8 @@
   </div>
 </template>
 <script>
+import Swal from "sweetalert2"
+
 export default {
   name: "CreateQuestionStage",
   data() {
@@ -157,7 +181,17 @@ export default {
         index++;
       });
       this.question.options = options;
-      this.$store.dispatch("question/createQuestion", this.question);
+      this.$store
+        .dispatch("question/createQuestion", this.question)
+        .then(() => {
+          Swal.fire({
+            icon: "success",
+            title: "Soal berhasil ditambahkan",
+            showConfirmButton: true,
+          }).then(() => {
+            this.$router.push("/dashboard/stage/"+this.stage._id+"/question/");
+          });
+        });
     },
   },
   created() {

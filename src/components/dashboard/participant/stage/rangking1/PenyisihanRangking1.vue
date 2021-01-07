@@ -100,14 +100,30 @@
             </div>
           </v-tab>
           <v-tab title="Pengumuman">
-            <div
-              class="container bg-white p-3 text-center text-dark rounded-lg mt-2 mb-2"
-            >
-              <p>
-                <i class="fas fa-exclamation-triangle fa-2x"></i>
-                <br />
-                Belum ada pengumuman
-              </p>
+            <div class="mt-3" v-if="stageAnnouncements">
+              <b-row
+                class="bg-white p-2 mb-2 shadow-sm rounded"
+                no-gutters
+                v-for="announcement in stageAnnouncements"
+                :key="announcement._id"
+              >
+                <b-col md="9" class="text-left p-3">
+                  <h4 class="text-bold">{{ announcement.title }}</h4>
+                  <p v-if="announcement"></p>
+
+                  <p class="text-secondary">
+                    {{ getDateTime("datetime", announcement.created_at) }}
+                  </p>
+                </b-col>
+                <b-col md="3" class="p-3">
+                  <a
+                    class="btn btn-primary"
+                    @click="showAnnouncement(announcement)"
+                  >
+                    <i class="fas fa-search"></i>&nbsp;Detail
+                  </a>
+                </b-col>
+              </b-row>
             </div>
           </v-tab>
           <v-tab title="Dokumen">
@@ -416,6 +432,9 @@ export default {
         localStorage.getItem("stage" + this.$route.params.idStage)
       );
     },
+    events() {
+      return this.$store.state.event.events;
+    },
     event() {
       return JSON.parse(localStorage.getItem("event"));
     },
@@ -432,20 +451,9 @@ export default {
     },
     time() {
       var today = new Date();
-      var started_at = new Date(this.stage.started_at);
-      var finished_at = new Date(this.stage.finished_at);
+      today.setHours(today.getHours() + 6);
 
-      today = new Date(
-        today.getTime() + (today.getTimezoneOffset() + 420) * 60 * 1000
-      );
-      started_at = new Date(
-        started_at.getTime() + (today.getTimezoneOffset() + 420) * 60 * 1000
-      );
-      finished_at = new Date(
-        finished_at.getTime() + (today.getTimezoneOffset() + 420) * 60 * 1000
-      );
-
-      return today > started_at && today < finished_at;
+      return today > this.started_at && today < this.finished_at;
     },
     _seconds: () => 1000,
     _minutes() {
@@ -468,6 +476,61 @@ export default {
     },
   },
   methods: {
+    getEventName(stageId) {
+      var name = "";
+      this.events.forEach((event) => {
+        event.stages.forEach((stage) => {
+          if (stageId == stage._id) {
+            switch (event.name) {
+              case "OSM":
+                switch (stage.name) {
+                  case "preliminary":
+                    name = event.name + " Penyisihan";
+                    break;
+                  case "semifinal":
+                    name = event.name + " Semifinal";
+                    break;
+                  case "final":
+                    name = event.name + " Final";
+                    break;
+                }
+                break;
+              case "The One":
+                switch (stage.name) {
+                  case "preliminary":
+                    name = event.name + " Babak Gugur";
+                    break;
+                  case "semifinal":
+                    name = event.name + " Babak Championship";
+                    break;
+                }
+                break;
+              case "Started":
+                switch (stage.name) {
+                  case "preliminary":
+                    name = event.name + " Pekan Kreativitas";
+                    break;
+                  case "semifinal":
+                    name = event.name + " Final";
+                    break;
+                }
+                break;
+              case "Sigma":
+                name = event.name;
+                break;
+              case "Open House":
+                name = event.name;
+                break;
+            }
+          }
+        });
+      });
+      return name;
+    },
+    showAnnouncement(announcement) {
+      this.announcement = announcement;
+      this.step = 2;
+    },
     addFile() {
       this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
       var fileExtension = /[.]/.exec(this.fileName.event_document)
@@ -512,9 +575,25 @@ export default {
       );
     },
     nextStep() {
-      this.step = 1;
-      if (this.answerFormByParticipantAndStage == null) {
-        this.createAnswerForm();
+      if (this.time) {
+        if (this.stageInformationOfParticipant.document == 1) {
+          this.step = 1;
+          if (this.answerFormByParticipantAndStage == null) {
+            this.createAnswerForm();
+          }
+        } else {
+          Swal.fire({
+            title: "Pakta integritas belum diunggah",
+            icon: "error",
+            showConfirmButton: true,
+          });
+        }
+      } else {
+        Swal.fire({
+          title: "Waktu pengerjaan belum dimulai",
+          icon: "error",
+          showConfirmButton: true,
+        });
       }
     },
     selectNumber(number) {
@@ -557,7 +636,7 @@ export default {
       var _answerForm = this.answerForm;
       if (_answerForm.disable[this.currentNumber] != true) {
         _answerForm.disable[this.currentNumber] = true;
-      } 
+      }
       var number = this.currentNumber;
       this.currentNumber = -1;
       this.currentNumber = number;
@@ -708,13 +787,13 @@ export default {
         this.setDisable();
 
         if (this.answerForm.correct != 0 && this.answerForm.wrong != 0) {
-          this.step = 0;
+          if (this.step == 1) this.step = 0;
         }
 
         if (distance < 0) {
           clearInterval(timer);
           this.show = false;
-          this.step = 0;
+          if (this.step == 1) this.step = 0;
           return;
         }
 
@@ -770,7 +849,6 @@ export default {
             this.showRemaining();
           }
         } else {
-
           this.answerForm.stageId = this.$route.params.idStage;
           this.answerForm.participantId = this.participant.id;
 

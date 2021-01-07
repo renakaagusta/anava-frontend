@@ -177,9 +177,10 @@
                   </b-row>
                 </router-link>
               </li>
-              <!--li
+              <li
                 @click="selectedSubItem = 2"
                 v-bind:class="[selectedSubItem == 2 ? 'active' : '']"
+                v-if="checkJoinStage('OSM', 'semifinal')"
               >
                 <router-link
                   class="text-white"
@@ -197,7 +198,7 @@
                     </b-col>
                   </b-row>
                 </router-link>
-              </li-->
+              </li>
             </ul>
           </li>
           <li
@@ -238,6 +239,28 @@
                     </b-col>
                     <b-col class="sidebar-text" lg="10">
                       Babak Gugur
+                    </b-col>
+                  </b-row>
+                </router-link>
+              </li>
+              <li
+                @click="selectedSubItem = 2"
+                v-bind:class="[selectedSubItem == 2 ? 'active' : '']"
+                v-if="checkJoinStage('The One', 'semifinal')"
+              >
+                <router-link
+                  class="text-white"
+                  :to="{
+                    name: 'MainStage',
+                    params: { idStage: events[1].stages[1]._id },
+                  }"
+                >
+                  <b-row>
+                    <b-col lg="1">
+                      <div class="inline"><i class="fas fa-trophy"></i></div>
+                    </b-col>
+                    <b-col class="sidebar-text" lg="10">
+                      Babak Champion
                     </b-col>
                   </b-row>
                 </router-link>
@@ -513,6 +536,27 @@
                   </b-row>
                 </router-link>
               </li>
+              <li
+                @click="selectedSubItem = 2"
+                v-bind:class="[selectedSubItem == 2 ? 'active' : '']"
+              >
+                <router-link
+                  class="text-white"
+                  :to="{
+                    name: 'ListParticipantStage',
+                    params: { idStage: events[1].stages[1]._id },
+                  }"
+                >
+                  <b-row>
+                    <b-col lg="1">
+                      <div class="inline"><i class="fas fa-trophy"></i></div>
+                    </b-col>
+                    <b-col class="sidebar-text" lg="10">
+                      Babak Champion
+                    </b-col>
+                  </b-row>
+                </router-link>
+              </li>
             </ul>
           </li>
           <li v-bind:class="[selectedItem == 7 ? 'active' : '']">
@@ -556,7 +600,10 @@
               </li>
             </ul>
           </li>
-          <li v-bind:class="[selectedItem == 8 ? 'active' : '']" @click="selectedItem = 8">
+          <li
+            v-bind:class="[selectedItem == 8 ? 'active' : '']"
+            @click="selectedItem = 8"
+          >
             <router-link
               class="text-white"
               :to="{
@@ -574,7 +621,10 @@
               </b-row>
             </router-link>
           </li>
-          <li v-bind:class="[selectedItem == 9 ? 'active' : '']"  @click="selectedItem = 9">
+          <li
+            v-bind:class="[selectedItem == 9 ? 'active' : '']"
+            @click="selectedItem = 9"
+          >
             <router-link
               class="text-white"
               :to="{
@@ -639,17 +689,17 @@ export default {
   },
   methods: {
     performToggle(item, eventName) {
-      var index = 0;  var eventIndex = 0;
-      this.events.forEach((event)=>{
-        if(event.name == eventName)
-          eventIndex = index;
+      var index = 0;
+      var eventIndex = 0;
+      this.events.forEach((event) => {
+        if (event.name == eventName) eventIndex = index;
         index++;
-      })
+      });
       var event = {
         roles: this.user.roles,
         item: eventIndex,
       };
-      
+
       this.$store.dispatch("event/selectEvent", event);
 
       if (this.selectedItem == item && this.toggle != 0) {
@@ -662,6 +712,20 @@ export default {
     },
     getEvents() {
       this.$store.dispatch("event/getAllEvent");
+    },
+    checkJoinStage(eventName, stageName) {
+      var joinStage = false;
+
+      if (this.user.participant.events.length > 0)
+        this.user.participant.events.forEach((event) => {
+          if (event.name == eventName) {
+            event.stages.forEach((stage) => {
+              if (stage.name == stageName) joinStage = true;
+            });
+          }
+        });
+
+      return joinStage;
     },
     checkJoinEvent(name) {
       var joinEvent = false;

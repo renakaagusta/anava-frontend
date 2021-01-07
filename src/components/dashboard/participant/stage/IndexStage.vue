@@ -50,7 +50,7 @@ export default {
               name = "Babak Gugur";
               break;
             case "semifinal":
-              name = "Babak Paket";
+              name = "Babak Championship";
               break;
           }
           break;

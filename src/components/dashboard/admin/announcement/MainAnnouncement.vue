@@ -74,7 +74,7 @@ export default {
                     name = event.name + " Babak Gugur";
                     break;
                   case "semifinal":
-                    name = event.name + " Babak Paket";
+                    name = event.name + " Babak Championship";
                     break;
                 }
                 break;
