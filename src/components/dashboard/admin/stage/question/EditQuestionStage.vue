@@ -156,9 +156,6 @@ export default {
               "/dashboard/stage/" + this.stage._id + "/question/"
             );
           });
-        },
-        (err) => {
-          alert("error");
         }
       );
     },
