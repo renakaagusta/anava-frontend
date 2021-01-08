@@ -81,16 +81,16 @@
 import Swal from "sweetalert2";
 
 export default {
-  name: "MainSchedule",
+  name: "AddParticipantStage",
   computed: {
     participants() {
       return this.$store.state.participant.participants;
     },
     stage() {
-      return this.$store.state.stage.stage;
+      return JSON.parse(localStorage.getItem('stage'+this.$route.params.idStage));
     },
     event() {
-      return JSON.parse(localStorage.getItem("event"));
+      return JSON.parse(localStorage.getItem('event'));
     },
   },
   methods: {

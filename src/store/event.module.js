@@ -67,6 +67,7 @@ export const event = {
       state.event = state.events[selectedEvent.item];
 
       localStorage.setItem("event", JSON.stringify(state.event));
+      localStorage.setItem("event"+state.event._id, JSON.stringify(state.event));
     },
     addEvent(state, user) {
       var oldUser = JSON.parse(localStorage.getItem("user"));

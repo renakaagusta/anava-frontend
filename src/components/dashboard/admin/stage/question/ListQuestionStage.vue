@@ -62,7 +62,7 @@
       <b-col md="2">
         <router-link
           class="btn btn-primary float-right"
-          :to="'question/' + question._id"
+          :to="{name:'EditQuestionStage', params:{idQuestion: question._id}}"
         >
           <i class="fas fa-pencil-alt"></i>
           Sunting
@@ -79,10 +79,10 @@ export default {
       return this.$store.state.question.questions;
     },
     stage() {
-      return this.$store.state.stage.stage;
+      return JSON.parse(localStorage.getItem('stage'+this.$route.params.idStage));
     },
     event() {
-      return this.$store.state.event.event;
+      return JSON.parse(localStorage.getItem('event'));
     },
   },
   methods: {

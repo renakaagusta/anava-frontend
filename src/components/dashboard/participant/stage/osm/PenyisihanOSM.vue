@@ -94,7 +94,7 @@
             <div v-else>
               <embed
                 :src="
-                  'http://anavaugm.com/event_document_' +
+                  'http://52.163.218.138/event_document_' +
                     event._id +
                     participant.id +
                     '.pdf'
@@ -141,13 +141,13 @@
           <v-tab title="Dokumen">
             <b-container class="text-left p-3 border mt-2">
               <b-container class="bg-white p-3 rounded shadow-sm border">
-                <a target="blank" href="http://anavaugm.com/OSM/guidebook.pdf">
+                <a target="blank" href="http://52.163.218.138/OSM/guidebook.pdf">
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Guidebook</h2>
                 </a>
               </b-container>
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
-                <a target="blank" href="http://anavaugm.com/OSM/silabus.pdf">
+                <a target="blank" href="http://52.163.218.138/OSM/silabus.pdf">
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Silabus</h2>
                 </a>
@@ -155,7 +155,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://anavaugm.com/OSM/pakta-integritas.pdf"
+                  href="http://52.163.218.138/OSM/pakta-integritas.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Pakta Integritas</h2>
@@ -389,13 +389,12 @@
 <script>
 import * as datetime from "./../../../../../services/datetime";
 import Swal from "sweetalert2";
-
 export default {
   name: "PenyisihanOSM",
   data() {
     return {
-      started_at: new Date(2021, 0, 17, 14, 0, 0),
-      finished_at: new Date(2021, 0, 17, 30, 0, 0),
+      started_at: new Date(2021, 0, 3, 15, 0, 0),
+      finished_at: new Date(2021, 0, 16, 19, 0, 0),
       step: 0,
       data: [],
       answerForm: null,
@@ -464,7 +463,6 @@ export default {
     time() {
       var today = new Date();
       today.setHours(today.getHours() + 6);
-
       return today > this.started_at && today < this.finished_at;
     },
     _seconds: () => 1000,
@@ -559,17 +557,14 @@ export default {
     },
     uploadFile() {
       var document = new FormData();
-
       this.loading = true;
       document.append("file", this.$refs.event_document.files[0]);
       document.append("participantId", this.participant.id);
-
       var formParticipant = {
         id: this.event._id,
         document: document,
         participantId: this.participant.id,
       };
-
       this.$store.dispatch("event/uploadEvent", formParticipant).then(
         (response) => {
           Swal.fire({
@@ -628,7 +623,6 @@ export default {
       var number = this.currentNumber;
       this.currentNumber = -1;
       this.currentNumber = number;
-
       this.saveAnswerForm(_answerForm);
     },
     getAllAnnouncementByStage() {
@@ -649,10 +643,8 @@ export default {
     getAnswerFormByParticipantAndStage() {
       if (this.answerFormByParticipantAndStage == null) {
         var answerForm = {};
-
         answerForm.stageId = this.$route.params.idStage;
         answerForm.participantId = this.participant.id;
-
         this.$store.dispatch(
           "answerForm/getAnswerFormByParticipantAndStage",
           answerForm
@@ -670,27 +662,22 @@ export default {
     createAnswerForm() {
       if (this.stageInformationOfParticipant.document == 1) {
         var _answerForm = {};
-
         _answerForm.stageId = this.$route.params.idStage;
         _answerForm.participantId = this.participant.id;
-
         this.$store
           .dispatch("answerForm/createAnswerForm", _answerForm)
           .then((answerForm) => {
             var _answerForm = JSON.parse(JSON.stringify(answerForm));
-
             if (!_answerForm.session) {
               var today = new Date();
               var started_at = new Date(this.stage.started_at);
               var finished_at = new Date(this.stage.finished_at);
-
               started_at = new Date(
                 started_at.getTime() + today.getTimezoneOffset() * 60 * 1000
               );
               finished_at = new Date(
                 finished_at.getTime() + today.getTimezoneOffset() * 60 * 1000
               );
-
               started_at.setHours(
                 started_at.getHours() +
                   parseInt(this.stageInformationOfParticipant.session)
@@ -699,12 +686,9 @@ export default {
                 finished_at.getHours() +
                   parseInt(this.stageInformationOfParticipant.session)
               );
-
               _answerForm.started_at = started_at.toISOString();
               _answerForm.finished_at = finished_at.toISOString();
-
               _answerForm.session = this.stageInformationOfParticipant.session;
-
               const format = _answerForm.finished_at.split("-");
               this.year = parseInt(format[0]);
               this.month = parseInt(format[1]);
@@ -713,24 +697,18 @@ export default {
               const clock = time[1].split(":");
               this.hour = parseInt(clock[0]);
               this.minute = parseInt(clock[1]);
-
               this.showRemaining();
-
               var doubtful = [];
               _answerForm.answers = [];
-
               _answerForm.questions.forEach(() => {
                 doubtful.push(null);
                 _answerForm.answers.push(null);
               });
-
               _answerForm.doubtful = doubtful;
-
               localStorage.setItem(
                 "answerForm" + this.$route.params.idStage,
                 JSON.stringify(_answerForm)
               );
-
               this.answerForm = _answerForm;
             }
           });
@@ -784,15 +762,11 @@ export default {
             this.stageInformationOfParticipant = stage;
             this.stageInformationOfParticipant.number = event.number;
             this.stageInformationOfParticipant.document = event.document;
-
             var started_at = new Date(this.stage.started_at);
             var finished_at = new Date(this.stage.finished_at);
-
             started_at = this.started_at;
             finished_at = this.finished_at;
-
             this.stageInformationOfParticipant.now = new Date();
-
             started_at.setHours(
               started_at.getHours() +
                 parseInt(this.stageInformationOfParticipant.session) -
@@ -803,7 +777,6 @@ export default {
                 parseInt(this.stageInformationOfParticipant.session) -
                 1
             );
-
             this.stageInformationOfParticipant.started_at = started_at.toISOString();
             this.stageInformationOfParticipant.finished_at = finished_at.toISOString();
           }
@@ -817,7 +790,6 @@ export default {
         var finished_at = new Date(
           this.stageInformationOfParticipant.finished_at
         );
-
         if (this.answerForm.correct != 0 && this.answerForm.wrong != 0) {
           if (this.step == 1) this.step = 0;
         }
@@ -837,14 +809,12 @@ export default {
           return;
         } else {
           const distance = finished_at.getTime() - now.getTime();
-
           const days = Math.floor(distance / this._days);
           const hours = Math.floor((distance % this._days) / this._hours);
           const minutes = Math.floor((distance % this._hours) / this._minutes);
           const seconds = Math.floor(
             (distance % this._minutes) / this._seconds
           );
-
           this.displaySeconds = seconds < 10 ? "0" + seconds : seconds;
           this.displayMinutes = minutes < 10 ? "0" + minutes : minutes;
           this.displayHours = hours < 10 ? "0" + hours : hours;
@@ -862,9 +832,7 @@ export default {
         if (this.step == 1) {
           if (this.answerFormByParticipantAndStage.score != null)
             clearInterval(this.timer);
-
           this.step = 1;
-
           const format = this.answerForm.finished_at.split("-");
           this.year = parseInt(format[0]);
           this.month = parseInt(format[1]);
@@ -873,17 +841,14 @@ export default {
           const clock = time[1].split(":");
           this.hour = parseInt(clock[0]);
           this.minute = parseInt(clock[1]);
-
           this.showRemaining();
         }
       } else {
         /*this.answerForm.stageId = this.$route.params.idStage;
         this.answerForm.participantId = this.participant.id;
-
         this.getStage();
         this.showRemaining();
         this.getAnswerFormByParticipantAndStage();
-
         this.items = [
           {
             "Mulai pengerjaan": this.getDateTime(
@@ -910,7 +875,6 @@ export default {
     this.showRemaining();
     this.getAnswerFormByParticipantAndStage();
     this.getAllAnnouncementByStage();
-
     this.items = [
       {
         "Mulai pengerjaan": this.getDateTime("datetime", this.stage.started_at),
@@ -929,21 +893,17 @@ export default {
 #working-page {
   height: 100%;
 }
-
 .number-question {
   width: 40px;
   height: 40px;
 }
-
 .number-question p {
   font-size: 11px;
   margin-top: 5px;
 }
-
 #nav-btn p {
   display: inline;
 }
-
 .checkbox {
   padding: 0;
   margin: 0;
@@ -952,7 +912,6 @@ export default {
   border-radius: 5px;
   color: white;
 }
-
 #dropFileForm {
   margin: 16px;
   text-align: center;
@@ -960,21 +919,17 @@ export default {
   overflow: hidden;
   transition: 0.5s;
 }
-
 #dropFileForm #fileLabel {
   background-color: rgba(200, 200, 200, 0.5);
   display: block;
   padding: 16px;
   position: relative;
   cursor: pointer;
-
   border: 2px dashed #555;
 }
-
 #dropFileForm #fileEventDocument {
   display: none;
 }
-
 #dropFileForm #fileLabel:after,
 #dropFileForm #fileLabel:before {
   position: absolute;
@@ -987,7 +942,6 @@ export default {
   z-index: -2;
   border-radius: 8px 8px 0 0;
 }
-
 #dropFileForm #fileLabel:before {
   z-index: -1;
   background: repeating-linear-gradient(
@@ -1000,11 +954,9 @@ export default {
   opacity: 0;
   transition: 0.5s;
 }
-
 #dropFileForm.fileHover #fileLabel:before {
   opacity: 0.25;
 }
-
 #dropFileForm .uploadButton {
   border: 0;
   outline: 0;
@@ -1014,11 +966,9 @@ export default {
   color: #fff;
   cursor: pointer;
 }
-
 #dropFileForm.fileHover {
   box-shadow: 0 0 16px limeGreen;
 }
-
 @media (max-width: 767px) {
   #nav-btn p {
     display: none;
@@ -1049,21 +999,17 @@ export default {
   overflow: hidden;
   transition: 0.5s;
 }
-
 #dropFileForm #fileLabel {
   background-color: rgba(200, 200, 200, 0.5);
   display: block;
   padding: 16px;
   position: relative;
   cursor: pointer;
-
   border: 2px dashed #555;
 }
-
 #dropFileForm #fileInput {
   display: none;
 }
-
 #dropFileForm #fileLabel:after,
 #dropFileForm #fileLabel:before {
   position: absolute;
@@ -1076,7 +1022,6 @@ export default {
   z-index: -2;
   border-radius: 8px 8px 0 0;
 }
-
 #dropFileForm #fileLabel:before {
   z-index: -1;
   background: repeating-linear-gradient(
@@ -1089,11 +1034,9 @@ export default {
   opacity: 0;
   transition: 0.5s;
 }
-
 #dropFileForm.fileHover #fileLabel:before {
   opacity: 0.25;
 }
-
 #dropFileForm .uploadButton {
   border: 0;
   outline: 0;
@@ -1103,11 +1046,9 @@ export default {
   color: #fff;
   cursor: pointer;
 }
-
 #dropFileForm.fileHover {
   box-shadow: 0 0 16px limeGreen;
 }
-
 .btn-purple {
   border: 0;
   outline: 0;

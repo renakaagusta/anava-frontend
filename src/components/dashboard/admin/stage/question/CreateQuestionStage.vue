@@ -162,10 +162,10 @@ export default {
       return this.$store.state.question.questions;
     },
     stage() {
-      return this.$store.state.stage.stage;
+      return JSON.parse(localStorage.getItem('stage'+this.$route.params.idStage));
     },
     event() {
-      return this.$store.state.event.event;
+      return JSON.parse(localStorage.getItem('event'));
     },
   },
   methods: {
