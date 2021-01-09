@@ -320,7 +320,7 @@ export default {
   name: "BabakChampionTheOne",
   data() {
     return {
-      started_at: new Date(2021, 0, 17, 14, 0, 0),
+      started_at: new Date(2021, 0, 1, 14, 0, 0),
       finished_at: new Date(2021, 0, 17, 31, 0, 0),
       step: 0,
       data: [],

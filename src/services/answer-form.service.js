@@ -1,7 +1,7 @@
 import axios from 'axios';
 import header from './header';
 
-const API_URL = 'http://anavaugm.com:3000/api/answer-form/';
+const API_URL = 'http://52.163.218.138/api/answer-form/';
 
 class AnswerFormService {
   getAllAnswerForm() {
