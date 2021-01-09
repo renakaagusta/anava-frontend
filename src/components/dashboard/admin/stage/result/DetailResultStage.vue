@@ -75,22 +75,22 @@
             :key="question._id"
           >
             <b-col class="text-center" md="3">
-              <p>{{ question.number }}</p>
+              <p>{{ question.number }}</p><br/>
             </b-col>
             <b-col class="text-center" md="3"
               >
               <p>{{ question.key }}</p>
             </b-col>
             <b-col class="text-center" md="3">
-              <p v-if="answers[index].choosed_option != null">
-                {{ answers[index].choosed_option }}
+              <p v-if="answers[index] != null">
+                {{ answers[index] }}
               </p>
-              <p v-else>-</p>
+              <p v-else>-</p>{{ answers[index].question }}
             </b-col>
             <b-col
               class="text-center text-success"
               md="2"
-              v-if="answers[index].choosed_option == question.key"
+              v-if="answers[index] == question.key"
             >
               <i class="fas fa-check"></i>
             </b-col>
@@ -207,15 +207,15 @@
               <p>{{ question.key }}</p>
             </b-col>
             <b-col class="text-center" md="2">
-              <p v-if="answers[index].choosed_option != null">
-                {{ answers[index].choosed_option }}
+              <p v-if="answers[index] != null">
+                {{ answers[index] }}
               </p>
               <p v-else>-</p>
             </b-col>
             <b-col
               class="text-center text-success"
               md="2"
-              v-if="answers[index].choosed_option == question.key"
+              v-if="answers[index] == question.key"
             >
               <i class="fas fa-check"></i>
             </b-col>
@@ -332,15 +332,15 @@
               <p>{{ question.key }}</p>
             </b-col>
             <b-col class="text-center" md="2">
-              <p v-if="answers[index].choosed_option != null">
-                {{ answers[index].choosed_option }}
+              <p v-if="answers[index] != null">
+                {{ answers[index] }}
               </p>
               <p v-else>-</p>
             </b-col>
             <b-col
               class="text-center text-success"
               md="2"
-              v-if="answers[index].choosed_option == question.key"
+              v-if="answers[index] == question.key"
             >
               <i class="fas fa-check"></i>
             </b-col>
@@ -484,11 +484,7 @@ export default {
       return questions;
     },
     answers() {
-      var answers = this.answerForm.answers;
-      answers = answers.sort(function(a, b) {
-        return a._id.localeCompare(b._id);
-      });
-
+      var answers = JSON.parse(this.answerForm._answers);
       return answers;
     },
     stage() {
