@@ -1,7 +1,7 @@
 import axios from 'axios';
 import header from './header';
 
-const API_URL = 'http://anavaugm.com/api/payment/';
+const API_URL = 'http://52.163.218.138:3000/api/payment/';
 
 class PaymentService {
   getAllPayment() {
