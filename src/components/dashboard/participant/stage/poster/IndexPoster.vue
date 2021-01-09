@@ -82,7 +82,7 @@
             <div>
               <embed
                 :src="
-                  'http://52.163.218.138/event_document_' +
+                  'http://anavaugm.com/event_document_' +
                     event._id +
                     participant.id +
                     '.pdf'
@@ -142,7 +142,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://52.163.218.138/STARTED/guidebook.pdf"
+                  href="http://anavaugm.com/STARTED/guidebook.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Guidebook</h2>
@@ -151,7 +151,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://52.163.218.138/STARTED/surat-orisinalitas.pdf"
+                  href="http://anavaugm.com/STARTED/surat-orisinalitas.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Surat Orisinalitas</h2>
@@ -160,7 +160,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://52.163.218.138/STARTED/tor-pekan-kreativitas.pdf"
+                  href="http://anavaugm.com/STARTED/tor-pekan-kreativitas.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">TOR</h2>
@@ -169,7 +169,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://52.163.218.138/logo-anava.png"
+                  href="http://anavaugm.com/logo-anava.png"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Logo ANAVA</h2>
@@ -230,7 +230,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://52.163.218.138/STARTED/tor-pekan-kreativitas.pdf"
+                  href="http://anavaugm.com/STARTED/tor-pekan-kreativitas.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">TOR</h2>
@@ -287,7 +287,7 @@
                 <div class="p-4 border">
                   <img
                     :src="
-                      'http://52.163.218.138/answer_' +
+                      'http://anavaugm.com/answer_' +
                         answerFormByParticipantAndStage.answers[0]._id +
                         '.png'
                     "

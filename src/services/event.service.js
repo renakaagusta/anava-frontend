@@ -1,7 +1,7 @@
 import axios from 'axios';
 import header from './header';
 
-const API_URL = 'http://52.163.218.138/api/event/';
+const API_URL = 'http://anavaugm.com/api/event/';
 
 class EventService {
   getAllEvent() {

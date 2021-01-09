@@ -47,7 +47,7 @@
       <b-col md="1">
         <img
           class="profile"
-          v-bind:src="'http://52.163.218.138/' + participant.image"
+          v-bind:src="'http://anavaugm.com/' + participant.image"
         />
       </b-col>
       <b-col md="2">
@@ -75,7 +75,7 @@
           class="btn btn-primary ml-3 mt-3"
           target="blank"
           :href="
-            'http://52.163.218.138/event_document_' +
+            'http://anavaugm.com/event_document_' +
               event._id +
               participant._id +
               '.pdf'
