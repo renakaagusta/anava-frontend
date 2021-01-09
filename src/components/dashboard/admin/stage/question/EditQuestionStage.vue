@@ -2,6 +2,7 @@
   <div>
     <b-container class="bg-white p-3 mt-3 shadow-sm rounded">
       <h1 class="mt-2">Sunting soal</h1>
+      Contoh format CSS: style="height:100px;width:200px"
       <b-form class="text-left ml-5 mt-4 mr-5">
         <b-form-group>
           <h2>Nomor</h2>
@@ -16,10 +17,18 @@
           <h2>Soal</h2>
           <vue-editor
             type="text"
-            id="content"
             placeholder="Masukan Soal"
             v-model="question.content"
-          ></vue-editor>
+          ></vue-editor
+          ><br />
+          <p>HTML Editor</p>
+          <textarea
+            id="0"
+            :value="question.content"
+            style="width:100%;"
+            rows="10"
+          />
+          <a class="btn btn-light" @click="save(0)">update</a>
         </b-form-group>
         <b-form-group>
           <h2>Pilihan A</h2>
@@ -29,6 +38,15 @@
             placeholder="Masukan Pilihan A"
             v-model="question.options[0].content"
           ></vue-editor>
+          <br />
+          <p>HTML Editor</p>
+          <textarea
+            id="1"
+            :value="question.options[0].content"
+            style="width:100%;"
+            rows="10"
+          />
+          <a class="btn btn-light" @click="save(1)">update</a>
         </b-form-group>
         <b-form-group>
           <h2>Pilihan B</h2>
@@ -38,6 +56,15 @@
             placeholder="Masukan Pilihan B"
             v-model="question.options[1].content"
           ></vue-editor>
+          <br />
+          <p>HTML Editor</p>
+          <textarea
+            id="2"
+            :value="question.options[1].content"
+            style="width:100%;"
+            rows="10"
+          />
+          <a class="btn btn-light" @click="save(2)">update</a>
         </b-form-group>
         <b-form-group>
           <h2>Pilihan C</h2>
@@ -47,6 +74,15 @@
             placeholder="Masukan Pilihan C"
             v-model="question.options[2].content"
           ></vue-editor>
+          <br />
+          <p>HTML Editor</p>
+          <textarea
+            id="3"
+            :value="question.options[2].content"
+            style="width:100%;"
+            rows="10"
+          />
+          <a class="btn btn-light" @click="save(3)">update</a>
         </b-form-group>
         <b-form-group>
           <h2>Pilihan D</h2>
@@ -56,6 +92,15 @@
             placeholder="Masukan Pilihan D"
             v-model="question.options[3].content"
           ></vue-editor>
+          <br />
+          <p>HTML Editor</p>
+          <textarea
+            id="4"
+            :value="question.options[3].content"
+            style="width:100%;"
+            rows="10"
+          />
+          <a class="btn btn-light" @click="save(4)">update</a>
         </b-form-group>
         <b-form-group>
           <h2>Pilihan E</h2>
@@ -65,6 +110,15 @@
             placeholder="Masukan Pilihan E"
             v-model="question.options[4].content"
           ></vue-editor>
+          <br />
+          <p>HTML Editor</p>
+          <textarea
+            id="5"
+            :value="question.options[4].content"
+            style="width:100%;"
+            rows="10"
+          />
+          <a class="btn btn-light" @click="save(5)">update</a>
         </b-form-group>
         <b-form-group>
           <h2>Kunci</h2>
@@ -123,30 +177,37 @@ import Swal from "sweetalert2";
 
 export default {
   name: "EditQuestionStage",
-  data() {
-    return {};
-  },
+  
   computed: {
     question() {
       return this.$store.state.question.question;
     },
     stage() {
-      return JSON.parse(localStorage.getItem('stage'+this.$route.params.idStage));
+      return this.$store.state.stage.stage;
     },
     event() {
-      return JSON.parse(localStorage.getItem('event'));
+      return this.$store.state.event.event;
     },
   },
   methods: {
+    save(index) {
+      if (index == 0)
+        this.question.content = document.getElementById(index.toString()).value;
+      else {
+        this.question.options[index - 1].content = document.getElementById(index.toString()).value;
+      }
+    },
     getQuestion() {
       this.$store.dispatch(
         "question/getQuestion",
         this.$route.params.idQuestion
       );
     },
+
     updateQuestion() {
-      this.$store.dispatch("question/updateQuestion", this.question).then(
-        () => {
+      this.$store
+        .dispatch("question/updateQuestion", this.question)
+        .then(() => {
           Swal.fire({
             icon: "success",
             title: "Soal berhasil diperbarui",
@@ -156,8 +217,7 @@ export default {
               "/dashboard/stage/" + this.stage._id + "/question/"
             );
           });
-        }
-      );
+        });
     },
   },
   created() {

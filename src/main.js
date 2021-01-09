@@ -18,6 +18,7 @@ import VueParticles from 'vue-particles'
 import VueTabs from 'vue-nav-tabs'
 import 'vue-nav-tabs/themes/vue-tabs.css'
 import Vuelidate from 'vuelidate'
+import CKEditor from 'ckeditor4-vue'
 
 Vue.use(BootstrapVue);
 Vue.use(Vue2Editor);
@@ -27,6 +28,8 @@ Vue.use(VueCarousel);
 Vue.use(VueParticles)
 Vue.use(VueTabs)
 Vue.use(Vuelidate)
+Vue.use( CKEditor );
+
 
 Vue.config.productionTip = false;
 

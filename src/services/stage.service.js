@@ -1,7 +1,7 @@
 import axios from 'axios';
 import header from './header';
 
-const API_URL = 'http://52.163.218.138:3000/api/stage/';
+const API_URL = 'http://localhost:3000/api/stage/';
 
 class StageService {
   getAllStage() {

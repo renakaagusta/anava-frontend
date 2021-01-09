@@ -169,6 +169,13 @@ export default {
     },
   },
   methods: {
+    save(index) {
+      if (index == 0)
+        this.question.content = document.getElementById(index.toString()).value;
+      else {
+        this.question.options[index - 1].content = document.getElementById(index.toString()).value;
+      }
+    },
     createQuestion() {
       var options = [];
       var index = 0;
