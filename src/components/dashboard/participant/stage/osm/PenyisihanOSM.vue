@@ -94,7 +94,7 @@
             <div v-else>
               <embed
                 :src="
-                  'http://anavaugm.com/event_document_' +
+                  'http://13.72.81.174/event_document_' +
                     event._id +
                     participant.id +
                     '.pdf'
@@ -141,13 +141,13 @@
           <v-tab title="Dokumen">
             <b-container class="text-left p-3 border mt-2">
               <b-container class="bg-white p-3 rounded shadow-sm border">
-                <a target="blank" href="http://anavaugm.com/OSM/guidebook.pdf">
+                <a target="blank" href="http://13.72.81.174/OSM/guidebook.pdf">
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Guidebook</h2>
                 </a>
               </b-container>
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
-                <a target="blank" href="http://anavaugm.com/OSM/silabus.pdf">
+                <a target="blank" href="http://13.72.81.174/OSM/silabus.pdf">
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Silabus</h2>
                 </a>
@@ -155,7 +155,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://anavaugm.com/OSM/pakta-integritas.pdf"
+                  href="http://13.72.81.174/OSM/pakta-integritas.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Pakta Integritas</h2>
@@ -790,9 +790,10 @@ export default {
         var finished_at = new Date(
           this.stageInformationOfParticipant.finished_at
         );
-        if (this.answerForm.correct != 0 && this.answerForm.wrong != 0 && this.answerForm.empty != 0) {
-          if (this.step == 1) this.step = 0;
-        }
+        if (this.answerForm != null)
+          if (this.answerForm.correct != 0 && this.answerForm.wrong != 0) {
+            if (this.step == 1) this.step = 0;
+          }
         if (now > finished_at) {
           this.answerForm.eventName = "OSM";
           this.answerForm.stageName = "preliminary";

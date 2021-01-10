@@ -33,7 +33,7 @@
       <b-col
         class="text-center"
         md="2"
-        v-if="event.name == 'The One'"
+        v-if="event.name == 'The One' && stage.name == 'semifinal'"
       >
         <p>Harga</p>
       </b-col>

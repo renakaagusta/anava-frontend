@@ -97,10 +97,13 @@
           <b-form-group>
             <h2>Mata Pelajaran</h2>
             <select class="custom-select" v-model="question.lesson">
-              <option value="Matematika" selected>Matematika</option>
+              <option value="Matematika Wajib" selected>Matematika Wajib</option>
+              <option value="Matematika Minat" selected>Matematika Minat</option>
               <option value="Fisika">Fisika</option>
               <option value="Kimia">Kimia</option>
               <option value="Biologi">Biologi</option>
+              <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+              <option value="Bahasa Inggris">Bahasa Inggris</option>
             </select>
           </b-form-group>
         </b-form-group>
@@ -118,10 +121,13 @@
             ><br />
             <h2>Mata Pelajaran</h2>
             <select class="custom-select" v-model="question.lesson">
-              <option value="Matematika" selected>Matematika</option>
+              <option value="Matematika Wajib" selected>Matematika Wajib</option>
+              <option value="Matematika Minat" selected>Matematika Minat</option>
               <option value="Fisika">Fisika</option>
               <option value="Kimia">Kimia</option>
               <option value="Biologi">Biologi</option>
+              <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+              <option value="Bahasa Inggris">Bahasa Inggris</option>
             </select>
           </b-form-group>
           <b-form-group>

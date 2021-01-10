@@ -8,7 +8,7 @@
               <b-col cols="2" lg="3">
                 <img
                   class="img-profile"
-                  v-bind:src="'http://anavaugm.com/' + user.image"
+                  v-bind:src="'http://13.72.81.174/' + user.image"
                 />
               </b-col>
               <b-col cols="2" class="sidebar-text text-left" lg="8">

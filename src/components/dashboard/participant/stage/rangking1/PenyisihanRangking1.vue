@@ -82,7 +82,7 @@
             <div v-else>
               <embed
                 :src="
-                  'http://anavaugm.com/event_document_' +
+                  'http://13.72.81.174/event_document_' +
                     event._id +
                     participant.id +
                     '.pdf'
@@ -131,7 +131,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://anavaugm.com/THE ONE/guidebook.pdf"
+                  href="http://13.72.81.174/THE ONE/guidebook.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Guidebook</h2>
@@ -140,7 +140,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://anavaugm.com/THE ONE/pakta-integritas.pdf"
+                  href="http://13.72.81.174/THE ONE/pakta-integritas.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Pakta Integritas</h2>
@@ -784,9 +784,9 @@ export default {
 
         const distance = this.finished_at.getTime() - now.getTime();
 
-        this.setDisable();
+        if (this.answerForm.disable != null) this.setDisable();
 
-        if (this.answerForm.correct != 0 && this.answerForm.wrong != 0 && this.answerForm.empty != 0) {
+        if (this.answerForm.correct != 0 && this.answerForm.wrong != 0) {
           if (this.step == 1) this.step = 0;
         }
 

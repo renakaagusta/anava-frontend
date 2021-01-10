@@ -124,7 +124,7 @@
           v-if="participant.participant.document.osis_card == 1"
           title="Kartu Osis"
           :img-src="
-            'http://anavaugm.com/osis_card_' + participant._id + '.jpg'
+            'http://13.72.81.174/osis_card_' + participant._id + '.jpg'
           "
           style="width: 500px;"
         >
@@ -143,7 +143,7 @@
         <b-card
           v-if="participant.participant.document.image == 1"
           title="Pas Foto"
-          :img-src="'http://anavaugm.com/image_' + participant._id + '.jpg'"
+          :img-src="'http://13.72.81.174/image_' + participant._id + '.jpg'"
           style="width: 300px; height: 500px;"
         >
         </b-card>

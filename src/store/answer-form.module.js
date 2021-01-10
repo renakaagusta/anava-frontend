@@ -77,7 +77,6 @@ export const answerForm = {
       );
     },
     submitAnswerForm({ commit }, answerForm) {
-      alert(JSON.stringify(answerForm));
       return AnswerFormService.submitAnswerForm(answerForm).then(
         (response) => {
           commit("submitAnswerForm", response.data.data);
