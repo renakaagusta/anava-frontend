@@ -786,7 +786,7 @@ export default {
 
         this.setDisable();
 
-        if (this.answerForm.correct != 0 && this.answerForm.wrong != 0) {
+        if (this.answerForm.correct != 0 && this.answerForm.wrong != 0 && this.answerForm.empty != 0) {
           if (this.step == 1) this.step = 0;
         }
 

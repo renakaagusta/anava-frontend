@@ -790,7 +790,7 @@ export default {
         var finished_at = new Date(
           this.stageInformationOfParticipant.finished_at
         );
-        if (this.answerForm.correct != 0 && this.answerForm.wrong != 0) {
+        if (this.answerForm.correct != 0 && this.answerForm.wrong != 0 && this.answerForm.empty != 0) {
           if (this.step == 1) this.step = 0;
         }
         if (now > finished_at) {
