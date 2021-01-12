@@ -23,7 +23,7 @@
                   style="padding: 20px 0; text-align: center; background: #ffffff;"
                 >
                   <img
-                    src="http://13.72.81.174/logo-anava.png"
+                    src="http://simulasi.anavaugm.com/logo-anava.png"
                     width="100"
                     height="100"
                     alt="alt_text"
@@ -179,8 +179,8 @@
                         <p>Hormat kami,</p>
                         <p>Anava</p>
                         <p>
-                          <a href="http://www.13.72.81.174/"
-                            >www.13.72.81.174</a
+                          <a href="http://www.simulasi.anavaugm.com/"
+                            >www.simulasi.anavaugm.com</a
                           >
                         </p>
                       </td>
@@ -221,7 +221,7 @@
         <b-col md="1">
           <img
             class="profile"
-            v-bind:src="'http://13.72.81.174/' + participant.image"
+            v-bind:src="'http://simulasi.anavaugm.com/' + participant.image"
           />
         </b-col>
         <b-col md="2">

@@ -82,7 +82,7 @@
             <div>
               <embed
                 :src="
-                  'http://13.72.81.174/event_document_' +
+                  'http://simulasi.anavaugm.com/event_document_' +
                     event._id +
                     participant.id +
                     '.pdf'
@@ -142,7 +142,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://13.72.81.174/STARTED/guidebook.pdf"
+                  href="http://simulasi.anavaugm.com/STARTED/guidebook.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Guidebook</h2>
@@ -151,7 +151,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://13.72.81.174/STARTED/surat-orisinalitas.pdf"
+                  href="http://simulasi.anavaugm.com/STARTED/surat-orisinalitas.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Surat Orisinalitas</h2>
@@ -160,7 +160,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://13.72.81.174/STARTED/tor-pekan-kreativitas.pdf"
+                  href="http://simulasi.anavaugm.com/STARTED/tor-pekan-kreativitas.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">TOR</h2>
@@ -169,7 +169,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://13.72.81.174/logo-anava.png"
+                  href="http://simulasi.anavaugm.com/logo-anava.png"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Logo ANAVA</h2>
@@ -230,7 +230,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://13.72.81.174/STARTED/tor-pekan-kreativitas.pdf"
+                  href="http://simulasi.anavaugm.com/STARTED/tor-pekan-kreativitas.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">TOR</h2>
@@ -287,7 +287,7 @@
                 <div class="p-4 border">
                   <img
                     :src="
-                      'http://13.72.81.174/answer_' +
+                      'http://simulasi.anavaugm.com/answer_' +
                         answerFormByParticipantAndStage.answers[0]._id +
                         '.png'
                     "
@@ -393,7 +393,7 @@ export default {
       return this.$store.state.event.events;
     },
     answerFormByParticipantAndStage() {
-      return JSON.parse(localStorage.getItem("answerForm"));
+      return JSON.parse(localStorage.getItem("answerForm2"));
     },
     participant() {
       return JSON.parse(localStorage.getItem("user"));
@@ -632,11 +632,11 @@ export default {
       this.$store
         .dispatch("answerForm/getAnswerFormByParticipantAndStage", answerForm)
         .then((result) => {
-          localStorage.setItem("answerForm", JSON.stringify(result));
+          localStorage.setItem("answerForm2", JSON.stringify(result));
         });
     },
     saveAnswerForm(_answerForm) {
-      localStorage.setItem("answerForm", JSON.stringify(_answerForm));
+      localStorage.setItem("answerForm2", JSON.stringify(_answerForm));
     },
     createAnswerForm() {
       if (this.stageInformationOfParticipant.document == 1) {
@@ -669,7 +669,7 @@ export default {
 
               this.showRemaining();
 
-              localStorage.setItem("answerForm", JSON.stringify(_answerForm));
+              localStorage.setItem("answerForm2", JSON.stringify(_answerForm));
             }
           });
       } else {
@@ -727,7 +727,7 @@ export default {
             this.initialCheck = 1;
           }
             
-          this.answerForm = JSON.parse(localStorage.getItem("answerForm"));
+          this.answerForm = JSON.parse(localStorage.getItem("answerForm2"));
 
           if (this.answerForm != null) {
             this.step = 1;

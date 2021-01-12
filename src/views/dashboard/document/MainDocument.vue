@@ -35,7 +35,7 @@
             <div v-else>
               <b-card
                 :img-src="
-                  'http://13.72.81.174/osis_card_' + participant.id + '.jpg'
+                  'http://simulasi.anavaugm.com/osis_card_' + participant.id + '.jpg'
                 "
                 style="width: 500px;"
                 ><button class="btn-purple" @click="changeOsisCard = 1">
@@ -77,7 +77,7 @@
             <div v-else>
               <b-card
                 :img-src="
-                  'http://13.72.81.174/image_' + participant.id + '.jpg'
+                  'http://simulasi.anavaugm.com/image_' + participant.id + '.jpg'
                 "
                 style="width: 500px;"
               >

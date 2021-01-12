@@ -25,7 +25,7 @@
       <b-col md="1">
         <img
           class="profile"
-          v-bind:src="'http://13.72.81.174/' + payment.participant.image"
+          v-bind:src="'http://simulasi.anavaugm.com/' + payment.participant.image"
         />
       </b-col>
       <b-col md="2">

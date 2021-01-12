@@ -1,7 +1,7 @@
 import axios from "axios";
 import header from "./header";
 
-const API_URL = "http://13.72.81.174:3000/api/answer/";
+const API_URL = "http://simulasi.anavaugm.com:3000/api/answer/";
 
 class AnswerFormService {
   uploadAnswer(answer) {

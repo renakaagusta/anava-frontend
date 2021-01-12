@@ -109,6 +109,17 @@ export const answerForm = {
         }
       );
     },
+    deleteAnswerForm({ commit }, answerForm) {
+      return AnswerFormService.deleteAnswerForm(answerForm).then(
+        (response) => {
+          commit("updateAnswerForm", response.data.data);
+          return Promise.resolve(response.data.data);
+        },
+        (error) => {
+          return Promise.reject(error);
+        }
+      );
+    },
   },
   mutations: {
     setAnswerForms(state, answerForms) {
@@ -117,7 +128,7 @@ export const answerForm = {
     setAnswerForm(state, answerForm) {
       state.answerForm = answerForm;
 
-      localStorage.setItem("answerForm"+answerForm.stage, JSON.stringify(answerForm));
+      localStorage.setItem("answerForm2"+answerForm.stage, JSON.stringify(answerForm));
     },
     createAnswerForm() {},
     submitAnswerForm() {},

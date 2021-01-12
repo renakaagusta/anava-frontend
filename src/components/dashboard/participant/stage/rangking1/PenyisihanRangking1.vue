@@ -33,6 +33,8 @@
                   }}
                 </td>
               </tr>
+
+            <button class="btn btn-primary mb-2" @click="reset()">Reset</button>
             </table>
           </v-tab>
           <v-tab title="Jadwal">
@@ -82,7 +84,7 @@
             <div v-else>
               <embed
                 :src="
-                  'http://13.72.81.174/event_document_' +
+                  'http://simulasi.anavaugm.com/event_document_' +
                     event._id +
                     participant.id +
                     '.pdf'
@@ -131,7 +133,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://13.72.81.174/THE ONE/guidebook.pdf"
+                  href="http://simulasi.anavaugm.com/THE ONE/guidebook.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Guidebook</h2>
@@ -140,7 +142,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://13.72.81.174/THE ONE/pakta-integritas.pdf"
+                  href="http://simulasi.anavaugm.com/THE ONE/pakta-integritas.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Pakta Integritas</h2>
@@ -446,7 +448,7 @@ export default {
     },
     answerFormByParticipantAndStage() {
       return JSON.parse(
-        localStorage.getItem("answerForm" + this.$route.params.idStage)
+        localStorage.getItem("answerForm2" + this.$route.params.idStage)
       );
     },
     time() {
@@ -476,6 +478,24 @@ export default {
     },
   },
   methods: {
+    reset() {
+      if (
+        localStorage.getItem("answerForm2" + this.$route.params.idStage) == null
+      ) {
+        localStorage.removeItem("answerForm2" + this.$route.params.idStage);
+      }
+
+      var answerForm = {
+        idParticipant: this.participant.id,
+        idStage: this.$route.params.idStage,
+      };
+
+      this.$store
+        .dispatch("answerForm/deleteAnswerForm", answerForm)
+        .then(() => {
+          this.$router.go();
+        });
+    },
     getEventName(stageId) {
       var name = "";
       this.events.forEach((event) => {
@@ -650,7 +670,7 @@ export default {
     },
     saveAnswerForm(_answerForm) {
       localStorage.setItem(
-        "answerForm" + this.$route.params.idStage,
+        "answerForm2" + this.$route.params.idStage,
         JSON.stringify(_answerForm)
       );
     },
@@ -713,7 +733,7 @@ export default {
             _answerForm.disable = disable;
 
             localStorage.setItem(
-              "answerForm" + this.$route.params.idStage,
+              "answerForm2" + this.$route.params.idStage,
               JSON.stringify(_answerForm)
             );
 
@@ -833,7 +853,7 @@ export default {
 
           if (this.answerFormByParticipantAndStage != null)
             this.answerForm = JSON.parse(
-              localStorage.getItem("answerForm" + this.$route.params.idStage)
+              localStorage.getItem("answerForm2" + this.$route.params.idStage)
             );
 
           if (this.answerForm != null && this.answerForm.finished_at != null) {

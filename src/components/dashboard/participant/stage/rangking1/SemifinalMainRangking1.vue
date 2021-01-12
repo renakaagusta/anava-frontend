@@ -34,6 +34,8 @@
                 </td>
               </tr>
             </table>
+
+            <button class="btn btn-primary mb-2" @click="reset()">Reset</button>
           </v-tab>
           <v-tab title="Jadwal">
             <table class="table table-border">
@@ -85,7 +87,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://13.72.81.174/THE ONE/guidebook.pdf"
+                  href="http://simulasi.anavaugm.com/THE ONE/guidebook.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Guidebook</h2>
@@ -346,7 +348,7 @@ export default {
   computed: {
     answerFormByParticipantAndStage() {
       return JSON.parse(
-        localStorage.getItem("answerForm" + this.$route.params.idStage)
+        localStorage.getItem("answerForm2" + this.$route.params.idStage)
       );
     },
     totalQuestion() {
@@ -398,6 +400,24 @@ export default {
     },
   },
   methods: {
+    reset() {
+      if (
+        localStorage.getItem("answerForm2" + this.$route.params.idStage) == null
+      ) {
+        localStorage.removeItem("answerForm2" + this.$route.params.idStage);
+      }
+
+      var answerForm = {
+        idParticipant: this.participant.id,
+        idStage: this.$route.params.idStage,
+      };
+
+      this.$store
+        .dispatch("answerForm/deleteAnswerForm", answerForm)
+        .then(() => {
+          this.$router.go();
+        });
+    },
     selectQuestion(index) {
       if (this.answerForm.money < this.answerForm.questions[index].price) {
         this.answerForm.questions[index].selected = true;
@@ -434,7 +454,7 @@ export default {
     },
     saveAnswerForm(_answerForm) {
       localStorage.setItem(
-        "answerForm" + this.$route.params.idStage,
+        "answerForm2" + this.$route.params.idStage,
         JSON.stringify(_answerForm)
       );
     },
@@ -570,7 +590,7 @@ export default {
             });
 
             localStorage.setItem(
-              "answerForm" + this.$route.params.idStage,
+              "answerForm2" + this.$route.params.idStage,
               JSON.stringify(_answerForm)
             );
 
@@ -688,7 +708,7 @@ export default {
 
           if (this.answerFormByParticipantAndStage != null)
             this.answerForm = JSON.parse(
-              localStorage.getItem("answerForm" + this.$route.params.idStage)
+              localStorage.getItem("answerForm2" + this.$route.params.idStage)
             );
 
           if (this.answerForm != null && this.answerForm.finished_at != null) {
@@ -755,7 +775,7 @@ export default {
     this.getStageInformationOfParticipant();
 
     /*localStorage.setItem(
-      "answerForm" + this.$route.params.idStage,
+      "answerForm2" + this.$route.params.idStage,
       JSON.stringify(answerForm)
     );*/
 

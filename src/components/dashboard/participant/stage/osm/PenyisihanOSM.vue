@@ -34,6 +34,8 @@
                 </td>
               </tr>
             </table>
+
+            <button class="btn btn-primary mb-2" @click="reset()">Reset</button>
           </v-tab>
           <v-tab title="Jadwal">
             <table class="table table-border">
@@ -94,7 +96,7 @@
             <div v-else>
               <embed
                 :src="
-                  'http://13.72.81.174/event_document_' +
+                  'http://simulasi.anavaugm.com/event_document_' +
                     event._id +
                     participant.id +
                     '.pdf'
@@ -141,13 +143,13 @@
           <v-tab title="Dokumen">
             <b-container class="text-left p-3 border mt-2">
               <b-container class="bg-white p-3 rounded shadow-sm border">
-                <a target="blank" href="http://13.72.81.174/OSM/guidebook.pdf">
+                <a target="blank" href="http://simulasi.anavaugm.com/OSM/guidebook.pdf">
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Guidebook</h2>
                 </a>
               </b-container>
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
-                <a target="blank" href="http://13.72.81.174/OSM/silabus.pdf">
+                <a target="blank" href="http://simulasi.anavaugm.com/OSM/silabus.pdf">
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Silabus</h2>
                 </a>
@@ -155,7 +157,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://13.72.81.174/OSM/pakta-integritas.pdf"
+                  href="http://simulasi.anavaugm.com/OSM/pakta-integritas.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Pakta Integritas</h2>
@@ -451,7 +453,7 @@ export default {
     },
     answerFormByParticipantAndStage() {
       return JSON.parse(
-        localStorage.getItem("answerForm" + this.$route.params.idStage)
+        localStorage.getItem("answerForm2" + this.$route.params.idStage)
       );
     },
     participant() {
@@ -640,6 +642,24 @@ export default {
       _answerForm.answers[this.currentNumber] = letter;
       this.saveAnswerForm(_answerForm);
     },
+    reset() {
+      if (
+        localStorage.getItem("answerForm2" + this.$route.params.idStage) == null
+      ) {
+        localStorage.removeItem("answerForm2" + this.$route.params.idStage);
+      }
+
+      var answerForm = {
+        idParticipant: this.participant.id,
+        idStage: this.$route.params.idStage,
+      };
+
+      this.$store
+        .dispatch("answerForm/deleteAnswerForm", answerForm)
+        .then(() => {
+          this.$router.go();
+        });
+    },
     getAnswerFormByParticipantAndStage() {
       if (this.answerFormByParticipantAndStage == null) {
         var answerForm = {};
@@ -655,7 +675,7 @@ export default {
     },
     saveAnswerForm(_answerForm) {
       localStorage.setItem(
-        "answerForm" + this.$route.params.idStage,
+        "answerForm2" + this.$route.params.idStage,
         JSON.stringify(_answerForm)
       );
     },
@@ -706,7 +726,7 @@ export default {
               });
               _answerForm.doubtful = doubtful;
               localStorage.setItem(
-                "answerForm" + this.$route.params.idStage,
+                "answerForm2" + this.$route.params.idStage,
                 JSON.stringify(_answerForm)
               );
               this.answerForm = _answerForm;

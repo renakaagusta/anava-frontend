@@ -24,7 +24,7 @@
       <a
         class="btn btn-primary ml-3 mt-3"
         target="blank"
-        href="http://13.72.81.174/twibbon.png"
+        href="http://simulasi.anavaugm.com/twibbon.png"
       >
         <i class="fa fa-download" />&nbsp;Unduh Twibbon Anava
       </a>
