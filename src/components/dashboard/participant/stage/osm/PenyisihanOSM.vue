@@ -401,10 +401,10 @@ export default {
   name: "PenyisihanOSM",
   data() {
     return {
-      //started_at: new Date(2021, 0, 17, 15, 0, 0),
-      //finished_at: new Date(2021, 0, 17, 16, 40, 0),
-      started_at: new Date(2021, 0, 1, 15, 0, 0),
+      started_at: new Date(2021, 0, 17, 15, 0, 0),
       finished_at: new Date(2021, 0, 17, 16, 40, 0),
+      //started_at: new Date(2021, 0, 1, 15, 0, 0),
+      //finished_at: new Date(2021, 0, 17, 16, 40, 0),
       step: 0,
       data: [],
       answerForm: null,
@@ -812,8 +812,8 @@ export default {
                 1
             );
 
-            started_at = new Date(2021, 0, 1, 15, 0, 0)
-            finished_at = new Date(2021, 0, 17, 16, 40, 0)
+            //started_at = new Date(2021, 0, 1, 15, 0, 0)
+            //finished_at = new Date(2021, 0, 17, 16, 40, 0)
             this.stageInformationOfParticipant.started_at = started_at.toISOString();
             this.stageInformationOfParticipant.finished_at = finished_at.toISOString();
           }
