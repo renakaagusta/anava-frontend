@@ -96,7 +96,7 @@
             <div v-else>
               <embed
                 :src="
-                  'http://simulasi.anavaugm.com/event_document_' +
+                  'http://anavaugm.com/event_document_' +
                     event._id +
                     participant.id +
                     '.pdf'
@@ -145,7 +145,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://simulasi.anavaugm.com/OSM/guidebook.pdf"
+                  href="http://anavaugm.com/OSM/guidebook.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Guidebook</h2>
@@ -154,7 +154,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://simulasi.anavaugm.com/OSM/silabus.pdf"
+                  href="http://anavaugm.com/OSM/silabus.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Silabus</h2>
@@ -163,7 +163,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://simulasi.anavaugm.com/OSM/pakta-integritas.pdf"
+                  href="http://anavaugm.com/OSM/pakta-integritas.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Pakta Integritas</h2>

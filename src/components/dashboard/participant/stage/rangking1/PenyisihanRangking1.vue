@@ -84,7 +84,7 @@
             <div v-else>
               <embed
                 :src="
-                  'http://simulasi.anavaugm.com/event_document_' +
+                  'http://anavaugm.com/event_document_' +
                     event._id +
                     participant.id +
                     '.pdf'
@@ -133,7 +133,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://simulasi.anavaugm.com/THE ONE/guidebook.pdf"
+                  href="http://anavaugm.com/THE ONE/guidebook.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Guidebook</h2>
@@ -142,7 +142,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://simulasi.anavaugm.com/THE ONE/pakta-integritas.pdf"
+                  href="http://anavaugm.com/THE ONE/pakta-integritas.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Pakta Integritas</h2>
