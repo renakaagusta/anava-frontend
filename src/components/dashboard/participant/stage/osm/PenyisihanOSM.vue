@@ -811,6 +811,9 @@ export default {
                 parseInt(this.stageInformationOfParticipant.session) -
                 1
             );
+
+            started_at = new Date(2021, 0, 1, 15, 0, 0)
+            finished_at = new Date(2021, 0, 17, 16, 40, 0)
             this.stageInformationOfParticipant.started_at = started_at.toISOString();
             this.stageInformationOfParticipant.finished_at = finished_at.toISOString();
           }
