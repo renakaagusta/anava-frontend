@@ -1,7 +1,7 @@
 import axios from 'axios';
 import header from './header';
 
-const API_URL = 'http://simulasi.anavaugm.com/api/announcement/';
+const API_URL = 'http://simulasi.anavaugm.com:3000/api/announcement/';
 
 class AnnouncementService {
   getAllAnnouncement() {
