@@ -384,8 +384,10 @@ export default {
   name: "BabakGugurTheOne",
   data() {
     return {
-      started_at: new Date(2021, 0, 1, 14, 0, 0),
-      finished_at: new Date(2021, 0, 17, 31, 0, 0),
+      //started_at: new Date(2021, 0, 23, 20, 0, 0),
+      //finished_at: new Date(2021, 0, 23, 21, 20, 0),
+      started_at: new Date(2021, 0, 1, 8, 0, 0),
+      finished_at: new Date(2021, 0, 23, 21, 20, 0),
       step: 0,
       data: [],
       answerForm: {},
@@ -480,7 +482,7 @@ export default {
   methods: {
     reset() {
       if (
-        localStorage.getItem("answerForm2" + this.$route.params.idStage) == null
+        localStorage.getItem("answerForm2" + this.$route.params.idStage) != null
       ) {
         localStorage.removeItem("answerForm2" + this.$route.params.idStage);
       }

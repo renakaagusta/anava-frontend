@@ -172,9 +172,22 @@
           <hr />
           <div class="content bg-white p-5 rounded shadow-sm">
             <h3>Sponsor :</h3>
-            <img src="sponsors.png" />
-            <h3 class="mt-4">Media Partner :</h3>
-            <img src="media-partners.png" />
+            <b-row>
+              <b-col class="mb-3" lg="3" sm="12" >
+                <img src="/patnership/sponsor/kospin-jasa.png" style="height:80px;"/><br/>
+                <small>"Kospin Jasa menyediakan pinjaman KUR dengan bunga 6% efektif per tahun."</small>
+                <br/>
+              </b-col>
+              <b-col lg="3" sm="12">
+                <img src="/patnership/sponsor/bess-finance.png"  style="height:80px;"/>
+              </b-col>
+            </b-row><br/><br/>
+            <h3 class="mt-5">Media Partner :</h3>
+            <b-row>
+              <b-col cols="2">
+                <img src="/patnership/medpar/suara-jogja.png" style="height:100px; width:280px;"/>
+              </b-col>
+            </b-row>
           </div>
         </div>
       </div>
@@ -349,7 +362,7 @@ export default {
 
 #partner {
   background-color: rgb(220, 220, 220);
-  color: rgb(70, 70, 50);
+  color: rgb(50, 50, 50);
   padding: 40px 100px;
 }
 
@@ -365,7 +378,14 @@ export default {
 }
 
 #partner .content img {
-  width: 400px;
+  height: 100px;
+  width: 250px;
+  padding: 5px;
+}
+
+#partner #image-small {
+  height: 100px;
+  width: 150px;
 }
 
 #partner h3 {
@@ -513,7 +533,38 @@ b-button {
     padding: 0;
     margin: 0;
     font-size: 22px;
-    margin-left: calc(50% - 20px);
+    margin-left: calc(50% - 60px);
+    overflow: hidden;
+  }
+}
+@media (max-width: 650px) {
+  #documentation img {
+    height: 200px;
+    size: 200px;
+  }
+  #event {
+    padding: 100px 40px;
+  }
+  #partner {
+    padding: 40px 50px;
+  }
+  #partner .content img {
+    width: 180px;
+  }
+  #partner h3 {
+    text-align: center;
+    font-size: 1.5em;
+  }
+  #about {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .rotate {
+    min-width: 100px;
+    padding: 0;
+    margin: 0;
+    font-size: 22px;
+    margin-left: calc(50% - 40px);
     overflow: hidden;
   }
 }
