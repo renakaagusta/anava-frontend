@@ -169,6 +169,15 @@
                   <h2 class="d-inline ml-4">Pakta Integritas</h2>
                 </a>
               </b-container>
+              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
+                <a
+                  target="blank"
+                  href="http://anavaugm.com/OSM/juklak.pdf"
+                >
+                  <i class="fa fa-download fa-3x text-dark"></i>
+                  <h2 class="d-inline ml-4">Petunjuk Pelaksanaan</h2>
+                </a>
+              </b-container>
             </b-container>
           </v-tab>
           <v-tab title="Tutorial">
@@ -401,10 +410,10 @@ export default {
   name: "PenyisihanOSM",
   data() {
     return {
-      started_at: new Date(2021, 0, 17, 15, 0, 0),
-      finished_at: new Date(2021, 0, 17, 16, 40, 0),
-      //started_at: new Date(2021, 0, 1, 15, 0, 0),
+      //started_at: new Date(2021, 0, 17, 15, 0, 0),
       //finished_at: new Date(2021, 0, 17, 16, 40, 0),
+      started_at: new Date(2021, 0, 1, 15, 0, 0),
+      finished_at: new Date(2021, 0, 17, 16, 40, 0),
       step: 0,
       data: [],
       answerForm: null,
