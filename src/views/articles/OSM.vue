@@ -155,7 +155,7 @@
             </a>
           </b-container>
           <b-container class="description  mt-4"><br/>
-            <a target="blank" href="http://anavaugm.com/OSM/silabus.pdf" class="btn d-inline">
+            <a target="blank" href="http://simulasi.anavaugm.com/OSM/silabus.pdf" class="btn d-inline">
               Unduh silabus
             </a>
           </b-container>

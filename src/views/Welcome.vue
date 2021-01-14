@@ -257,7 +257,7 @@ export default {
       rgb(13, 33, 60),
       rgb(52, 3, 62, 0.8)
     ),
-    url("http://anavaugm.com/bg-home.jpg");
+    url("http://simulasi.anavaugm.com/bg-home.jpg");
   background-size: cover;
   padding-bottom: 20px;
 }
@@ -270,7 +270,7 @@ export default {
       rgb(13, 33, 60),
       rgb(52, 3, 62, 0.8)
     ),
-    url("http://anavaugm.com/bg-about.jpg");
+    url("http://simulasi.anavaugm.com/bg-about.jpg");
   background-size: cover;
   min-height: 100%;
   padding-top: 100px;

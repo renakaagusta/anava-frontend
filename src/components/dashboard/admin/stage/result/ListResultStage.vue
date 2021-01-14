@@ -18,7 +18,7 @@
       <b-col md="1">
         <img
           class="profile"
-          v-bind:src="'http://anavaugm.com/' + answerForm.participant.image"
+          v-bind:src="'http://simulasi.anavaugm.com/' + answerForm.participant.image"
         />
       </b-col>
       <b-col md="2">
@@ -59,7 +59,7 @@ export default {
   computed: {
     answerForms() {
       var list = this.$store.state.answerForm.answerForms;
-      list.sort((a, b) => a.score - b.score);
+      list.sort((a, b) => b.score - a.score);
       return list;
     },
     stage() {
