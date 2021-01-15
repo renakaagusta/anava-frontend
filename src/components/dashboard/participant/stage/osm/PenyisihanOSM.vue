@@ -411,7 +411,7 @@ export default {
   data() {
     return {
       started_at: new Date(2021, 0, 17, 15, 0, 0),
-      finished_at: new Date(2021, 0, 17, 16, 40, 0),
+      finished_at: new Date(2021, 0, 17, 17, 0, 0),
       //started_at: new Date(2021, 0, 1, 15, 0, 0),
       //finished_at: new Date(2021, 0, 17, 16, 40, 0),
       step: 0,
@@ -725,8 +725,8 @@ export default {
               );
 
               if (this.stageInformationOfParticipant.session == 2) {
-                started_at = new Date(2021, 0, 1, 17, 0, 0);
-                finished_at = new Date(2021, 0, 17, 18, 40, 0);
+                started_at = new Date(2021, 0, 17, 17, 0, 0);
+                finished_at = new Date(2021, 0, 17, 19, 0, 0);
               }
 
               _answerForm.started_at = started_at.toISOString();
