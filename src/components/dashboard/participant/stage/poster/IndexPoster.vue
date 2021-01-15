@@ -337,8 +337,8 @@ export default {
   name: "PenyisihanStarted",
   data() {
     return {
-      started_at: new Date(2021, 0, 3, 15, 0, 0),
-      finished_at: new Date(2021, 0, 15, 12, 0, 0),
+      started_at: new Date(2021, 0, 3, 8, 0, 0),
+      finished_at: new Date(2021, 0, 16, 12, 0, 0),
       step: 0,
       data: [],
       answerForm: {},
