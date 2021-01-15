@@ -51,6 +51,7 @@ export const stage = {
     },
     setStage(state, stage) {
       state.stage = stage;
+      stage.participants = null;
       localStorage.setItem("stage"+stage._id, JSON.stringify(state.stage));
     },
   },

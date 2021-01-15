@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="event.name == 'OSM'">
+    <div v-if="event.name == 'OSM' && answerForm!=null">
       <b-container
         class="bg-white p-3 mt-3 shadow-sm rounded"
         v-if="stage.name == 'preliminary'"
@@ -85,7 +85,7 @@
               <p v-if="answers[index] != null">
                 {{ answers[index] }}
               </p>
-              <p v-else>-</p>{{ answers[index].question }}
+              <p v-else>-</p>
             </b-col>
             <b-col
               class="text-center text-success"
@@ -476,7 +476,7 @@ export default {
       return this.$store.state.answerForm.answerForm;
     },
     questions() {
-      var questions = this.answerForm.questions;
+      var questions = JSON.parse(this.answerForm._questions);
       return questions;
     },
     answers() {
