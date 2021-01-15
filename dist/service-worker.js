@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.46a97918cfac4fbbe6ace8c859d518bf.js"
+  "/precache-manifest.830cfbb1e2b101e47397336ec92a7197.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "anava-frontend"});
