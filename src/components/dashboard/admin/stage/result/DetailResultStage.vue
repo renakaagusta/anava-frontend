@@ -1,5 +1,5 @@
 <template>
-  <div>{{ answerForm }}
+  <div>
     <div v-if="event.name == 'OSM'">
       <b-container
         class="bg-white p-3 mt-3 shadow-sm rounded"
