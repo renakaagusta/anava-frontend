@@ -51,7 +51,7 @@
             class="btn-white event text-dark p-3 w-100 text-left"
             @click="selectEvent(event._id, index)"
           >
-            <b-row v-if="event.name != 'Started' && event.name != 'OSM'">
+            <b-row>
               <b-col lg="2">
                 <img class="logo" v-bind:src="'../../../' + event.logo" />
               </b-col>
@@ -225,7 +225,7 @@ export default {
   computed: {
     events() {
       return this.$store.state.event.events.filter(function(event){
-        return event.name != 'Started';
+        return event.name != 'Started' && event.name != 'OSM';
       });
     },
     payments() {
