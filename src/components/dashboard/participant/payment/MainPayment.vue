@@ -225,7 +225,7 @@ export default {
   computed: {
     events() {
       return this.$store.state.event.events.filter(function(event){
-        return event.name != 'Started';
+        return event.name != 'Started' && event.name != 'OSM';
       });
     },
     payments() {
