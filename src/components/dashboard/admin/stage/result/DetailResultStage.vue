@@ -432,7 +432,7 @@
         <div class="p-3 border">
           <img
             :src="
-              'http://anavaugm.com/answer_' + answerForm.answers[0] + '.png'
+              'http://anavaugm.com/answer_' + answerForm.answers[0]._id + '.png'
             "
             style="height:900px; width: 600px;"
           />
