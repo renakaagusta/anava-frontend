@@ -182,13 +182,13 @@
                 <img src="/patnership/sponsor/bess-finance.png"  style="height:80px;"/>
               </b-col>
               <b-col lg="3" sm="12">
-                <img src="/patnership/sponsor/alumni-stat.jpg"  style="height:80px;"/>
+                <img src="/patnership/sponsor/alumni-stat.jpg"  style="height:120px; width:120px"/>
               </b-col>
               <b-col lg="3" sm="12">
                 <img src="/patnership/sponsor/im-coco.png"  style="height:80px;"/>
               </b-col>
               <b-col lg="3" sm="12">
-                <img src="/patnership/sponsor/cicil.png"  style="height:80px;"/>
+                <img src="/patnership/sponsor/cicil.png"  style="height:70px;"/>
               </b-col>
             </b-row><br/><br/>
             <h3 class="mt-5">Media Partner :</h3>
