@@ -194,6 +194,7 @@
         type="submit"
         value="Mulai"
         class="btn btn-purple mt-3"
+        v-if="this.stageInformationOfParticipant.number != null"
         @click="nextStep()"
       />
     </b-container>
@@ -235,7 +236,10 @@
               </b-row>
             </template>
             <b-card-text class="text-left">
-              <div v-html="answerForm.questions[currentNumber].content" style="max-width:800px; overflow-x: scroll" />
+              <div
+                v-html="answerForm.questions[currentNumber].content"
+                style="max-width:800px; overflow-x: scroll"
+              />
               <br />
               <b-form-radio-group
                 class="mt-2"
@@ -615,17 +619,12 @@ export default {
           });
         }
       } else {
-
-      var today = new Date();
-      today.setHours(today.getHours() + 7);
+        var today = new Date();
+        today.setHours(today.getHours() + 7);
         alert(
-          today +
-            "\n" +
-            new Date(this.stageInformationOfParticipant.started_at)
+          today + "\n" + new Date(this.stageInformationOfParticipant.started_at)
         );
-        alert(
-          today > new Date(this.stageInformationOfParticipant.started_at)
-        );
+        alert(today > new Date(this.stageInformationOfParticipant.started_at));
         Swal.fire({
           title: "Waktu pengerjaan belum dimulai",
           icon: "error",
@@ -671,22 +670,33 @@ export default {
       this.saveAnswerForm(_answerForm);
     },
     reset() {
-      if (
-        localStorage.getItem("answerForm2" + this.$route.params.idStage) != null
-      ) {
-        localStorage.removeItem("answerForm2" + this.$route.params.idStage);
-      }
+      new Swal({
+        title:
+          "Anda akan log out dan jika anda telah mengerjakan sebelumnya maka data tersebut akan ikut terhapus, anda yakin?",
+        showDenyButton: true,
+        buttons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (
+            localStorage.getItem("answerForm2" + this.$route.params.idStage) !=
+            null
+          ) {
+            localStorage.removeItem("answerForm2" + this.$route.params.idStage);
+          }
 
-      var answerForm = {
-        idParticipant: this.participant.id,
-        idStage: this.$route.params.idStage,
-      };
+          var answerForm = {
+            idParticipant: this.participant.id,
+            idStage: this.$route.params.idStage,
+          };
 
-      this.$store
-        .dispatch("answerForm/deleteAnswerForm", answerForm)
-        .then(() => {
-          this.$router.go();
-        });
+          this.$store
+            .dispatch("answerForm/deleteAnswerForm", answerForm)
+            .then(() => {
+              localStorage.clear()
+              this.$router.go("http://adminsimulasi.anavaugm.com");
+            });
+        }
+      });
     },
     getAnswerFormByParticipantAndStage() {
       if (this.answerFormByParticipantAndStage == null) {
@@ -715,7 +725,7 @@ export default {
         this.$store
           .dispatch("answerForm/createAnswerForm", _answerForm)
           .then((answerForm) => {
-            console.log(answerForm)
+            console.log(answerForm);
             var _answerForm = JSON.parse(JSON.stringify(answerForm));
             if (!_answerForm.session) {
               var today = new Date();
@@ -1041,7 +1051,7 @@ export default {
   border: 0;
   outline: 0;
   width: 30%;
-padding: 8px;
+  padding: 8px;
   background-color: #58427c;
   color: #fff;
   cursor: pointer;
