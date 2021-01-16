@@ -411,7 +411,7 @@ export default {
   name: "PenyisihanOSM",
   data() {
     return {
-      started_at: new Date(2021, 0, 17, 16, 0, 0),
+      started_at: new Date(2021, 0, 7, 16, 0, 0),
       finished_at: new Date(2021, 0, 17, 18, 0, 0),
       //started_at: new Date(2021, 0, 15, 29, 0, 0),
       //finished_at: new Date(2021, 0, 15, 34, 0, 0),
@@ -621,10 +621,6 @@ export default {
       } else {
         var today = new Date();
         today.setHours(today.getHours() + 7);
-        alert(
-          today + "\n" + new Date(this.stageInformationOfParticipant.started_at)
-        );
-        alert(today > new Date(this.stageInformationOfParticipant.started_at));
         Swal.fire({
           title: "Waktu pengerjaan belum dimulai",
           icon: "error",
