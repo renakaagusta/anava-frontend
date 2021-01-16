@@ -21,21 +21,11 @@
                   {{ stageInformationOfParticipant.number }}
                 </td>
               </tr>
-              <tr class="border">
-                <td><b>Terdaftar pada</b></td>
-                <td v-if="stageInformationOfParticipant.pay_at == null">-</td>
-                <td v-if="stageInformationOfParticipant.pay_at != null">
-                  {{
-                    getDateTime(
-                      "datetime",
-                      stageInformationOfParticipant.pay_at
-                    )
-                  }}
-                </td>
-              </tr>
-            </table>
+            </table><br/>
 
-            <button class="btn btn-primary mb-2" @click="reset()">Reset</button>
+            <b>Catatan</b> : <br/>Apabila telah memasuki waktu pengerjaan dan setelah menekan tombol mulai, lebih dari satu menit soal tidak muncul harap tekan tombol reset dan login kembali
+      
+            <br/><button class="btn btn-primary mt-2 mb-2" @click="reset()">Reset</button>
           </v-tab>
           <v-tab title="Jadwal">
             <table class="table table-border">
@@ -605,7 +595,12 @@ export default {
       );
     },
     nextStep() {
-      if (this.time) {
+      var today = new Date();
+      today.setHours(today.getHours() + 7);
+      var isTime =
+        today > new Date(this.stageInformationOfParticipant.started_at) &&
+        today < new Date(this.stageInformationOfParticipant.finished_at);
+      if (isTime) {
         if (this.stageInformationOfParticipant.document == 1) {
           this.step = 1;
           if (this.answerFormByParticipantAndStage == null) {
@@ -619,10 +614,8 @@ export default {
           });
         }
       } else {
-        var today = new Date();
-        today.setHours(today.getHours() + 7);
         Swal.fire({
-          title: "Waktu pengerjaan belum dimulai",
+          title: "Bukan waktu pengerjaan",
           icon: "error",
           showConfirmButton: true,
         });
@@ -688,7 +681,7 @@ export default {
           this.$store
             .dispatch("answerForm/deleteAnswerForm", answerForm)
             .then(() => {
-              localStorage.clear()
+              localStorage.clear();
               this.$router.go("http://adminsimulasi.anavaugm.com");
             });
         }
@@ -821,19 +814,19 @@ export default {
             var started_at = new Date(this.stage.started_at);
             var finished_at = new Date(this.stage.finished_at);
 
-            if(this.stageInformationOfParticipant.session == 2) {
-                this.started_at = new Date(2021, 0, 17, 18, 20, 0);
-                this.finished_at = new Date(2021, 0, 17, 20, 5, 0);
+            if (this.stageInformationOfParticipant.session == 2) {
+              this.started_at = new Date(2021, 0, 17, 18, 20, 0);
+              this.finished_at = new Date(2021, 0, 17, 20, 5, 0);
             } else {
-                this.started_at = new Date(2021, 0, 17, 15, 0, 0);
-                this.finished_at = new Date(2021, 0, 17, 16, 45, 0);
+              this.started_at = new Date(2021, 0, 17, 15, 0, 0);
+              this.finished_at = new Date(2021, 0, 17, 16, 45, 0);
             }
 
             started_at = this.started_at;
             finished_at = this.finished_at;
 
             this.stageInformationOfParticipant.now = new Date();
-            
+
             //started_at = new Date(2021, 0, 1, 15, 0, 0)
             //finished_at = new Date(2021, 0, 17, 16, 40, 0)
             this.stageInformationOfParticipant.started_at = started_at.toISOString();

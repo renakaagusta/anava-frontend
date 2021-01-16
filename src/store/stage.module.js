@@ -4,11 +4,9 @@ export const stage = {
   namespaced: true,
   state: {
     stages: [],
-    stage: {}
+    stage: {},
   },
-  getters: {
-    
-  },
+  getters: {},
   actions: {
     getAllStage({ commit }) {
       return StageService.getAllStage().then(
@@ -47,12 +45,13 @@ export const stage = {
   mutations: {
     setStages(state, stages) {
       state.stages = stages;
-      localStorage.setItem("stages"+stages._id, JSON.stringify(state.stages));
+      localStorage.setItem("stages" + stages._id, JSON.stringify(state.stages));
     },
     setStage(state, stage) {
       state.stage = stage;
-      stage.participants = null;
-      localStorage.setItem("stage"+stage._id, JSON.stringify(state.stage));
+      var user = JSON.parse(localStorage.getItem("user"));
+      if (user.roles.includes("participant")) stage.participants = null;
+      localStorage.setItem("stage" + stage._id, JSON.stringify(state.stage));
     },
   },
 };

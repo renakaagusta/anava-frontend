@@ -38,55 +38,56 @@
         <p v-else>Pakta Integritas</p>
       </b-col>
     </b-row>
-    <b-row
-      class="bg-white p-2 mb-2 shadow-sm rounded"
-      no-gutters
-      v-for="participant in stage.participants"
-      :key="participant._id"
-    >
-      <b-col md="1">
-        <img
-          class="profile"
-          v-bind:src="'http://anavaugm.com/' + participant.image"
-        />
-      </b-col>
-      <b-col md="2">
-        <p class="text-bold">{{ participant.username }}</p>
-        <br />
-        <p class="text-secondary">
-          {{ participant.firstname + " " + participant.lastname }}
-        </p>
-      </b-col>
-      <b-col md="3">
-        <b v-if="getNumberParticipant(participant)">
-          {{ getNumberParticipant(participant) }}
-        </b>
-        <p v-else>-</p>
-      </b-col>
-      <b-col md="3">
-        <i
-          v-if="getPaymentStatus(participant)"
-          class="fas fa-check text-success"
-        ></i>
-        <p v-else>-</p>
-      </b-col>
-      <b-col md="3">
-        <a
-          class="btn btn-primary ml-3 mt-3"
-          target="blank"
-          :href="
-            'http://anavaugm.com/event_document_' +
-              event._id +
-              participant._id +
-              '.pdf'
-          "
-          v-if="getDocumentStatus(participant)"
-        >
-          <i class="fa fa-download" />&nbsp;Unduh
-        </a>
-        <p v-else>-</p>
-      </b-col>
-    </b-row>
+    <div v-for="(participant, index) in stage.participants" :key="index">
+      <b-row
+        class="bg-white p-2 mb-2 shadow-sm rounded"
+        no-gutters
+        v-if="participant != null"
+      >
+        <b-col md="1">
+          <img
+            class="profile"
+            v-bind:src="'http://anavaugm.com/' + participant.image"
+          />
+        </b-col>
+        <b-col md="2">
+          <p class="text-bold">{{ participant.username }}</p>
+          <br />
+          <p class="text-secondary">
+            {{ participant.firstname + " " + participant.lastname }}
+          </p>
+        </b-col>
+        <b-col md="3">
+          <b v-if="getNumberParticipant(participant)">
+            {{ getNumberParticipant(participant) }}
+          </b>
+          <p v-else>-</p>
+        </b-col>
+        <b-col md="3">
+          <i
+            v-if="getPaymentStatus(participant)"
+            class="fas fa-check text-success"
+          ></i>
+          <p v-else>-</p>
+        </b-col>
+        <b-col md="3">
+          <a
+            class="btn btn-primary ml-3 mt-3"
+            target="blank"
+            :href="
+              'http://anavaugm.com/event_document_' +
+                event._id +
+                participant._id +
+                '.pdf'
+            "
+            v-if="getDocumentStatus(participant)"
+          >
+            <i class="fa fa-download" />&nbsp;Unduh
+          </a>
+          <p v-else>-</p>
+        </b-col>
+      </b-row>
+    </div>
   </div>
 </template>
 <script>
@@ -126,7 +127,8 @@ export default {
       var paymentStatus = false;
       participant.participant.events.forEach((event) => {
         event.stages.forEach((stage) => {
-          if (stage.id == this.$route.params.idStage && event.number) paymentStatus = true;
+          if (stage.id == this.$route.params.idStage && event.number)
+            paymentStatus = true;
         });
       });
       return paymentStatus;
@@ -135,7 +137,8 @@ export default {
       var documentStatus = false;
       participant.participant.events.forEach((event) => {
         event.stages.forEach(() => {
-          if (this.event.name == event.name && event.document == 1) documentStatus = true;
+          if (this.event.name == event.name && event.document == 1)
+            documentStatus = true;
         });
       });
       return documentStatus;
