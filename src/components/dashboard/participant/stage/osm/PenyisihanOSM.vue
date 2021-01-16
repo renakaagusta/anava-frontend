@@ -407,7 +407,7 @@ export default {
   name: "PenyisihanOSM",
   data() {
     return {
-      started_at: new Date(2021, 0, 17, 16, 0, 0),
+      started_at: new Date(2021, 0, 5, 16, 0, 0),
       finished_at: new Date(2021, 0, 17, 18, 0, 0),
       //started_at: new Date(2021, 0, 15, 29, 0, 0),
       //finished_at: new Date(2021, 0, 15, 34, 0, 0),
