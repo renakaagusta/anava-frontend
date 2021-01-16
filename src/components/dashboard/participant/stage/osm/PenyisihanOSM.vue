@@ -21,11 +21,17 @@
                   {{ stageInformationOfParticipant.number }}
                 </td>
               </tr>
-            </table><br/>
+            </table>
 
-            <b>Catatan</b> : <br/>Apabila telah memasuki waktu pengerjaan dan setelah menekan tombol mulai, lebih dari satu menit soal tidak muncul harap tekan tombol reset dan login kembali
-      
-            <br/><button class="btn btn-primary mt-2 mb-2" @click="reset()">Reset</button>
+            <br />
+
+            <b>Catatan</b> : <br />Apabila telah memasuki waktu pengerjaan dan
+            setelah menekan tombol mulai, lebih dari satu menit soal tidak
+            muncul harap tekan tombol reset dan login kembali
+
+            <br /><button class="btn btn-primary mt-2 mb-2" @click="reset()">
+              Reset
+            </button>
           </v-tab>
           <v-tab title="Jadwal">
             <table class="table table-border">
@@ -813,13 +819,33 @@ export default {
             this.stageInformationOfParticipant.document = event.document;
             var started_at = new Date(this.stage.started_at);
             var finished_at = new Date(this.stage.finished_at);
-
-            if (this.stageInformationOfParticipant.session == 2) {
-              this.started_at = new Date(2021, 0, 17, 18, 20, 0);
-              this.finished_at = new Date(2021, 0, 17, 20, 5, 0);
-            } else {
-              this.started_at = new Date(2021, 0, 17, 15, 0, 0);
-              this.finished_at = new Date(2021, 0, 17, 16, 45, 0);
+            
+            if (this.started_at.getTimezoneOffset() == -420) {
+              if (this.stageInformationOfParticipant.session == 2) {
+                this.started_at = new Date(2021, 0, 17, 18, 20, 0);
+                this.finished_at = new Date(2021, 0, 17, 20, 5, 0);
+              } else {
+                this.started_at = new Date(2021, 0, 17, 15, 0, 0);
+                this.finished_at = new Date(2021, 0, 17, 16, 45, 0);
+              }
+            }
+            if (this.started_at.getTimezoneOffset() == -480) {
+              if (this.stageInformationOfParticipant.session == 2) {
+                this.started_at = new Date(2021, 0, 17, 16, 20, 0);
+                this.finished_at = new Date(2021, 0, 17, 18, 5, 0);
+              } else {
+                this.started_at = new Date(2021, 0, 17, 13, 0, 0);
+                this.finished_at = new Date(2021, 0, 17, 14, 45, 0);
+              }
+            }
+            if (this.started_at.getTimezoneOffset() == -540) {
+              if (this.stageInformationOfParticipant.session == 2) {
+                this.started_at = new Date(2021, 0, 17, 14, 20, 0);
+                this.finished_at = new Date(2021, 0, 17, 16, 5, 0);
+              } else {
+                this.started_at = new Date(2021, 0, 17, 11, 0, 0);
+                this.finished_at = new Date(2021, 0, 17, 12, 45, 0);
+              }
             }
 
             started_at = this.started_at;
