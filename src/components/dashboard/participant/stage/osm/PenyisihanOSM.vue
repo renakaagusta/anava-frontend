@@ -411,8 +411,8 @@ export default {
   name: "PenyisihanOSM",
   data() {
     return {
-      started_at: new Date(2021, 0, 7, 16, 0, 0),
-      finished_at: new Date(2021, 0, 17, 18, 0, 0),
+      started_at: new Date(2021, 0, 17, 16, 0, 0),
+      finished_at: new Date(2021, 0, 17, 17, 45, 0),
       //started_at: new Date(2021, 0, 15, 29, 0, 0),
       //finished_at: new Date(2021, 0, 15, 34, 0, 0),
       step: 0,
@@ -822,6 +822,12 @@ export default {
             var finished_at = new Date(this.stage.finished_at);
             started_at = this.started_at;
             finished_at = this.finished_at;
+
+            if(this.stageInformationOfParticipant.session == 2) {
+                this.started_at = new Date(2021, 0, 17, 18, 0, 0);
+                this.finished_at = new Date(2021, 0, 17, 19, 45, 0);
+            }
+
             this.stageInformationOfParticipant.now = new Date();
             started_at.setHours(
               started_at.getHours() +
@@ -834,6 +840,7 @@ export default {
                 1
             );
 
+            
             //started_at = new Date(2021, 0, 1, 15, 0, 0)
             //finished_at = new Date(2021, 0, 17, 16, 40, 0)
             this.stageInformationOfParticipant.started_at = started_at.toISOString();
