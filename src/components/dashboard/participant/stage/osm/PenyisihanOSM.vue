@@ -169,6 +169,12 @@
                   <h2 class="d-inline ml-4">Petunjuk Pelaksanaan Penyisihan</h2>
                 </a>
               </b-container>
+              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
+                <a target="blank" href="http://anavaugm.com/OSM/persiapan.pdf">
+                  <i class="fa fa-download fa-3x text-dark"></i>
+                  <h2 class="d-inline ml-4">Persiapan Hari H Penyisihan</h2>
+                </a>
+              </b-container>
             </b-container>
           </v-tab>
           <v-tab title="Tutorial">
@@ -1035,7 +1041,7 @@ export default {
   border: 0;
   outline: 0;
   width: 30%;
-  padding: 8px;
+padding: 8px;
   background-color: #58427c;
   color: #fff;
   cursor: pointer;
