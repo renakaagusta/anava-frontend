@@ -411,8 +411,8 @@ export default {
   name: "PenyisihanOSM",
   data() {
     return {
-      started_at: new Date(2021, 0, 17, 16, 0, 0),
-      finished_at: new Date(2021, 0, 17, 17, 45, 0),
+      started_at: new Date(2021, 0, 17, 15, 0, 0),
+      finished_at: new Date(2021, 0, 17, 16, 45, 0),
       //started_at: new Date(2021, 0, 15, 29, 0, 0),
       //finished_at: new Date(2021, 0, 15, 34, 0, 0),
       step: 0,
@@ -820,26 +820,19 @@ export default {
             this.stageInformationOfParticipant.document = event.document;
             var started_at = new Date(this.stage.started_at);
             var finished_at = new Date(this.stage.finished_at);
+
+            if(this.stageInformationOfParticipant.session == 2) {
+                this.started_at = new Date(2021, 0, 17, 18, 20, 0);
+                this.finished_at = new Date(2021, 0, 17, 20, 5, 0);
+            } else {
+                this.started_at = new Date(2021, 0, 17, 15, 0, 0);
+                this.finished_at = new Date(2021, 0, 17, 16, 45, 0);
+            }
+
             started_at = this.started_at;
             finished_at = this.finished_at;
 
-            if(this.stageInformationOfParticipant.session == 2) {
-                this.started_at = new Date(2021, 0, 17, 18, 0, 0);
-                this.finished_at = new Date(2021, 0, 17, 19, 45, 0);
-            }
-
             this.stageInformationOfParticipant.now = new Date();
-            started_at.setHours(
-              started_at.getHours() +
-                parseInt(this.stageInformationOfParticipant.session) -
-                1
-            );
-            finished_at.setHours(
-              finished_at.getHours() +
-                parseInt(this.stageInformationOfParticipant.session) -
-                1
-            );
-
             
             //started_at = new Date(2021, 0, 1, 15, 0, 0)
             //finished_at = new Date(2021, 0, 17, 16, 40, 0)
