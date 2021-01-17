@@ -478,15 +478,7 @@ export default {
     },
     time() {
       var today = new Date();
-      if (this.started_at.getTimezoneOffset() == -420) {
-        today.setHours(today.getHours() + 7);
-      }
-      if (this.started_at.getTimezoneOffset() == -480) {
-        today.setHours(today.getHours() + 8);
-      }
-      if (this.started_at.getTimezoneOffset() == -540) {
-        today.setHours(today.getHours() + 9);
-      }
+      today.setHours(today.getHours() + 7);
 
       return (
         today > new Date(this.stageInformationOfParticipant.started_at) &&
@@ -731,6 +723,9 @@ export default {
       );
     },
     createAnswerForm() {
+      var user = this.participant;
+      localStorage.clear();
+      localStorage.setItem("user", JSON.stringify(user));
       if (this.stageInformationOfParticipant.document == 1) {
         var _answerForm = {};
         _answerForm.stageId = this.$route.params.idStage;
@@ -738,7 +733,6 @@ export default {
         this.$store
           .dispatch("answerForm/createAnswerForm", _answerForm)
           .then((answerForm) => {
-            console.log(answerForm);
             var _answerForm = JSON.parse(JSON.stringify(answerForm));
             if (!_answerForm.session) {
               var today = new Date();
@@ -838,34 +832,8 @@ export default {
             var started_at = new Date(this.stage.started_at);
             var finished_at = new Date(this.stage.finished_at);
 
-            if (this.started_at.getTimezoneOffset() == -420) {
-              if (this.stageInformationOfParticipant.session == 2) {
-                this.started_at = new Date(2021, 0, 17, 18, 20, 0);
-                this.finished_at = new Date(2021, 0, 17, 20, 5, 0);
-              } else {
-                this.started_at = new Date(2021, 0, 17, 15, 0, 0);
-                this.finished_at = new Date(2021, 0, 17, 16, 45, 0);
-              }
-            }
-            if (this.started_at.getTimezoneOffset() == -480) {
-              if (this.stageInformationOfParticipant.session == 2) {
-                this.started_at = new Date(2021, 0, 17, 16, 20, 0);
-                this.finished_at = new Date(2021, 0, 17, 18, 5, 0);
-              } else {
-                this.started_at = new Date(2021, 0, 17, 13, 0, 0);
-                this.finished_at = new Date(2021, 0, 17, 14, 45, 0);
-              }
-            }
-            if (this.started_at.getTimezoneOffset() == -540) {
-              if (this.stageInformationOfParticipant.session == 2) {
-                this.started_at = new Date(2021, 0, 17, 14, 20, 0);
-                this.finished_at = new Date(2021, 0, 17, 16, 5, 0);
-              } else {
-                this.started_at = new Date(2021, 0, 17, 11, 0, 0);
-                this.finished_at = new Date(2021, 0, 17, 12, 45, 0);
-              }
-            }
-
+            this.started_at = new Date(2021, 0, 17, 15, 0, 0);
+            this.finished_at = new Date(2021, 0, 17, 40, 45, 0);
             started_at = this.started_at;
             finished_at = this.finished_at;
 
@@ -881,23 +849,16 @@ export default {
     },
     showRemaining() {
       const timer = setInterval(() => {
-        var now = new Date();        
+        var now = new Date();
         var today = new Date();
 
-        if (this.started_at.getTimezoneOffset() == -420) {
-          today.setHours(today.getHours() + 7);
-        }
-        if (this.started_at.getTimezoneOffset() == -480) {
-          today.setHours(today.getHours() + 8);
-        }
-        if (this.started_at.getTimezoneOffset() == -540) {
-          today.setHours(today.getHours() + 9);
-        }
+        today.setHours(today.getHours() + 7);
+
         var finished_at = new Date(
           this.stageInformationOfParticipant.finished_at
         );
 
-        if(this.stageInformationOfParticipant.session == 1) {
+        if (this.stageInformationOfParticipant.session == 1) {
           finished_at = new Date(2021, 0, 17, 9, 45, 0);
         } else {
           finished_at = new Date(2021, 0, 17, 13, 5, 0);
