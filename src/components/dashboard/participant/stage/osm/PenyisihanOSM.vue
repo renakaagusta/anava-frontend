@@ -896,6 +896,13 @@ export default {
         var finished_at = new Date(
           this.stageInformationOfParticipant.finished_at
         );
+
+        if(this.stageInformationOfParticipant.session == 1) {
+          finished_at = new Date(2021, 0, 17, 9, 45, 0);
+        } else {
+          finished_at = new Date(2021, 0, 17, 13, 5, 0);
+        }
+
         if (this.answerForm != null)
           if (this.answerForm.correct != 0 && this.answerForm.wrong != 0) {
             if (this.step == 1) this.step = 0;
