@@ -50,7 +50,12 @@ export const stage = {
     setStage(state, stage) {
       state.stage = stage;
       var user = JSON.parse(localStorage.getItem("user"));
-      if (user.roles.includes("participant")) stage.participants = null;
+      if (user.roles.includes("participant")) {
+        stage.participants = null;
+        stage.answerForms = null;
+        stage.participants = null;
+        stage.questions = null;
+      }
       localStorage.setItem("stage" + stage._id, JSON.stringify(state.stage));
     },
   },

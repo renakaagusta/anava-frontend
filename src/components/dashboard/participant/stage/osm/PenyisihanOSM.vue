@@ -408,7 +408,7 @@ export default {
   data() {
     return {
       started_at: new Date(2021, 0, 17, 15, 0, 0),
-      finished_at: new Date(2021, 0, 17, 16, 45, 0),
+      finished_at: new Date(2021, 0, 17, 24, 45, 0),
       //started_at: new Date(2021, 0, 15, 29, 0, 0),
       //finished_at: new Date(2021, 0, 15, 34, 0, 0),
       step: 0,
@@ -832,9 +832,8 @@ export default {
             var started_at = new Date(this.stage.started_at);
             var finished_at = new Date(this.stage.finished_at);
 
-this.started_at = new Date(2021, 0, 17, 14, 30, 0);
-            //this.started_at = new Date(2021, 0, 17, 22, 30, 0);
-            this.finished_at = new Date(2021, 0, 17, 24, 15, 0);
+            this.started_at = new Date(2021, 0, 17, 15, 0, 0);
+            this.finished_at = new Date(2021, 0, 17, 40, 45, 0);
             started_at = this.started_at;
             finished_at = this.finished_at;
 
@@ -859,7 +858,8 @@ this.started_at = new Date(2021, 0, 17, 14, 30, 0);
           this.stageInformationOfParticipant.finished_at
         );
 
-        finished_at = new Date(2021, 0, 17, 17, 15, 0);
+        finished_at = new Date(2021, 0, 18, 9, 45, 0);
+        console.log(this.answerForm);
 
         if (this.answerForm != null)
           if (this.answerForm.correct != 0 && this.answerForm.wrong != 0) {
