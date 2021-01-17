@@ -620,7 +620,7 @@ export default {
       if (this.started_at.getTimezoneOffset() == -540) {
         today.setHours(today.getHours() + 9);
       }
-      
+
       var isTime =
         today > new Date(this.stageInformationOfParticipant.started_at) &&
         today < new Date(this.stageInformationOfParticipant.finished_at);
@@ -882,7 +882,15 @@ export default {
     showRemaining() {
       const timer = setInterval(() => {
         var now = new Date();
-        now.setHours(now.getHours() + 7);
+        if (this.started_at.getTimezoneOffset() == -420) {
+          today.setHours(today.getHours() + 7);
+        }
+        if (this.started_at.getTimezoneOffset() == -480) {
+          today.setHours(today.getHours() + 8);
+        }
+        if (this.started_at.getTimezoneOffset() == -540) {
+          today.setHours(today.getHours() + 9);
+        }
         var finished_at = new Date(
           this.stageInformationOfParticipant.finished_at
         );
