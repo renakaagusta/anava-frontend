@@ -832,8 +832,9 @@ export default {
             var started_at = new Date(this.stage.started_at);
             var finished_at = new Date(this.stage.finished_at);
 
-            this.started_at = new Date(2021, 0, 17, 15, 0, 0);
-            this.finished_at = new Date(2021, 0, 17, 40, 45, 0);
+this.started_at = new Date(2021, 0, 17, 14, 30, 0);
+            //this.started_at = new Date(2021, 0, 17, 22, 30, 0);
+            this.finished_at = new Date(2021, 0, 17, 24, 15, 0);
             started_at = this.started_at;
             finished_at = this.finished_at;
 
@@ -858,11 +859,7 @@ export default {
           this.stageInformationOfParticipant.finished_at
         );
 
-        if (this.stageInformationOfParticipant.session == 1) {
-          finished_at = new Date(2021, 0, 17, 9, 45, 0);
-        } else {
-          finished_at = new Date(2021, 0, 17, 13, 5, 0);
-        }
+        finished_at = new Date(2021, 0, 17, 17, 15, 0);
 
         if (this.answerForm != null)
           if (this.answerForm.correct != 0 && this.answerForm.wrong != 0) {
