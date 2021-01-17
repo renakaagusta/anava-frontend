@@ -881,7 +881,9 @@ export default {
     },
     showRemaining() {
       const timer = setInterval(() => {
-        var now = new Date();
+        var now = new Date();        
+        var today = new Date();
+
         if (this.started_at.getTimezoneOffset() == -420) {
           today.setHours(today.getHours() + 7);
         }
