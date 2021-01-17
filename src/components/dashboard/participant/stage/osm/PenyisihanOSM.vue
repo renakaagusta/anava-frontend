@@ -602,7 +602,16 @@ export default {
     },
     nextStep() {
       var today = new Date();
-      today.setHours(today.getHours() + 7);
+      if (this.started_at.getTimezoneOffset() == -420) {
+        today.setHours(today.getHours() + 7);
+      }
+      if (this.started_at.getTimezoneOffset() == -480) {
+        today.setHours(today.getHours() + 8);
+      }
+      if (this.started_at.getTimezoneOffset() == -540) {
+        today.setHours(today.getHours() + 9);
+      }
+      alert(today);
       var isTime =
         today > new Date(this.stageInformationOfParticipant.started_at) &&
         today < new Date(this.stageInformationOfParticipant.finished_at);
@@ -819,7 +828,7 @@ export default {
             this.stageInformationOfParticipant.document = event.document;
             var started_at = new Date(this.stage.started_at);
             var finished_at = new Date(this.stage.finished_at);
-            
+
             if (this.started_at.getTimezoneOffset() == -420) {
               if (this.stageInformationOfParticipant.session == 2) {
                 this.started_at = new Date(2021, 0, 17, 18, 20, 0);
