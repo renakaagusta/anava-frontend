@@ -478,7 +478,16 @@ export default {
     },
     time() {
       var today = new Date();
-      today.setHours(today.getHours() + 7);
+      if (this.started_at.getTimezoneOffset() == -420) {
+        today.setHours(today.getHours() + 7);
+      }
+      if (this.started_at.getTimezoneOffset() == -480) {
+        today.setHours(today.getHours() + 8);
+      }
+      if (this.started_at.getTimezoneOffset() == -540) {
+        today.setHours(today.getHours() + 9);
+      }
+
       return (
         today > new Date(this.stageInformationOfParticipant.started_at) &&
         today < new Date(this.stageInformationOfParticipant.finished_at)
@@ -611,7 +620,7 @@ export default {
       if (this.started_at.getTimezoneOffset() == -540) {
         today.setHours(today.getHours() + 9);
       }
-      alert(today);
+      
       var isTime =
         today > new Date(this.stageInformationOfParticipant.started_at) &&
         today < new Date(this.stageInformationOfParticipant.finished_at);
