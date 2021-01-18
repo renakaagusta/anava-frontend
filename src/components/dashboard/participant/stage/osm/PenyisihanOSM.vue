@@ -614,8 +614,7 @@ export default {
       }
 
       var isTime =
-        today > new Date(this.stageInformationOfParticipant.started_at) &&
-        today < new Date(this.stageInformationOfParticipant.finished_at);
+        today > new Date(this.stageInformationOfParticipant.started_at) 
       if (isTime) {
         if (this.stageInformationOfParticipant.document == 1) {
           this.step = 1;
