@@ -832,15 +832,14 @@ export default {
             var started_at = new Date(this.stage.started_at);
             var finished_at = new Date(this.stage.finished_at);
 
-            this.started_at = new Date(2021, 0, 17, 15, 0, 0);
-            this.finished_at = new Date(2021, 0, 17, 40, 45, 0);
+            this.started_at = new Date(2021, 0, 18, 22, 30, 0);
+            this.finished_at = new Date(2021, 0, 18, 24, 15, 0);
+            
             started_at = this.started_at;
             finished_at = this.finished_at;
 
             this.stageInformationOfParticipant.now = new Date();
 
-            //started_at = new Date(2021, 0, 1, 15, 0, 0)
-            //finished_at = new Date(2021, 0, 17, 16, 40, 0)
             this.stageInformationOfParticipant.started_at = started_at.toISOString();
             this.stageInformationOfParticipant.finished_at = finished_at.toISOString();
           }
@@ -858,9 +857,8 @@ export default {
           this.stageInformationOfParticipant.finished_at
         );
 
-        finished_at = new Date(2021, 0, 18, 9, 45, 0);
-        console.log(this.answerForm);
-
+        finished_at = new Date(2021, 0, 18, 18, 15, 0);
+        
         if (this.answerForm != null)
           if (this.answerForm.correct != 0 && this.answerForm.wrong != 0) {
             if (this.step == 1) this.step = 0;
