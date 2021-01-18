@@ -857,7 +857,8 @@ export default {
           this.stageInformationOfParticipant.finished_at
         );
 
-        finished_at = new Date(2021, 0, 18, 18, 15, 0);
+        //Sesuai WIB
+        finished_at = new Date(2021, 0, 18, 17, 15, 0);
         
         if (this.answerForm != null)
           if (this.answerForm.correct != 0 && this.answerForm.wrong != 0) {
