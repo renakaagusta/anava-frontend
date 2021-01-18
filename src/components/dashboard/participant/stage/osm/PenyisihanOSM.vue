@@ -832,8 +832,8 @@ export default {
             var started_at = new Date(this.stage.started_at);
             var finished_at = new Date(this.stage.finished_at);
 
-            this.started_at = new Date(2021, 0, 18, 22, 30, 0);
-            this.finished_at = new Date(2021, 0, 18, 24, 15, 0);
+            this.started_at = new Date(2021, 0, 18, 26, 15, 0);
+            this.finished_at = new Date(2021, 0, 18, 28, 0, 0);
             
             started_at = this.started_at;
             finished_at = this.finished_at;
@@ -858,7 +858,7 @@ export default {
         );
 
         //Sesuai WIB
-        finished_at = new Date(2021, 0, 18, 17, 15, 0);
+        finished_at = new Date(2021, 0, 18, 21, 0, 0);
         
         if (this.answerForm != null)
           if (this.answerForm.correct != 0 && this.answerForm.wrong != 0) {
