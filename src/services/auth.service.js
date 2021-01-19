@@ -25,7 +25,7 @@ class AuthService {
   register(user) {
     return axios.post(API_URL + "signup", user);
   }
-  
+
   confirmEmail(id) {
     return axios.put(API_URL + "confirm-email/" + id);
   }

@@ -1,141 +1,966 @@
 <template>
   <div id="working-page">
-    <b-row>
-      <!-- soal -->
-      <b-col col cols="12" md="9">
-        <b-card-group deck>
-          <b-card
-            border-variant="secondary"
-            header="featured"
-            header-tag="header"
-            header-bg-variant="white"
-            header-text-variant="black"
-            align="center"
-          >
-            <template #header>
-              <b-row class="text-left">
-                <b-col cols="7" md="8">Soal No. 25</b-col>
-                <b-col cols="4" md="4" class="text-right">
-                  <b-button-group size="sm">
-                    <b-button variant="secondary">Sisa Waktu</b-button>
-                    <b-button variant="success">01:00:02</b-button>
-                  </b-button-group>
-                </b-col>
-              </b-row>
-            </template>
-            <b-card-text class="text-left">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Accusantium porro quas ea iusto voluptas ullam quisquam quis
-              nostrum nemo ipsam obcaecati, nam illum hic. Unde ipsam nostrum
-              debitis delectus nobis. Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Quod, esse ab? Amet minima quaerat facilis,
-              ratione corrupti odio! Nam deleniti accusamus reiciendis sit vero
-              accusantium minus autem placeat voluptatibus sunt.
-              <br />
-              <b-form-group class="mt-3">
-                <vue-editor
-                  type="text"
-                  id="content"
-                  placeholder="Masukan jawaban anda"
-                ></vue-editor>
-              </b-form-group>
-            </b-card-text>
-          </b-card>
-        </b-card-group>
-        <b-row>
-          <b-col id="nav-btn" cols="2" md="3">
-            <b-button class="mt-3" block variant="primary">
-              <i class="fas fa-arrow-left"></i>
-              <p>Sebelumnya</p>
-            </b-button>
-          </b-col>
-          <b-col cols="6 offset-1" md="4 offset-1">
-            <b-button class="mt-3" block variant="warning">
-              <b-form-checkbox
-                id="checkbox-1"
-                v-model="status"
-                name="checkbox-1"
-                value="accepted"
-                unchecked-value="not_accepted"
+    <b-container class="bg-white p-3 rounded shadow-sm mb-4" v-if="step == 0">
+      <b-container class="border">
+        <vue-tabs>
+          <v-tab title="Data Peserta">
+            <table class="table table-border">
+              <tr class="border">
+                <td><b>Status Pembayaran</b></td>
+                <td v-if="stageInformationOfParticipant.number == null">-</td>
+                <td v-if="stageInformationOfParticipant.number > 0">
+                  <i class="fas fa-check text-success"></i>
+                </td>
+              </tr>
+              <tr class="border">
+                <td><b>Nomor Peserta</b></td>
+                <td v-if="stageInformationOfParticipant.number == null">-</td>
+                <td v-if="stageInformationOfParticipant.number != null">
+                  {{ stageInformationOfParticipant.number }}
+                </td>
+              </tr>
+              <tr class="border">
+                <td><b>Terdaftar pada</b></td>
+                <td v-if="stageInformationOfParticipant.pay_at == null">-</td>
+                <td v-if="stageInformationOfParticipant.pay_at != null">
+                  {{
+                    getDateTime(
+                      "datetime",
+                      stageInformationOfParticipant.pay_at
+                    )
+                  }}
+                </td>
+              </tr>
+            </table>
+          </v-tab>
+          <v-tab title="Jadwal">
+            <table class="table table-border">
+              <tr class="border">
+                <td><b>Mulai pengerjaan</b></td>
+                <td v-if="stage.started_at != null">
+                  {{ getDateTime("datetime", getTime(started_at)) }}
+                </td>
+                <td v-else>-</td>
+              </tr>
+              <tr class="border">
+                <td><b>Selesai pengerjaan</b></td>
+                <td v-if="stage.finished_at != null">
+                  {{ getDateTime("datetime", getTime(finished_at)) }}
+                </td>
+                <td v-else>-</td>
+              </tr>
+            </table>
+          </v-tab>
+          <v-tab title="Pengumuman">
+            <div class="mt-3" v-if="stageAnnouncements">
+              <b-row
+                class="bg-white p-2 mb-2 shadow-sm rounded"
+                no-gutters
+                v-for="announcement in stageAnnouncements"
+                :key="announcement._id"
               >
-                Ragu-Ragu
-              </b-form-checkbox>
-            </b-button>
-          </b-col>
-          <b-col id="nav-btn" cols="2 offset-1" md="3 offset-1">
-            <b-button class="mt-3 mb-4" block variant="primary">
-              <p>Selanjutnya</p>
-              <i class="fas fa-arrow-right"></i>
-            </b-button>
-          </b-col>
-        </b-row>
-      </b-col>
+                <b-col md="9" class="text-left p-3">
+                  <h4 class="text-bold">{{ announcement.title }}</h4>
+                  <p v-if="announcement"></p>
 
-      <!-- nomor soal -->
-      <b-col col md="3">
-        <b-card-group deck>
-          <b-card
-            border-variant="secondary"
-            header="Nomor Soal"
-            header-bg-variant="white"
-            header-text-variant="black"
-            align="center"
-          >
-            <b-card-text>
-              <b-row>
-                {{ JumlahSoal() }}
-                <b-col
-                  cols="2"
-                  md="2 mr-1 mb-2"
-                  v-for="number in data"
-                  :key="number"
-                >
-                  <b-button id="number-question">
-                    <p>{{ number }}</p>
-                  </b-button>
+                  <p class="text-secondary">
+                    {{ getDateTime("datetime", announcement.created_at) }}
+                  </p>
+                </b-col>
+                <b-col md="3" class="p-3">
+                  <a
+                    class="btn btn-primary"
+                    @click="showAnnouncement(announcement)"
+                  >
+                    <i class="fas fa-search"></i>&nbsp;Detail
+                  </a>
                 </b-col>
               </b-row>
-            </b-card-text>
-          </b-card>
-        </b-card-group>
-        <b-button class="mt-3 mb-5" block variant="danger"
-          >Hentikan Ujian</b-button
+            </div>
+            <div v-else>
+              <div
+                class="container bg-white p-3 text-center text-dark rounded-lg mt-2 mb-2"
+              >
+                <p>
+                  <i class="fas fa-exclamation-triangle fa-2x"></i>
+                  <br />
+                  Belum ada pengumuman
+                </p>
+              </div>
+            </div>
+          </v-tab>
+          <v-tab title="Dokumen">
+            <b-container class="text-left p-3 border mt-2">
+              <b-container class="bg-white p-3 rounded shadow-sm border">
+                <a
+                  target="blank"
+                  href="http://anavaugm.com/STARTED/guidebook.pdf"
+                >
+                  <i class="fa fa-download fa-3x text-dark"></i>
+                  <h2 class="d-inline ml-4">Guidebook</h2>
+                </a>
+              </b-container>
+              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
+                <a
+                  target="blank"
+                  href="http://anavaugm.com/STARTED/surat-orisinalitas.pdf"
+                >
+                  <i class="fa fa-download fa-3x text-dark"></i>
+                  <h2 class="d-inline ml-4">Surat Orisinalitas</h2>
+                </a>
+              </b-container>
+              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
+                <a
+                  target="blank"
+                  href="http://anavaugm.com/STARTED/tor-pekan-kreativitas.pdf"
+                >
+                  <i class="fa fa-download fa-3x text-dark"></i>
+                  <h2 class="d-inline ml-4">TOR</h2>
+                </a>
+              </b-container>
+              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
+                <a target="blank" href="http://anavaugm.com/logo-anava.pdf">
+                  <i class="fa fa-download fa-3x text-dark"></i>
+                  <h2 class="d-inline ml-4">Logo ANAVA</h2>
+                </a>
+              </b-container>
+            </b-container>
+          </v-tab>
+        </vue-tabs>
+      </b-container>
+      <input
+        type="submit"
+        value="Mulai"
+        class="btn btn-purple mt-3"
+        @click="nextStep()"
+      />
+    </b-container>
+    <b-row class="pl-3 pr-3 mb-3" v-if="step == 1">
+      <div v-if="mainStep == 1">
+        <b-container class="bg-white p-4 shadow-sm">
+          <h1>Ketentuan jawaban</h1>
+          <hr />
+          <br />
+          <b-row>
+            <b-col cols="12" md="12">
+              <p class="text-left">
+                1. jawaban yang diikutsertakan dalam lomba merupakan hasil karya
+                orisinil peserta yang belum pernah dipublikasikan sebelumnya di
+                media manapun dan belum pernah diikutsertakan dalam perlombaan
+                lain (dinyatakan dalam lembar pernyataan orisinilitas karya yang
+                dapat diunduh di web ANAVA).<br />
+                2. Peserta wajib membuat surat pernyataan orisinalitas jawaban
+                yang ditandatangani oleh peserta (format terlampir) yang akan
+                disertakan dalam pengunggahan berkas-berkas lainnya.<br />
+                3. jawaban dibuat sesuai topik utama dan dapat memilih satu
+                sub-topik yang disediakan.<br />
+                4. Topik umum Lomba jawaban STARTED adalah “Implementasi
+                Statistika dalam Kehidupan Sehari-hari”.<br />
+                5. Sub topik dalam Lomba jawaban STARTED antara lain :<br />
+                a. Bidang Ekonomi<br />
+                b. Bidang Pendidikan<br />
+                c. Bidang Kesehatan<br />
+                d. Bidang Sosial Budaya<br />
+                e. Bidang Teknologi<br />
+                6. Konten dalam jawaban dapat memuat Teori, Studi kasus,
+                Analisis, dan/atau Penyajian Data.<br />
+                7. jawaban dibuat secara digital pada kanvas dengan rasio 6 : 9
+                , resolusi 300 dpi, format .pdf dan ukuran file maksimal 10
+                MB.<br />
+                8. Peserta diperbolehkan menggunakan aplikasi berjenis apapun
+                (corel draw, adobe photoshop, dan sebagainya). <br />
+                9. Ketentuan lebih rinci dapat dilihat pada ToR (Term of
+                Reference).<br />
+              </p>
+            </b-col>
+            <b-col cols="12" md="12">
+              <h1>TOR</h1>
+              <hr />
+              <br />
+              <b-col lg="12">
+                <b-container class="bg-white p-3 rounded shadow-sm border">
+                  <a
+                    target="blank"
+                    href="http://anavaugm.com/STARTED/tor-pekan-kreativitas.pdf"
+                  >
+                    <i class="fa fa-download fa-3x text-dark"></i>
+                    <h2 class="d-inline ml-4">TOR</h2>
+                  </a>
+                </b-container>
+              </b-col>
+            </b-col>
+            <b-col cols="12" md="12">
+              <h1 class="mt-3">Sisa Waktu</h1>
+              <hr />
+              <br />
+              <b-col lg="12">
+                <b-card>
+                  <b-row class="h2 mt-4">
+                    <b-col>{{ displayDays }}</b-col> :
+                    <b-col>{{ displayHours }}</b-col> :
+                    <b-col>{{ displayMinutes }}</b-col> :
+                    <b-col>{{ displaySeconds }}</b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col>Hari</b-col>
+                    <b-col>Jam</b-col>
+                    <b-col>Menit</b-col>
+                    <b-col>Detik</b-col>
+                  </b-row>
+                </b-card>
+              </b-col>
+            </b-col>
+            <b-col class="mt-4" cols="12" md="12">
+              <h1>Form Pengumpulan</h1>
+              <hr />
+              <br />
+              <div v-if="answerFormByParticipantAndStage.answers != null">
+                <div
+                  id="dropFileForm"
+                  v-if="uploaded == false || changeStartedjawaban == 1"
+                >
+                  <input
+                    type="file"
+                    id="fileStartedjawaban"
+                    ref="started_jawaban"
+                    @change="addFile('started_jawaban')"
+                  />
+
+                  <label for="fileStartedjawaban" id="fileLabel">
+                    <i class="fa fa-upload fa-5x"></i>
+                    <br />
+                    <span
+                      id="fileLabelText"
+                      v-html="fileName.started_jawaban"
+                    />
+                  </label>
+
+                  <button class="uploadButton" @click="uploadAnswer(1)">
+                    <b-spinner v-if="loading" label="Spinning"></b-spinner>
+                    <p v-if="!loading" class="d-inline">Unggah</p>
+                  </button>
+                </div>
+                <div v-else>
+                  <div class="p-4 border">
+                    <img
+                      :src="
+                        'http://anavaugm.com/answer_' +
+                        answerFormByParticipantAndStage.answers[0]._id +
+                        '.pdf'
+                      "
+                      style="height: 900px; width: 600px"
+                    />
+                    <button
+                      class="btn-purple mt-3"
+                      v-if="true"
+                      @click="changeStartedjawaban = 1"
+                    >
+                      Ganti
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </b-col>
+          </b-row>
+        </b-container>
+      </div>
+      <div v-if="mainStep == 2">
+        <b-container class="bg-white p-4 shadow-sm">
+          <h1>Ketentuan jawaban</h1>
+          <hr />
+          <br />
+          <b-row>
+            <b-col cols="12" md="12">
+              <h1 class="mt-3">Sisa Waktu</h1>
+              <hr />
+              <br />
+              <b-col lg="12">
+                <b-card>
+                  <b-row class="h2 mt-4">
+                    <b-col>{{ displayDays }}</b-col> :
+                    <b-col>{{ displayHours }}</b-col> :
+                    <b-col>{{ displayMinutes }}</b-col> :
+                    <b-col>{{ displaySeconds }}</b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col>Hari</b-col>
+                    <b-col>Jam</b-col>
+                    <b-col>Menit</b-col>
+                    <b-col>Detik</b-col>
+                  </b-row>
+                </b-card>
+              </b-col>
+            </b-col>
+          </b-row>
+        </b-container>
+      </div>
+      <div v-if="mainStep == 3">
+        <b-container class="bg-white p-4 shadow-sm">
+          <h1>Ketentuan jawaban</h1>
+          <hr />
+          <br />
+          <b-row>
+            <b-col cols="12" md="12">
+              <p class="text-left">
+                1. jawaban yang diikutsertakan dalam lomba merupakan hasil karya
+                orisinil peserta yang belum pernah dipublikasikan sebelumnya di
+                media manapun dan belum pernah diikutsertakan dalam perlombaan
+                lain (dinyatakan dalam lembar pernyataan orisinilitas karya yang
+                dapat diunduh di web ANAVA).<br />
+                2. Peserta wajib membuat surat pernyataan orisinalitas jawaban
+                yang ditandatangani oleh peserta (format terlampir) yang akan
+                disertakan dalam pengunggahan berkas-berkas lainnya.<br />
+                3. jawaban dibuat sesuai topik utama dan dapat memilih satu
+                sub-topik yang disediakan.<br />
+                4. Topik umum Lomba jawaban STARTED adalah “Implementasi
+                Statistika dalam Kehidupan Sehari-hari”.<br />
+                5. Sub topik dalam Lomba jawaban STARTED antara lain :<br />
+                a. Bidang Ekonomi<br />
+                b. Bidang Pendidikan<br />
+                c. Bidang Kesehatan<br />
+                d. Bidang Sosial Budaya<br />
+                e. Bidang Teknologi<br />
+                6. Konten dalam jawaban dapat memuat Teori, Studi kasus,
+                Analisis, dan/atau Penyajian Data.<br />
+                7. jawaban dibuat secara digital pada kanvas dengan rasio 6 : 9
+                , resolusi 300 dpi, format .pdf dan ukuran file maksimal 10
+                MB.<br />
+                8. Peserta diperbolehkan menggunakan aplikasi berjenis apapun
+                (corel draw, adobe photoshop, dan sebagainya). <br />
+                9. Ketentuan lebih rinci dapat dilihat pada ToR (Term of
+                Reference).<br />
+              </p>
+            </b-col>
+            <b-col cols="12" md="12">
+              <h1>TOR</h1>
+              <hr />
+              <br />
+              <b-col lg="12">
+                <b-container class="bg-white p-3 rounded shadow-sm border">
+                  <a
+                    target="blank"
+                    href="http://anavaugm.com/STARTED/tor-pekan-kreativitas.pdf"
+                  >
+                    <i class="fa fa-download fa-3x text-dark"></i>
+                    <h2 class="d-inline ml-4">TOR</h2>
+                  </a>
+                </b-container>
+              </b-col>
+            </b-col>
+            <b-col cols="12" md="12">
+              <h1 class="mt-3">Sisa Waktu</h1>
+              <hr />
+              <br />
+              <b-col lg="12">
+                <b-card>
+                  <b-row class="h2 mt-4">
+                    <b-col>{{ displayDays }}</b-col> :
+                    <b-col>{{ displayHours }}</b-col> :
+                    <b-col>{{ displayMinutes }}</b-col> :
+                    <b-col>{{ displaySeconds }}</b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col>Hari</b-col>
+                    <b-col>Jam</b-col>
+                    <b-col>Menit</b-col>
+                    <b-col>Detik</b-col>
+                  </b-row>
+                </b-card>
+              </b-col>
+            </b-col>
+            <b-col class="mt-4" cols="12" md="12">
+              <h1>Form Pengumpulan</h1>
+              <hr />
+              <br />
+              <div v-if="answerFormByParticipantAndStage.answers != null">
+                <div
+                  id="dropFileForm"
+                  v-if="uploaded == false || changeStartedjawaban == 1"
+                >
+                  <input
+                    type="file"
+                    id="fileStartedjawaban"
+                    ref="started_jawaban"
+                    @change="addFile('started_jawaban')"
+                  />
+
+                  <label for="fileStartedjawaban" id="fileLabel">
+                    <i class="fa fa-upload fa-5x"></i>
+                    <br />
+                    <span
+                      id="fileLabelText"
+                      v-html="fileName.started_jawaban"
+                    />
+                  </label>
+
+                  <button class="uploadButton" @click="uploadAnswer(2)">
+                    <b-spinner v-if="loading" label="Spinning"></b-spinner>
+                    <p v-if="!loading" class="d-inline">Unggah</p>
+                  </button>
+                </div>
+                <div v-else>
+                  <div class="p-4 border">
+                    <embed
+                      :src="
+                        'http://anavaugm.com/answer_' +
+                        answerFormByParticipantAndStage.answers[0]._id +
+                        '.pdf'
+                      "
+                      style="height: 900px; width: 600px"
+                    />
+                    <button
+                      class="btn-purple mt-3"
+                      v-if="true"
+                      @click="changeStartedjawaban = 1"
+                    >
+                      Ganti
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </b-col>
+          </b-row>
+        </b-container>
+      </div>
+    </b-row>
+    <b-row v-if="step == 2" class="pl-3 pr-3">
+      <b-container class="bg-white p-4 shadow rounded text-left">
+        <h2>{{ announcement.title }}</h2>
+        <p
+          v-if="announcement.stage == null && announcement.participant == null"
         >
-      </b-col>
+          Umum
+        </p>
+        <p v-if="announcement.stage != null">
+          {{ "Kepada peserta " + getEventName(announcement.stage._id) }}
+        </p>
+        <p v-if="announcement.participant != null">
+          {{ "Kepada " + announcement.participant.username }}
+        </p>
+        <br />
+        <small>{{ getDateTime("datetime", announcement.created_at) }}</small>
+        <hr />
+        <div class="mt-4" v-html="announcement.content" />
+      </b-container>
     </b-row>
   </div>
 </template>
 <script>
+import * as datetime from "./../../../../../services/datetime";
+import Swal from "sweetalert2";
+
 export default {
-  name: "SemifinalOSMSesi1",
+  name: "PenyisihanStarted",
   data() {
     return {
+      now: new Date(),
+      started_at: new Date(2021, 0, 3, 8, 0, 0),
+      finished_at: new Date(2021, 0, 19, 19, 0, 0),
+      finished_at1: null,
+      finished_at2: null,
+      step: 0,
+      mainStep: 0,
       data: [],
+      answerForm: {},
+      stageInformationOfParticipant: {},
+      itemsTab1: [],
+      itemsTab2: [{ "Nomor pendaftaran": 0, "Terdaftar pada": 0 }],
+      displayDays: 0,
+      displayHours: 0,
+      displayMinutes: 0,
+      displaySeconds: 0,
+      doubtful: [],
+      year: 0,
+      month: 0,
+      day: 0,
+      hour: 0,
+      minute: 0,
+      timer: null,
+      announcement: {},
+      formParticipant: {
+        firstname: "",
+        lastname: "",
+        grade: 10,
+        birthDate: "",
+        address: "",
+        phoneNumber: "",
+        schoolName: "",
+        schoolAddress: "",
+        region: 1,
+      },
+      document: {
+        type: "",
+      },
+      changeStartedjawaban: 0,
+      changeEventDocument: 0,
+      initialCheck: 0,
+      loading: false,
+      uploaded: false,
+      fileName: {
+        started_jawaban: "Unggah file jawaban (*.pdf)",
+        event_document: "Unggah surat orisinalitas (*.pdf)",
+      },
     };
   },
+  computed: {
+    stage() {
+      return JSON.parse(
+        localStorage.getItem("stage" + this.$route.params.idStage)
+      );
+    },
+    event() {
+      return JSON.parse(localStorage.getItem("event"));
+    },
+    events() {
+      return this.$store.state.event.events;
+    },
+    answerFormByParticipantAndStage() {
+      return JSON.parse(localStorage.getItem("answerForm2"));
+    },
+    participant() {
+      return JSON.parse(localStorage.getItem("user"));
+    },
+    stageAnnouncements() {
+      return this.$store.state.announcement.participantAnnouncements;
+    },
+    time() {
+      var today = new Date();
+
+      return today > this.started_at && today < this.finished_at;
+    },
+    _seconds: () => 1000,
+    _minutes() {
+      return this._seconds * 60;
+    },
+    _hours() {
+      return this._minutes * 60;
+    },
+    _days() {
+      return this._hours * 24;
+    },
+    end() {
+      return new Date(
+        this.year,
+        this.month - 1,
+        this.date,
+        this.hour,
+        this.minute
+      );
+    },
+  },
   methods: {
-    JumlahSoal() {
-      for (let i = 0; i < 20; i++) {
-        this.data[i] = i + 1;
+    getEventName(stageId) {
+      var name = "";
+      this.events.forEach((event) => {
+        event.stages.forEach((stage) => {
+          if (stageId == stage._id) {
+            switch (event.name) {
+              case "OSM":
+                switch (stage.name) {
+                  case "preliminary":
+                    name = event.name + " Penyisihan";
+                    break;
+                  case "semifinal":
+                    name = event.name + " Semifinal";
+                    break;
+                  case "final":
+                    name = event.name + " Final";
+                    break;
+                }
+                break;
+              case "The One":
+                switch (stage.name) {
+                  case "preliminary":
+                    name = event.name + " Babak Gugur";
+                    break;
+                  case "semifinal":
+                    name = event.name + " Babak Championship";
+                    break;
+                }
+                break;
+              case "Started":
+                switch (stage.name) {
+                  case "preliminary":
+                    name = event.name + " Pekan Kreativitas";
+                    break;
+                  case "semifinal":
+                    name = event.name + " Final";
+                    break;
+                }
+                break;
+              case "Sigma":
+                name = event.name;
+                break;
+              case "Open House":
+                name = event.name;
+                break;
+            }
+          }
+        });
+      });
+      return name;
+    },
+    showAnnouncement(announcement) {
+      this.announcement = announcement;
+      this.step = 2;
+    },
+    getTime(_time) {
+      var time = new Date(_time);
+
+      return time;
+    },
+    nextStep() {
+      var today = new Date();
+      today.setHours(today.getHours() + 7);
+
+      var isTime = today > new Date(this.started_at);
+      
+
+      if (isTime) {
+        if (this.stageInformationOfParticipant.document == 1) {
+          this.step = 1;
+          this.createAnswerForm();
+        } else {
+          Swal.fire({
+            title: "Anda belum mengunggah Surat Orisinalitas",
+            icon: "error",
+            showConfirmButton: true,
+          }).then();
+        }
+      } else {
+        Swal.fire({
+          title: "Waktu pengerjaan belum dimulai",
+          icon: "error",
+          showConfirmButton: true,
+        }).then();
       }
     },
+    getDateTime: function (type, date) {
+      return datetime.getDateTime(type, date);
+    },
+    addFile(type) {
+      var fileExtension = "";
+      if (type == "started_jawaban") {
+        this.fileName.started_jawaban = this.$refs.started_jawaban.files[0].name.toString();
+        fileExtension = /[.]/.exec(this.fileName.started_jawaban)
+          ? /[^.]+$/.exec(this.fileName.started_jawaban)
+          : undefined;
+        if (fileExtension != "pdf") {
+          Swal.fire({
+            title: "Format file tidak sesuai",
+            icon: "error",
+            showConfirmButton: true,
+          }).then();
+          this.fileName.started_jawaban = "Unggah file jawaban (*.pdf)";
+        }
+      } else {
+        this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
+        fileExtension = /[.]/.exec(this.fileName.event_document)
+          ? /[^.]+$/.exec(this.fileName.event_document)
+          : undefined;
+        if (fileExtension != "pdf") {
+          Swal.fire({
+            title: "Format file tidak sesuai",
+            icon: "error",
+            showConfirmButton: true,
+          }).then();
+          this.fileName.event_document = "Unggah surat orisinalitas (*.pdf)";
+        }
+      }
+    },
+    uploadAnswer(number) {
+      this.loading = true;
+
+      var document = new FormData();
+
+      this.loading = true;
+      
+      document.append("eventName", "OSM");
+      document.append("stageName", "semifinal");
+      document.append("file", this.$refs.started_jawaban.files[0]);
+
+      var formAnswer = {
+        id: this.answerForm.answers[number - 1]._id,
+        data: document,
+      };
+
+      this.$store.dispatch("answer/uploadAnswer", formAnswer).then(
+        () => {
+          Swal.fire({
+            icon: "success",
+            title: "File berhasil diunggah",
+            showConfirmButton: true,
+          }).then(() => {});
+          this.loading = false;
+          this.uploaded = true;
+        },
+        () => {
+          alert("error");
+        }
+      );
+    },
+    uploadFile() {
+      var document = new FormData();
+
+      this.loading = true;
+      document.append("file", this.$refs.event_document.files[0]);
+      document.append("participantId", this.participant.id);
+
+      var formParticipant = {
+        id: this.event._id,
+        document: document,
+        participantId: this.participant.id,
+      };
+
+      this.$store.dispatch("event/uploadEvent", formParticipant).then(
+        (response) => {
+          Swal.fire({
+            title: "Berhasil mengunggah dokumen",
+            icon: "success",
+            showConfirmButton: true,
+          }).then();
+          this.loading = false;
+          const participant = response.data.data;
+          var user = JSON.parse(localStorage.getItem("user"));
+          user.participant = participant.participant;
+          localStorage.setItem("user", JSON.stringify(user));
+          this.getStageInformationOfParticipant();
+        },
+        () => {}
+      );
+    },
+    getStage() {
+      this.$store.dispatch("stage/getStage", this.$route.params.idStage);
+    },
+    getAllAnnouncementByStage() {
+      this.$store
+        .dispatch(
+          "announcement/getAllAnnouncementByStage",
+          this.$route.params.idStage
+        )
+        .then((response) => {
+          console.log(response);
+        });
+    },
+    getStageInformationOfParticipant() {
+      this.participant.participant.events.forEach((event) => {
+        event.stages.forEach((stage) => {
+          if (stage.name == this.stage.name && event.name == this.event.name) {
+            this.stageInformationOfParticipant = stage;
+            this.stageInformationOfParticipant.number = event.number;
+            this.stageInformationOfParticipant.document = event.document;
+          }
+        });
+      });
+    },
+    getAnswerFormByParticipantAndStage() {
+      var answerForm = {};
+
+      answerForm.stageId = this.$route.params.idStage;
+      answerForm.participantId = this.participant.id;
+
+      this.$store
+        .dispatch("answerForm/getAnswerFormByParticipantAndStage", answerForm)
+        .then((result) => {
+          localStorage.setItem("answerForm2", JSON.stringify(result));
+        });
+    },
+    saveAnswerForm(_answerForm) {
+      localStorage.setItem("answerForm2", JSON.stringify(_answerForm));
+    },
+    createAnswerForm() {
+      if (this.stageInformationOfParticipant.document == 1) {
+        var _answerForm = {};
+        _answerForm.stageId = this.$route.params.idStage;
+        _answerForm.participantId = this.participant.id;
+
+
+
+        this.$store
+          .dispatch("answerForm/createAnswerForm", _answerForm)
+          .then((answerForm) => {
+            var _answerForm = JSON.parse(JSON.stringify(answerForm));
+
+            if (!_answerForm.session) {
+              var started_at = new Date(this.started_at);
+              var finished_at = new Date(this.finished_at);
+
+              _answerForm.started_at = started_at.toISOString();
+              _answerForm.finished_at = finished_at.toISOString();
+
+              _answerForm.session = this.stageInformationOfParticipant.session;
+
+              const format = _answerForm.finished_at.split("-");
+              this.year = parseInt(format[0]);
+              this.month = parseInt(format[1]);
+              const time = format[2].split("T");
+              this.date = parseInt(time[0]);
+              const clock = time[1].split(":");
+              this.hour = parseInt(clock[0]);
+              this.minute = parseInt(clock[1]);
+
+              this.showRemaining();
+
+              localStorage.setItem("answerForm2", JSON.stringify(_answerForm));
+            }
+          });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Surat orisinalitas belum diunggah",
+          text: this.message,
+          showConfirmButton: true,
+        }).then(() => {});
+      }
+    },
+    submitAnswerForm() {
+      this.answerForm.eventName = "OSM";
+      this.answerForm.stageName = "semifinal";
+      this.$store
+        .dispatch("answerForm/submitAnswerForm", this.answerForm)
+        .then((response) => {
+          console.log("submitResponse" + JSON.stringify(response));
+        });
+    },
+    showRemaining() {
+      const timer = setInterval(() => {
+        var distance = 0;
+
+        this.now = new Date();
+
+        if (this.now > this.finished_at) {
+          this.step = 0;
+        } else if (this.now > this.finished_at2) {
+          this.mainStep = 3;
+          distance = this.finished_at.getTime() - this.now.getTime();
+        } else if (this.now > this.finished_at1) {
+          this.mainStep = 2;
+          distance = this.finished_at2.getTime() - this.now.getTime();
+        } else if (this.now > this.started_at) {
+          this.mainStep = 1;
+          distance = this.finished_at1.getTime() - this.now.getTime();
+        }
+        
+
+        if (!this.time) {
+          clearInterval(timer);
+          this.step = 0;
+          this.submitAnswerForm();
+        }
+
+        const days = Math.floor(distance / this._days);
+        const hours = Math.floor((distance % this._days) / this._hours);
+        const minutes = Math.floor((distance % this._hours) / this._minutes);
+        const seconds = Math.floor((distance % this._minutes) / this._seconds);
+
+        this.displaySeconds = seconds < 10 ? "0" + seconds : seconds;
+        this.displayMinutes = minutes < 10 ? "0" + minutes : minutes;
+        this.displayHours = hours < 10 ? "0" + hours : hours;
+        this.displayDays = days < 10 ? "0" + days : days;
+      }, 1000);
+    },
+  },
+  updated() {
+    if (this.answerForm != null) {
+      if (this.stageInformationOfParticipant.id == this.$route.params.idStage) {
+        if (this.step == 1) {
+          if (this.answerFormByParticipantAndStage.score != null)
+            clearInterval(this.timer);
+
+          if (
+            this.answerFormByParticipantAndStage.answers[0].uploaded == 1 &&
+            this.initialCheck == 0
+          ) {
+            this.uploaded = true;
+            this.initialCheck = 1;
+          }
+
+          this.answerForm = JSON.parse(localStorage.getItem("answerForm2"));
+
+          if (this.answerForm != null) {
+            this.step = 1;
+
+            const format = this.stage.finished_at.split("-");
+            this.year = parseInt(format[0]);
+            this.month = parseInt(format[1]);
+            const time = format[2].split("T");
+            this.date = parseInt(time[0]);
+            const clock = time[1].split(":");
+            this.hour = parseInt(clock[0]);
+            this.minute = parseInt(clock[1]);
+
+            this.showRemaining();
+          }
+        }
+      } else {
+        this.getStage();
+        this.answerForm.stageId = this.$route.params.idStage;
+        this.answerForm.participantId = this.participant.id;
+        this.items = [
+          {
+            "Mulai pengerjaan": this.getDateTime(
+              "datetime",
+              this.stage.started_at
+            ),
+            "Selesai pengerjaan": this.getDateTime(
+              "datetime",
+              this.stage.finished_at
+            ),
+            "Pengumuman lolos": this.getDateTime(
+              "datetime",
+              this.stage.started_at
+            ),
+          },
+        ];
+        this.getStageInformationOfParticipant();
+      }
+    }
+  },
+  created() {
+    this.answerForm.stageId = this.$route.params.idStage;
+    this.answerForm.participantId = this.participant.id;
+
+    var finished_at2 = new Date(this.finished_at);
+    var finished_at1 = new Date(this.finished_at);
+    finished_at2 = finished_at2.setMinutes(this.finished_at.getMinutes() - 15);
+    finished_at1 = finished_at1.setMinutes(
+      this.finished_at.getMinutes() - 40
+    );
+
+    this.finished_at2 = new Date(finished_at2);
+    this.finished_at1 = new Date(finished_at1);
+
+    this.getStage();
+    this.getAllAnnouncementByStage();
+    this.getAnswerFormByParticipantAndStage();
+
+    this.items = [
+      {
+        "Mulai pengerjaan": this.getDateTime("datetime", this.stage.started_at),
+        "Selesai pengerjaan": this.getDateTime(
+          "datetime",
+          this.stage.finished_at
+        ),
+        "Pengumuman lolos": this.getDateTime("datetime", this.stage.started_at),
+      },
+    ];
+    this.getStageInformationOfParticipant();
   },
 };
 </script>
 <style scoped>
 #working-page {
-  position: absolute;
   height: 100%;
 }
 
 #number-question {
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
 }
 
 #number-question p {
   font-size: 11px;
-  margin-left: -5px;
+  margin-top: 5px;
 }
 
 #nav-btn p {
@@ -155,5 +980,93 @@ export default {
     font-size: 15px;
     margin-top: 5px;
   }
+}
+.btn-purple {
+  border: 0;
+  outline: 0;
+  width: 30%;
+  padding: 8px;
+  background-color: #58427c;
+  color: #fff;
+  cursor: pointer;
+}
+#dropFileForm {
+  margin: 16px;
+  text-align: center;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: 0.5s;
+}
+
+#dropFileForm #fileLabel {
+  background-color: rgba(200, 200, 200, 0.5);
+  display: block;
+  padding: 16px;
+  position: relative;
+  cursor: pointer;
+
+  border: 2px dashed #555;
+}
+
+#dropFileForm #fileEventDocument {
+  display: none;
+}
+
+#dropFileForm #fileStartedjawaban {
+  display: none;
+}
+
+#dropFileForm #fileLabel:after,
+#dropFileForm #fileLabel:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  z-index: -2;
+  border-radius: 8px 8px 0 0;
+}
+
+#dropFileForm #fileLabel:before {
+  z-index: -1;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 5%,
+    black 5%,
+    black 10%
+  );
+  opacity: 0;
+  transition: 0.5s;
+}
+
+#dropFileForm.fileHover #fileLabel:before {
+  opacity: 0.25;
+}
+
+#dropFileForm .uploadButton {
+  border: 0;
+  outline: 0;
+  width: 100%;
+  padding: 8px;
+  background-color: #58427c;
+  color: #fff;
+  cursor: pointer;
+}
+
+#dropFileForm.fileHover {
+  box-shadow: 0 0 16px limeGreen;
+}
+
+.btn-purple {
+  border: 0;
+  outline: 0;
+  width: 100%;
+  padding: 8px;
+  background-color: #58427c;
+  color: #fff;
+  cursor: pointer;
 }
 </style>

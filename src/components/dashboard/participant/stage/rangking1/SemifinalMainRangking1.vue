@@ -48,7 +48,7 @@
               </tr>
               <tr class="border">
                 <td><b>Selesai pengerjaan</b></td>
-                <td v-if="stage.finished_at != null">
+                <td v-if="finished_at != null">
                   {{ getDateTime("datetime", finished_at) }}
                 </td>
                 <td v-else>-</td>
@@ -111,7 +111,7 @@
       <input
         type="submit"
         value="Mulai"
-        class="btn btn-purple mt-3"
+        class="btn-purple mt-3"
         @click="nextStep()"
       />
     </b-container>
@@ -127,7 +127,7 @@
             <b-button-group size="sm">
               <b-button variant="secondary">Sisa Waktu</b-button>
               <b-button variant="success"
-                ><b-row class="mt-0" style="font-size: 16px;">
+                ><b-row class="mt-0" style="font-size: 16px">
                   <b-col
                     ><small>{{ displayHours }}</small></b-col
                   >
@@ -203,7 +203,7 @@
                       <b-button-group size="sm">
                         <b-button variant="secondary">Sisa Waktu</b-button>
                         <b-button variant="success"
-                          ><b-row class="mt-0" style="font-size: 16px;">
+                          ><b-row class="mt-0" style="font-size: 16px">
                             <b-col
                               ><small>{{ displayHours }}</small></b-col
                             >
@@ -323,7 +323,7 @@ export default {
   data() {
     return {
       started_at: new Date(2021, 0, 1, 14, 0, 0),
-      finished_at: new Date(2021, 0, 19, 31, 0, 0),
+      finished_at: new Date(2021, 0, 30, 0, 0, 0),
       //started_at: new Date(2021, 0, 1, 14, 0, 0),
       //finished_at: new Date(2021, 0, 23, 31, 0, 0),
       step: 0,
@@ -375,20 +375,8 @@ export default {
     },
     time() {
       var today = new Date();
-      var started_at = new Date(this.stage.started_at);
-      var finished_at = new Date(this.stage.finished_at);
 
-      today = new Date(
-        today.getTime() + (today.getTimezoneOffset() + 420) * 60 * 1000
-      );
-      started_at = new Date(
-        started_at.getTime() + (today.getTimezoneOffset() + 420) * 60 * 1000
-      );
-      finished_at = new Date(
-        finished_at.getTime() + (today.getTimezoneOffset() + 420) * 60 * 1000
-      );
-
-      return today > started_at && today < finished_at;
+      return today > this.started_at && today < this.finished_at;
     },
     _seconds: () => 1000,
     _minutes() {
@@ -421,23 +409,30 @@ export default {
         });
     },
     selectQuestion(index) {
-      if (this.answerForm.money < this.answerForm.questions[index].price) {
-        this.answerForm.questions[index].selected = true;
-        this.answerForm.money -= this.answerForm.questions[index].price;
+      if (this.answerForm.money >= this.answerForm.questions[index].price) {
+        if (!this.answerForm.questions[index].selected) {
+          this.answerForm.questions[index].selected = true;
+          this.answerForm.money -= this.answerForm.questions[index].price;
 
-        var selectedQuestion = this.answerForm.questions[index];
-        localStorage.setItem(
-          "selectedQuestion",
-          JSON.stringify(selectedQuestion)
-        );
-        this.selectedQuestion = selectedQuestion;
+          var selectedQuestion = this.answerForm.questions[index];
+          localStorage.setItem(
+            "selectedQuestion",
+            JSON.stringify(selectedQuestion)
+          );
+          this.selectedQuestion = selectedQuestion;
 
-        this.saveAnswerForm(this.answerForm);
-        this.detail = true;
+          this.saveAnswerForm(this.answerForm);
+          this.detail = true;
+        } else {
+          Swal.fire({
+            title: "Soal telah dibuka",
+            icon: "warning",
+            showConfirmButton: true,
+          });
+        }
       } else {
-        alert                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       (this.answerForm.money)
         Swal.fire({
-          title: "Uang yang anda miliki tidak mencukupi",
+          title: "Sisa bekal yang anda miliki tidak mencukupi",
           icon: "error",
           showConfirmButton: true,
         });
@@ -541,64 +536,7 @@ export default {
       this.$store
         .dispatch("answerForm/createAnswerForm", _answerForm)
         .then((answerForm) => {
-          var _answerForm = JSON.parse(JSON.stringify(answerForm));
-
-          if (!_answerForm.session) {
-            var today = new Date();
-            var started_at = new Date(this.stage.started_at);
-            var finished_at = new Date(this.stage.finished_at);
-
-            started_at = new Date(
-              started_at.getTime() + today.getTimezoneOffset() * 60 * 1000
-            );
-            finished_at = new Date(
-              finished_at.getTime() + today.getTimezoneOffset() * 60 * 1000
-            );
-
-            started_at.setHours(
-              started_at.getHours() +
-                parseInt(this.stageInformationOfParticipant.session)
-            );
-            finished_at.setHours(
-              finished_at.getHours() +
-                parseInt(this.stageInformationOfParticipant.session)
-            );
-
-            _answerForm.started_at = started_at.toISOString();
-            _answerForm.finished_at = finished_at.toISOString();
-
-            _answerForm.session = this.stageInformationOfParticipant.session;
-
-            const format = _answerForm.finished_at.split("-");
-            this.year = parseInt(format[0]);
-            this.month = parseInt(format[1]);
-            const time = format[2].split("T");
-            this.date = parseInt(time[0]);
-            const clock = time[1].split(":");
-            this.hour = parseInt(clock[0]);
-            this.minute = parseInt(clock[1]);
-
-            this.showRemaining();
-
-            _answerForm.answers = [];
-
-            var index = 0;
-
-            _answerForm.questions.forEach(() => {
-              _answerForm.questions[index]._number = index + 1;
-              _answerForm.questions[index].selected = false;
-              _answerForm.answers.push(null);
-
-              index++;
-            });
-
-            localStorage.setItem(
-              "answerForm2" + this.$route.params.idStage,
-              JSON.stringify(_answerForm)
-            );
-
-            this.answerForm = _answerForm;
-          }
+          console.log(answerForm);
         });
     },
     submitAnswerForm() {
@@ -615,7 +553,7 @@ export default {
             .then((response) => {
               this.answerForm = response;
               this.saveAnswerForm(response);
-              //this.step = 0;
+              this.step = 0;
             });
         }
       });
@@ -629,7 +567,7 @@ export default {
     updateQuestion() {
       this.$store.dispatch("question/updateQuestion", this.question);
     },
-    getDateTime: function(type, date) {
+    getDateTime: function (type, date) {
       return datetime.getDateTime(type, date);
     },
     getStage() {
@@ -658,13 +596,13 @@ export default {
       });
     },
     showRemaining() {
-      const timer = setInterval(() => {
+      var timer = setInterval(() => {
         var now = new Date();
         now.setHours(now.getHours() + 7);
 
         const distance = this.finished_at.getTime() - now.getTime();
 
-        if (this.answerForm.correct != 0 && this.answerForm.wrong != 0) {
+        if (this.answerForm.correct != 0 || this.answerForm.wrong != 0) {
           if (this.step == 1) this.step = 0;
         }
 
@@ -681,7 +619,7 @@ export default {
           this.$store
             .dispatch("answerForm/submitAnswerForm", this.answerForm)
             .then((response) => {
-              //this.step = 0;
+              this.step = 0;
               this.answerForm = response;
               this.saveAnswerForm(response);
             });
@@ -742,7 +680,7 @@ export default {
               ),
               "Selesai pengerjaan": this.getDateTime(
                 "datetime",
-                this.stage.finished_at
+                this.finished_at
               ),
               "Pengumuman lolos": this.getDateTime(
                 "datetime",
@@ -768,10 +706,7 @@ export default {
     this.items = [
       {
         "Mulai pengerjaan": this.getDateTime("datetime", this.stage.started_at),
-        "Selesai pengerjaan": this.getDateTime(
-          "datetime",
-          this.stage.finished_at
-        ),
+        "Selesai pengerjaan": this.getDateTime("datetime", this.finished_at),
         "Pengumuman lolos": this.getDateTime("datetime", this.stage.started_at),
       },
     ];

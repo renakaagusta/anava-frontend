@@ -21,20 +21,9 @@
                   {{ stageInformationOfParticipant.number }}
                 </td>
               </tr>
-              <tr class="border">
-                <td><b>Terdaftar pada</b></td>
-                <td v-if="stageInformationOfParticipant.pay_at == null">-</td>
-                <td v-if="stageInformationOfParticipant.pay_at != null">
-                  {{
-                    getDateTime(
-                      "datetime",
-                      stageInformationOfParticipant.pay_at
-                    )
-                  }}
-                </td>
-              </tr>
-
-            <button class="btn btn-primary mb-2" @click="reset()">Reset</button>
+              <button class="btn btn-primary mb-2" @click="reset()">
+                Reset
+              </button>
             </table>
           </v-tab>
           <v-tab title="Jadwal">
@@ -60,7 +49,7 @@
               id="dropFileForm"
               v-if="
                 stageInformationOfParticipant.document == 0 ||
-                  changeEventDocument == 1
+                changeEventDocument == 1
               "
             >
               <input
@@ -85,9 +74,9 @@
               <embed
                 :src="
                   'http://anavaugm.com/event_document_' +
-                    event._id +
-                    participant.id +
-                    '.pdf'
+                  event._id +
+                  participant.id +
+                  '.pdf'
                 "
                 width="700px"
                 height="1800px"
@@ -189,7 +178,7 @@
                   <b-button-group size="sm">
                     <b-button variant="secondary">Sisa Waktu</b-button>
                     <b-button variant="success"
-                      ><b-row class="mt-0" style="font-size: 16px;">
+                      ><b-row class="mt-0" style="font-size: 16px">
                         <b-col
                           ><small>{{ displayHours }}</small></b-col
                         >
@@ -208,7 +197,10 @@
               </b-row>
             </template>
             <b-card-text class="text-left">
-              <div v-html="answerForm.questions[currentNumber].content" />
+              <div
+                v-html="answerForm.questions[currentNumber].content"
+                style="max-width: 800px; overflow-x: scroll"
+              />
               <br />
               <b-form-radio-group
                 class="mt-2"
@@ -315,7 +307,7 @@
                   <div
                     v-if="
                       answerForm.disable[index] != true &&
-                        answerForm.answers[index] != null
+                      answerForm.answers[index] != null
                     "
                     class="btn btn-primary number-question"
                     @click="selectNumber(index)"
@@ -333,7 +325,7 @@
                   <div
                     v-if="
                       answerForm.disable[index] != true &&
-                        answerForm.answers[index] == null
+                      answerForm.answers[index] == null
                     "
                     class="btn btn-secondary number-question"
                     @click="selectNumber(index)"
@@ -384,10 +376,10 @@ export default {
   name: "BabakGugurTheOne",
   data() {
     return {
-      started_at: new Date(2021, 0, 23, 20, 0, 0),
-      finished_at: new Date(2021, 0, 23, 21, 20, 0),
-      //started_at: new Date(2021, 0, 1, 8, 0, 0),
+      //started_at: new Date(2021, 0, 23, 20, 0, 0),
       //finished_at: new Date(2021, 0, 23, 21, 20, 0),
+      started_at: new Date(2021, 0, 19, 27, 30, 0),
+      finished_at: new Date(2021, 0, 19, 28, 0, 0),
       step: 0,
       data: [],
       answerForm: {},
@@ -455,9 +447,9 @@ export default {
     },
     time() {
       var today = new Date();
-      today.setHours(today.getHours() + 6);
+      today.setHours(today.getHours() + 7);
 
-      return today > this.started_at && today < this.finished_at;
+      return today > this.started_at;
     },
     _seconds: () => 1000,
     _minutes() {
@@ -740,6 +732,8 @@ export default {
             );
 
             this.answerForm = _answerForm;
+
+            this.step = 1;
           }
         });
     },
@@ -752,12 +746,18 @@ export default {
         if (result.isConfirmed) {
           this.answerForm.eventName = "The One";
           this.answerForm.stageName = "preliminary";
+          var index = 0;
+          this.answerForm.questions.forEach(() => {
+            this.answerForm.questions[index].content = null;
+            this.answerForm.questions[index].answers = null;
+            index++;
+          });
           this.$store
             .dispatch("answerForm/submitAnswerForm", this.answerForm)
             .then((response) => {
               this.answerForm = response;
               this.saveAnswerForm(response);
-              //this.step = 0;
+              this.step = 0;
             });
         }
       });
@@ -771,7 +771,7 @@ export default {
     updateQuestion() {
       this.$store.dispatch("question/updateQuestion", this.question);
     },
-    getDateTime: function(type, date) {
+    getDateTime: function (type, date) {
       return datetime.getDateTime(type, date);
     },
     getStage() {
@@ -825,7 +825,7 @@ export default {
           this.$store
             .dispatch("answerForm/submitAnswerForm", this.answerForm)
             .then((response) => {
-              //this.step = 0;
+              this.step = 0;
               this.answerForm = response;
               this.saveAnswerForm(response);
             });
