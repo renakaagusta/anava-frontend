@@ -211,9 +211,7 @@
                     <b-col md="12"
                       >Harga : {{ selectedQuestion.price }} $</b-col
                     >
-                    <b-col md="12"
-                      >Sisa bekal : {{ answerForm.money }} $</b-col
-                    >
+                    <b-col md="12">Sisa bekal : {{ answerForm.money }} $</b-col>
                   </b-row>
                 </template>
                 <b-card-text class="text-left">
@@ -258,14 +256,14 @@
                     </div>
                     <div v-else>
                       <div class="p-4 border">
-                        <embed
+                        <img
                           :src="
                             'http://anavaugm.com/answer_' +
                             answerForm.answers[selectedQuestion.number - 1]
                               ._id +
                             '.jpg'
                           "
-                          style="height: 900px; width: 600px"
+                          style="height: 500px; width: 300px"
                         />
                         <button
                           class="btn-purple mt-3"
@@ -322,7 +320,7 @@ export default {
   data() {
     return {
       started_at: new Date(2021, 0, 20, 28, 30, 0),
-      finished_at: new Date(2021, 0, 20, 29, 0, 0),
+      finished_at: new Date(2021, 0, 20, 30, 0, 0),
       //started_at: new Date(2021, 0, 1, 14, 0, 0),
       //finished_at: new Date(2021, 0, 23, 31, 0, 0),
       step: 0,
@@ -411,6 +409,8 @@ export default {
         .then(() => {
           this.$router.go();
         });
+
+      localStorage.removeItem("selectedQuestion")
     },
     selectQuestion(index) {
       if (this.answerForm.money >= this.answerForm.questions[index].price) {
@@ -449,27 +449,19 @@ export default {
         fileExtension = /[.]/.exec(this.fileName.started_jawaban)
           ? /[^.]+$/.exec(this.fileName.started_jawaban)
           : undefined;
-        alert(this.$refs.started_jawaban.files[0].name.toString())
-        if (fileExtension != "jpg") {
+
+        this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
+        fileExtension = /[.]/.exec(this.fileName.event_document)
+          ? /[^.]+$/.exec(this.fileName.event_document)
+          : undefined;
+      } else {
+        if (fileExtension != "jpg" || fileExtension != "jpeg") {
           Swal.fire({
             title: "Format file tidak sesuai",
             icon: "error",
             showConfirmButton: true,
           }).then();
           this.fileName.started_jawaban = "Unggah file jawaban (*.jpg)";
-        }
-      } else {
-        this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
-        fileExtension = /[.]/.exec(this.fileName.event_document)
-          ? /[^.]+$/.exec(this.fileName.event_document)
-          : undefined;
-        if (fileExtension != "jpg") {
-          Swal.fire({
-            title: "Format file tidak sesuai",
-            icon: "error",
-            showConfirmButton: true,
-          }).then();
-          this.fileName.event_document = "Unggah surat orisinalitas (*.jpg)";
         }
       }
     },
@@ -652,6 +644,9 @@ export default {
               JSON.stringify(_answerForm)
             );
             this.answerForm = _answerForm;
+            this.step = 1;
+
+            localStorage.removeItem("selectedQuestion")
           }
         });
     },
