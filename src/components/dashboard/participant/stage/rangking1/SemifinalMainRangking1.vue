@@ -21,18 +21,6 @@
                   {{ stageInformationOfParticipant.number }}
                 </td>
               </tr>
-              <tr class="border">
-                <td><b>Terdaftar pada</b></td>
-                <td v-if="stageInformationOfParticipant.pay_at == null">-</td>
-                <td v-if="stageInformationOfParticipant.pay_at != null">
-                  {{
-                    getDateTime(
-                      "datetime",
-                      stageInformationOfParticipant.pay_at
-                    )
-                  }}
-                </td>
-              </tr>
             </table>
 
             <button class="btn btn-primary mb-2" @click="reset()">Reset</button>
@@ -120,7 +108,7 @@
         <b-row class="mb-3">
           <b-col md="5">
             <h5 class="text-left ml-3 mb-3">
-              Uang Bekal : Rp {{ answerForm.money }}
+              Uang Bekal : {{ answerForm.money }} $
             </h5>
           </b-col>
           <b-col md="7" class="text-right">
@@ -160,7 +148,7 @@
             >
               <h5>Paket {{ index + 1 }}</h5>
               <p>{{ question.lesson }}</p>
-              Rp. {{ question.price }}
+              {{ question.price }} $
             </b-button>
             <b-button
               block
@@ -170,7 +158,7 @@
             >
               <h5>Paket {{ index + 1 }}</h5>
               <p>{{ question.lesson }}</p>
-              Rp. {{ question.price }}
+              {{ question.price }} $
             </b-button>
           </b-col>
         </b-row>
@@ -221,63 +209,74 @@
                     </b-col>
                     <b-col md="12">Mapel : {{ selectedQuestion.lesson }}</b-col>
                     <b-col md="12"
-                      >Harga : Rp. {{ selectedQuestion.price }}</b-col
+                      >Harga : {{ selectedQuestion.price }} $</b-col
                     >
                     <b-col md="12"
-                      >Sisa bekal : Rp. {{ answerForm.money }}</b-col
+                      >Sisa bekal : {{ answerForm.money }} $</b-col
                     >
                   </b-row>
                 </template>
                 <b-card-text class="text-left">
-                  <div v-html="selectedQuestion.content" />
+                  <div
+                    v-html="selectedQuestion.content"
+                    style="max-width: 800px; overflow-x: scroll"
+                  />
                   <br />
-                  <b-form-radio-group
-                    class="mt-2"
-                    v-model="answerForm.answers[selectedQuestion._number - 1]"
-                  >
-                    <b-form-radio
-                      name="some-radios"
-                      value="A"
-                      @change="selectAnswer('A')"
-                      ><div
-                        v-html="selectedQuestion.options[0].content"
-                      ></div></b-form-radio
-                    ><br />
+                  <b-col class="mt-4" cols="12" md="12">
+                    <hr />
+                    <br />
+                    <div
+                      id="dropFileForm"
+                      v-if="
+                        answerForm.answers[selectedQuestion.number - 1]
+                          .uploaded == false || changeStartedjawaban == 1
+                      "
+                    >
+                      <input
+                        type="file"
+                        id="fileStartedjawaban"
+                        ref="started_jawaban"
+                        @change="addFile('started_jawaban')"
+                      />
 
-                    <b-form-radio
-                      name="some-radios"
-                      value="B"
-                      @change="selectAnswer('B')"
-                      ><div
-                        v-html="selectedQuestion.options[1].content"
-                      ></div></b-form-radio
-                    ><br />
+                      <label for="fileStartedjawaban" id="fileLabel">
+                        <i class="fa fa-upload fa-5x"></i>
+                        <br />
+                        <span
+                          id="fileLabelText"
+                          v-html="fileName.started_jawaban"
+                        />
+                      </label>
 
-                    <b-form-radio
-                      name="some-radios"
-                      value="C"
-                      @change="selectAnswer('C')"
-                      ><div
-                        v-html="selectedQuestion.options[2].content"
-                      ></div></b-form-radio
-                    ><br />
-
-                    <b-form-radio
-                      name="some-radios"
-                      value="D"
-                      @change="selectAnswer('D')"
-                      ><div
-                        v-html="selectedQuestion.options[3].content"
-                      ></div></b-form-radio
-                    ><br />
-
-                    <b-form-radio
-                      name="some-radios"
-                      value="E"
-                      @change="selectAnswer('E')"
-                      ><div v-html="selectedQuestion.options[4].content"></div
-                    ></b-form-radio>
-                  </b-form-radio-group>
+                      <button
+                        class="uploadButton"
+                        @click="uploadAnswer(selectedQuestion.number)"
+                      >
+                        <b-spinner v-if="loading" label="Spinning"></b-spinner>
+                        <p v-if="!loading" class="d-inline">Unggah</p>
+                      </button>
+                    </div>
+                    <div v-else>
+                      <div class="p-4 border">
+                        <embed
+                          :src="
+                            'http://anavaugm.com/answer_' +
+                            answerForm.answers[selectedQuestion.number - 1]
+                              ._id +
+                            '.pdf'
+                          "
+                          style="height: 900px; width: 600px"
+                        />
+                        <button
+                          class="btn-purple mt-3"
+                          v-if="true"
+                          @click="changeStartedjawaban = 1"
+                        >
+                          Ganti
+                        </button>
+                      </div>
+                    </div>
+                  </b-col>
                   <b-button
                     class="mt-3"
                     block
@@ -322,8 +321,8 @@ export default {
   name: "BabakChampionTheOne",
   data() {
     return {
-      started_at: new Date(2021, 0, 1, 14, 0, 0),
-      finished_at: new Date(2021, 0, 30, 0, 0, 0),
+      started_at: new Date(2021, 0, 20, 27, 30, 0),
+      finished_at: new Date(2021, 0, 20, 28, 0, 0),
       //started_at: new Date(2021, 0, 1, 14, 0, 0),
       //finished_at: new Date(2021, 0, 23, 31, 0, 0),
       step: 0,
@@ -344,7 +343,12 @@ export default {
       hour: 0,
       minute: 0,
       timer: null,
+      changeStartedJawaban: null,
       announcement: {},
+      fileName: {
+        started_jawaban: "Unggah file jawaban (*.pdf)",
+        event_document: "Unggah surat orisinalitas (*.pdf)",
+      },
     };
   },
   computed: {
@@ -438,6 +442,72 @@ export default {
         });
       }
     },
+    addFile(type) {
+      var fileExtension = "";
+      if (type == "started_jawaban") {
+        this.fileName.started_jawaban = this.$refs.started_jawaban.files[0].name.toString();
+        fileExtension = /[.]/.exec(this.fileName.started_jawaban)
+          ? /[^.]+$/.exec(this.fileName.started_jawaban)
+          : undefined;
+        if (fileExtension != "pdf") {
+          Swal.fire({
+            title: "Format file tidak sesuai",
+            icon: "error",
+            showConfirmButton: true,
+          }).then();
+          this.fileName.started_jawaban = "Unggah file jawaban (*.pdf)";
+        }
+      } else {
+        this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
+        fileExtension = /[.]/.exec(this.fileName.event_document)
+          ? /[^.]+$/.exec(this.fileName.event_document)
+          : undefined;
+        if (fileExtension != "pdf") {
+          Swal.fire({
+            title: "Format file tidak sesuai",
+            icon: "error",
+            showConfirmButton: true,
+          }).then();
+          this.fileName.event_document = "Unggah surat orisinalitas (*.pdf)";
+        }
+      }
+    },
+    uploadAnswer(number) {
+      this.loading = true;
+
+      var document = new FormData();
+
+      this.loading = true;
+
+      document.append("eventName", "The One");
+      document.append("stageName", "semifinal");
+      document.append("file", this.$refs.started_jawaban.files[0]);
+
+      var formAnswer = {
+        id: this.answerForm.answers[number - 1]._id,
+        data: document,
+      };
+
+      this.$store.dispatch("answer/uploadAnswer", formAnswer).then(
+        (answer) => {
+          Swal.fire({
+            icon: "success",
+            title: "File berhasil diunggah",
+            showConfirmButton: true,
+          }).then(() => {});
+          this.loading = false;
+          this.uploaded = true;
+          this.answerForm.answers[this.selectedQuestion.number - 1] = answer;
+          localStorage.setItem(
+            "answerForm2" + this.$route.params.idStage,
+            JSON.stringify(this.answerForm)
+          );
+        },
+        () => {
+          alert("error");
+        }
+      );
+    },
     selectAnswer(letter) {
       if (this.selectedQuestion != null) {
         var _answerForm = this.answerForm;
@@ -449,6 +519,7 @@ export default {
     setAnswer() {
       localStorage.removeItem("selectedQuestion");
       this.detail = false;
+      this.fileName.started_jawaban = "Unggah file jawaban (*.pdf)";
     },
     saveAnswerForm(_answerForm) {
       localStorage.setItem(
@@ -536,7 +607,51 @@ export default {
       this.$store
         .dispatch("answerForm/createAnswerForm", _answerForm)
         .then((answerForm) => {
-          console.log(answerForm);
+          var _answerForm = JSON.parse(JSON.stringify(answerForm));
+          if (!_answerForm.session) {
+            var today = new Date();
+            var started_at = new Date(this.stage.started_at);
+            var finished_at = new Date(this.stage.finished_at);
+            started_at = new Date(
+              started_at.getTime() + today.getTimezoneOffset() * 60 * 1000
+            );
+            finished_at = new Date(
+              finished_at.getTime() + today.getTimezoneOffset() * 60 * 1000
+            );
+            started_at.setHours(
+              started_at.getHours() +
+                parseInt(this.stageInformationOfParticipant.session)
+            );
+            finished_at.setHours(
+              finished_at.getHours() +
+                parseInt(this.stageInformationOfParticipant.session)
+            );
+            _answerForm.started_at = started_at.toISOString();
+            _answerForm.finished_at = finished_at.toISOString();
+            _answerForm.session = this.stageInformationOfParticipant.session;
+            const format = _answerForm.finished_at.split("-");
+            this.year = parseInt(format[0]);
+            this.month = parseInt(format[1]);
+            const time = format[2].split("T");
+            this.date = parseInt(time[0]);
+            const clock = time[1].split(":");
+            this.hour = parseInt(clock[0]);
+            this.minute = parseInt(clock[1]);
+            this.showRemaining();
+
+            var index = 0;
+            _answerForm.questions.forEach(() => {
+              _answerForm.questions[index]._number = index + 1;
+              _answerForm.questions[index].selected = false;
+
+              index++;
+            });
+            localStorage.setItem(
+              "answerForm2" + this.$route.params.idStage,
+              JSON.stringify(_answerForm)
+            );
+            this.answerForm = _answerForm;
+          }
         });
     },
     submitAnswerForm() {
@@ -729,6 +844,117 @@ export default {
 };
 </script>
 <style>
+#working-page {
+  height: 100%;
+}
+
+#number-question {
+  width: 40px;
+  height: 40px;
+}
+
+#number-question p {
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+#nav-btn p {
+  display: inline;
+}
+
+@media (max-width: 767px) {
+  #nav-btn p {
+    display: none;
+  }
+  #number-question {
+    width: 45px;
+    height: 45px;
+    margin-left: 15px;
+  }
+  #number-question p {
+    font-size: 15px;
+    margin-top: 5px;
+  }
+}
+.btn-purple {
+  border: 0;
+  outline: 0;
+  width: 30%;
+  padding: 8px;
+  background-color: #58427c;
+  color: #fff;
+  cursor: pointer;
+}
+#dropFileForm {
+  margin: 16px;
+  text-align: center;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: 0.5s;
+}
+
+#dropFileForm #fileLabel {
+  background-color: rgba(200, 200, 200, 0.5);
+  display: block;
+  padding: 16px;
+  position: relative;
+  cursor: pointer;
+
+  border: 2px dashed #555;
+}
+
+#dropFileForm #fileEventDocument {
+  display: none;
+}
+
+#dropFileForm #fileStartedjawaban {
+  display: none;
+}
+
+#dropFileForm #fileLabel:after,
+#dropFileForm #fileLabel:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  z-index: -2;
+  border-radius: 8px 8px 0 0;
+}
+
+#dropFileForm #fileLabel:before {
+  z-index: -1;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 5%,
+    black 5%,
+    black 10%
+  );
+  opacity: 0;
+  transition: 0.5s;
+}
+
+#dropFileForm.fileHover #fileLabel:before {
+  opacity: 0.25;
+}
+
+#dropFileForm .uploadButton {
+  border: 0;
+  outline: 0;
+  width: 100%;
+  padding: 8px;
+  background-color: #58427c;
+  color: #fff;
+  cursor: pointer;
+}
+
+#dropFileForm.fileHover {
+  box-shadow: 0 0 16px limeGreen;
+}
+
 .btn-purple {
   border: 0;
   outline: 0;
