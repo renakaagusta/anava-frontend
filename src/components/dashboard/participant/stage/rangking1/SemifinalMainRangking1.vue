@@ -75,7 +75,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://anavaugm.com/THE ONE/guidebook.pdf"
+                  href="http://anavaugm.com/THE ONE/guidebook.jpg"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Guidebook</h2>
@@ -263,7 +263,7 @@
                             'http://anavaugm.com/answer_' +
                             answerForm.answers[selectedQuestion.number - 1]
                               ._id +
-                            '.pdf'
+                            '.jpg'
                           "
                           style="height: 900px; width: 600px"
                         />
@@ -346,8 +346,8 @@ export default {
       changeStartedJawaban: null,
       announcement: {},
       fileName: {
-        started_jawaban: "Unggah file jawaban (*.pdf)",
-        event_document: "Unggah surat orisinalitas (*.pdf)",
+        started_jawaban: "Unggah file jawaban (*.jpg)",
+        event_document: "Unggah surat orisinalitas (*.jpg)",
       },
     };
   },
@@ -449,26 +449,27 @@ export default {
         fileExtension = /[.]/.exec(this.fileName.started_jawaban)
           ? /[^.]+$/.exec(this.fileName.started_jawaban)
           : undefined;
-        if (fileExtension != "pdf") {
+        alert(this.$refs.started_jawaban.files[0].name.toString())
+        if (fileExtension != "jpg") {
           Swal.fire({
             title: "Format file tidak sesuai",
             icon: "error",
             showConfirmButton: true,
           }).then();
-          this.fileName.started_jawaban = "Unggah file jawaban (*.pdf)";
+          this.fileName.started_jawaban = "Unggah file jawaban (*.jpg)";
         }
       } else {
         this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
         fileExtension = /[.]/.exec(this.fileName.event_document)
           ? /[^.]+$/.exec(this.fileName.event_document)
           : undefined;
-        if (fileExtension != "pdf") {
+        if (fileExtension != "jpg") {
           Swal.fire({
             title: "Format file tidak sesuai",
             icon: "error",
             showConfirmButton: true,
           }).then();
-          this.fileName.event_document = "Unggah surat orisinalitas (*.pdf)";
+          this.fileName.event_document = "Unggah surat orisinalitas (*.jpg)";
         }
       }
     },
@@ -519,7 +520,7 @@ export default {
     setAnswer() {
       localStorage.removeItem("selectedQuestion");
       this.detail = false;
-      this.fileName.started_jawaban = "Unggah file jawaban (*.pdf)";
+      this.fileName.started_jawaban = "Unggah file jawaban (*.jpg)";
     },
     saveAnswerForm(_answerForm) {
       localStorage.setItem(
