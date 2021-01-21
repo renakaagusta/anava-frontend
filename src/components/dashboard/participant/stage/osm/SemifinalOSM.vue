@@ -1,5 +1,5 @@
 <template>
-  <div id="working-page">
+  <div id="working-page">{{ started_at }}<br/>{{ finished_at }}<br/>{{ now }}
     <b-container class="bg-white p-3 rounded shadow-sm mb-4" v-if="step == 0">
       <b-container class="border">
         <vue-tabs>
@@ -384,8 +384,8 @@ export default {
   data() {
     return {
       now: new Date(),
-      started_at: new Date(2021, 0, 21, 8, 0, 0),
-      finished_at: new Date(2021, 0, 21, 9, 50, 0),
+      started_at: new Date(2021, 0, 21, 19, 0, 0),
+      finished_at: new Date(2021, 0, 21, 21, 0, 0),
       finished_at1: null,
       finished_at2: null,
       step: 0,
@@ -543,7 +543,7 @@ export default {
     },
     nextStep() {
       var today = new Date();
-      today.setHours(today.getHours() + 7);
+      today.setHours(today.getHours());
 
       var isTime = today > new Date(this.started_at);
 
@@ -834,8 +834,8 @@ export default {
 
     var finished_at2 = new Date(this.finished_at);
     var finished_at1 = new Date(this.finished_at);
-    finished_at2 = finished_at2.setMinutes(this.finished_at.getMinutes() - 30);
-    finished_at1 = finished_at1.setMinutes(this.finished_at.getMinutes() - 35);
+    finished_at2 = finished_at2.setMinutes(this.finished_at.getMinutes() - 50);
+    finished_at1 = finished_at1.setMinutes(this.finished_at.getMinutes() - 55);
 
     this.finished_at2 = new Date(finished_at2);
     this.finished_at1 = new Date(finished_at1);
