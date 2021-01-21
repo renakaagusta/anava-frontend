@@ -19,18 +19,6 @@
                   {{ stageInformationOfParticipant.number }}
                 </td>
               </tr>
-              <tr class="border">
-                <td><b>Terdaftar pada</b></td>
-                <td v-if="stageInformationOfParticipant.pay_at == null">-</td>
-                <td v-if="stageInformationOfParticipant.pay_at != null">
-                  {{
-                    getDateTime(
-                      "datetime",
-                      stageInformationOfParticipant.pay_at
-                    )
-                  }}
-                </td>
-              </tr>
             </table>
           </v-tab>
           <v-tab title="Jadwal">
@@ -94,7 +82,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://anavaugm.com/STARTED/guidebook.pdf"
+                  href="http://anavaugm.com/STARTED/guidebook.jpg"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Guidebook</h2>
@@ -103,7 +91,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://anavaugm.com/STARTED/surat-orisinalitas.pdf"
+                  href="http://anavaugm.com/STARTED/surat-orisinalitas.jpg"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Surat Orisinalitas</h2>
@@ -112,14 +100,14 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://anavaugm.com/STARTED/tor-pekan-kreativitas.pdf"
+                  href="http://anavaugm.com/STARTED/tor-pekan-kreativitas.jpg"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">TOR</h2>
                 </a>
               </b-container>
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
-                <a target="blank" href="http://anavaugm.com/logo-anava.pdf">
+                <a target="blank" href="http://anavaugm.com/logo-anava.jpg">
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Logo ANAVA</h2>
                 </a>
@@ -127,6 +115,9 @@
             </b-container>
           </v-tab>
         </vue-tabs>
+        <button class="btn btn-primary mt-2 mb-2" @click="reset()">
+          Reset
+        </button>
       </b-container>
       <input
         type="submit"
@@ -138,53 +129,21 @@
     <b-row class="pl-3 pr-3 mb-3" v-if="step == 1">
       <div v-if="mainStep == 1">
         <b-container class="bg-white p-4 shadow-sm">
-          <h1>Ketentuan jawaban</h1>
+          <h1>Soal 1</h1>
           <hr />
           <br />
           <b-row>
             <b-col cols="12" md="12">
-              <p class="text-left">
-                1. jawaban yang diikutsertakan dalam lomba merupakan hasil karya
-                orisinil peserta yang belum pernah dipublikasikan sebelumnya di
-                media manapun dan belum pernah diikutsertakan dalam perlombaan
-                lain (dinyatakan dalam lembar pernyataan orisinilitas karya yang
-                dapat diunduh di web ANAVA).<br />
-                2. Peserta wajib membuat surat pernyataan orisinalitas jawaban
-                yang ditandatangani oleh peserta (format terlampir) yang akan
-                disertakan dalam pengunggahan berkas-berkas lainnya.<br />
-                3. jawaban dibuat sesuai topik utama dan dapat memilih satu
-                sub-topik yang disediakan.<br />
-                4. Topik umum Lomba jawaban STARTED adalah “Implementasi
-                Statistika dalam Kehidupan Sehari-hari”.<br />
-                5. Sub topik dalam Lomba jawaban STARTED antara lain :<br />
-                a. Bidang Ekonomi<br />
-                b. Bidang Pendidikan<br />
-                c. Bidang Kesehatan<br />
-                d. Bidang Sosial Budaya<br />
-                e. Bidang Teknologi<br />
-                6. Konten dalam jawaban dapat memuat Teori, Studi kasus,
-                Analisis, dan/atau Penyajian Data.<br />
-                7. jawaban dibuat secara digital pada kanvas dengan rasio 6 : 9
-                , resolusi 300 dpi, format .pdf dan ukuran file maksimal 10
-                MB.<br />
-                8. Peserta diperbolehkan menggunakan aplikasi berjenis apapun
-                (corel draw, adobe photoshop, dan sebagainya). <br />
-                9. Ketentuan lebih rinci dapat dilihat pada ToR (Term of
-                Reference).<br />
-              </p>
-            </b-col>
-            <b-col cols="12" md="12">
-              <h1>TOR</h1>
-              <hr />
-              <br />
               <b-col lg="12">
                 <b-container class="bg-white p-3 rounded shadow-sm border">
                   <a
                     target="blank"
-                    href="http://anavaugm.com/STARTED/tor-pekan-kreativitas.pdf"
+                    href="http://localhost:8080/Simulasi Sesi 1 (Semifinal OSM).jpg"
                   >
                     <i class="fa fa-download fa-3x text-dark"></i>
-                    <h2 class="d-inline ml-4">TOR</h2>
+                    <h2 class="d-inline ml-4">
+                      Simulasi Sesi 1 (Semifinal OSM)
+                    </h2>
                   </a>
                 </b-container>
               </b-col>
@@ -217,7 +176,10 @@
               <div v-if="answerFormByParticipantAndStage.answers != null">
                 <div
                   id="dropFileForm"
-                  v-if="uploaded == false || changeStartedjawaban == 1"
+                  v-if="
+                    answerForm.answers[0].uploaded == false ||
+                    changeStartedjawaban == 1
+                  "
                 >
                   <input
                     type="file"
@@ -246,7 +208,7 @@
                       :src="
                         'http://anavaugm.com/answer_' +
                         answerFormByParticipantAndStage.answers[0]._id +
-                        '.pdf'
+                        '.jpg'
                       "
                       style="height: 900px; width: 600px"
                     />
@@ -266,14 +228,11 @@
       </div>
       <div v-if="mainStep == 2">
         <b-container class="bg-white p-4 shadow-sm">
-          <h1>Ketentuan jawaban</h1>
+          <h1>Jeda</h1>
           <hr />
           <br />
           <b-row>
             <b-col cols="12" md="12">
-              <h1 class="mt-3">Sisa Waktu</h1>
-              <hr />
-              <br />
               <b-col lg="12">
                 <b-card>
                   <b-row class="h2 mt-4">
@@ -296,53 +255,21 @@
       </div>
       <div v-if="mainStep == 3">
         <b-container class="bg-white p-4 shadow-sm">
-          <h1>Ketentuan jawaban</h1>
+          <h1>Soal 2</h1>
           <hr />
           <br />
           <b-row>
             <b-col cols="12" md="12">
-              <p class="text-left">
-                1. jawaban yang diikutsertakan dalam lomba merupakan hasil karya
-                orisinil peserta yang belum pernah dipublikasikan sebelumnya di
-                media manapun dan belum pernah diikutsertakan dalam perlombaan
-                lain (dinyatakan dalam lembar pernyataan orisinilitas karya yang
-                dapat diunduh di web ANAVA).<br />
-                2. Peserta wajib membuat surat pernyataan orisinalitas jawaban
-                yang ditandatangani oleh peserta (format terlampir) yang akan
-                disertakan dalam pengunggahan berkas-berkas lainnya.<br />
-                3. jawaban dibuat sesuai topik utama dan dapat memilih satu
-                sub-topik yang disediakan.<br />
-                4. Topik umum Lomba jawaban STARTED adalah “Implementasi
-                Statistika dalam Kehidupan Sehari-hari”.<br />
-                5. Sub topik dalam Lomba jawaban STARTED antara lain :<br />
-                a. Bidang Ekonomi<br />
-                b. Bidang Pendidikan<br />
-                c. Bidang Kesehatan<br />
-                d. Bidang Sosial Budaya<br />
-                e. Bidang Teknologi<br />
-                6. Konten dalam jawaban dapat memuat Teori, Studi kasus,
-                Analisis, dan/atau Penyajian Data.<br />
-                7. jawaban dibuat secara digital pada kanvas dengan rasio 6 : 9
-                , resolusi 300 dpi, format .pdf dan ukuran file maksimal 10
-                MB.<br />
-                8. Peserta diperbolehkan menggunakan aplikasi berjenis apapun
-                (corel draw, adobe photoshop, dan sebagainya). <br />
-                9. Ketentuan lebih rinci dapat dilihat pada ToR (Term of
-                Reference).<br />
-              </p>
-            </b-col>
-            <b-col cols="12" md="12">
-              <h1>TOR</h1>
-              <hr />
-              <br />
               <b-col lg="12">
                 <b-container class="bg-white p-3 rounded shadow-sm border">
                   <a
                     target="blank"
-                    href="http://anavaugm.com/STARTED/tor-pekan-kreativitas.pdf"
+                    href="http://localhost:8080/Simulasi Sesi 2 (Semifinal OSM).jpg"
                   >
                     <i class="fa fa-download fa-3x text-dark"></i>
-                    <h2 class="d-inline ml-4">TOR</h2>
+                    <h2 class="d-inline ml-4">
+                      Simulasi Sesi 2 (Semifinal OSM)
+                    </h2>
                   </a>
                 </b-container>
               </b-col>
@@ -375,7 +302,10 @@
               <div v-if="answerFormByParticipantAndStage.answers != null">
                 <div
                   id="dropFileForm"
-                  v-if="uploaded == false || changeStartedjawaban == 1"
+                  v-if="
+                    answerForm.answers[1].uploaded == false ||
+                    changeStartedjawaban == 1
+                  "
                 >
                   <input
                     type="file"
@@ -404,7 +334,7 @@
                       :src="
                         'http://anavaugm.com/answer_' +
                         answerFormByParticipantAndStage.answers[0]._id +
-                        '.pdf'
+                        '.jpg'
                       "
                       style="height: 900px; width: 600px"
                     />
@@ -454,8 +384,8 @@ export default {
   data() {
     return {
       now: new Date(),
-      started_at: new Date(2021, 0, 3, 8, 0, 0),
-      finished_at: new Date(2021, 0, 19, 19, 0, 0),
+      started_at: new Date(2021, 0, 21, 8, 0, 0),
+      finished_at: new Date(2021, 0, 21, 9, 50, 0),
       finished_at1: null,
       finished_at2: null,
       step: 0,
@@ -497,8 +427,8 @@ export default {
       loading: false,
       uploaded: false,
       fileName: {
-        started_jawaban: "Unggah file jawaban (*.pdf)",
-        event_document: "Unggah surat orisinalitas (*.pdf)",
+        started_jawaban: "Unggah file jawaban (*.jpg)",
+        event_document: "Unggah surat orisinalitas (*.jpg)",
       },
     };
   },
@@ -515,7 +445,9 @@ export default {
       return this.$store.state.event.events;
     },
     answerFormByParticipantAndStage() {
-      return JSON.parse(localStorage.getItem("answerForm2"));
+      return JSON.parse(
+        localStorage.getItem("answerForm2" + this.$route.params.idStage)
+      );
     },
     participant() {
       return JSON.parse(localStorage.getItem("user"));
@@ -614,7 +546,6 @@ export default {
       today.setHours(today.getHours() + 7);
 
       var isTime = today > new Date(this.started_at);
-      
 
       if (isTime) {
         if (this.stageInformationOfParticipant.document == 1) {
@@ -645,26 +576,26 @@ export default {
         fileExtension = /[.]/.exec(this.fileName.started_jawaban)
           ? /[^.]+$/.exec(this.fileName.started_jawaban)
           : undefined;
-        if (fileExtension != "pdf") {
+        if (fileExtension != "jpg" || fileExtension != "jpeg") {
+          this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
+          fileExtension = /[.]/.exec(this.fileName.event_document)
+            ? /[^.]+$/.exec(this.fileName.event_document)
+            : undefined;
+          if (fileExtension != "jpg") {
+            Swal.fire({
+              title: "Format file tidak sesuai",
+              icon: "error",
+              showConfirmButton: true,
+            }).then();
+            this.fileName.event_document = "Unggah surat orisinalitas (*.jpg)";
+          }
+        } else {
           Swal.fire({
             title: "Format file tidak sesuai",
             icon: "error",
             showConfirmButton: true,
           }).then();
-          this.fileName.started_jawaban = "Unggah file jawaban (*.pdf)";
-        }
-      } else {
-        this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
-        fileExtension = /[.]/.exec(this.fileName.event_document)
-          ? /[^.]+$/.exec(this.fileName.event_document)
-          : undefined;
-        if (fileExtension != "pdf") {
-          Swal.fire({
-            title: "Format file tidak sesuai",
-            icon: "error",
-            showConfirmButton: true,
-          }).then();
-          this.fileName.event_document = "Unggah surat orisinalitas (*.pdf)";
+          this.fileName.started_jawaban = "Unggah file jawaban (*.jpg)";
         }
       }
     },
@@ -674,7 +605,7 @@ export default {
       var document = new FormData();
 
       this.loading = true;
-      
+
       document.append("eventName", "OSM");
       document.append("stageName", "semifinal");
       document.append("file", this.$refs.started_jawaban.files[0]);
@@ -685,12 +616,15 @@ export default {
       };
 
       this.$store.dispatch("answer/uploadAnswer", formAnswer).then(
-        () => {
+        (answer) => {
           Swal.fire({
             icon: "success",
             title: "File berhasil diunggah",
             showConfirmButton: true,
           }).then(() => {});
+          this.answerForm.answers[number - 1] = answer;
+
+          localStorage.setItem("answerForm2", JSON.stringify(this.answerForm));
           this.loading = false;
           this.uploaded = true;
         },
@@ -698,6 +632,34 @@ export default {
           alert("error");
         }
       );
+    },
+    reset() {
+      new Swal({
+        title:
+          "Anda akan log out dan jika anda telah mengerjakan sebelumnya maka data tersebut akan ikut terhapus, anda yakin?",
+        showDenyButton: true,
+        buttons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (
+            localStorage.getItem("answerForm2" + this.$route.params.idStage) !=
+            null
+          ) {
+            localStorage.removeItem("answerForm2" + this.$route.params.idStage);
+          }
+
+          var answerForm = {
+            idParticipant: this.participant.id,
+            idStage: this.$route.params.idStage,
+          };
+
+          this.$store
+            .dispatch("answerForm/deleteAnswerForm", answerForm)
+            .then(() => {
+              this.$router.go();
+            });
+        }
+      });
     },
     uploadFile() {
       var document = new FormData();
@@ -774,34 +736,38 @@ export default {
         _answerForm.stageId = this.$route.params.idStage;
         _answerForm.participantId = this.participant.id;
 
-
-
         this.$store
           .dispatch("answerForm/createAnswerForm", _answerForm)
           .then((answerForm) => {
-            var _answerForm = JSON.parse(JSON.stringify(answerForm));
+            alert(JSON.stringify(answerForm));
+            if (answerForm != null) {
+              var _answerForm = JSON.parse(JSON.stringify(answerForm));
 
-            if (!_answerForm.session) {
-              var started_at = new Date(this.started_at);
-              var finished_at = new Date(this.finished_at);
+              if (!_answerForm.session) {
+                var started_at = new Date(this.started_at);
+                var finished_at = new Date(this.finished_at);
 
-              _answerForm.started_at = started_at.toISOString();
-              _answerForm.finished_at = finished_at.toISOString();
+                _answerForm.started_at = started_at.toISOString();
+                _answerForm.finished_at = finished_at.toISOString();
 
-              _answerForm.session = this.stageInformationOfParticipant.session;
+                _answerForm.session = this.stageInformationOfParticipant.session;
 
-              const format = _answerForm.finished_at.split("-");
-              this.year = parseInt(format[0]);
-              this.month = parseInt(format[1]);
-              const time = format[2].split("T");
-              this.date = parseInt(time[0]);
-              const clock = time[1].split(":");
-              this.hour = parseInt(clock[0]);
-              this.minute = parseInt(clock[1]);
+                const format = _answerForm.finished_at.split("-");
+                this.year = parseInt(format[0]);
+                this.month = parseInt(format[1]);
+                const time = format[2].split("T");
+                this.date = parseInt(time[0]);
+                const clock = time[1].split(":");
+                this.hour = parseInt(clock[0]);
+                this.minute = parseInt(clock[1]);
 
-              this.showRemaining();
+                this.showRemaining();
 
-              localStorage.setItem("answerForm2", JSON.stringify(_answerForm));
+                localStorage.setItem(
+                  "answerForm2" + this.$route.params.idStage,
+                  JSON.stringify(_answerForm)
+                );
+              }
             }
           });
       } else {
@@ -824,6 +790,8 @@ export default {
     },
     showRemaining() {
       const timer = setInterval(() => {
+        this.answerForm = this.answerFormByParticipantAndStage;
+
         var distance = 0;
 
         this.now = new Date();
@@ -840,7 +808,6 @@ export default {
           this.mainStep = 1;
           distance = this.finished_at1.getTime() - this.now.getTime();
         }
-        
 
         if (!this.time) {
           clearInterval(timer);
@@ -860,72 +827,15 @@ export default {
       }, 1000);
     },
   },
-  updated() {
-    if (this.answerForm != null) {
-      if (this.stageInformationOfParticipant.id == this.$route.params.idStage) {
-        if (this.step == 1) {
-          if (this.answerFormByParticipantAndStage.score != null)
-            clearInterval(this.timer);
-
-          if (
-            this.answerFormByParticipantAndStage.answers[0].uploaded == 1 &&
-            this.initialCheck == 0
-          ) {
-            this.uploaded = true;
-            this.initialCheck = 1;
-          }
-
-          this.answerForm = JSON.parse(localStorage.getItem("answerForm2"));
-
-          if (this.answerForm != null) {
-            this.step = 1;
-
-            const format = this.stage.finished_at.split("-");
-            this.year = parseInt(format[0]);
-            this.month = parseInt(format[1]);
-            const time = format[2].split("T");
-            this.date = parseInt(time[0]);
-            const clock = time[1].split(":");
-            this.hour = parseInt(clock[0]);
-            this.minute = parseInt(clock[1]);
-
-            this.showRemaining();
-          }
-        }
-      } else {
-        this.getStage();
-        this.answerForm.stageId = this.$route.params.idStage;
-        this.answerForm.participantId = this.participant.id;
-        this.items = [
-          {
-            "Mulai pengerjaan": this.getDateTime(
-              "datetime",
-              this.stage.started_at
-            ),
-            "Selesai pengerjaan": this.getDateTime(
-              "datetime",
-              this.stage.finished_at
-            ),
-            "Pengumuman lolos": this.getDateTime(
-              "datetime",
-              this.stage.started_at
-            ),
-          },
-        ];
-        this.getStageInformationOfParticipant();
-      }
-    }
-  },
+  updated() {},
   created() {
     this.answerForm.stageId = this.$route.params.idStage;
     this.answerForm.participantId = this.participant.id;
 
     var finished_at2 = new Date(this.finished_at);
     var finished_at1 = new Date(this.finished_at);
-    finished_at2 = finished_at2.setMinutes(this.finished_at.getMinutes() - 15);
-    finished_at1 = finished_at1.setMinutes(
-      this.finished_at.getMinutes() - 40
-    );
+    finished_at2 = finished_at2.setMinutes(this.finished_at.getMinutes() - 30);
+    finished_at1 = finished_at1.setMinutes(this.finished_at.getMinutes() - 35);
 
     this.finished_at2 = new Date(finished_at2);
     this.finished_at1 = new Date(finished_at1);

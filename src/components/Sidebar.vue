@@ -199,6 +199,28 @@
                   </b-row>
                 </router-link>
               </li>
+              <li
+                @click="selectedSubItem = 3"
+                v-bind:class="[selectedSubItem == 3 ? 'active' : '']"
+                v-if="checkJoinStage('OSM', 'final')"
+              >
+                <router-link
+                  class="text-white"
+                  :to="{
+                    name: 'MainStage',
+                    params: { idStage: events[0].stages[2]._id },
+                  }"
+                >
+                  <b-row>
+                    <b-col lg="1">
+                      <div class="inline"><i class="fas fa-trophy"></i></div>
+                    </b-col>
+                    <b-col class="sidebar-text" lg="10">
+                      Final
+                    </b-col>
+                  </b-row>
+                </router-link>
+              </li>
             </ul>
           </li>
           <li
@@ -491,6 +513,27 @@
                     </b-col>
                     <b-col class="sidebar-text" lg="10">
                       Semifinal
+                    </b-col>
+                  </b-row>
+                </router-link>
+              </li>
+              <li
+                @click="selectedSubItem = 3"
+                v-bind:class="[selectedSubItem == 3 ? 'active' : '']"
+              >
+                <router-link
+                  class="text-white"
+                  :to="{
+                    name: 'ListParticipantStage',
+                    params: { idStage: events[0].stages[2]._id },
+                  }"
+                >
+                  <b-row>
+                    <b-col lg="1">
+                      <div class="inline"><i class="fas fa-trophy"></i></div>
+                    </b-col>
+                    <b-col class="sidebar-text" lg="10">
+                      Final
                     </b-col>
                   </b-row>
                 </router-link>

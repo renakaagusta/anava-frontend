@@ -21,9 +21,6 @@
                   {{ stageInformationOfParticipant.number }}
                 </td>
               </tr>
-              <button class="btn btn-primary mb-2" @click="reset()">
-                Reset
-              </button>
             </table>
           </v-tab>
           <v-tab title="Jadwal">
@@ -151,6 +148,8 @@
             </div>
           </v-tab>
         </vue-tabs>
+
+        <button class="btn btn-primary mb-2" @click="reset()">Reset</button>
       </b-container>
       <input
         type="submit"
@@ -378,8 +377,8 @@ export default {
     return {
       //started_at: new Date(2021, 0, 23, 20, 0, 0),
       //finished_at: new Date(2021, 0, 23, 21, 20, 0),
-      started_at: new Date(2021, 0, 19, 27, 30, 0),
-      finished_at: new Date(2021, 0, 19, 28, 0, 0),
+      started_at: new Date(2021, 0, 21, 23, 0, 0),
+      finished_at: new Date(2021, 0, 21, 25, 0, 0),
       step: 0,
       data: [],
       answerForm: {},
