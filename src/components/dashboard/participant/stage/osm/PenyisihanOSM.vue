@@ -857,7 +857,7 @@ export default {
         );
 
         //Sesuai WIB
-        finished_at = new Date(2021, 0, 18, 21, 0, 0);
+        finished_at = new Date(2021, 0, 18, 22, 0, 0);
         
         if (this.answerForm != null)
           if (this.answerForm.correct != 0 && this.answerForm.wrong != 0) {
