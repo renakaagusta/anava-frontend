@@ -140,16 +140,7 @@
                   href="http://anavaugm.com/THE ONE/pembagian-room.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
-                  <h2 class="d-inline ml-4">Petunjuk The One Babak Gugur</h2>
-                </a>
-              </b-container>
-              <b-container class="bg-white p-3 rounded shadow-sm border">
-                <a
-                  target="blank"
-                  href="http://anavaugm.com/THE ONE/petunjuk.pdf"
-                >
-                  <i class="fa fa-download fa-3x text-dark"></i>
-                  <h2 class="d-inline ml-4">Petunjuk The One Babak Gugur</h2>
+                  <h2 class="d-inline ml-4">Pembagian Room</h2>
                 </a>
               </b-container>
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
@@ -162,17 +153,6 @@
                 </a>
               </b-container>
             </b-container>
-          </v-tab>
-          <v-tab title="Tutorial">
-            <div
-              class="container bg-white p-3 text-center text-dark rounded-lg mt-2 mb-2"
-            >
-              <p>
-                <i class="fas fa-exclamation-triangle fa-2x"></i>
-                <br />
-                Tutorial belum diunggah
-              </p>
-            </div>
           </v-tab>
         </vue-tabs>
 
