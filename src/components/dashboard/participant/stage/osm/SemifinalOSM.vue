@@ -399,10 +399,10 @@ export default {
   data() {
     return {
       now: new Date(),
-      startedAt: new Date(2021, 0, 22, 23, 0, 0),
-      finishedAt: new Date(2021, 0, 22, 24, 55, 0),
-      started_at: new Date(2021, 0, 22, 16, 0, 0),
-      finished_at: new Date(2021, 0, 22, 17, 55, 0),
+      startedAt: new Date(2021, 0, 22, 25, 0, 0),
+      finishedAt: new Date(2021, 0, 22, 27, 35, 0),
+      started_at: new Date(2021, 0, 22, 18, 0, 0),
+      finished_at: new Date(2021, 0, 22, 20, 35, 0),
       finished_at1: null,
       finished_at2: null,
       step: 0,
@@ -863,8 +863,8 @@ export default {
 
     var finished_at2 = new Date(this.finished_at);
     var finished_at1 = new Date(this.finished_at);
-    finished_at2 = finished_at2.setMinutes(this.finished_at.getMinutes() - 20);
-    finished_at1 = finished_at1.setMinutes(this.finished_at.getMinutes() - 25);
+    finished_at2 = finished_at2.setMinutes(this.finished_at.getMinutes() - 60);
+    finished_at1 = finished_at1.setMinutes(this.finished_at.getMinutes() - 65);
 
     this.finished_at2 = new Date(finished_at2);
     this.finished_at1 = new Date(finished_at1);

@@ -561,7 +561,6 @@ export default {
     },
     addFile(type) {
       var fileExtension = "";
-      alert(type);
       if (type == "started_jawaban1") {
         fileExtension = /[.]/.exec(this.fileName.started_jawaban1)
           ? /[^.]+$/.exec(this.fileName.started_jawaban1)
@@ -620,7 +619,6 @@ export default {
             showConfirmButton: true,
           }).then(() => {});
           this.answerForm.answers[number - 1] = answer;
-          alert(JSON.stringify(answer));
 
           localStorage.setItem("answerForm2", JSON.stringify(this.answerForm));
           this.loading = false;
