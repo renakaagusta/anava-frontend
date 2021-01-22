@@ -139,7 +139,7 @@
                 <b-container class="bg-white p-3 rounded shadow-sm border">
                   <a
                     target="blank"
-                    href="http://anavaugm.com/Simulasi Final OSM.pdf"
+                    href="http://anavaugm.com/final.pdf"
                   >
                     <i class="fa fa-download fa-3x text-dark"></i>
                     <h2 class="d-inline ml-4">
