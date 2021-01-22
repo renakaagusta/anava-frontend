@@ -23,6 +23,14 @@
               </tr>
             </table>
 
+            <br />
+
+            <b>Catatan</b> : <br />Apabila telah memasuki waktu pengerjaan dan
+            setelah menekan tombol mulai, lebih dari satu menit soal tidak
+            muncul harap tekan tombol reset dan login kembali
+
+            <br />
+
             <button class="btn btn-primary mb-2" @click="reset()">Reset</button>
           </v-tab>
           <v-tab title="Jadwal">
@@ -319,8 +327,8 @@ export default {
   name: "BabakChampionTheOne",
   data() {
     return {
-      started_at: new Date(2021, 0, 22, 16, 0, 0),
-      finished_at: new Date(2021, 0, 22, 18, 0, 0),
+      started_at: new Date(2021, 0, 21, 16, 0, 0),
+      finished_at: new Date(2021, 0, 21, 18, 0, 0),
       //started_at: new Date(2021, 0, 1, 14, 0, 0),
       //finished_at: new Date(2021, 0, 23, 31, 0, 0),
       step: 0,
@@ -408,7 +416,7 @@ export default {
         .dispatch("answerForm/deleteAnswerForm", answerForm)
         .then(() => {
           localStorage.clear();
-          this.$router.go('/');
+          this.$router.go("/");
         });
 
       localStorage.removeItem("selectedQuestion");
@@ -446,15 +454,19 @@ export default {
     addFile(type) {
       var fileExtension = "";
       if (type == "started_jawaban") {
-        this.fileName.started_jawaban = this.$refs.started_jawaban.files[0].name.toString();
         fileExtension = /[.]/.exec(this.fileName.started_jawaban)
           ? /[^.]+$/.exec(this.fileName.started_jawaban)
           : undefined;
-
-        this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
-        fileExtension = /[.]/.exec(this.fileName.event_document)
-          ? /[^.]+$/.exec(this.fileName.event_document)
-          : undefined;
+        if (fileExtension != "jpg" || fileExtension != "jpeg") {
+          Swal.fire({
+            title: "Format file tidak sesuai",
+            icon: "error",
+            showConfirmButton: true,
+          }).then();
+          this.fileName.started_jawaban = "Unggah file jawaban (*.jpg)";
+        } else {
+          this.fileName.started_jawaban = this.$refs.started_jawaban.files[0].name.toString();
+        }
       } else {
         if (fileExtension != "jpg" || fileExtension != "jpeg") {
           Swal.fire({

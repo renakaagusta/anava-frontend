@@ -149,6 +149,14 @@
           </v-tab>
         </vue-tabs>
 
+        <br />
+
+        <b>Catatan</b> : <br />Apabila telah memasuki waktu pengerjaan dan
+        setelah menekan tombol mulai, lebih dari satu menit soal tidak muncul
+        harap tekan tombol reset dan login kembali
+
+        <br />
+
         <button class="btn btn-primary mb-2" @click="reset()">Reset</button>
       </b-container>
       <input
@@ -376,9 +384,9 @@ export default {
   data() {
     return {
       //started_at: new Date(2021, 0, 23, 20, 0, 0),
-      //finished_at: new Date(2021, 0, 23, 22, 20, 0),
-      started_at: new Date(2021, 0, 22, 16, 0, 0),
-      finished_at: new Date(2021, 0, 22, 18, 0, 0),
+      //finished_at: new Date(2021, 0, 23, 21, 20, 0),
+      started_at: new Date(2021, 0, 22, 23, 0, 0),
+      finished_at: new Date(2021, 0, 22, 25, 0, 0),
       step: 0,
       data: [],
       answerForm: {},

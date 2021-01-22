@@ -82,7 +82,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://anavaugm.com/STARTED/guidebook.jpg"
+                  href="http://anavaugm.com/STARTED/guidebook.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Guidebook</h2>
@@ -92,7 +92,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://anavaugm.com/STARTED/tor-pekan-kreativitas.jpg"
+                  href="http://anavaugm.com/STARTED/tor-pekan-kreativitas.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">TOR</h2>
@@ -101,6 +101,13 @@
             </b-container>
           </v-tab>
         </vue-tabs>
+        <br />
+
+        <b>Catatan</b> : <br />Apabila telah memasuki waktu pengerjaan dan
+        setelah menekan tombol mulai, lebih dari satu menit soal tidak muncul
+        harap tekan tombol reset dan login kembali
+
+        <br />
         <button class="btn btn-primary mt-2 mb-2" @click="reset()">
           Reset
         </button>
@@ -122,10 +129,7 @@
             <b-col cols="12" md="12">
               <b-col lg="12">
                 <b-container class="bg-white p-3 rounded shadow-sm border">
-                  <a
-                    target="blank"
-                    href="http://anavaugm.com/semifinal1.pdf"
-                  >
+                  <a target="blank" href="http://anavaugm.com/semifinal1.pdf">
                     <i class="fa fa-download fa-3x text-dark"></i>
                     <h2 class="d-inline ml-4">
                       Simulasi Sesi 1 (Semifinal OSM)
@@ -190,11 +194,11 @@
                 </div>
                 <div v-else>
                   <div class="p-4 border">
-                    <img
+                    <embed
                       :src="
                         'http://anavaugm.com/answer_' +
                         answerFormByParticipantAndStage.answers[0]._id +
-                        '.jpg'
+                        '.pdf'
                       "
                       style="height: 900px; width: 600px"
                     />
@@ -248,10 +252,7 @@
             <b-col cols="12" md="12">
               <b-col lg="12">
                 <b-container class="bg-white p-3 rounded shadow-sm border">
-                  <a
-                    target="blank"
-                    href="http://anavaugm.com/semifinal2.pdf"
-                  >
+                  <a target="blank" href="http://anavaugm.com/semifinal2.pdf">
                     <i class="fa fa-download fa-3x text-dark"></i>
                     <h2 class="d-inline ml-4">
                       Simulasi Sesi 2 (Semifinal OSM)
@@ -319,8 +320,8 @@
                     <embed
                       :src="
                         'http://anavaugm.com/answer_' +
-                        answerFormByParticipantAndStage.answers[0]._id +
-                        '.jpg'
+                        answerFormByParticipantAndStage.answers[1]._id +
+                        '.pdf'
                       "
                       style="height: 900px; width: 600px"
                     />
@@ -370,10 +371,10 @@ export default {
   data() {
     return {
       now: new Date(),
-      startedAt: new Date(2021, 0, 22, 16, 0, 0),
-      finishedAt: new Date(2021, 0, 22, 16, 55, 0),
-      started_at: new Date(2021, 0, 22, 9, 0, 0),
-      finished_at: new Date(2021, 0, 22, 9, 55, 0),
+      startedAt: new Date(2021, 0, 21, 19, 20, 0),
+      finishedAt: new Date(2021, 0, 21, 19, 75, 0),
+      started_at: new Date(2021, 0, 21, 12, 20, 0),
+      finished_at: new Date(2021, 0, 21, 12, 75, 0),
       finished_at1: null,
       finished_at2: null,
       step: 0,
@@ -415,8 +416,8 @@ export default {
       loading: false,
       uploaded: false,
       fileName: {
-        started_jawaban: "Unggah file jawaban (*.jpg)",
-        event_document: "Unggah surat orisinalitas (*.jpg)",
+        started_jawaban: "Unggah file jawaban (*.pdf)",
+        event_document: "Unggah surat orisinalitas (*.pdf)",
       },
     };
   },
@@ -561,29 +562,23 @@ export default {
       var fileExtension = "";
       if (type == "started_jawaban") {
         this.fileName.started_jawaban = this.$refs.started_jawaban.files[0].name.toString();
+
         fileExtension = /[.]/.exec(this.fileName.started_jawaban)
           ? /[^.]+$/.exec(this.fileName.started_jawaban)
           : undefined;
-        if (fileExtension != "jpg" || fileExtension != "jpeg") {
-          this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
-          fileExtension = /[.]/.exec(this.fileName.event_document)
-            ? /[^.]+$/.exec(this.fileName.event_document)
-            : undefined;
-          if (fileExtension != "jpg") {
-            Swal.fire({
-              title: "Format file tidak sesuai",
-              icon: "error",
-              showConfirmButton: true,
-            }).then();
-            this.fileName.event_document = "Unggah surat orisinalitas (*.jpg)";
-          }
-        } else {
+          
+        if (fileExtension != "pdf") {
           Swal.fire({
             title: "Format file tidak sesuai",
             icon: "error",
             showConfirmButton: true,
           }).then();
-          this.fileName.started_jawaban = "Unggah file jawaban (*.jpg)";
+          this.fileName.started_jawaban = "Unggah file jawaban (*.pdf)";
+        } else {
+          this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
+          fileExtension = /[.]/.exec(this.fileName.event_document)
+            ? /[^.]+$/.exec(this.fileName.event_document)
+            : undefined;
         }
       }
     },
@@ -604,13 +599,13 @@ export default {
       };
 
       this.$store.dispatch("answer/uploadAnswer", formAnswer).then(
-        (answer) => {
+        () => {
           Swal.fire({
             icon: "success",
             title: "File berhasil diunggah",
             showConfirmButton: true,
           }).then(() => {});
-          this.answerForm.answers[number - 1] = answer;
+          this.answerForm.answers[number - 1].uploaded = 1;
 
           localStorage.setItem("answerForm2", JSON.stringify(this.answerForm));
           this.loading = false;
@@ -729,7 +724,7 @@ export default {
           .then((answerForm) => {
             var started_at = new Date(this.started_at);
             var finished_at = new Date(this.finished_at);
-            var _answerForm = null; 
+            var _answerForm = null;
             if (answerForm != null) {
               _answerForm = JSON.parse(JSON.stringify(answerForm));
 

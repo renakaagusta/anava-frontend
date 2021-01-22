@@ -1,6 +1,5 @@
 <template>
   <div id="working-page">
-    
     <b-container class="bg-white p-3 rounded shadow-sm mb-4" v-if="step == 0">
       <b-container class="border">
         <vue-tabs>
@@ -116,6 +115,15 @@
             </b-container>
           </v-tab>
         </vue-tabs>
+
+        <br />
+
+        <b>Catatan</b> : <br />Apabila telah memasuki waktu pengerjaan dan
+        setelah menekan tombol mulai, lebih dari satu menit soal tidak muncul
+        harap tekan tombol reset dan login kembali
+
+        <br />
+
         <button class="btn btn-primary mt-2 mb-2" @click="reset()">
           Reset
         </button>
@@ -137,14 +145,9 @@
             <b-col cols="12" md="12">
               <b-col lg="12">
                 <b-container class="bg-white p-3 rounded shadow-sm border">
-                  <a
-                    target="blank"
-                    href="http://anavaugm.com/final.pdf"
-                  >
+                  <a target="blank" href="http://anavaugm.com/final.pdf">
                     <i class="fa fa-download fa-3x text-dark"></i>
-                    <h2 class="d-inline ml-4">
-                      Simulasi Final OSM
-                    </h2>
+                    <h2 class="d-inline ml-4">Simulasi Final OSM</h2>
                   </a>
                 </b-container>
               </b-col>
@@ -166,6 +169,60 @@
                   </b-row>
                 </b-card>
               </b-col>
+            </b-col>
+            <b-col class="mt-4" cols="12" md="12">
+              <h1>Form Pengumpulan</h1>
+              <hr />
+              <br />
+              <div v-if="answerFormByParticipantAndStage.answers != null">
+                <div
+                  id="dropFileForm"
+                  v-if="
+                    answerFormByParticipantAndStage.answers[0].upload == true ||
+                    changeStartedjawaban == 1
+                  "
+                >
+                  <input
+                    type="file"
+                    id="fileStartedjawaban"
+                    ref="started_jawaban1"
+                    @change="addFile('started_jawaban1')"
+                  />
+
+                  <label for="fileStartedjawaban" id="fileLabel">
+                    <i class="fa fa-upload fa-5x"></i>
+                    <br />
+                    <span
+                      id="fileLabelText"
+                      v-html="fileName.started_jawaban1"
+                    />
+                  </label>
+
+                  <button class="uploadButton" @click="uploadAnswer(1)">
+                    <b-spinner v-if="loading" label="Spinning"></b-spinner>
+                    <p v-if="!loading" class="d-inline">Unggah</p>
+                  </button>
+                </div>
+                <div v-else>
+                  <div class="p-4 border">
+                    <embed
+                      :src="
+                        'http://anavaugm.com/answer_' +
+                        answerFormByParticipantAndStage.answers[0]._id +
+                        '.pdf'
+                      "
+                      style="height: 900px; width: 600px"
+                    />
+                    <button
+                      class="btn-purple mt-3"
+                      v-if="true"
+                      @click="changeStartedjawaban = 1"
+                    >
+                      Ganti
+                    </button>
+                  </div>
+                </div>
+              </div>
             </b-col>
           </b-row>
         </b-container>
@@ -234,13 +291,16 @@
               <div v-if="answerFormByParticipantAndStage.answers != null">
                 <div
                   id="dropFileForm"
-                  v-if="answerFormByParticipantAndStage.answers[0].upload == true || changeStartedjawaban == 1"
+                  v-if="
+                    answerFormByParticipantAndStage.answers[1].upload == true ||
+                    changeStartedjawaban == 1
+                  "
                 >
                   <input
                     type="file"
                     id="fileStartedjawaban"
-                    ref="started_jawaban"
-                    @change="addFile('started_jawaban')"
+                    ref="started_jawaban1"
+                    @change="addFile('started_jawaban2')"
                   />
 
                   <label for="fileStartedjawaban" id="fileLabel">
@@ -248,7 +308,7 @@
                     <br />
                     <span
                       id="fileLabelText"
-                      v-html="fileName.started_jawaban"
+                      v-html="fileName.started_jawaban2"
                     />
                   </label>
 
@@ -259,11 +319,11 @@
                 </div>
                 <div v-else>
                   <div class="p-4 border">
-                    <img
+                    <embed
                       :src="
                         'http://anavaugm.com/answer_' +
-                        answerFormByParticipantAndStage.answers[0]._id +
-                        '.jpg'
+                        answerFormByParticipantAndStage.answers[1]._id +
+                        '.pdf'
                       "
                       style="height: 900px; width: 600px"
                     />
@@ -313,10 +373,10 @@ export default {
   data() {
     return {
       now: new Date(),
-      startedAt: new Date(2021, 0, 22, 16, 0, 0),
-      finishedAt: new Date(2021, 0, 22, 16, 65, 0),
-      started_at: new Date(2021, 0, 22, 9, 0, 0),
-      finished_at: new Date(2021, 0, 22, 9, 55, 0),
+      startedAt: new Date(2021, 0, 21, 16, 0, 0),
+      finishedAt: new Date(2021, 0, 21, 16,75, 0),
+      started_at: new Date(2021, 0, 21, 9, 0, 0),
+      finished_at: new Date(2021, 0, 21, 9, 75, 0),
       finished_at1: null,
       finished_at2: null,
       step: 0,
@@ -358,7 +418,8 @@ export default {
       loading: false,
       uploaded: false,
       fileName: {
-        started_jawaban: "Unggah file jawaban (*.jpg)",
+        started_jawaban1: "Unggah file jawaban (*.pdf)",
+        started_jawaban2: "Unggah file jawaban (*.ppt)",
         event_document: "Unggah surat orisinalitas (*.jpg)",
       },
     };
@@ -500,20 +561,34 @@ export default {
     },
     addFile(type) {
       var fileExtension = "";
-      alert(type)
-      if (type == "started_jawaban") {
-        if (fileExtension != "jpg" || fileExtension != "jpeg") {
-          this.fileName.started_jawaban = this.$refs.started_jawaban.files[0].name.toString();
-          fileExtension = /[.]/.exec(this.fileName.started_jawaban)
-            ? /[^.]+$/.exec(this.fileName.started_jawaban)
-            : undefined;
-        } else {
+      alert(type);
+      if (type == "started_jawaban1") {
+        fileExtension = /[.]/.exec(this.fileName.started_jawaban1)
+          ? /[^.]+$/.exec(this.fileName.started_jawaban1)
+          : undefined;
+        if (fileExtension != "pdf") {
           Swal.fire({
             title: "Format file tidak sesuai",
             icon: "error",
             showConfirmButton: true,
           }).then();
-          this.fileName.started_jawaban = "Unggah file jawaban (*.jpg)";
+          this.fileName.started_jawaban1 = "Unggah file jawaban (*.pdf)";
+        } else {
+          this.fileName.started_jawaban1 = this.$refs.started_jawaban1.files[0].name.toString();
+        }
+      } else {
+        if (fileExtension != "ppt" || fileExtension != "pptx") {
+          Swal.fire({
+            title: "Format file tidak sesuai",
+            icon: "error",
+            showConfirmButton: true,
+          }).then();
+          this.fileName.started_jawaban2 = "Unggah file jawaban (*.ppt)";
+        } else {
+          this.fileName.started_jawaban2 = this.$refs.started_jawaban2.files[0].name.toString();
+          fileExtension = /[.]/.exec(this.fileName.started_jawaban2)
+            ? /[^.]+$/.exec(this.fileName.started_jawaban2)
+            : undefined;
         }
       }
     },
@@ -526,8 +601,12 @@ export default {
 
       document.append("eventName", "OSM");
       document.append("stageName", "final");
-      document.append("file", this.$refs.started_jawaban.files[0]);
-
+      document.append("number", number);
+      if (number == 1) {
+        document.append("file", this.$refs.started_jawaban1.files[0]);
+      } else {
+        document.append("file", this.$refs.started_jawaban1.files[1]);
+      }
       var formAnswer = {
         id: this.answerForm.answers[number - 1]._id,
         data: document,
@@ -541,11 +620,12 @@ export default {
             showConfirmButton: true,
           }).then(() => {});
           this.answerForm.answers[number - 1] = answer;
-          alert(JSON.stringify(answer))
+          alert(JSON.stringify(answer));
 
           localStorage.setItem("answerForm2", JSON.stringify(this.answerForm));
           this.loading = false;
           this.uploaded = true;
+          this.changeStartedJawaban = 0;
         },
         () => {
           alert("error");
