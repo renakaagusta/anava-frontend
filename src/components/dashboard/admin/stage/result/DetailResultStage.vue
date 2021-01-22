@@ -1,10 +1,7 @@
 <template>
   <div>
     <div v-if="event.name == 'OSM' || event.name == 'The One'">
-      <b-container
-        class="bg-white p-3 mt-3 shadow-sm rounded"
-        v-if="stage.name == 'preliminary'"
-      >
+      <b-container class="bg-white p-3 mt-3 shadow-sm rounded">
         <h1 class="mt-2">Data Peserta</h1>
         <hr />
         <br />
@@ -108,33 +105,53 @@
               <p>Nomor</p>
             </b-col>
             <b-col class="text-center" md="3">
-              <p>Status</p>
+              <p>Jawaban</p>
             </b-col>
           </b-row>
           <b-row
-            class="bg-white p-3 mb-2 shadow-sm rounded"
+            class="bg-white p-3 mb-2 shadow-sm rounded text-bold"
             no-gutters
-            v-for="(question, index) in questions"
-            :key="question._id"
           >
             <b-col class="text-center" md="3">
-              <p>{{ question.number }}</p>
-              <br />
+              <p>1</p>
             </b-col>
             <b-col class="text-center" md="3">
-              <p v-if="answer[index].uploaded == 1">
-                <a
-                  class="btn btn-primary ml-3 mt-3"
-                  target="blank"
-                  :href="
-                    'http://anavaugm.com/answer_' + answers[index]._id + '.jpg'
-                  "
-                >
-                  <i class="fa fa-download" />&nbsp;Unduh
-                </a>
-              </p>
-
-              <div v-else>-</div>
+              <a
+                class="btn btn-primary ml-3 mt-3"
+                target="blank"
+                :href="
+                  'http://anavaugm.com/answer_' +
+                  answerForm.answers[0]._id +
+                  '.pdf'
+                "
+                v-if="answerForm.answers[0].uploaded == 1"
+              >
+                <i class="fa fa-download" />&nbsp;Unduh
+              </a>
+              <p v-else>-</p>
+            </b-col>
+          </b-row>
+          <b-row
+            class="bg-white p-3 mb-2 shadow-sm rounded text-bold"
+            no-gutters
+          >
+            <b-col class="text-center" md="3">
+              <p>2</p>
+            </b-col>
+            <b-col class="text-center" md="3">
+              <a
+                class="btn btn-primary ml-3 mt-3"
+                target="blank"
+                :href="
+                  'http://anavaugm.com/answer_' +
+                  answerForm.answers[1]._id +
+                  '.pdf'
+                "
+                v-if="answerForm.answers[1].uploaded == 1"
+              >
+                <i class="fa fa-download" />&nbsp;Unduh
+              </a>
+              <p v-else>-</p>
             </b-col>
           </b-row>
         </div>

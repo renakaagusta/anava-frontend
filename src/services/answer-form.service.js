@@ -12,6 +12,7 @@ class AnswerFormService {
     return axios.get(API_URL + "stage/" + idStage, header(true));
   }
   getAnswerForm(id) {
+    alert(API_URL + id)
     return axios.get(API_URL + id, header());
   }
   getAnswerFormByParticipantAndStage(answerForm) {

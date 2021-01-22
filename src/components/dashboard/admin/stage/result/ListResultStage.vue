@@ -58,7 +58,7 @@
         <h3 class="text-left mt-4">Hasil</h3>
         <b-row class="bg-white p-3 mb-2 shadow-sm rounded text-bold" no-gutters>
           <b-col class="text-left" md="4">
-            <p>Hasil</p>
+            <p>Peserta</p>
           </b-col>
         </b-row>
         <b-row

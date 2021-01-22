@@ -399,10 +399,10 @@ export default {
   data() {
     return {
       now: new Date(),
-      startedAt: new Date(2021, 0, 22, 25, 20, 0),
-      finishedAt: new Date(2021, 0, 22, 27, 35, 0),
-      started_at: new Date(2021, 0, 22, 18, 30, 0),
-      finished_at: new Date(2021, 0, 22, 20, 35, 0),
+      startedAt: new Date(2021, 0, 22, 23, 0, 0),
+      finishedAt: new Date(2021, 0, 22, 24, 55, 0),
+      started_at: new Date(2021, 0, 22, 16, 0, 0),
+      finished_at: new Date(2021, 0, 22, 17, 55, 0),
       finished_at1: null,
       finished_at2: null,
       step: 0,
@@ -638,6 +638,7 @@ export default {
           localStorage.setItem("answerForm2", JSON.stringify(this.answerForm));
           this.loading = false;
           this.uploaded = true;
+          this.changeStartedJawaban;
         },
         () => {
           alert("error");
