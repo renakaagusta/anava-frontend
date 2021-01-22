@@ -88,14 +88,42 @@
                   <h2 class="d-inline ml-4">Guidebook</h2>
                 </a>
               </b-container>
-
-              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
+              <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://anavaugm.com/STARTED/tor-pekan-kreativitas.pdf"
+                  href="http://anavaugm.com/OSM/petunjuk-semifinal.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
-                  <h2 class="d-inline ml-4">TOR</h2>
+                  <h2 class="d-inline ml-4">Petunjuk OSM Semifinal</h2>
+                </a>
+              </b-container>
+              <b-container class="bg-white p-3 rounded shadow-sm border">
+                <a
+                  target="blank"
+                  href="http://anavaugm.com/OSM/pembagian-room.pdf"
+                >
+                  <i class="fa fa-download fa-3x text-dark"></i>
+                  <h2 class="d-inline ml-4">
+                    Pembagian Room dan LO Semifinal OSM
+                  </h2>
+                </a>
+              </b-container>
+              <b-container class="bg-white p-3 rounded shadow-sm border">
+                <a
+                  target="blank"
+                  href="http://anavaugm.com/OSM/lembar-jawab-1.pdf"
+                >
+                  <i class="fa fa-download fa-3x text-dark"></i>
+                  <h2 class="d-inline ml-4">Lembar Jawab Sesi 1</h2>
+                </a>
+              </b-container>
+              <b-container class="bg-white p-3 rounded shadow-sm border">
+                <a
+                  target="blank"
+                  href="http://anavaugm.com/OSM/lembar-jawab-2.pdf"
+                >
+                  <i class="fa fa-download fa-3x text-dark"></i>
+                  <h2 class="d-inline ml-4">Lembar Jawab Sesi 2</h2>
                 </a>
               </b-container>
             </b-container>
@@ -371,10 +399,10 @@ export default {
   data() {
     return {
       now: new Date(),
-      startedAt: new Date(2021, 0, 21, 19, 20, 0),
-      finishedAt: new Date(2021, 0, 21, 19, 75, 0),
-      started_at: new Date(2021, 0, 21, 12, 20, 0),
-      finished_at: new Date(2021, 0, 21, 12, 75, 0),
+      startedAt: new Date(2021, 0, 22, 25, 20, 0),
+      finishedAt: new Date(2021, 0, 22, 27, 35, 0),
+      started_at: new Date(2021, 0, 22, 18, 30, 0),
+      finished_at: new Date(2021, 0, 22, 20, 35, 0),
       finished_at1: null,
       finished_at2: null,
       step: 0,
@@ -566,7 +594,7 @@ export default {
         fileExtension = /[.]/.exec(this.fileName.started_jawaban)
           ? /[^.]+$/.exec(this.fileName.started_jawaban)
           : undefined;
-          
+
         if (fileExtension != "pdf") {
           Swal.fire({
             title: "Format file tidak sesuai",
