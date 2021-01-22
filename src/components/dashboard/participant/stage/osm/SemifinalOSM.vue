@@ -399,9 +399,9 @@ export default {
   data() {
     return {
       now: new Date(),
-      startedAt: new Date(2021, 0, 22, 25, 0, 0),
+      startedAt: new Date(2021, 0, 22, 25, 30, 0),
       finishedAt: new Date(2021, 0, 22, 27, 35, 0),
-      started_at: new Date(2021, 0, 22, 18, 0, 0),
+      started_at: new Date(2021, 0, 22, 18, 30, 0),
       finished_at: new Date(2021, 0, 22, 20, 35, 0),
       finished_at1: null,
       finished_at2: null,
