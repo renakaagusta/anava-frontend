@@ -157,10 +157,10 @@
             <b-col cols="12" md="12">
               <b-col lg="12">
                 <b-container class="bg-white p-3 rounded shadow-sm border">
-                  <a target="blank" href="http://anavaugm.com/semifinal1.pdf">
+                  <a target="blank" href="http://anavaugm.com/Soal Semifinal Sesi 1 (FIX).pdf">
                     <i class="fa fa-download fa-3x text-dark"></i>
                     <h2 class="d-inline ml-4">
-                      Simulasi Sesi 1 (Semifinal OSM)
+                      Soal Sesi 1 (Semifinal OSM)
                     </h2>
                   </a>
                 </b-container>
@@ -280,10 +280,10 @@
             <b-col cols="12" md="12">
               <b-col lg="12">
                 <b-container class="bg-white p-3 rounded shadow-sm border">
-                  <a target="blank" href="http://anavaugm.com/semifinal2.pdf">
+                  <a target="blank" href="Soal Semifinal Sesi 2 (FIX).pdf">
                     <i class="fa fa-download fa-3x text-dark"></i>
                     <h2 class="d-inline ml-4">
-                      Simulasi Sesi 2 (Semifinal OSM)
+                      Soal Sesi 2 (Semifinal OSM)
                     </h2>
                   </a>
                 </b-container>
@@ -399,11 +399,15 @@ export default {
   data() {
     return {
       now: new Date(),
-      startedAt: new Date(2021, 0, 22, 25, 30, 0),
-      finishedAt: new Date(2021, 0, 22, 27, 35, 0),
-      started_at: new Date(2021, 0, 22, 18, 30, 0),
-      finished_at: new Date(2021, 0, 22, 20, 35, 0),
-      finished_at1: null,
+      startedAt: new Date(2021, 0, 22, 30, 30, 0),
+      finishedAt: new Date(2021, 0, 22, 32, 35, 0),
+      started_at: new Date(2021, 0, 22, 23, 40, 0),
+      finished_at: new Date(2021, 0, 22, 25, 40, 0),
+      /*startedAt: new Date(2021, 0, 23, 25, 30, 0),
+      finishedAt: new Date(2021, 0, 23, 27, 35, 0),
+      started_at: new Date(2021, 0, 23, 8, 40, 0),
+      finished_at: new Date(2021, 0, 23, 10, 40, 0),
+      */finished_at1: null,
       finished_at2: null,
       step: 0,
       mainStep: 0,
@@ -864,7 +868,7 @@ export default {
     var finished_at2 = new Date(this.finished_at);
     var finished_at1 = new Date(this.finished_at);
     finished_at2 = finished_at2.setMinutes(this.finished_at.getMinutes() - 60);
-    finished_at1 = finished_at1.setMinutes(this.finished_at.getMinutes() - 65);
+    finished_at1 = finished_at1.setMinutes(this.finished_at.getMinutes() - 80);
 
     this.finished_at2 = new Date(finished_at2);
     this.finished_at1 = new Date(finished_at1);
