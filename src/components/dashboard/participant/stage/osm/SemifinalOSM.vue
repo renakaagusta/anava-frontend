@@ -124,7 +124,7 @@
                 <b-container class="bg-white p-3 rounded shadow-sm border">
                   <a
                     target="blank"
-                    href="http://anavaugm.com/Simulasi Sesi 1 (Semifinal OSM).jpg"
+                    href="http://anavaugm.com/semifinal1.pdf"
                   >
                     <i class="fa fa-download fa-3x text-dark"></i>
                     <h2 class="d-inline ml-4">
@@ -250,7 +250,7 @@
                 <b-container class="bg-white p-3 rounded shadow-sm border">
                   <a
                     target="blank"
-                    href="http://anavaugm.com/Simulasi Sesi 2 (Semifinal OSM).jpg"
+                    href="http://anavaugm.com/semifinal2.pdf"
                   >
                     <i class="fa fa-download fa-3x text-dark"></i>
                     <h2 class="d-inline ml-4">
@@ -370,10 +370,10 @@ export default {
   data() {
     return {
       now: new Date(),
-      startedAt: new Date(2021, 0, 22, 16, 0, 0),
-      finishedAt: new Date(2021, 0, 22, 16, 55, 0),
-      started_at: new Date(2021, 0, 22, 9, 0, 0),
-      finished_at: new Date(2021, 0, 22, 9, 55, 0),
+      startedAt: new Date(2021, 0, 21, 16, 0, 0),
+      finishedAt: new Date(2021, 0, 21, 16, 55, 0),
+      started_at: new Date(2021, 0, 21, 9, 0, 0),
+      finished_at: new Date(2021, 0, 21, 9, 55, 0),
       finished_at1: null,
       finished_at2: null,
       step: 0,
