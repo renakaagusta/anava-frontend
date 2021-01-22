@@ -1,6 +1,5 @@
 <template>
   <div id="working-page">
-    {{ finished_at1 }}<br/>{{ finished_at2 }}<br/>{{ finished_at }}
     <b-container class="bg-white p-3 rounded shadow-sm mb-4" v-if="step == 0">
       <b-container class="border">
         <vue-tabs>
@@ -404,8 +403,8 @@ export default {
       finishedAt: new Date(2021, 0, 22, 32, 40, 0),
       started_at: new Date(2021, 0, 22, 23, 40, 0),
       finished_at: new Date(2021, 0, 22, 25, 40, 0),
-      */startedAt: new Date(2021, 0, 23, 25, 40, 0),
-      finishedAt: new Date(2021, 0, 23, 27, 40, 0),
+      */startedAt: new Date(2021, 0, 23, 15, 40, 0),
+      finishedAt: new Date(2021, 0, 23, 17, 40, 0),
       started_at: new Date(2021, 0, 23, 8, 40, 0),
       finished_at: new Date(2021, 0, 23, 10, 40, 0),
       finished_at1: null,
