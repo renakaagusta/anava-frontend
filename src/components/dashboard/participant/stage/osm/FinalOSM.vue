@@ -27,14 +27,14 @@
               <tr class="border">
                 <td><b>Mulai pengerjaan</b></td>
                 <td v-if="stage.started_at != null">
-                  {{ getDateTime("datetime", getTime(started_at)) }}
+                  {{ getDateTime("datetime", getTime(startedAt)) }}
                 </td>
                 <td v-else>-</td>
               </tr>
               <tr class="border">
                 <td><b>Selesai pengerjaan</b></td>
                 <td v-if="stage.finished_at != null">
-                  {{ getDateTime("datetime", getTime(finished_at)) }}
+                  {{ getDateTime("datetime", getTime(finishedAt)) }}
                 </td>
                 <td v-else>-</td>
               </tr>
@@ -139,20 +139,17 @@
                 <b-container class="bg-white p-3 rounded shadow-sm border">
                   <a
                     target="blank"
-                    href="http://localhost:8080/Simulasi Final OSM.pdf"
+                    href="http://anavaugm.com/Simulasi Final OSM.pdf"
                   >
                     <i class="fa fa-download fa-3x text-dark"></i>
                     <h2 class="d-inline ml-4">
-                      Simulasi Sesi 1 (Final OSM)
+                      Simulasi Final OSM
                     </h2>
                   </a>
                 </b-container>
               </b-col>
             </b-col>
             <b-col cols="12" md="12">
-              <h1 class="mt-3">Sisa Waktu</h1>
-              <hr />
-              <br />
               <b-col lg="12">
                 <b-card>
                   <b-row class="h2 mt-4">
@@ -237,7 +234,7 @@
               <div v-if="answerFormByParticipantAndStage.answers != null">
                 <div
                   id="dropFileForm"
-                  v-if="uploaded == false || changeStartedjawaban == 1"
+                  v-if="answerFormByParticipantAndStage.answers[0].upload == true || changeStartedjawaban == 1"
                 >
                   <input
                     type="file"
@@ -255,14 +252,14 @@
                     />
                   </label>
 
-                  <button class="uploadButton" @click="uploadAnswer(2)">
+                  <button class="uploadButton" @click="uploadAnswer(1)">
                     <b-spinner v-if="loading" label="Spinning"></b-spinner>
                     <p v-if="!loading" class="d-inline">Unggah</p>
                   </button>
                 </div>
                 <div v-else>
                   <div class="p-4 border">
-                    <embed
+                    <img
                       :src="
                         'http://anavaugm.com/answer_' +
                         answerFormByParticipantAndStage.answers[0]._id +
@@ -316,8 +313,10 @@ export default {
   data() {
     return {
       now: new Date(),
-      started_at: new Date(2021, 0, 3, 8, 0, 0),
-      finished_at: new Date(2021, 0, 21, 10, 40, 0),
+      startedAt: new Date(2021, 0, 22, 16, 0, 0),
+      finishedAt: new Date(2021, 0, 22, 16, 65, 0),
+      started_at: new Date(2021, 0, 22, 9, 0, 0),
+      finished_at: new Date(2021, 0, 22, 9, 65, 0),
       finished_at1: null,
       finished_at2: null,
       step: 0,
@@ -501,24 +500,13 @@ export default {
     },
     addFile(type) {
       var fileExtension = "";
+      alert(type)
       if (type == "started_jawaban") {
-        this.fileName.started_jawaban = this.$refs.started_jawaban.files[0].name.toString();
-        fileExtension = /[.]/.exec(this.fileName.started_jawaban)
-          ? /[^.]+$/.exec(this.fileName.started_jawaban)
-          : undefined;
         if (fileExtension != "jpg" || fileExtension != "jpeg") {
-          this.fileName.event_document = this.$refs.event_document.files[0].name.toString();
-          fileExtension = /[.]/.exec(this.fileName.event_document)
-            ? /[^.]+$/.exec(this.fileName.event_document)
+          this.fileName.started_jawaban = this.$refs.started_jawaban.files[0].name.toString();
+          fileExtension = /[.]/.exec(this.fileName.started_jawaban)
+            ? /[^.]+$/.exec(this.fileName.started_jawaban)
             : undefined;
-          if (fileExtension != "jpg") {
-            Swal.fire({
-              title: "Format file tidak sesuai",
-              icon: "error",
-              showConfirmButton: true,
-            }).then();
-            this.fileName.event_document = "Unggah surat orisinalitas (*.jpg)";
-          }
         } else {
           Swal.fire({
             title: "Format file tidak sesuai",
@@ -553,6 +541,7 @@ export default {
             showConfirmButton: true,
           }).then(() => {});
           this.answerForm.answers[number - 1] = answer;
+          alert(JSON.stringify(answer))
 
           localStorage.setItem("answerForm2", JSON.stringify(this.answerForm));
           this.loading = false;
@@ -591,36 +580,6 @@ export default {
             });
         }
       });
-    },
-    uploadFile() {
-      var document = new FormData();
-
-      this.loading = true;
-      document.append("file", this.$refs.event_document.files[0]);
-      document.append("participantId", this.participant.id);
-
-      var formParticipant = {
-        id: this.event._id,
-        document: document,
-        participantId: this.participant.id,
-      };
-
-      this.$store.dispatch("event/uploadEvent", formParticipant).then(
-        (response) => {
-          Swal.fire({
-            title: "Berhasil mengunggah dokumen",
-            icon: "success",
-            showConfirmButton: true,
-          }).then();
-          this.loading = false;
-          const participant = response.data.data;
-          var user = JSON.parse(localStorage.getItem("user"));
-          user.participant = participant.participant;
-          localStorage.setItem("user", JSON.stringify(user));
-          this.getStageInformationOfParticipant();
-        },
-        () => {}
-      );
     },
     getStage() {
       this.$store.dispatch("stage/getStage", this.$route.params.idStage);
@@ -812,8 +771,8 @@ export default {
 
     var finished_at2 = new Date(this.finished_at);
     var finished_at1 = new Date(this.finished_at);
-    finished_at2 = finished_at2.setMinutes(this.finished_at.getMinutes() - 30);
-    finished_at1 = finished_at1.setMinutes(this.finished_at.getMinutes() - 35);
+    finished_at2 = finished_at2.setMinutes(this.finished_at.getMinutes() - 20);
+    finished_at1 = finished_at1.setMinutes(this.finished_at.getMinutes() - 25);
 
     this.finished_at2 = new Date(finished_at2);
     this.finished_at1 = new Date(finished_at1);

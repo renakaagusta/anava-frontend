@@ -1,5 +1,5 @@
 <template>
-  <div id="working-page">{{ started_at }}<br/>{{ finished_at }}<br/>{{ now }}
+  <div id="working-page">
     <b-container class="bg-white p-3 rounded shadow-sm mb-4" v-if="step == 0">
       <b-container class="border">
         <vue-tabs>
@@ -26,14 +26,14 @@
               <tr class="border">
                 <td><b>Mulai pengerjaan</b></td>
                 <td v-if="stage.started_at != null">
-                  {{ getDateTime("datetime", getTime(started_at)) }}
+                  {{ getDateTime("datetime", getTime(startedAt)) }}
                 </td>
                 <td v-else>-</td>
               </tr>
               <tr class="border">
                 <td><b>Selesai pengerjaan</b></td>
                 <td v-if="stage.finished_at != null">
-                  {{ getDateTime("datetime", getTime(finished_at)) }}
+                  {{ getDateTime("datetime", getTime(finishedAt)) }}
                 </td>
                 <td v-else>-</td>
               </tr>
@@ -88,15 +88,7 @@
                   <h2 class="d-inline ml-4">Guidebook</h2>
                 </a>
               </b-container>
-              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
-                <a
-                  target="blank"
-                  href="http://anavaugm.com/STARTED/surat-orisinalitas.jpg"
-                >
-                  <i class="fa fa-download fa-3x text-dark"></i>
-                  <h2 class="d-inline ml-4">Surat Orisinalitas</h2>
-                </a>
-              </b-container>
+
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
@@ -104,12 +96,6 @@
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">TOR</h2>
-                </a>
-              </b-container>
-              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
-                <a target="blank" href="http://anavaugm.com/logo-anava.jpg">
-                  <i class="fa fa-download fa-3x text-dark"></i>
-                  <h2 class="d-inline ml-4">Logo ANAVA</h2>
                 </a>
               </b-container>
             </b-container>
@@ -138,7 +124,7 @@
                 <b-container class="bg-white p-3 rounded shadow-sm border">
                   <a
                     target="blank"
-                    href="http://localhost:8080/Simulasi Sesi 1 (Semifinal OSM).jpg"
+                    href="http://anavaugm.com/Simulasi Sesi 1 (Semifinal OSM).jpg"
                   >
                     <i class="fa fa-download fa-3x text-dark"></i>
                     <h2 class="d-inline ml-4">
@@ -264,7 +250,7 @@
                 <b-container class="bg-white p-3 rounded shadow-sm border">
                   <a
                     target="blank"
-                    href="http://localhost:8080/Simulasi Sesi 2 (Semifinal OSM).jpg"
+                    href="http://anavaugm.com/Simulasi Sesi 2 (Semifinal OSM).jpg"
                   >
                     <i class="fa fa-download fa-3x text-dark"></i>
                     <h2 class="d-inline ml-4">
@@ -384,8 +370,10 @@ export default {
   data() {
     return {
       now: new Date(),
-      started_at: new Date(2021, 0, 21, 19, 0, 0),
-      finished_at: new Date(2021, 0, 21, 21, 0, 0),
+      startedAt: new Date(2021, 0, 22, 16, 0, 0),
+      finishedAt: new Date(2021, 0, 22, 16, 55, 0),
+      started_at: new Date(2021, 0, 22, 9, 0, 0),
+      finished_at: new Date(2021, 0, 22, 9, 55, 0),
       finished_at1: null,
       finished_at2: null,
       step: 0,
@@ -739,14 +727,13 @@ export default {
         this.$store
           .dispatch("answerForm/createAnswerForm", _answerForm)
           .then((answerForm) => {
-            alert(JSON.stringify(answerForm));
+            var started_at = new Date(this.started_at);
+            var finished_at = new Date(this.finished_at);
+            var _answerForm = null; 
             if (answerForm != null) {
-              var _answerForm = JSON.parse(JSON.stringify(answerForm));
+              _answerForm = JSON.parse(JSON.stringify(answerForm));
 
               if (!_answerForm.session) {
-                var started_at = new Date(this.started_at);
-                var finished_at = new Date(this.finished_at);
-
                 _answerForm.started_at = started_at.toISOString();
                 _answerForm.finished_at = finished_at.toISOString();
 
@@ -768,6 +755,24 @@ export default {
                   JSON.stringify(_answerForm)
                 );
               }
+            } else {
+              _answerForm = this.answerFormByParticipantAndStage;
+
+              _answerForm.started_at = started_at.toISOString();
+              _answerForm.finished_at = finished_at.toISOString();
+
+              _answerForm.session = this.stageInformationOfParticipant.session;
+
+              const format = _answerForm.finished_at.split("-");
+              this.year = parseInt(format[0]);
+              this.month = parseInt(format[1]);
+              const time = format[2].split("T");
+              this.date = parseInt(time[0]);
+              const clock = time[1].split(":");
+              this.hour = parseInt(clock[0]);
+              this.minute = parseInt(clock[1]);
+
+              this.showRemaining();
             }
           });
       } else {
@@ -834,8 +839,8 @@ export default {
 
     var finished_at2 = new Date(this.finished_at);
     var finished_at1 = new Date(this.finished_at);
-    finished_at2 = finished_at2.setMinutes(this.finished_at.getMinutes() - 50);
-    finished_at1 = finished_at1.setMinutes(this.finished_at.getMinutes() - 55);
+    finished_at2 = finished_at2.setMinutes(this.finished_at.getMinutes() - 20);
+    finished_at1 = finished_at1.setMinutes(this.finished_at.getMinutes() - 25);
 
     this.finished_at2 = new Date(finished_at2);
     this.finished_at1 = new Date(finished_at1);

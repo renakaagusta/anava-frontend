@@ -486,6 +486,7 @@ export default {
       this.$store
         .dispatch("answerForm/deleteAnswerForm", answerForm)
         .then(() => {
+          localStorage.clear();
           this.$router.go();
         });
     },

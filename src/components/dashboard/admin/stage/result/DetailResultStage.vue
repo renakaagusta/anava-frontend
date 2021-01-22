@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="event.name == 'OSM' && answerForm!=null">
+    <div v-if="event.name == 'OSM' || event.name == 'The One'">
       <b-container
         class="bg-white p-3 mt-3 shadow-sm rounded"
         v-if="stage.name == 'preliminary'"
@@ -19,8 +19,8 @@
               <td>
                 {{
                   answerForm.participant.firstname +
-                    " " +
-                    answerForm.participant.lastname
+                  " " +
+                  answerForm.participant.lastname
                 }}
               </td>
             </tr>
@@ -36,9 +36,9 @@
                   target="blank"
                   :href="
                     'http://anavaugm.com/event_document_' +
-                      event._id +
-                      answerForm.participant._id +
-                      '.pdf'
+                    event._id +
+                    answerForm.participant._id +
+                    '.pdf'
                   "
                 >
                   <i class="fa fa-download" />&nbsp;Unduh
@@ -50,7 +50,7 @@
         <h1 class="mt-3">Lembar Jawaban</h1>
         <hr />
         <br />
-        <div class="p-3 border">
+        <div class="p-3 border" v-if="stage.name == 'preliminary'">
           <b-row
             class="bg-white p-3 mb-2 shadow-sm rounded text-bold"
             no-gutters
@@ -75,10 +75,10 @@
             :key="question._id"
           >
             <b-col class="text-center" md="3">
-              <p>{{ question.number }}</p><br/>
+              <p>{{ question.number }}</p>
+              <br />
             </b-col>
-            <b-col class="text-center" md="3"
-              >
+            <b-col class="text-center" md="3">
               <p>{{ question.key }}</p>
             </b-col>
             <b-col class="text-center" md="3">
@@ -99,26 +99,44 @@
             </b-col>
           </b-row>
         </div>
-        <h1 class="mt-3">Penilaian</h1>
-        <hr />
-        <br />
-        <div class="p-3 border text-center">
-          <p>
-            Benar : <b>{{ answerForm.correct }}</b>
-          </p>
-          <br />
-          <p>
-            Salah : <b>{{ answerForm.wrong }}</b>
-          </p>
-          <br />
-          <p>
-            Kosong : <b>{{ answerForm.empty }}</b>
-          </p>
-          <br />
-          <p>
-            Nilai akhir : <b>{{ answerForm.score }}</b>
-          </p>
-          <br />
+        <div class="p-3 border" v-if="stage.name == 'semifinal'">
+          <b-row
+            class="bg-white p-3 mb-2 shadow-sm rounded text-bold"
+            no-gutters
+          >
+            <b-col class="text-center" md="3">
+              <p>Nomor</p>
+            </b-col>
+            <b-col class="text-center" md="3">
+              <p>Status</p>
+            </b-col>
+          </b-row>
+          <b-row
+            class="bg-white p-3 mb-2 shadow-sm rounded"
+            no-gutters
+            v-for="(question, index) in questions"
+            :key="question._id"
+          >
+            <b-col class="text-center" md="3">
+              <p>{{ question.number }}</p>
+              <br />
+            </b-col>
+            <b-col class="text-center" md="3">
+              <p v-if="answer[index].uploaded == 1">
+                <a
+                  class="btn btn-primary ml-3 mt-3"
+                  target="blank"
+                  :href="
+                    'http://anavaugm.com/answer_' + answers[index]._id + '.jpg'
+                  "
+                >
+                  <i class="fa fa-download" />&nbsp;Unduh
+                </a>
+              </p>
+
+              <div v-else>-</div>
+            </b-col>
+          </b-row>
         </div>
       </b-container>
     </div>
@@ -141,8 +159,8 @@
               <td>
                 {{
                   answerForm.participant.firstname +
-                    " " +
-                    answerForm.participant.lastname
+                  " " +
+                  answerForm.participant.lastname
                 }}
               </td>
             </tr>
@@ -158,9 +176,9 @@
                   target="blank"
                   :href="
                     'http://anavaugm.com/event_document_' +
-                      event._id +
-                      answerForm.participant._id +
-                      '.pdf'
+                    event._id +
+                    answerForm.participant._id +
+                    '.pdf'
                   "
                 >
                   <i class="fa fa-download" />&nbsp;Unduh
@@ -267,8 +285,8 @@
               <td>
                 {{
                   answerForm.participant.firstname +
-                    " " +
-                    answerForm.participant.lastname
+                  " " +
+                  answerForm.participant.lastname
                 }}
               </td>
             </tr>
@@ -284,9 +302,9 @@
                   target="blank"
                   :href="
                     'http://anavaugm.com/event_document_' +
-                      event._id +
-                      answerForm.participant._id +
-                      '.pdf'
+                    event._id +
+                    answerForm.participant._id +
+                    '.pdf'
                   "
                 >
                   <i class="fa fa-download" />&nbsp;Unduh
@@ -398,8 +416,8 @@
               <td>
                 {{
                   answerForm.participant.firstname +
-                    " " +
-                    answerForm.participant.lastname
+                  " " +
+                  answerForm.participant.lastname
                 }}
               </td>
             </tr>
@@ -415,9 +433,9 @@
                   target="blank"
                   :href="
                     'http://anavaugm.com/event_document_' +
-                      event._id +
-                      answerForm.participant._id +
-                      '.pdf'
+                    event._id +
+                    answerForm.participant._id +
+                    '.pdf'
                   "
                 >
                   <i class="fa fa-download" />&nbsp;Unduh
@@ -434,7 +452,7 @@
             :src="
               'http://anavaugm.com/answer_' + answerForm.answers[0]._id + '.png'
             "
-            style="height:900px; width: 600px;"
+            style="height: 900px; width: 600px"
           />
         </div>
         <h1 class="mt-3">Penilaian</h1>
@@ -450,7 +468,7 @@
           <a
             href="#"
             @click="setAnswerFormScore()"
-            class="btn btn-primary  mt-3"
+            class="btn btn-primary mt-3"
             type="submit"
           >
             <i class="far fa-save text-white"></i>

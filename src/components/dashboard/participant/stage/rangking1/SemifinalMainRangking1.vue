@@ -319,8 +319,8 @@ export default {
   name: "BabakChampionTheOne",
   data() {
     return {
-      started_at: new Date(2021, 0, 21, 23, 20, 0),
-      finished_at: new Date(2021, 0, 21, 28, 0, 0),
+      started_at: new Date(2021, 0, 22, 15, 0, 0),
+      finished_at: new Date(2021, 0, 22, 17, 0, 0),
       //started_at: new Date(2021, 0, 1, 14, 0, 0),
       //finished_at: new Date(2021, 0, 23, 31, 0, 0),
       step: 0,
@@ -407,10 +407,11 @@ export default {
       this.$store
         .dispatch("answerForm/deleteAnswerForm", answerForm)
         .then(() => {
-          this.$router.go();
+          localStorage.clear();
+          this.$router.go('/');
         });
 
-      localStorage.removeItem("selectedQuestion")
+      localStorage.removeItem("selectedQuestion");
     },
     selectQuestion(index) {
       if (this.answerForm.money >= this.answerForm.questions[index].price) {
@@ -646,7 +647,7 @@ export default {
             this.answerForm = _answerForm;
             this.step = 1;
 
-            localStorage.removeItem("selectedQuestion")
+            localStorage.removeItem("selectedQuestion");
           }
         });
     },

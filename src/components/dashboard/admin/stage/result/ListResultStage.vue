@@ -1,57 +1,97 @@
 <template>
   <div>
-    <div>
-      <h3 class="text-left mt-4">Peserta</h3>
-      <b-row class="bg-white p-3 mb-2 shadow-sm rounded text-bold" no-gutters>
-        <b-col class="text-left" md="4">
-          <p>Peserta</p>
-        </b-col>
-        <b-col md="2">
-          <p>Benar</p>
-        </b-col>
-        <b-col md="2">
-          <p>Kosong</p>
-        </b-col>
-        <b-col md="2">
-          <p>Salah</p>
-        </b-col>
-        <b-col md="2">
-          <p>Nilai</p>
-        </b-col>
-      </b-row>
-      <b-row
-        class="bg-white p-2 mb-2 shadow-sm rounded"
-        no-gutters
-        v-for="(answerForm, index) in answerForms"
-        :key="answerForm._id"
-      >
-        <b-col md="1">
-          {{ index + 1 }}
-        </b-col>
-        <b-col md="3">
-          <p class="text-bold">{{ answerForm.participant.username }}</p>
-          <br />
-          <p class="text-secondary">
-            {{
-              answerForm.participant.firstname +
-              " " +
-              answerForm.participant.lastname
-            }}
-          </p>
-        </b-col>
-        <b-col md="2">
-          {{ answerForm.correct }}
-        </b-col>
-        <b-col md="2">
-          {{ answerForm.empty }}
-        </b-col>
-        <b-col md="2">
-          {{ answerForm.wrong }}
-        </b-col>
-        <b-col md="2">
-          {{ answerForm.score }}
-        </b-col>
-      </b-row>
+    <div v-if="event.name == 'OSM' || event.name == 'The One'">
+      <div v-if="stage.name == 'preliminary'">
+        <h3 class="text-left mt-4">Hasil</h3>
+        <b-row class="bg-white p-3 mb-2 shadow-sm rounded text-bold" no-gutters>
+          <b-col class="text-left" md="4">
+            <p>Peserta</p>
+          </b-col>
+          <b-col md="2">
+            <p>Benar</p>
+          </b-col>
+          <b-col md="2">
+            <p>Kosong</p>
+          </b-col>
+          <b-col md="2">
+            <p>Salah</p>
+          </b-col>
+          <b-col md="2">
+            <p>Nilai</p>
+          </b-col>
+        </b-row>
+        <b-row
+          class="bg-white p-2 mb-2 shadow-sm rounded"
+          no-gutters
+          v-for="(answerForm, index) in answerForms"
+          :key="answerForm._id"
+        >
+          <b-col md="1">
+            {{ index + 1 }}
+          </b-col>
+          <b-col md="3">
+            <p class="text-bold">{{ answerForm.participant.username }}</p>
+            <br />
+            <p class="text-secondary">
+              {{
+                answerForm.participant.firstname +
+                " " +
+                answerForm.participant.lastname
+              }}
+            </p>
+          </b-col>
+          <b-col md="2">
+            {{ answerForm.correct }}
+          </b-col>
+          <b-col md="2">
+            {{ answerForm.empty }}
+          </b-col>
+          <b-col md="2">
+            {{ answerForm.wrong }}
+          </b-col>
+          <b-col md="2">
+            {{ answerForm.score }}
+          </b-col>
+        </b-row>
+      </div>
+      <div v-else>
+        <h3 class="text-left mt-4">Hasil</h3>
+        <b-row class="bg-white p-3 mb-2 shadow-sm rounded text-bold" no-gutters>
+          <b-col class="text-left" md="4">
+            <p>Hasil</p>
+          </b-col>
+        </b-row>
+        <b-row
+          class="bg-white p-2 mb-2 shadow-sm rounded"
+          no-gutters
+          v-for="(answerForm, index) in answerForms"
+          :key="answerForm._id"
+        >
+          <b-col md="1">
+            {{ index + 1 }}
+          </b-col>
+          <b-col md="3">
+            <p class="text-bold">{{ answerForm.participant.username }}</p>
+            <br />
+            <p class="text-secondary">
+              {{
+                answerForm.participant.firstname +
+                " " +
+                answerForm.participant.lastname
+              }}
+            </p>
+          </b-col>
+          <b-col md="3">
+            <router-link
+              class="btn btn-primary"
+              :to="'result/' + answerForm._id"
+            >
+              <i class="fas fa-search"></i>
+              Detail
+            </router-link>
+          </b-col>
+        </b-row>
+      </div>
     </div>
   </div>
 </template>
@@ -86,7 +126,6 @@ export default {
         list[index].answers = null;
         list[index]._questions = null;
         list[index]._answers = null;
-        list[index]._id = null;
         list[index].created_at = null;
         list[index].updated_at = null;
 
