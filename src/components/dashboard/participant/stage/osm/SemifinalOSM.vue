@@ -1,5 +1,6 @@
 <template>
   <div id="working-page">
+    {{ finished_at1 }}<br/>{{ finished_at2 }}<br/>{{ finished_at }}
     <b-container class="bg-white p-3 rounded shadow-sm mb-4" v-if="step == 0">
       <b-container class="border">
         <vue-tabs>
@@ -399,15 +400,15 @@ export default {
   data() {
     return {
       now: new Date(),
-      startedAt: new Date(2021, 0, 22, 30, 30, 0),
-      finishedAt: new Date(2021, 0, 22, 32, 35, 0),
+      /*startedAt: new Date(2021, 0, 22, 30, 40, 0),
+      finishedAt: new Date(2021, 0, 22, 32, 40, 0),
       started_at: new Date(2021, 0, 22, 23, 40, 0),
       finished_at: new Date(2021, 0, 22, 25, 40, 0),
-      /*startedAt: new Date(2021, 0, 23, 25, 30, 0),
-      finishedAt: new Date(2021, 0, 23, 27, 35, 0),
+      */startedAt: new Date(2021, 0, 23, 25, 40, 0),
+      finishedAt: new Date(2021, 0, 23, 27, 40, 0),
       started_at: new Date(2021, 0, 23, 8, 40, 0),
       finished_at: new Date(2021, 0, 23, 10, 40, 0),
-      */finished_at1: null,
+      finished_at1: null,
       finished_at2: null,
       step: 0,
       mainStep: 0,
@@ -867,8 +868,8 @@ export default {
 
     var finished_at2 = new Date(this.finished_at);
     var finished_at1 = new Date(this.finished_at);
-    finished_at2 = finished_at2.setMinutes(this.finished_at.getMinutes() - 60);
-    finished_at1 = finished_at1.setMinutes(this.finished_at.getMinutes() - 80);
+    finished_at2 = finished_at2.setMinutes(this.finished_at.getMinutes() - 40);
+    finished_at1 = finished_at1.setMinutes(this.finished_at.getMinutes() - 60);
 
     this.finished_at2 = new Date(finished_at2);
     this.finished_at1 = new Date(finished_at1);
