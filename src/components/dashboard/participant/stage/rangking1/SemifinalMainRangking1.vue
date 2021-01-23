@@ -328,7 +328,7 @@ export default {
   data() {
     return {
       started_at: new Date(2021, 0, 24, 19, 0, 0),
-      finished_at: new Date(2021, 0, 24, 19, 35, 0),
+      finished_at: new Date(2021, 0, 24, 19, 50, 0),
       //started_at: new Date(2021, 0, 1, 14, 0, 0),
       //finished_at: new Date(2021, 0, 23, 31, 0, 0),
       step: 0,
