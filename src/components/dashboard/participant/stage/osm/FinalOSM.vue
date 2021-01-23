@@ -368,9 +368,9 @@ export default {
       finished_at: new Date(2021, 0, 22, 25, 40, 0),
       */
       startedAt: new Date(2021, 0, 23, 27, 0, 0),
-      finishedAt: new Date(2021, 0, 23, 29, 0, 0),
+      finishedAt: new Date(2021, 0, 23, 29, 30, 0),
       started_at: new Date(2021, 0, 23, 19, 0, 0),
-      finished_at: new Date(2021, 0, 23, 22, 0, 0),
+      finished_at: new Date(2021, 0, 23, 22, 30, 0),
       finished_at1: null,
       finished_at2: null,
       step: 0,
