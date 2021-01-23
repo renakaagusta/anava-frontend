@@ -44,7 +44,6 @@
             </tr>
           </table>
         </div>
-        {{ stage.name }}
         <h1 class="mt-3">Lembar Jawaban</h1>
         <hr />
         <br />
@@ -147,6 +146,65 @@
                   'http://anavaugm.com/answer_' +
                   answerForm.answers[1]._id +
                   '.pdf'
+                "
+                v-if="answerForm.answers[1].uploaded == 1"
+              >
+                <i class="fa fa-download" />&nbsp;Unduh
+              </a>
+              <p v-else>-</p>
+            </b-col>
+          </b-row>
+        </div>
+        <div class="p-3 border" v-if="stage.name == 'final' && event.name == 'OSM'">
+          <b-row
+            class="bg-white p-3 mb-2 shadow-sm rounded text-bold"
+            no-gutters
+          >
+            <b-col class="text-center" md="3">
+              <p>Nomor</p>
+            </b-col>
+            <b-col class="text-center" md="3">
+              <p>Jawaban</p>
+            </b-col>
+          </b-row>
+          <b-row
+            class="bg-white p-3 mb-2 shadow-sm rounded text-bold"
+            no-gutters
+          >
+            <b-col class="text-center" md="3">
+              <p>1</p>
+            </b-col>
+            <b-col class="text-center" md="3">
+              <a
+                class="btn btn-primary ml-3 mt-3"
+                target="blank"
+                :href="
+                  'http://anavaugm.com/answer_' +
+                  answerForm.answers[0]._id +
+                  '.pdf'
+                "
+                v-if="answerForm.answers[0].uploaded == 1"
+              >
+                <i class="fa fa-download" />&nbsp;Unduh
+              </a>
+              <p v-else>-</p>
+            </b-col>
+          </b-row>
+          <b-row
+            class="bg-white p-3 mb-2 shadow-sm rounded text-bold"
+            no-gutters
+          >
+            <b-col class="text-center" md="3">
+              <p>2</p>
+            </b-col>
+            <b-col class="text-center" md="3">
+              <a
+                class="btn btn-primary ml-3 mt-3"
+                target="blank"
+                :href="
+                  'http://anavaugm.com/answer_' +
+                  answerForm.answers[1]._id +
+                  '.ppt'
                 "
                 v-if="answerForm.answers[1].uploaded == 1"
               >
