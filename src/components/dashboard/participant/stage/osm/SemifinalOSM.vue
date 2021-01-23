@@ -280,7 +280,7 @@
             <b-col cols="12" md="12">
               <b-col lg="12">
                 <b-container class="bg-white p-3 rounded shadow-sm border">
-                  <a target="blank" href="Soal Semifinal Sesi 2 (FIX).pdf">
+                  <a target="blank" href="http://anavaugm.com/Soal Semifinal Sesi 2 (FIX).pdf">
                     <i class="fa fa-download fa-3x text-dark"></i>
                     <h2 class="d-inline ml-4">
                       Soal Sesi 2 (Semifinal OSM)
