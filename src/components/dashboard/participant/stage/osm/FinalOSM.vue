@@ -130,10 +130,19 @@
                 <b-container class="bg-white p-3 rounded shadow-sm border">
                   <a
                     target="blank"
-                    href="http://anavaugm.com/final.pdf"
+                    href="http://anavaugm.com/Soal Final 1 Sesi 1 OSM.pdf"
                   >
                     <i class="fa fa-download fa-3x text-dark"></i>
                     <h2 class="d-inline ml-4">Soal Final OSM</h2>
+                  </a>
+                </b-container>
+                <b-container class="bg-white p-3 rounded shadow-sm border">
+                  <a
+                    target="blank"
+                    href="http://anavaugm.com/DATA FINAL PESERTA OSM.xlsx"
+                  >
+                    <i class="fa fa-download fa-3x text-dark"></i>
+                    <h2 class="d-inline ml-4">Data Final Peserta OSM</h2>
                   </a>
                 </b-container>
               </b-col>
@@ -362,15 +371,10 @@ export default {
   data() {
     return {
       now: new Date(),
-      /*startedAt: new Date(2021, 0, 22, 30, 40, 0),
-      finishedAt: new Date(2021, 0, 22, 32, 40, 0),
-      started_at: new Date(2021, 0, 22, 23, 40, 0),
-      finished_at: new Date(2021, 0, 22, 25, 40, 0),
-      */
-      startedAt: new Date(2021, 0, 23, 27, 0, 0),
-      finishedAt: new Date(2021, 0, 23, 29, 30, 0),
-      started_at: new Date(2021, 0, 23, 19, 0, 0),
-      finished_at: new Date(2021, 0, 23, 22, 30, 0),
+      startedAt: new Date(2021, 0, 24, 15, 15, 0),
+      finishedAt: new Date(2021, 0, 24, 17, 5, 0),
+      started_at: new Date(2021, 0, 24, 8, 15, 0),
+      finished_at: new Date(2021, 0, 24, 10, 5, 0),
       finished_at1: null,
       finished_at2: null,
       step: 0,
@@ -413,7 +417,7 @@ export default {
       uploaded: false,
       fileName: {
         started_jawaban: "Unggah file jawaban (*.pdf)",
-        started_jawaban2: "Unggah file jawaban (*.ppt)",
+        started_jawaban2: "Unggah file jawaban (*.pptx)",
         event_document: "Unggah surat orisinalitas (*.pdf)",
       },
     };
@@ -587,7 +591,7 @@ export default {
             icon: "error",
             showConfirmButton: true,
           }).then();
-          this.fileName.started_jawaban2 = "Unggah file jawaban (*.ppt)";
+          this.fileName.started_jawaban2 = "Unggah file jawaban (*.pptx)";
         }
       }
     },
@@ -845,8 +849,8 @@ export default {
 
     var finished_at2 = new Date(this.finished_at);
     var finished_at1 = new Date(this.finished_at);
-    finished_at2 = finished_at2.setMinutes(this.finished_at.getMinutes() - 20);
-    finished_at1 = finished_at1.setMinutes(this.finished_at.getMinutes() - 25);
+    finished_at2 = finished_at2.setMinutes(this.finished_at.getMinutes() - 40);
+    finished_at1 = finished_at1.setMinutes(this.finished_at.getMinutes() - 60);
 
     this.finished_at2 = new Date(finished_at2);
     this.finished_at1 = new Date(finished_at1);
