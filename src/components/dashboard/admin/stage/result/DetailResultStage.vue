@@ -204,7 +204,7 @@
                 :href="
                   'http://anavaugm.com/answer_' +
                   answerForm.answers[1]._id +
-                  '.ppt'
+                  '.pptx'
                 "
                 v-if="answerForm.answers[1].uploaded == 1"
               >
