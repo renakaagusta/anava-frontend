@@ -130,7 +130,7 @@
                 <b-container class="bg-white p-3 rounded shadow-sm border">
                   <a
                     target="blank"
-                    href="http://anavaugm.com/Soal Final 1 Sesi 1 OSM.pdf"
+                    href="http://anavaugm.com/Soal Final OSM ANAVA #15.pdf"
                   >
                     <i class="fa fa-download fa-3x text-dark"></i>
                     <h2 class="d-inline ml-4">Soal Final OSM</h2>
