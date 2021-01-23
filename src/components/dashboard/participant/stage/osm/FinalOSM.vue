@@ -130,7 +130,7 @@
                 <b-container class="bg-white p-3 rounded shadow-sm border">
                   <a
                     target="blank"
-                    href="http://anavaugm.com/Soal Final OSM ANAVA #15.pdf"
+                    href="http://anavaugm.com/soal-final-osm.pdf"
                   >
                     <i class="fa fa-download fa-3x text-dark"></i>
                     <h2 class="d-inline ml-4">Soal Final OSM</h2>
@@ -371,9 +371,9 @@ export default {
   data() {
     return {
       now: new Date(),
-      startedAt: new Date(2021, 0, 24, 15, 15, 0),
+      startedAt: new Date(2021, 0, 24, 1, 15, 0),
       finishedAt: new Date(2021, 0, 24, 17, 5, 0),
-      started_at: new Date(2021, 0, 24, 8, 15, 0),
+      started_at: new Date(2021, 0, 24, 1, 15, 0),
       finished_at: new Date(2021, 0, 24, 10, 5, 0),
       finished_at1: null,
       finished_at2: null,
