@@ -82,40 +82,24 @@
               <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://anavaugm.com/STARTED/guidebook.jpg"
+                  href="http://anavaugm.com/STARTED/guidebook.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">Guidebook</h2>
                 </a>
               </b-container>
-              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
+              <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://anavaugm.com/STARTED/surat-orisinalitas.jpg"
+                  href="http://anavaugm.com/OSM/petunjuk-final.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
-                  <h2 class="d-inline ml-4">Surat Orisinalitas</h2>
-                </a>
-              </b-container>
-              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
-                <a
-                  target="blank"
-                  href="http://anavaugm.com/STARTED/tor-pekan-kreativitas.jpg"
-                >
-                  <i class="fa fa-download fa-3x text-dark"></i>
-                  <h2 class="d-inline ml-4">TOR</h2>
-                </a>
-              </b-container>
-              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
-                <a target="blank" href="http://anavaugm.com/logo-anava.jpg">
-                  <i class="fa fa-download fa-3x text-dark"></i>
-                  <h2 class="d-inline ml-4">Logo ANAVA</h2>
+                  <h2 class="d-inline ml-4">Petunjuk OSM Final</h2>
                 </a>
               </b-container>
             </b-container>
           </v-tab>
         </vue-tabs>
-
         <br />
 
         <b>Catatan</b> : <br />Apabila telah memasuki waktu pengerjaan dan
@@ -123,7 +107,6 @@
         harap tekan tombol reset dan login kembali
 
         <br />
-
         <button class="btn btn-primary mt-2 mb-2" @click="reset()">
           Reset
         </button>
@@ -145,14 +128,20 @@
             <b-col cols="12" md="12">
               <b-col lg="12">
                 <b-container class="bg-white p-3 rounded shadow-sm border">
-                  <a target="blank" href="http://anavaugm.com/final.pdf">
+                  <a
+                    target="blank"
+                    href="http://anavaugm.com/final.pdf"
+                  >
                     <i class="fa fa-download fa-3x text-dark"></i>
-                    <h2 class="d-inline ml-4">Simulasi Final OSM</h2>
+                    <h2 class="d-inline ml-4">Soal Final OSM</h2>
                   </a>
                 </b-container>
               </b-col>
             </b-col>
             <b-col cols="12" md="12">
+              <h1 class="mt-3">Sisa Waktu</h1>
+              <hr />
+              <br />
               <b-col lg="12">
                 <b-card>
                   <b-row class="h2 mt-4">
@@ -178,15 +167,15 @@
                 <div
                   id="dropFileForm"
                   v-if="
-                    answerFormByParticipantAndStage.answers[0].upload == true ||
+                    answerForm.answers[0].uploaded == false ||
                     changeStartedjawaban == 1
                   "
                 >
                   <input
                     type="file"
                     id="fileStartedjawaban"
-                    ref="started_jawaban1"
-                    @change="addFile('started_jawaban1')"
+                    ref="started_jawaban"
+                    @change="addFile('started_jawaban')"
                   />
 
                   <label for="fileStartedjawaban" id="fileLabel">
@@ -194,7 +183,7 @@
                     <br />
                     <span
                       id="fileLabelText"
-                      v-html="fileName.started_jawaban1"
+                      v-html="fileName.started_jawaban"
                     />
                   </label>
 
@@ -234,9 +223,6 @@
           <br />
           <b-row>
             <b-col cols="12" md="12">
-              <h1 class="mt-3">Sisa Waktu</h1>
-              <hr />
-              <br />
               <b-col lg="12">
                 <b-card>
                   <b-row class="h2 mt-4">
@@ -259,7 +245,7 @@
       </div>
       <div v-if="mainStep == 3">
         <b-container class="bg-white p-4 shadow-sm">
-          <h1>Form Jawaban</h1>
+          <h1>Soal 2</h1>
           <hr />
           <br />
           <b-row>
@@ -292,14 +278,14 @@
                 <div
                   id="dropFileForm"
                   v-if="
-                    answerFormByParticipantAndStage.answers[1].upload == true ||
+                    answerForm.answers[1].uploaded == false ||
                     changeStartedjawaban == 1
                   "
                 >
                   <input
                     type="file"
                     id="fileStartedjawaban"
-                    ref="started_jawaban1"
+                    ref="started_jawaban"
                     @change="addFile('started_jawaban2')"
                   />
 
@@ -312,21 +298,24 @@
                     />
                   </label>
 
-                  <button class="uploadButton" @click="uploadAnswer(1)">
+                  <button class="uploadButton" @click="uploadAnswer(2)">
                     <b-spinner v-if="loading" label="Spinning"></b-spinner>
                     <p v-if="!loading" class="d-inline">Unggah</p>
                   </button>
                 </div>
                 <div v-else>
                   <div class="p-4 border">
-                    <embed
-                      :src="
+                    <a
+                      class="btn btn-primary ml-3 mt-3"
+                      target="blank"
+                      :href="
                         'http://anavaugm.com/answer_' +
                         answerFormByParticipantAndStage.answers[1]._id +
-                        '.pdf'
+                        '.pptx'
                       "
-                      style="height: 900px; width: 600px"
-                    />
+                    >
+                      <i class="fa fa-download" />&nbsp;Unduh File PPT
+                    </a>
                     <button
                       class="btn-purple mt-3"
                       v-if="true"
@@ -373,10 +362,15 @@ export default {
   data() {
     return {
       now: new Date(),
-      startedAt: new Date(2021, 0, 21, 16, 0, 0),
-      finishedAt: new Date(2021, 0, 21, 16,75, 0),
-      started_at: new Date(2021, 0, 21, 9, 0, 0),
-      finished_at: new Date(2021, 0, 21, 9, 75, 0),
+      /*startedAt: new Date(2021, 0, 22, 30, 40, 0),
+      finishedAt: new Date(2021, 0, 22, 32, 40, 0),
+      started_at: new Date(2021, 0, 22, 23, 40, 0),
+      finished_at: new Date(2021, 0, 22, 25, 40, 0),
+      */
+      startedAt: new Date(2021, 0, 23, 27, 40, 0),
+      finishedAt: new Date(2021, 0, 23, 28, 0, 0),
+      started_at: new Date(2021, 0, 23, 20, 0, 0),
+      finished_at: new Date(2021, 0, 23, 21, 0, 0),
       finished_at1: null,
       finished_at2: null,
       step: 0,
@@ -418,9 +412,9 @@ export default {
       loading: false,
       uploaded: false,
       fileName: {
-        started_jawaban1: "Unggah file jawaban (*.pdf)",
+        started_jawaban: "Unggah file jawaban (*.pdf)",
         started_jawaban2: "Unggah file jawaban (*.ppt)",
-        event_document: "Unggah surat orisinalitas (*.jpg)",
+        event_document: "Unggah surat orisinalitas (*.pdf)",
       },
     };
   },
@@ -437,7 +431,9 @@ export default {
       return this.$store.state.event.events;
     },
     answerFormByParticipantAndStage() {
-      return JSON.parse(localStorage.getItem("answerForm2"));
+      return JSON.parse(
+        localStorage.getItem("answerForm2" + this.$route.params.idStage)
+      );
     },
     participant() {
       return JSON.parse(localStorage.getItem("user"));
@@ -533,7 +529,7 @@ export default {
     },
     nextStep() {
       var today = new Date();
-      today.setHours(today.getHours() + 7);
+      today.setHours(today.getHours());
 
       var isTime = today > new Date(this.started_at);
 
@@ -561,33 +557,37 @@ export default {
     },
     addFile(type) {
       var fileExtension = "";
-      if (type == "started_jawaban1") {
-        fileExtension = /[.]/.exec(this.fileName.started_jawaban1)
-          ? /[^.]+$/.exec(this.fileName.started_jawaban1)
+      if (type == "started_jawaban") {
+        this.fileName.started_jawaban = this.$refs.started_jawaban.files[0].name.toString();
+
+        fileExtension = /[.]/.exec(this.fileName.started_jawaban)
+          ? /[^.]+$/.exec(this.fileName.started_jawaban)
           : undefined;
+
         if (fileExtension != "pdf") {
           Swal.fire({
             title: "Format file tidak sesuai",
             icon: "error",
             showConfirmButton: true,
           }).then();
-          this.fileName.started_jawaban1 = "Unggah file jawaban (*.pdf)";
-        } else {
-          this.fileName.started_jawaban1 = this.$refs.started_jawaban1.files[0].name.toString();
+          this.fileName.started_jawaban = "Unggah file jawaban (*.pdf)";
         }
       } else {
-        if (fileExtension != "ppt" || fileExtension != "pptx") {
+        this.fileName.started_jawaban2 = this.$refs.started_jawaban.files[0].name.toString();
+
+        fileExtension = /[.]/.exec(this.fileName.started_jawaban2)
+          ? /[^.]+$/.exec(this.fileName.started_jawaban2)
+          : undefined;
+
+        if (fileExtension == "ppt" || fileExtension == "pptx") {
+          console.log();
+        } else {
           Swal.fire({
             title: "Format file tidak sesuai",
             icon: "error",
             showConfirmButton: true,
           }).then();
           this.fileName.started_jawaban2 = "Unggah file jawaban (*.ppt)";
-        } else {
-          this.fileName.started_jawaban2 = this.$refs.started_jawaban2.files[0].name.toString();
-          fileExtension = /[.]/.exec(this.fileName.started_jawaban2)
-            ? /[^.]+$/.exec(this.fileName.started_jawaban2)
-            : undefined;
         }
       }
     },
@@ -601,29 +601,26 @@ export default {
       document.append("eventName", "OSM");
       document.append("stageName", "final");
       document.append("number", number);
-      if (number == 1) {
-        document.append("file", this.$refs.started_jawaban1.files[0]);
-      } else {
-        document.append("file", this.$refs.started_jawaban1.files[1]);
-      }
+      document.append("file", this.$refs.started_jawaban.files[0]);
+
       var formAnswer = {
         id: this.answerForm.answers[number - 1]._id,
         data: document,
       };
 
       this.$store.dispatch("answer/uploadAnswer", formAnswer).then(
-        (answer) => {
+        () => {
           Swal.fire({
             icon: "success",
             title: "File berhasil diunggah",
             showConfirmButton: true,
           }).then(() => {});
-          this.answerForm.answers[number - 1] = answer;
+          this.answerForm.answers[number - 1].uploaded = 1;
 
           localStorage.setItem("answerForm2", JSON.stringify(this.answerForm));
           this.loading = false;
           this.uploaded = true;
-          this.changeStartedJawaban = 0;
+          this.changeStartedJawaban;
         },
         () => {
           alert("error");
@@ -653,11 +650,40 @@ export default {
           this.$store
             .dispatch("answerForm/deleteAnswerForm", answerForm)
             .then(() => {
-              localStorage.clear();
               this.$router.go();
             });
         }
       });
+    },
+    uploadFile() {
+      var document = new FormData();
+
+      this.loading = true;
+      document.append("file", this.$refs.event_document.files[0]);
+      document.append("participantId", this.participant.id);
+
+      var formParticipant = {
+        id: this.event._id,
+        document: document,
+        participantId: this.participant.id,
+      };
+
+      this.$store.dispatch("event/uploadEvent", formParticipant).then(
+        (response) => {
+          Swal.fire({
+            title: "Berhasil mengunggah dokumen",
+            icon: "success",
+            showConfirmButton: true,
+          }).then();
+          this.loading = false;
+          const participant = response.data.data;
+          var user = JSON.parse(localStorage.getItem("user"));
+          user.participant = participant.participant;
+          localStorage.setItem("user", JSON.stringify(user));
+          this.getStageInformationOfParticipant();
+        },
+        () => {}
+      );
     },
     getStage() {
       this.$store.dispatch("stage/getStage", this.$route.params.idStage);
@@ -707,11 +733,36 @@ export default {
         this.$store
           .dispatch("answerForm/createAnswerForm", _answerForm)
           .then((answerForm) => {
-            var _answerForm = JSON.parse(JSON.stringify(answerForm));
+            var started_at = new Date(this.started_at);
+            var finished_at = new Date(this.finished_at);
+            var _answerForm = null;
+            if (answerForm != null) {
+              _answerForm = JSON.parse(JSON.stringify(answerForm));
 
-            if (!_answerForm.session) {
-              var started_at = new Date(this.started_at);
-              var finished_at = new Date(this.finished_at);
+              if (!_answerForm.session) {
+                _answerForm.started_at = started_at.toISOString();
+                _answerForm.finished_at = finished_at.toISOString();
+
+                _answerForm.session = this.stageInformationOfParticipant.session;
+
+                const format = _answerForm.finished_at.split("-");
+                this.year = parseInt(format[0]);
+                this.month = parseInt(format[1]);
+                const time = format[2].split("T");
+                this.date = parseInt(time[0]);
+                const clock = time[1].split(":");
+                this.hour = parseInt(clock[0]);
+                this.minute = parseInt(clock[1]);
+
+                this.showRemaining();
+
+                localStorage.setItem(
+                  "answerForm2" + this.$route.params.idStage,
+                  JSON.stringify(_answerForm)
+                );
+              }
+            } else {
+              _answerForm = this.answerFormByParticipantAndStage;
 
               _answerForm.started_at = started_at.toISOString();
               _answerForm.finished_at = finished_at.toISOString();
@@ -728,8 +779,6 @@ export default {
               this.minute = parseInt(clock[1]);
 
               this.showRemaining();
-
-              localStorage.setItem("answerForm2", JSON.stringify(_answerForm));
             }
           });
       } else {
@@ -752,6 +801,8 @@ export default {
     },
     showRemaining() {
       const timer = setInterval(() => {
+        this.answerForm = this.answerFormByParticipantAndStage;
+
         var distance = 0;
 
         this.now = new Date();
@@ -787,62 +838,7 @@ export default {
       }, 1000);
     },
   },
-  updated() {
-    if (this.answerForm != null) {
-      if (this.stageInformationOfParticipant.id == this.$route.params.idStage) {
-        if (this.step == 1) {
-          if (this.answerFormByParticipantAndStage.score != null)
-            clearInterval(this.timer);
-
-          if (
-            this.answerFormByParticipantAndStage.answers[0].uploaded == 1 &&
-            this.initialCheck == 0
-          ) {
-            this.uploaded = true;
-            this.initialCheck = 1;
-          }
-
-          this.answerForm = JSON.parse(localStorage.getItem("answerForm2"));
-
-          if (this.answerForm != null) {
-            this.step = 1;
-
-            const format = this.stage.finished_at.split("-");
-            this.year = parseInt(format[0]);
-            this.month = parseInt(format[1]);
-            const time = format[2].split("T");
-            this.date = parseInt(time[0]);
-            const clock = time[1].split(":");
-            this.hour = parseInt(clock[0]);
-            this.minute = parseInt(clock[1]);
-
-            this.showRemaining();
-          }
-        }
-      } else {
-        this.getStage();
-        this.answerForm.stageId = this.$route.params.idStage;
-        this.answerForm.participantId = this.participant.id;
-        this.items = [
-          {
-            "Mulai pengerjaan": this.getDateTime(
-              "datetime",
-              this.stage.started_at
-            ),
-            "Selesai pengerjaan": this.getDateTime(
-              "datetime",
-              this.stage.finished_at
-            ),
-            "Pengumuman lolos": this.getDateTime(
-              "datetime",
-              this.stage.started_at
-            ),
-          },
-        ];
-        this.getStageInformationOfParticipant();
-      }
-    }
-  },
+  updated() {},
   created() {
     this.answerForm.stageId = this.$route.params.idStage;
     this.answerForm.participantId = this.participant.id;

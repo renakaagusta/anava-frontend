@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="event.name == 'OSM' || event.name == 'The One'">
+    <div v-if="event.name == 'OSM'">
       <b-container class="bg-white p-3 mt-3 shadow-sm rounded">
         <h1 class="mt-2">Data Peserta</h1>
         <hr />
@@ -44,6 +44,7 @@
             </tr>
           </table>
         </div>
+        {{ stage.name }}
         <h1 class="mt-3">Lembar Jawaban</h1>
         <hr />
         <br />
@@ -96,7 +97,7 @@
             </b-col>
           </b-row>
         </div>
-        <div class="p-3 border" v-if="stage.name == 'semifinal'">
+        <div class="p-3 border" v-if="stage.name == 'semifinal' && event.name == 'OSM'">
           <b-row
             class="bg-white p-3 mb-2 shadow-sm rounded text-bold"
             no-gutters
@@ -333,84 +334,43 @@
         <h1 class="mt-3">Lembar Jawaban</h1>
         <hr />
         <br />
-        <div class="p-3 border">
+       <div class="p-3 border" v-if="stage.name == 'semifinal'">
           <b-row
             class="bg-white p-3 mb-2 shadow-sm rounded text-bold"
             no-gutters
           >
-            <b-col class="text-center" md="2">
+            <b-col class="text-center" md="3">
               <p>Nomor</p>
             </b-col>
-            <b-col class="text-center" md="2">
-              <p>Kunci</p>
-            </b-col>
-            <b-col class="text-center" md="2">
+            <b-col class="text-center" md="3">
               <p>Jawaban</p>
-            </b-col>
-            <b-col class="text-center" md="2">
-              <p>Status</p>
-            </b-col>
-            <b-col class="text-center" md="2">
-              <p>Poin</p>
             </b-col>
           </b-row>
           <b-row
-            class="bg-white p-3 mb-2 shadow-sm rounded"
+            class="bg-white p-3 mb-2 shadow-sm rounded text-bold"
             no-gutters
-            v-for="(question, index) in questions"
-            :key="question._id"
+            v-for="(answer, index) in answerForm.answers"
+            :key="answer._id"
           >
-            <b-col class="text-center" md="2">
-              <p>{{ question.number }}</p>
+            <b-col class="text-center" md="3">
+              <p>{{ index + 1 }}</p>
             </b-col>
-            <b-col class="text-center" md="2">
-              <p>{{ question.key }}</p>
-            </b-col>
-            <b-col class="text-center" md="2">
-              <p v-if="answers[index] != null">
-                {{ answers[index] }}
-              </p>
+            <b-col class="text-center" md="3">
+              <a
+                class="btn btn-primary ml-3 mt-3"
+                target="blank"
+                :href="
+                  'http://anavaugm.com/answer_' +
+                  answerForm.answers[index]._id +
+                  '.jpg'
+                "
+                v-if="answerForm.answers[index].uploaded == 1"
+              >
+                <i class="fa fa-download" />&nbsp;Unduh
+              </a>
               <p v-else>-</p>
             </b-col>
-            <b-col
-              class="text-center text-success"
-              md="2"
-              v-if="answers[index] == question.key"
-            >
-              <i class="fas fa-check"></i>
-            </b-col>
-            <b-col class="text-center text-danger" md="2" v-else>
-              <i class="fas fa-times"></i>
-            </b-col>
-            <b-col class="text-center" md="2">
-              <p>{{ question.poin }}</p>
-            </b-col>
           </b-row>
-        </div>
-        <h1 class="mt-3">Penilaian</h1>
-        <hr />
-        <br />
-        <div class="p-3 border text-center">
-          <p>
-            Benar : <b>{{ answerForm.correct }}</b>
-          </p>
-          <br />
-          <p>
-            Salah : <b>{{ answerForm.wrong }}</b>
-          </p>
-          <br />
-          <p>
-            Kosong : <b>{{ answerForm.empty }}</b>
-          </p>
-          <br />
-          <p>
-            Sisa uang : <b>{{ answerForm.money }}</b>
-          </p>
-          <br />
-          <p>
-            Nilai akhir : <b>{{ answerForm.score }}</b>
-          </p>
-          <br />
         </div>
       </b-container>
     </div>

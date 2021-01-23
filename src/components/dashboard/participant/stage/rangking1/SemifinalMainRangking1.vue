@@ -327,8 +327,8 @@ export default {
   name: "BabakChampionTheOne",
   data() {
     return {
-      started_at: new Date(2021, 0, 21, 16, 0, 0),
-      finished_at: new Date(2021, 0, 21, 18, 0, 0),
+      started_at: new Date(2021, 0, 23, 27, 0, 0),
+      finished_at: new Date(2021, 0, 23, 28, 0, 0),
       //started_at: new Date(2021, 0, 1, 14, 0, 0),
       //finished_at: new Date(2021, 0, 23, 31, 0, 0),
       step: 0,
@@ -454,18 +454,20 @@ export default {
     addFile(type) {
       var fileExtension = "";
       if (type == "started_jawaban") {
+        this.fileName.started_jawaban = this.$refs.started_jawaban.files[0].name.toString();
         fileExtension = /[.]/.exec(this.fileName.started_jawaban)
           ? /[^.]+$/.exec(this.fileName.started_jawaban)
           : undefined;
-        if (fileExtension != "jpg" || fileExtension != "jpeg") {
+        alert(fileExtension);
+        if (fileExtension == "jpg" || fileExtension == "jpeg") {
+          this.fileName.started_jawaban = this.$refs.started_jawaban.files[0].name.toString();
+        } else {
           Swal.fire({
             title: "Format file tidak sesuai",
             icon: "error",
             showConfirmButton: true,
           }).then();
           this.fileName.started_jawaban = "Unggah file jawaban (*.jpg)";
-        } else {
-          this.fileName.started_jawaban = this.$refs.started_jawaban.files[0].name.toString();
         }
       } else {
         if (fileExtension != "jpg" || fileExtension != "jpeg") {
