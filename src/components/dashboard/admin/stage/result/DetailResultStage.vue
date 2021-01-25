@@ -483,9 +483,9 @@
         <hr />
         <br />
         <div class="p-3 border">
-          <img
+          <embed
             :src="
-              'http://anavaugm.com/answer_' + answerForm.answers[0]._id + '.png'
+              'http://anavaugm.com/answer_' + answerForm.answers[0]._id + '.pdf'
             "
             style="height: 900px; width: 600px"
           />

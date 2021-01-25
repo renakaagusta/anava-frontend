@@ -7,9 +7,7 @@
             <table class="table table-border">
               <tr class="border">
                 <td><b>Status Pembayaran</b></td>
-                <td v-if="stageInformationOfParticipant.number == null">
-                  -
-                </td>
+                <td v-if="stageInformationOfParticipant.number == null">-</td>
                 <td v-if="stageInformationOfParticipant.number > 0">
                   <i class="fas fa-check text-success"></i>
                 </td>
@@ -19,18 +17,6 @@
                 <td v-if="stageInformationOfParticipant.number == null">-</td>
                 <td v-if="stageInformationOfParticipant.number != null">
                   {{ stageInformationOfParticipant.number }}
-                </td>
-              </tr>
-              <tr class="border">
-                <td><b>Terdaftar pada</b></td>
-                <td v-if="stageInformationOfParticipant.pay_at == null">-</td>
-                <td v-if="stageInformationOfParticipant.pay_at != null">
-                  {{
-                    getDateTime(
-                      "datetime",
-                      stageInformationOfParticipant.pay_at
-                    )
-                  }}
                 </td>
               </tr>
             </table>
@@ -105,28 +91,10 @@
               <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
                 <a
                   target="blank"
-                  href="http://anavaugm.com/STARTED/surat-orisinalitas.pdf"
-                >
-                  <i class="fa fa-download fa-3x text-dark"></i>
-                  <h2 class="d-inline ml-4">Surat Orisinalitas</h2>
-                </a>
-              </b-container>
-              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
-                <a
-                  target="blank"
-                  href="http://anavaugm.com/STARTED/tor-pekan-kreativitas.pdf"
+                  href="http://anavaugm.com/STARTED/tor-pekan-final.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">TOR</h2>
-                </a>
-              </b-container>
-              <b-container class="bg-white p-3 rounded shadow-sm border mt-3">
-                <a
-                  target="blank"
-                  href="http://anavaugm.com/logo-anava.png"
-                >
-                  <i class="fa fa-download fa-3x text-dark"></i>
-                  <h2 class="d-inline ml-4">Logo ANAVA</h2>
                 </a>
               </b-container>
             </b-container>
@@ -142,38 +110,44 @@
     </b-container>
     <b-row class="pl-3 pr-3 mb-3" v-if="step == 1">
       <b-container class="bg-white p-4 shadow-sm">
-        <h1>Ketentuan Poster</h1>
+        <h1>Ketentuan Deskripsi Poster</h1>
         <hr />
         <br />
         <b-row>
           <b-col cols="12" md="12">
             <p class="text-left">
-              1. Poster yang diikutsertakan dalam lomba merupakan hasil karya
-              orisinil peserta yang belum pernah dipublikasikan sebelumnya di
-              media manapun dan belum pernah diikutsertakan dalam perlombaan
-              lain (dinyatakan dalam lembar pernyataan orisinilitas karya yang
-              dapat diunduh di web ANAVA).<br />
-              2. Peserta wajib membuat surat pernyataan orisinalitas poster yang
-              ditandatangani oleh peserta (format terlampir) yang akan
-              disertakan dalam pengunggahan berkas-berkas lainnya.<br />
-              3. Poster dibuat sesuai topik utama dan dapat memilih satu
-              sub-topik yang disediakan.<br />
-              4. Topik umum Lomba Poster STARTED adalah “Implementasi Statistika
-              dalam Kehidupan Sehari-hari”.<br />
-              5. Sub topik dalam Lomba Poster STARTED antara lain :<br />
-              a. Bidang Ekonomi<br />
-              b. Bidang Pendidikan<br />
-              c. Bidang Kesehatan<br />
-              d. Bidang Sosial Budaya<br />
-              e. Bidang Teknologi<br />
-              6. Konten dalam poster dapat memuat Teori, Studi kasus, Analisis,
-              dan/atau Penyajian Data.<br />
-              7. Poster dibuat secara digital pada kanvas dengan rasio 6 : 9 ,
-              resolusi 300 dpi, format .PDF dan ukuran file maksimal 10 MB.<br />
-              8. Peserta diperbolehkan menggunakan aplikasi berjenis apapun
-              (corel draw, adobe photoshop, dan sebagainya). <br />
-              9. Ketentuan lebih rinci dapat dilihat pada ToR (Term of
-              Reference).<br />
+              1. Tim Finalis membuat deskripsi dari poster yang telah dibuat
+              sebelumnya.<br/> 
+              2. Deskripsi poster dibuat menggunakan template yang
+              telah disediakan. Template dapat diunduh di website ANAVA.<br/>
+              3. Judul deskripsi poster sama dengan judul dari posternya.<br/>
+              4. Substansi tidak mengandung unsur SARA (Suku, Agama, Ras, dan
+              Antargolongan) dan segala hal yang melanggar etika dan moral. <br/>
+              5. Tidak boleh plagiarisme (menyalin karya orang lain). 6. Harus
+              menyertakan sumber dari tulisan dengan tata cara sitasi dan daftar
+              pustaka yang benar (Harvard Style, Chicago Style, dan sebagainya). <br/>
+              7. Deskripsi poster dibuat dalam bahasa Indonesia sesuai EYD. <br/>
+              8. Ketentuan penulisan deskripsi sebagai berikut : a. Terdiri dari
+              300 - 500 kata (tidak termasuk judul dan daftar pustaka) b. Margin
+              atas, kanan, bawah, dan kiri masing-masing 3 cm c. Jenis huruf
+              Times New Roman dengan ukuran 12 ptd. Line spacing 1,5 e.
+              Alignment Justify (rata kiri-kanan) <br/>
+              9. Struktur deskripsi karya
+              poster : a. Judul b. Latar Belakang (alasan dari pemilihan
+              subtopik pada poster) c. Deskripsi Poster (dapat berupa penjelasan
+              teori, analisis studi kasus, dan atau penjelasan penyajian data)
+              d. Kesimpulan e. Daftar Pustaka <br/>
+              10. Deskripsi poster dikirim dalam
+              bentuk pdf. <br/>
+              11. Format penamaan file poster yang dikirimkan yaitu
+              Nomor Pendaftaran_Judul Poster. <br/>12. Deskripsi poster dikirimkan
+              melalui website ANAVA. Pengiriman karya di luar website ANAVA
+              tidak akan diterima. <br/>13. Deskripsi poster yang dikirimkan setelah
+              29 Januari 2021 pukul 12.00 WIB TIDAK AKAN DITERIMA dan DIANGGAP
+              MENGUNDURKAN DIRI. <br/>14. Deskripsi poster yang telah dikirim oleh
+              peserta menjadi hak milik panitia ANAVA#15 dan tidak dikembalikan.<br/>
+              15. Panitia memiliki hak untuk menerbitkan deskripsi yang telah
+              dikirim oleh peserta.
             </p>
           </b-col>
           <b-col cols="12" md="12">
@@ -184,7 +158,7 @@
               <b-container class="bg-white p-3 rounded shadow-sm border">
                 <a
                   target="blank"
-                  href="http://anavaugm.com/STARTED/tor-pekan-kreativitas.pdf"
+                  href="http://anavaugm.com/STARTED/tor-pekan-final.pdf"
                 >
                   <i class="fa fa-download fa-3x text-dark"></i>
                   <h2 class="d-inline ml-4">TOR</h2>
@@ -218,7 +192,10 @@
             <hr />
             <br />
             <div v-if="answerFormByParticipantAndStage.answers != null">
-              <div id="dropFileForm" v-if="uploaded == false || changeStartedPoster == 1">
+              <div
+                id="dropFileForm"
+                v-if="uploaded == false || changeStartedPoster == 1"
+              >
                 <input
                   type="file"
                   id="fileStartedPoster"
@@ -239,13 +216,13 @@
               </div>
               <div v-else>
                 <div class="p-4 border">
-                  <img
+                  <embed
                     :src="
                       'http://anavaugm.com/answer_' +
-                        answerFormByParticipantAndStage.answers[0]._id +
-                        '.pdf'
+                      answerFormByParticipantAndStage.answers[0]._id +
+                      '.pdf'
                     "
-                    style="height:900px; width:600px;"
+                    style="height: 900px; width: 600px"
                   />
                   <button
                     class="btn-purple mt-3"
@@ -288,11 +265,11 @@ import * as datetime from "./../../../../../services/datetime";
 import Swal from "sweetalert2";
 
 export default {
-  name: "PenyisihanStarted",
+  name: "FinalStarted",
   data() {
     return {
-      started_at: new Date(2021, 0, 3, 8, 0, 0),
-      finished_at: new Date(2021, 0, 16, 12, 0, 0),
+      started_at: new Date(2021, 0, 26, 15, 0, 0),
+      finished_at: new Date(2021, 0, 26, 19, 0, 0),
       step: 0,
       data: [],
       answerForm: {},
@@ -338,7 +315,9 @@ export default {
   },
   computed: {
     stage() {
-      return JSON.parse(localStorage.getItem("stage" + this.$route.params.idStage));
+      return JSON.parse(
+        localStorage.getItem("stage" + this.$route.params.idStage)
+      );
     },
     event() {
       return JSON.parse(localStorage.getItem("event"));
@@ -442,7 +421,13 @@ export default {
       return time;
     },
     nextStep() {
-      if (this.time) {
+
+      var today = new Date();
+      today.setHours(today.getHours() + 7);
+
+      var isTime = today > new Date(this.started_at) && today < new Date(this.finished_at);
+
+      if (isTime) {
         if (this.stageInformationOfParticipant.document == 1) {
           this.step = 1;
           this.createAnswerForm();
@@ -461,7 +446,7 @@ export default {
         }).then();
       }
     },
-    getDateTime: function(type, date) {
+    getDateTime: function (type, date) {
       return datetime.getDateTime(type, date);
     },
     addFile(type) {
@@ -509,12 +494,10 @@ export default {
       this.$store.dispatch("answer/uploadAnswer", formAnswer).then(
         () => {
           Swal.fire({
-              icon: "success",
-              title: "File berhasil diunggah",
-              showConfirmButton: true,
-            }).then(() => {
-              
-            });
+            icon: "success",
+            title: "File berhasil diunggah",
+            showConfirmButton: true,
+          }).then(() => {});
           this.loading = false;
           this.uploaded = true;
         },
@@ -569,7 +552,7 @@ export default {
     getStageInformationOfParticipant() {
       this.participant.participant.events.forEach((event) => {
         event.stages.forEach((stage) => {
-          if (stage.name == this.stage.name &&  event.name == this.event.name) {
+          if (stage.name == this.stage.name && event.name == this.event.name) {
             this.stageInformationOfParticipant = stage;
             this.stageInformationOfParticipant.number = event.number;
             this.stageInformationOfParticipant.document = event.document;
@@ -647,11 +630,14 @@ export default {
     showRemaining() {
       const timer = setInterval(() => {
         var now = new Date();
+        now.setHours(now.getHours() + 7)
         var end = this.finished_at;
 
         const distance = end.getTime() - now.getTime();
 
-        if (!this.time) {
+        console.log(distance)
+
+        if (distance < 0) {
           clearInterval(timer);
           this.step = 0;
           this.submitAnswerForm();
@@ -666,21 +652,23 @@ export default {
         this.displayMinutes = minutes < 10 ? "0" + minutes : minutes;
         this.displayHours = hours < 10 ? "0" + hours : hours;
         this.displayDays = days < 10 ? "0" + days : days;
-      }, 1000);
+      }, 200);
     },
   },
   updated() {
     if (this.answerForm != null) {
       if (this.stageInformationOfParticipant.id == this.$route.params.idStage) {
         if (this.step == 1) {
-          if (this.answerFormByParticipantAndStage.score != null)
-            clearInterval(this.timer);
+          
 
-          if(this.answerFormByParticipantAndStage.answers[0].uploaded == 1 && this.initialCheck == 0) {
+          if (
+            this.answerFormByParticipantAndStage.answers[0].uploaded == 1 &&
+            this.initialCheck == 0
+          ) {
             this.uploaded = true;
             this.initialCheck = 1;
           }
-            
+
           this.answerForm = JSON.parse(localStorage.getItem("answerForm2"));
 
           if (this.answerForm != null) {

@@ -33,9 +33,7 @@
                 <b-col cols="1" lg="1">
                   <div class="inline"><i class="fas fa-home"></i></div>
                 </b-col>
-                <b-col cols="10" class="sidebar-text" lg="10">
-                  Beranda
-                </b-col>
+                <b-col cols="10" class="sidebar-text" lg="10"> Beranda </b-col>
               </b-row>
             </router-link>
           </li>
@@ -50,9 +48,7 @@
                     <i class="far fa-newspaper"></i>
                   </div>
                 </b-col>
-                <b-col cols="10" class="sidebar-text" lg="10">
-                  Artikel
-                </b-col>
+                <b-col cols="10" class="sidebar-text" lg="10"> Artikel </b-col>
               </b-row>
             </router-link>
           </li>
@@ -65,9 +61,7 @@
                 <b-col lg="1">
                   <div class="inline"><i class="fas fa-bullhorn"></i></div>
                 </b-col>
-                <b-col class="sidebar-text" lg="10">
-                  Pengumuman
-                </b-col>
+                <b-col class="sidebar-text" lg="10"> Pengumuman </b-col>
               </b-row>
             </router-link>
           </li>
@@ -80,9 +74,7 @@
                 <b-col cols="1" lg="1">
                   <div class="inline"><i class="far fa-calendar-alt"></i></div>
                 </b-col>
-                <b-col cols="10" class="sidebar-text" lg="10">
-                  Jadwal
-                </b-col>
+                <b-col cols="10" class="sidebar-text" lg="10"> Jadwal </b-col>
               </b-row>
             </router-link>
           </li>
@@ -97,9 +89,7 @@
                     <i class="far fa-image"></i>
                   </div>
                 </b-col>
-                <b-col cols="10" class="sidebar-text" lg="10">
-                  Twibbon
-                </b-col>
+                <b-col cols="10" class="sidebar-text" lg="10"> Twibbon </b-col>
               </b-row>
             </router-link>
           </li>
@@ -171,9 +161,7 @@
                     <b-col lg="1">
                       <div class="inline"><i class="fas fa-trophy"></i></div>
                     </b-col>
-                    <b-col class="sidebar-text" lg="10">
-                      Penyisihan
-                    </b-col>
+                    <b-col class="sidebar-text" lg="10"> Penyisihan </b-col>
                   </b-row>
                 </router-link>
               </li>
@@ -193,9 +181,7 @@
                     <b-col lg="1">
                       <div class="inline"><i class="fas fa-trophy"></i></div>
                     </b-col>
-                    <b-col class="sidebar-text" lg="10">
-                      Semifinal
-                    </b-col>
+                    <b-col class="sidebar-text" lg="10"> Semifinal </b-col>
                   </b-row>
                 </router-link>
               </li>
@@ -215,9 +201,7 @@
                     <b-col lg="1">
                       <div class="inline"><i class="fas fa-trophy"></i></div>
                     </b-col>
-                    <b-col class="sidebar-text" lg="10">
-                      Final
-                    </b-col>
+                    <b-col class="sidebar-text" lg="10"> Final </b-col>
                   </b-row>
                 </router-link>
               </li>
@@ -259,9 +243,7 @@
                     <b-col lg="1">
                       <div class="inline"><i class="fas fa-trophy"></i></div>
                     </b-col>
-                    <b-col class="sidebar-text" lg="10">
-                      Babak Gugur
-                    </b-col>
+                    <b-col class="sidebar-text" lg="10"> Babak Gugur </b-col>
                   </b-row>
                 </router-link>
               </li>
@@ -281,9 +263,7 @@
                     <b-col lg="1">
                       <div class="inline"><i class="fas fa-trophy"></i></div>
                     </b-col>
-                    <b-col class="sidebar-text" lg="10">
-                      Babak Champion
-                    </b-col>
+                    <b-col class="sidebar-text" lg="10"> Babak Champion </b-col>
                   </b-row>
                 </router-link>
               </li>
@@ -331,6 +311,25 @@
                   </b-row>
                 </router-link>
               </li>
+              <li
+                @click="selectedSubItem = 2"
+                v-bind:class="[selectedSubItem == 2 ? 'active' : '']"
+              >
+                <router-link
+                  class="text-white"
+                  :to="{
+                    name: 'MainStage',
+                    params: { idStage: events[2].stages[1]._id },
+                  }"
+                >
+                  <b-row>
+                    <b-col lg="1">
+                      <div class="inline"><i class="fas fa-trophy"></i></div>
+                    </b-col>
+                    <b-col class="sidebar-text" lg="10"> Pekan Final </b-col>
+                  </b-row>
+                </router-link>
+              </li>
             </ul>
           </li>
           <li
@@ -348,9 +347,7 @@
                 <b-col cols="1" lg="1">
                   <div class="inline"><i class="fas fa-trophy"></i></div>
                 </b-col>
-                <b-col cols="10" class="sidebar-text" lg="10">
-                  Sigma
-                </b-col>
+                <b-col cols="10" class="sidebar-text" lg="10"> Sigma </b-col>
               </b-row>
             </router-link>
           </li>
@@ -389,9 +386,7 @@
                 <b-col lg="1">
                   <div class="inline"><i class="fas fa-home"></i></div>
                 </b-col>
-                <b-col class="sidebar-text" lg="10">
-                  Beranda
-                </b-col>
+                <b-col class="sidebar-text" lg="10"> Beranda </b-col>
               </b-row>
             </router-link>
           </li>
@@ -404,9 +399,7 @@
                 <b-col lg="1">
                   <div class="inline"><i class="fas fa-users"></i></div>
                 </b-col>
-                <b-col class="sidebar-text" lg="10">
-                  Peserta
-                </b-col>
+                <b-col class="sidebar-text" lg="10"> Peserta </b-col>
               </b-row>
             </router-link>
           </li>
@@ -421,9 +414,7 @@
                     <i class="fas fa-money-bill-wave"></i>
                   </div>
                 </b-col>
-                <b-col class="sidebar-text" lg="10">
-                  Pembayaran
-                </b-col>
+                <b-col class="sidebar-text" lg="10"> Pembayaran </b-col>
               </b-row>
             </router-link>
           </li>
@@ -436,9 +427,7 @@
                 <b-col lg="1">
                   <div class="inline"><i class="far fa-calendar-alt"></i></div>
                 </b-col>
-                <b-col class="sidebar-text" lg="10">
-                  Jadwal
-                </b-col>
+                <b-col class="sidebar-text" lg="10"> Jadwal </b-col>
               </b-row>
             </router-link>
           </li>
@@ -451,9 +440,7 @@
                 <b-col lg="1">
                   <div class="inline"><i class="fas fa-bullhorn"></i></div>
                 </b-col>
-                <b-col class="sidebar-text" lg="10">
-                  Pengumuman
-                </b-col>
+                <b-col class="sidebar-text" lg="10"> Pengumuman </b-col>
               </b-row>
             </router-link>
           </li>
@@ -490,9 +477,7 @@
                     <b-col lg="1">
                       <div class="inline"><i class="fas fa-trophy"></i></div>
                     </b-col>
-                    <b-col class="sidebar-text" lg="10">
-                      Penyisihan
-                    </b-col>
+                    <b-col class="sidebar-text" lg="10"> Penyisihan </b-col>
                   </b-row>
                 </router-link>
               </li>
@@ -511,9 +496,7 @@
                     <b-col lg="1">
                       <div class="inline"><i class="fas fa-trophy"></i></div>
                     </b-col>
-                    <b-col class="sidebar-text" lg="10">
-                      Semifinal
-                    </b-col>
+                    <b-col class="sidebar-text" lg="10"> Semifinal </b-col>
                   </b-row>
                 </router-link>
               </li>
@@ -532,9 +515,7 @@
                     <b-col lg="1">
                       <div class="inline"><i class="fas fa-trophy"></i></div>
                     </b-col>
-                    <b-col class="sidebar-text" lg="10">
-                      Final
-                    </b-col>
+                    <b-col class="sidebar-text" lg="10"> Final </b-col>
                   </b-row>
                 </router-link>
               </li>
@@ -573,9 +554,7 @@
                     <b-col lg="1">
                       <div class="inline"><i class="fas fa-trophy"></i></div>
                     </b-col>
-                    <b-col class="sidebar-text" lg="10">
-                      Babak Gugur
-                    </b-col>
+                    <b-col class="sidebar-text" lg="10"> Babak Gugur </b-col>
                   </b-row>
                 </router-link>
               </li>
@@ -594,9 +573,7 @@
                     <b-col lg="1">
                       <div class="inline"><i class="fas fa-trophy"></i></div>
                     </b-col>
-                    <b-col class="sidebar-text" lg="10">
-                      Babak Champion
-                    </b-col>
+                    <b-col class="sidebar-text" lg="10"> Babak Champion </b-col>
                   </b-row>
                 </router-link>
               </li>
@@ -641,6 +618,27 @@
                   </b-row>
                 </router-link>
               </li>
+              <li
+                @click="selectedSubItem = 2"
+                v-bind:class="[selectedSubItem == 2 ? 'active' : '']"
+              >
+                <router-link
+                  class="text-white"
+                  :to="{
+                    name: 'ListParticipantStage',
+                    params: { idStage: events[2].stages[1]._id },
+                  }"
+                >
+                  <b-row>
+                    <b-col lg="1">
+                      <div class="inline"><i class="fas fa-trophy"></i></div>
+                    </b-col>
+                    <b-col class="sidebar-text" lg="10">
+                      Pekan Final
+                    </b-col>
+                  </b-row>
+                </router-link>
+              </li>
             </ul>
           </li>
           <li
@@ -658,9 +656,7 @@
                 <b-col lg="1">
                   <div class="inline"><i class="fas fa-trophy"></i></div>
                 </b-col>
-                <b-col class="sidebar-text" lg="10">
-                  Sigma
-                </b-col>
+                <b-col class="sidebar-text" lg="10"> Sigma </b-col>
               </b-row>
             </router-link>
           </li>
@@ -679,9 +675,7 @@
                 <b-col lg="1">
                   <div class="inline"><i class="fas fa-trophy"></i></div>
                 </b-col>
-                <b-col class="sidebar-text" lg="10">
-                  Open House
-                </b-col>
+                <b-col class="sidebar-text" lg="10"> Open House </b-col>
               </b-row>
             </router-link>
           </li>

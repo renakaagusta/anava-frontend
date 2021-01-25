@@ -48,7 +48,7 @@ import ParticipantSemifinalOSM from "./../../../components/dashboard/participant
 import ParticipantFinalOSM from "./../../../components/dashboard/participant/stage/osm/FinalOSM.vue";
 
 import ParticipantPekanFinalPoster from "./../../../components/dashboard/participant/stage/poster/IndexPoster.vue";
-import ParticipantPekanKreativitasPoster from "./../../../components/dashboard/participant/stage/poster/IndexPoster.vue";
+import ParticipantPekanKreativitasPoster from "./../../../components/dashboard/participant/stage/poster/FinalPoster.vue";
 
 import ParticipantPenyisihanRangking1 from "./../../../components/dashboard/participant/stage/rangking1/PenyisihanRangking1.vue";
 import ParticipantSemifinalRangking1 from "./../../../components/dashboard/participant/stage/rangking1/SemifinalMainRangking1.vue";
