@@ -166,6 +166,23 @@
               </b-container>
             </b-col>
           </b-col>
+
+          <b-col cols="12" md="12">
+            <h1>Template Deskripsi</h1>
+            <hr />
+            <br />
+            <b-col lg="12">
+              <b-container class="bg-white p-3 rounded shadow-sm border">
+                <a
+                  target="blank"
+                  href="http://anavaugm.com/STARTED/template-deskripsi.docx"
+                >
+                  <i class="fa fa-download fa-3x text-dark"></i>
+                  <h2 class="d-inline ml-4">Template</h2>
+                </a>
+              </b-container>
+            </b-col>
+          </b-col>
           <b-col cols="12" md="12">
             <h1 class="mt-3">Sisa Waktu</h1>
             <hr />

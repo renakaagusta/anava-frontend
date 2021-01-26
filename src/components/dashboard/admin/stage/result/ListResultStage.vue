@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="event.name == 'OSM' || event.name == 'The One'">
+    <div>
       <div v-if="stage.name == 'preliminary'">
         <h3 class="text-left mt-4">Hasil</h3>
         <b-row class="bg-white p-3 mb-2 shadow-sm rounded text-bold" no-gutters>

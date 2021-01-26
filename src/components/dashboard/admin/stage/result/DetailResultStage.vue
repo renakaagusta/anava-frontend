@@ -435,7 +435,6 @@
     <div v-if="event.name == 'Started'">
       <b-container
         class="bg-white p-3 mt-3 shadow-sm rounded"
-        v-if="stage.name == 'preliminary'"
       >
         <h1 class="mt-2">Data Peserta</h1>
         <hr />
